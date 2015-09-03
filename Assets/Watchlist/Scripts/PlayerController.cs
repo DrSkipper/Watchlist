@@ -7,11 +7,14 @@ public class PlayerController : VoBehavior
 {
     public float AccelerationDuration = 0.5f;
     public float MaxSpeed = 1.0f;
+    public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
+
+    // Made public for display/debugging/editor purposes only
     public Vector2 Velocity = new Vector2();
 
     void Start()
     {
-        _acceleration = this.MaxSpeed / this.AccelerationDuration;
+        _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
     }
 
     void Update()
