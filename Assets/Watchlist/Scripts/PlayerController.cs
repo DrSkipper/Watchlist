@@ -11,6 +11,8 @@ public class PlayerController : VoBehavior
     public float ShotCooldown = 0.2f;
     public float ShotSpeed = 1.5f;
 
+    public GameObject BulletPrefab;
+
     // Made public for display/debugging/editor purposes only
     public Vector2 Velocity = new Vector2();
 
@@ -54,11 +56,19 @@ public class PlayerController : VoBehavior
         //TODO - fcole - Weapon behaviors should be handled in own class(es)
         if (_shotCooldown <= 0.0f)
         {
+            _shotCooldown = this.ShotCooldown;
             Vector2 aimAxis = getAimingAxis();
+
             if (aimAxis.x != 0 || aimAxis.y != 0)
             {
-                //TODO - Create instance of bullet prefab and set velocity on it's BulletController component
+                // Create instance of bullet prefab and set velocity on it's BulletController component
+                GameObject bullet = Instantiate(BulletPrefab, this.transform.position, Quaternion.identity) as GameObject;
+                bullet.GetComponent<BulletController>().Velocity = new Vector2(aimAxis.x * this.ShotSpeed, aimAxis.y * this.ShotSpeed);
             }
+        }
+        else
+        {
+            _shotCooldown -= Time.deltaTime;
         }
     }
 
@@ -105,8 +115,7 @@ public class PlayerController : VoBehavior
 
     private Vector2 getAimingAxis()
     {
-        //TODO - Don't use movement axis here
-        Vector2 movementAxis = new Vector2();
+        Vector2 aimAxis = new Vector2();
 
         if (Input.anyKey)
         {
@@ -114,10 +123,10 @@ public class PlayerController : VoBehavior
             float x = 0;
             float y = 0;
 
-            if (Input.GetKey(KeyCode.W)) y += 1;
-            if (Input.GetKey(KeyCode.A)) x -= 1;
-            if (Input.GetKey(KeyCode.S)) y -= 1;
-            if (Input.GetKey(KeyCode.D)) x += 1;
+            if (Input.GetKey(KeyCode.UpArrow)) y += 1;
+            if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
+            if (Input.GetKey(KeyCode.DownArrow)) y -= 1;
+            if (Input.GetKey(KeyCode.RightArrow)) x += 1;
 
             if (y != 0 && x != 0)
             {
@@ -125,17 +134,17 @@ public class PlayerController : VoBehavior
                 y = Mathf.Sign(y) * 0.70710678f;
             }
 
-            movementAxis.x = x;
-            movementAxis.y = y;
+            aimAxis.x = x;
+            aimAxis.y = y;
         }
 
         else
         {
             // Use controller input
-            movementAxis.x = Input.GetAxis("Horizontal");
-            movementAxis.y = Input.GetAxis("Vertical");
+            aimAxis.x = Input.GetAxis("Horizontal 2");
+            aimAxis.y = Input.GetAxis("Vertical 2");
         }
 
-        return movementAxis;
+        return aimAxis;
     }
 }
