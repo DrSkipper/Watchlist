@@ -82,7 +82,8 @@ public class PlayerController : VoBehavior
         else
         {
             // Use controller input
-
+            movementAxis.x = Input.GetAxis("Horizontal");
+            movementAxis.y = Input.GetAxis("Vertical");
         }
 
         return movementAxis;
