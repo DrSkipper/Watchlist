@@ -8,6 +8,8 @@ public class PlayerController : VoBehavior
     public float AccelerationDuration = 0.5f;
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
+    public float ShotCooldown = 0.2f;
+    public float ShotSpeed = 1.5f;
 
     // Made public for display/debugging/editor purposes only
     public Vector2 Velocity = new Vector2();
@@ -47,15 +49,63 @@ public class PlayerController : VoBehavior
         this.transform.position = new Vector3(this.transform.position.x + this.Velocity.x * Time.deltaTime, 
                                               this.transform.position.y,
                                               this.transform.position.z + this.Velocity.y * Time.deltaTime);
+
+        // Shooting
+        //TODO - fcole - Weapon behaviors should be handled in own class(es)
+        if (_shotCooldown <= 0.0f)
+        {
+            Vector2 aimAxis = getAimingAxis();
+            if (aimAxis.x != 0 || aimAxis.y != 0)
+            {
+                //TODO - Create instance of bullet prefab and set velocity on it's BulletController component
+            }
+        }
     }
 
     /**
      * Private
      */
     private float _acceleration;
+    private float _shotCooldown;
 
     private Vector2 getMovementAxis()
     {
+        Vector2 movementAxis = new Vector2();
+
+        if (Input.anyKey)
+        {
+            // Construct movment axis from 4-directional keyboard input
+            float x = 0;
+            float y = 0;
+
+            if (Input.GetKey(KeyCode.W)) y += 1;
+            if (Input.GetKey(KeyCode.A)) x -= 1;
+            if (Input.GetKey(KeyCode.S)) y -= 1;
+            if (Input.GetKey(KeyCode.D)) x += 1;
+
+            if (y != 0 && x != 0)
+            {
+                x = Mathf.Sign(x) * 0.70710678f;
+                y = Mathf.Sign(y) * 0.70710678f;
+            }
+
+            movementAxis.x = x;
+            movementAxis.y = y;
+        }
+
+        else
+        {
+            // Use controller input
+            movementAxis.x = Input.GetAxis("Horizontal");
+            movementAxis.y = Input.GetAxis("Vertical");
+        }
+
+        return movementAxis;
+    }
+
+    private Vector2 getAimingAxis()
+    {
+        //TODO - Don't use movement axis here
         Vector2 movementAxis = new Vector2();
 
         if (Input.anyKey)
