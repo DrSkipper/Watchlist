@@ -143,6 +143,7 @@ public class PlayerController : VoBehavior
             // Use controller input
             aimAxis.x = Input.GetAxis("Horizontal 2");
             aimAxis.y = Input.GetAxis("Vertical 2");
+            aimAxis.Normalize();
         }
 
         return aimAxis;
