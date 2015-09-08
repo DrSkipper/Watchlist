@@ -21,5 +21,5 @@ public class BulletController : VoBehavior
     /**
      * Private
      */
-    public float _lifetime = 0.0f;
+    private float _lifetime = 0.0f;
 }
