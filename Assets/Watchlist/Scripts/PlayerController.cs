@@ -10,6 +10,7 @@ public class PlayerController : VoBehavior
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotCooldown = 0.2f;
     public float ShotSpeed = 1.5f;
+    public Vector3 Up = Vector3.up;
 
     public GameObject BulletPrefab;
 
@@ -50,7 +51,7 @@ public class PlayerController : VoBehavior
 
         this.transform.position = new Vector3(this.transform.position.x + this.Velocity.x * Time.deltaTime, 
                                               this.transform.position.y,
-                                              this.transform.position.z + this.Velocity.y * Time.deltaTime);
+                                              this.transform.position.z) + this.Up * (this.Velocity.y * Time.deltaTime);
 
         // Shooting
         //TODO - fcole - Weapon behaviors should be handled in own class(es)
