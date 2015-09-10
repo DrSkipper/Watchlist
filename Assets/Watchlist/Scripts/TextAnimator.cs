@@ -75,15 +75,23 @@ public class TextAnimator : VoBehavior
 
             if (shouldProgress)
             {
+                while (_timeSinceCharacter > 0.0f)
+                {
+                    _timeSinceCharacter -= _singleCharacterDuration;
+
+                    _textSoFar += this.Text[_currentIndex];
+                    _textComponent.text = _textSoFar;
+                    ++_currentIndex;
+
+                    if (_currentIndex >= this.Text.Length)
+                    {
+                        _running = false;
+                        break;
+                    }
+                }
+
                 _timeSinceCharacter = 0;
                 _timeSinceSwap = _swapDuration + 0.1f;
-
-                _textSoFar += this.Text[_currentIndex];
-                _textComponent.text = _textSoFar;
-                ++_currentIndex;
-
-                if (_currentIndex >= this.Text.Length)
-                    _running = false;
             }
         }
 	}
