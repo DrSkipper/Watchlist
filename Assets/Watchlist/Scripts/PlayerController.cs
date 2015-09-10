@@ -8,11 +8,14 @@ public class PlayerController : VoBehavior
     public float AccelerationDuration = 0.5f;
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
+    public bool RotateVisualTowardAccel = true;
     public float ShotCooldown = 0.2f;
     public float ShotSpeed = 1.5f;
     public Vector3 Up = Vector3.up;
 
     public GameObject BulletPrefab;
+    public Sprite MovingSprite;
+    public Sprite IdlingSprite;
 
     // Made public for display/debugging/editor purposes only
     public Vector2 Velocity = new Vector2();
@@ -71,6 +74,31 @@ public class PlayerController : VoBehavior
         {
             _shotCooldown -= Time.deltaTime;
         }
+
+        // Rotate visual
+        if (this.RotateVisualTowardAccel)
+        {
+            Vector3 depth = this.Up.y > 0 ? new Vector3(0, 0, 1) : new Vector3(0, 1, 0);
+            this.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(movementAxis.y, movementAxis.x) * 180.0f / Mathf.PI + -90.0f, depth);
+        }
+
+        // Check if we need to use moving sprite
+        if (this.MovingSprite != null)
+        {
+            if (Mathf.Abs(movementAxis.x) > 0.001f || Mathf.Abs(movementAxis.y) > 0.001f)
+            {
+                if (!_usingMovingSprite)
+                {
+                    _usingMovingSprite = true;
+                    this.spriteRenderer.sprite = this.MovingSprite;
+                }
+            }
+            else if (_usingMovingSprite)
+            {
+                _usingMovingSprite = false;
+                this.spriteRenderer.sprite = this.IdlingSprite;
+            }
+        }
     }
 
     /**
@@ -78,6 +106,7 @@ public class PlayerController : VoBehavior
      */
     private float _acceleration;
     private float _shotCooldown;
+    private bool _usingMovingSprite;
 
     private Vector2 getMovementAxis()
     {
