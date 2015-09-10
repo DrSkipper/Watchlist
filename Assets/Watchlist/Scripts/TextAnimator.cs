@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Text))]
 public class TextAnimator : VoBehavior
 {
+    [TextArea(3, 10)]
+    [Multiline]
     public string Text = "<INSERT TEXT>";
     public int CharactersToAnimate = 1;
     public int CharactersPerSecond = 10;
@@ -162,8 +165,8 @@ public class TextAnimator : VoBehavior
      * Private
      */
     private static char[] ALPHABETICAL_CHARACTERS = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-    private static char[] PUNCTUATION_CHARACTERS = { '.', ',', ';', '!', '?', '-', '\'', ':' };
-    private static char[] SPECIAL_CHARACTERS = { '<', '>', '*', '@', '#', '$', '%', '^', '&', '(', ')', '_', '+', '=', '/', '[', ']', '|', '"' };
+    private static char[] PUNCTUATION_CHARACTERS = { '.', ',', ';', '-', '\'', ':' };
+    private static char[] SPECIAL_CHARACTERS = { '!', '?', '<', '>', '*', '@', '#', '$', '%', '^', '&', '(', ')', '_', '+', '=', '/', '[', ']', '|', '"' };
 
     private Text _textComponent;
     private string _textSoFar;
