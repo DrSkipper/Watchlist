@@ -77,7 +77,7 @@ public class TextAnimator : VoBehavior
                         }
                     }
 
-                    _textComponent.text = newText;
+                    _textComponent.text = this.EnableCursorBlink ? newText + this.CursorText : newText;
                 }
                 else
                 {
@@ -103,6 +103,10 @@ public class TextAnimator : VoBehavior
                     {
                         _running = false;
                         break;
+                    }
+                    else if (this.EnableCursorBlink)
+                    {
+                        _textComponent.text += this.CursorText;
                     }
                 }
 
