@@ -18,9 +18,11 @@ public class LevelGraphController : VoBehavior
     void Start()
     {
         _grid = new GameObject[this.Size, this.Size];
+        _paths = new GameObject[this.Size * 2 - 1, this.Size * 2 - 1];
         _availableTiles = new List<Vector2>();
         int halfSize = this.Size / 2;
 
+        // Setup boxes
         for (int x = -halfSize; x < _grid.GetLength(0) - halfSize; ++x)
         {
             for (int y = -halfSize; y < _grid.GetLength(1) - halfSize; ++y)
@@ -29,7 +31,11 @@ public class LevelGraphController : VoBehavior
                 if ((x == 0 && Math.Abs(y) == halfSize) || (y == 0 && Math.Abs(x) == halfSize))
                     continue;
 
-                GameObject go = Instantiate(BoxPrefab, new Vector3(this.GridSpaceDistance * x, this.GridSpaceDistance * y, 0), Quaternion.identity) as GameObject;
+                GameObject go = Instantiate(BoxPrefab) as GameObject;
+                go.transform.parent = this.transform;
+                go.transform.localPosition = new Vector3(this.GridSpaceDistance * x, this.GridSpaceDistance * y, 0);
+                _grid[x + halfSize, y + halfSize] = go;
+
                 bool isCompletedTile = false;
                 bool isAvailableTile = false;
 
@@ -50,6 +56,7 @@ public class LevelGraphController : VoBehavior
 
                 if (isAvailableTile)
                 {
+                    _availableTiles.Add(gridPositionOfBox(go));
                     makeAvailableTile(go);
                 }
 
@@ -64,21 +71,65 @@ public class LevelGraphController : VoBehavior
                         }
                     }
                 }
-
-                go.transform.parent = this.transform;
             }
         }
+
+        // Setup paths
+        for (int x = 0; x < _grid.GetLength(0) - 1; ++x)
+        {
+            for (int y = 0; y < _grid.GetLength(1) - 1; ++y)
+            {
+                if (_grid[x, y] == null)
+                    continue;
+
+                bool completed = isCompletedTile(_grid[x, y]);
+                bool available = !completed && isAvailableTile(_grid[x, y]);
+
+                if (x == 1 && y == 2)
+                    Debug.Log("found it, complete = " + completed + ", available = " + available);
+
+                if (completed || available)
+                {
+                    bool northCompleted = _paths[x * 2, y * 2 + 1] == null && isCompletedTile(_grid[x, y + 1]);
+                    bool northAvailable = !available && !northCompleted && _paths[x * 2, y * 2 + 1] == null && isAvailableTile(_grid[x, y + 1]);
+                    bool eastCompleted = _paths[x * 2 + 1, y * 2] == null && isCompletedTile(_grid[x + 1, y]);
+                    bool eastAvailable = !available && !eastCompleted && _paths[x * 2 + 1, y * 2] == null && isAvailableTile(_grid[x + 1, y]);
+
+                    if (northCompleted || northAvailable)
+                    {
+                        GameObject go = Instantiate(this.LinePrebab);
+                        go.transform.parent = this.transform;
+                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - halfSize), this.GridSpaceDistance * (y - halfSize) + this.GridSpaceDistance / 2.0f, 0);
+                        go.GetComponent<LevelSelectColorizer>().Color = completed && northCompleted ? this.PlayerColor : this.AvailableColor;
+                        _paths[x * 2, y * 2 + 1] = go;
+                    }
+
+                    if (eastCompleted || eastAvailable)
+                    {
+                        GameObject go = Instantiate(this.LinePrebab);
+                        go.transform.parent = this.transform;
+                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - halfSize) + this.GridSpaceDistance / 2.0f, this.GridSpaceDistance * (y - halfSize), 0);
+                        go.transform.localRotation = Quaternion.AngleAxis(90.0f, new Vector3(0, 0, 1));
+                        go.GetComponent<LevelSelectColorizer>().Color = completed && eastCompleted ? this.PlayerColor : this.AvailableColor;
+                        _paths[x * 2 + 1, y * 2] = go;
+                    }
+                }
+            }
+        }
+
+        //TODO - Initialize current tile
     }
 
     /**
      * Private
      */
     private GameObject[,] _grid;
+    private GameObject[,] _paths;
     private List<Vector2> _availableTiles;
 
     private Vector2 gridPositionOfBox(GameObject box)
     {
-        return new Vector2(Mathf.RoundToInt(box.transform.position.x / this.GridSpaceDistance), Mathf.RoundToInt(box.transform.position.y / this.GridSpaceDistance));
+        return new Vector2(Mathf.RoundToInt(box.transform.localPosition.x / this.GridSpaceDistance), Mathf.RoundToInt(box.transform.localPosition.y / this.GridSpaceDistance));
     }
 
     private bool isBossTile(GameObject go)
