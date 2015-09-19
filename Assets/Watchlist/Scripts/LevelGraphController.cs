@@ -153,7 +153,18 @@ public class LevelGraphController : VoBehavior
         }
         else
         {
-
+            if (!_currentBlinkingOff && _timeSinceBlink >= this.BlinkIntervalOn)
+            {
+                blinkCurrentTileOff();
+            }
+            else if (_currentBlinkingOff && _timeSinceBlink >= this.BlinkIntervalOff)
+            {
+                blinkCurrentTileOn();
+            }
+            else
+            {
+                _timeSinceBlink += Time.deltaTime;
+            }
         }
     }
 
@@ -164,7 +175,8 @@ public class LevelGraphController : VoBehavior
     private GameObject[,] _grid;
     private GameObject[,] _paths;
     private List<Vector2> _availableTiles;
-    private bool _currentBlinking;
+    private bool _currentBlinkingOff;
+    private float _timeSinceBlink;
 
     private GameObject getCurrentTileObject()
     {
@@ -254,6 +266,27 @@ public class LevelGraphController : VoBehavior
         LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
         currentColorizer.Color = this.PlayerColor;
         currentColorizer.UpdateColor();
-        _currentBlinking = false;
+        _timeSinceBlink = 0.0f;
+        _currentBlinkingOff = false;
+    }
+
+    private void blinkCurrentTileOn()
+    {
+        GameObject current = getCurrentTileObject();
+        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
+        currentColorizer.Color = this.PlayerColor;
+        currentColorizer.UpdateColor();
+        _timeSinceBlink = 0.0f;
+        _currentBlinkingOff = false;
+    }
+
+    private void blinkCurrentTileOff()
+    {
+        GameObject current = getCurrentTileObject();
+        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
+        currentColorizer.Color = Color.clear;
+        currentColorizer.UpdateColor();
+        _timeSinceBlink = 0.0f;
+        _currentBlinkingOff = true;
     }
 }
