@@ -7,6 +7,7 @@ public class LevelGraphController : VoBehavior
     public int Size = 7; // Should be odd number
     public Vector2[] BossTiles;
     public Vector2[] CompletedTiles;
+    public Vector2 CurrentTile;
     public GameObject BoxPrefab;
     public GameObject LinePrebab;
     public float GridSpaceDistance = 17.0f;
@@ -14,27 +15,29 @@ public class LevelGraphController : VoBehavior
     public Color BossColor;
     public Color AvailableColor;
     public Color BaseColor;
+    public float BlinkIntervalOn = 0.5f;
+    public float BlinkIntervalOff = 0.2f;
 
     void Start()
     {
         _grid = new GameObject[this.Size, this.Size];
         _paths = new GameObject[this.Size * 2 - 1, this.Size * 2 - 1];
         _availableTiles = new List<Vector2>();
-        int halfSize = this.Size / 2;
+        _halfSize = this.Size / 2;
 
         // Setup boxes
-        for (int x = -halfSize; x < _grid.GetLength(0) - halfSize; ++x)
+        for (int x = -_halfSize; x < _grid.GetLength(0) - _halfSize; ++x)
         {
-            for (int y = -halfSize; y < _grid.GetLength(1) - halfSize; ++y)
+            for (int y = -_halfSize; y < _grid.GetLength(1) - _halfSize; ++y)
             {
                 // Skip middle of all sides
-                if ((x == 0 && Math.Abs(y) == halfSize) || (y == 0 && Math.Abs(x) == halfSize))
+                if ((x == 0 && Math.Abs(y) == _halfSize) || (y == 0 && Math.Abs(x) == _halfSize))
                     continue;
 
                 GameObject go = Instantiate(BoxPrefab) as GameObject;
                 go.transform.parent = this.transform;
                 go.transform.localPosition = new Vector3(this.GridSpaceDistance * x, this.GridSpaceDistance * y, 0);
-                _grid[x + halfSize, y + halfSize] = go;
+                _grid[x + _halfSize, y + _halfSize] = go;
 
                 bool isCompletedTile = false;
                 bool isAvailableTile = false;
@@ -96,7 +99,7 @@ public class LevelGraphController : VoBehavior
                     {
                         GameObject go = Instantiate(this.LinePrebab);
                         go.transform.parent = this.transform;
-                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - halfSize), this.GridSpaceDistance * (y - halfSize) + this.GridSpaceDistance / 2.0f, 0);
+                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - _halfSize), this.GridSpaceDistance * (y - _halfSize) + this.GridSpaceDistance / 2.0f, 0);
                         go.GetComponent<LevelSelectColorizer>().Color = completed && northCompleted ? this.PlayerColor : this.AvailableColor;
                         _paths[x * 2, y * 2 + 1] = go;
                     }
@@ -105,7 +108,7 @@ public class LevelGraphController : VoBehavior
                     {
                         GameObject go = Instantiate(this.LinePrebab);
                         go.transform.parent = this.transform;
-                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - halfSize) + this.GridSpaceDistance / 2.0f, this.GridSpaceDistance * (y - halfSize), 0);
+                        go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - _halfSize) + this.GridSpaceDistance / 2.0f, this.GridSpaceDistance * (y - _halfSize), 0);
                         go.transform.localRotation = Quaternion.AngleAxis(90.0f, new Vector3(0, 0, 1));
                         go.GetComponent<LevelSelectColorizer>().Color = completed && eastCompleted ? this.PlayerColor : this.AvailableColor;
                         _paths[x * 2 + 1, y * 2] = go;
@@ -114,15 +117,59 @@ public class LevelGraphController : VoBehavior
             }
         }
 
-        //TODO - Initialize current tile
+        // Initialize current tile
+        moveCurrentTile(getCurrentTileObject());
+    }
+
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            GameObject previous = getCurrentTileObject();
+            Vector2 previousCoord = this.CurrentTile;
+
+            if (this.CurrentTile.IntX() > -_halfSize && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+            {
+                this.CurrentTile.x -= 1;
+            }
+            else if (this.CurrentTile.IntY() > -_halfSize && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
+            {
+                this.CurrentTile.y -= 1;
+            }
+            else if (this.CurrentTile.IntX() < _halfSize && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
+            {
+                this.CurrentTile.x += 1;
+            }
+            if (this.CurrentTile.IntY() < _halfSize && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
+            {
+                this.CurrentTile.y += 1;
+            }
+
+            GameObject nextTile = getCurrentTileObject();
+            if (nextTile != null && nextTile != previous)
+                moveCurrentTile(nextTile, previous);
+            else
+                this.CurrentTile = previousCoord;
+        }
+        else
+        {
+
+        }
     }
 
     /**
      * Private
      */
+    private int _halfSize;
     private GameObject[,] _grid;
     private GameObject[,] _paths;
     private List<Vector2> _availableTiles;
+    private bool _currentBlinking;
+
+    private GameObject getCurrentTileObject()
+    {
+        return _grid[this.CurrentTile.IntX() + _halfSize, this.CurrentTile.IntY() + _halfSize];
+    }
 
     private Vector2 gridPositionOfBox(GameObject box)
     {
@@ -199,8 +246,14 @@ public class LevelGraphController : VoBehavior
     {
         if (previous != null)
         {
-            current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().Color = isAvailableTile(previous) ? this.AvailableColor : this.BaseColor;
+            LevelSelectColorizer previousColorizer = previous.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
+            previousColorizer.Color = isAvailableTile(previous) ? this.AvailableColor : this.BaseColor;
+            previousColorizer.UpdateColor();
         }
-        current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().Color = this.PlayerColor;
+
+        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
+        currentColorizer.Color = this.PlayerColor;
+        currentColorizer.UpdateColor();
+        _currentBlinking = false;
     }
 }
