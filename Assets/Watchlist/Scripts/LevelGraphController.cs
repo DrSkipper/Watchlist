@@ -85,9 +85,6 @@ public class LevelGraphController : VoBehavior
                 bool completed = isCompletedTile(_grid[x, y]);
                 bool available = !completed && isAvailableTile(_grid[x, y]);
 
-                if (x == 1 && y == 2)
-                    Debug.Log("found it, complete = " + completed + ", available = " + available);
-
                 if (completed || available)
                 {
                     bool northCompleted = _paths[x * 2, y * 2 + 1] == null && isCompletedTile(_grid[x, y + 1]);
