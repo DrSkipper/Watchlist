@@ -37,7 +37,6 @@ public class AppearanceCurve : VoBehavior
     {
         _running = true;
         _timeElapsed = 0.0f;
-        _totalDistance = Mathf.Abs(this.EndAngle - this.StartAngle);
         this.transform.localRotation = Quaternion.AngleAxis(this.StartAngle, new Vector3(1, 1, 0));
     }
 
@@ -45,6 +44,5 @@ public class AppearanceCurve : VoBehavior
      * Private
      */
     private float _timeElapsed;
-    private float _totalDistance;
     private bool _running;
 }
