@@ -11,6 +11,12 @@ public class LevelSelectColorizer : VoBehavior
         this.UpdateColor();
     }
 
+    public void UpdateColor(Color color)
+    {
+        this.Color = color;
+        this.UpdateColor();
+    }
+
     public void UpdateColor()
     {
         foreach (LineRenderer line in this.gameObject.GetComponentsInChildren<LineRenderer>())
