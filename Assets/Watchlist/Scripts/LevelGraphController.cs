@@ -68,7 +68,6 @@ public class LevelGraphController : VoBehavior
     {
         _grid = new LevelGraphTile[this.Size, this.Size];
         _paths = new LevelGraphPath[this.Size * 2 - 1, this.Size * 2 - 1];
-        _availableTiles = new List<Vector2>();
         _halfSize = this.Size / 2;
 
         // Setup boxes
@@ -95,14 +94,11 @@ public class LevelGraphController : VoBehavior
                         state = TileState.Complete;
                         break;
                     }
-                    else if (neighborsTile(go, tile))
+                    else if (neighborsTile(position, tile))
                     {
                         state = TileState.Available;
                     }
                 }
-
-                if (state == TileState.Available)
-                    _availableTiles.Add(gridPositionOfBox(go));
 
                 if (state != TileState.Complete)
                 {
@@ -159,40 +155,36 @@ public class LevelGraphController : VoBehavior
         }
 
         // Initialize current tile
-        //moveCurrentTile(getCurrentTileObject());
+        moveCurrentTile(this.CurrentPosition);
     }
 
     void Update()
     {
-        /*
         if (Input.anyKeyDown)
         {
-            GameObject previous = getCurrentTileObject();
-            Vector2 previousCoord = this.CurrentTile;
+            Vector2 newPosition = this.CurrentPosition;
 
-            if (this.CurrentTile.IntX() > -_halfSize && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+            if (this.CurrentPosition.IntX() > -_halfSize && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
             {
-                this.CurrentTile.x -= 1;
+                newPosition.x -= 1;
             }
-            else if (this.CurrentTile.IntY() > -_halfSize && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
+            else if (this.CurrentPosition.IntY() > -_halfSize && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
             {
-                this.CurrentTile.y -= 1;
+                newPosition.y -= 1;
             }
-            else if (this.CurrentTile.IntX() < _halfSize && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
+            else if (this.CurrentPosition.IntX() < _halfSize && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
             {
-                this.CurrentTile.x += 1;
+                newPosition.x += 1;
             }
-            if (this.CurrentTile.IntY() < _halfSize && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
+            else if (this.CurrentPosition.IntY() < _halfSize && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
             {
-                this.CurrentTile.y += 1;
+                newPosition.y += 1;
             }
 
-            GameObject nextTile = getCurrentTileObject();
-            if (nextTile != null && nextTile != previous)
-                moveCurrentTile(nextTile, previous);
-            else
-                this.CurrentTile = previousCoord;
+            if ((newPosition.IntX() != this.CurrentPosition.IntX() || newPosition.IntY() != this.CurrentPosition.IntY()) && _grid[newPosition.IntX() + _halfSize, newPosition.IntY() + _halfSize] != null)
+                moveCurrentTile(newPosition);
         }
+        
         else
         {
             if (!_currentBlinkingOff && _timeSinceBlink >= this.BlinkIntervalOn)
@@ -208,7 +200,6 @@ public class LevelGraphController : VoBehavior
                 _timeSinceBlink += Time.deltaTime;
             }
         }
-        */
     }
 
     /**
@@ -217,58 +208,11 @@ public class LevelGraphController : VoBehavior
     private int _halfSize;
     private LevelGraphTile[,] _grid;
     private LevelGraphPath[,] _paths;
-    private List<Vector2> _availableTiles;
     private bool _currentBlinkingOff;
     private float _timeSinceBlink;
 
-    /*
-    private GameObject getCurrentTileObject()
+    private bool neighborsTile(Vector2 tile, Vector2 neighbor)
     {
-        return _grid[this.CurrentTile.IntX() + _halfSize, this.CurrentTile.IntY() + _halfSize];
-    }*/
-
-    private Vector2 gridPositionOfBox(GameObject box)
-    {
-        return new Vector2(Mathf.RoundToInt(box.transform.localPosition.x / this.GridSpaceDistance), Mathf.RoundToInt(box.transform.localPosition.y / this.GridSpaceDistance));
-    }
-
-    private bool isBossTile(GameObject go)
-    {
-        Vector2 position = gridPositionOfBox(go);
-        foreach (Vector2 tile in this.BossTiles)
-        {
-            if (tile.IntX() == position.IntX() && tile.IntY() == position.IntY())
-                return true;
-        }
-        return false;
-    }
-
-    private bool isCompletedTile(GameObject go)
-    {
-        Vector2 position = gridPositionOfBox(go);
-        foreach (Vector2 tile in this.CompletedTiles)
-        {
-            if (tile.IntX() == position.IntX() && tile.IntY() == position.IntY())
-                return true;
-        }
-        return false;
-    }
-
-    private bool isAvailableTile(GameObject go)
-    {
-        Vector2 position = gridPositionOfBox(go);
-        foreach (Vector2 tile in _availableTiles)
-        {
-            if (tile.IntX() == position.IntX() && tile.IntY() == position.IntY())
-                return true;
-        }
-        return false;
-    }
-
-    private bool neighborsTile(GameObject go, Vector2 neighbor)
-    {
-        Vector2 tile = gridPositionOfBox(go);
-
         if (tile.IntX() == neighbor.IntX())
         {
             if (Math.Abs(tile.IntY() - neighbor.IntY()) == 1)
@@ -291,24 +235,7 @@ public class LevelGraphController : VoBehavior
         tile.State = state;
         tile.Traits = traits;
 
-        Color outline = this.BaseColor;
-        Color center = Color.clear;
-
-        if (state == TileState.Complete)
-        {
-            center = this.PlayerColor;
-        }
-        else
-        {
-            if (state == TileState.Available)
-                outline = this.AvailableColor;
-
-            if (tile.HasTrait(TileTrait.Boss))
-                center = this.BossColor;
-        }
-
-        go.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(outline);
-        go.transform.Find("Center").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(center);
+        colorizeTile(tile);
         return tile;
     }
 
@@ -327,40 +254,64 @@ public class LevelGraphController : VoBehavior
         return path;
     }
 
-    private void moveCurrentTile(GameObject current, GameObject previous = null)
+    private void moveCurrentTile(Vector2 newPosition)
     {
-        if (previous != null)
-        {
-            LevelSelectColorizer previousColorizer = previous.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
-            previousColorizer.Color = isAvailableTile(previous) ? this.AvailableColor : this.BaseColor;
-            previousColorizer.UpdateColor();
-        }
+        if (newPosition.IntX() != this.CurrentPosition.IntX() || newPosition.IntY() != this.CurrentPosition.IntY())
+            removeCurrentEffect(this.CurrentPosition);
 
-        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
-        currentColorizer.Color = this.PlayerColor;
-        currentColorizer.UpdateColor();
+        this.CurrentPosition = newPosition;
+        applyCurrentEffect(this.CurrentPosition);
         _timeSinceBlink = 0.0f;
         _currentBlinkingOff = false;
     }
 
-    /*
+    private void removeCurrentEffect(Vector2 position)
+    {
+        LevelGraphTile tile = _grid[position.IntX() + _halfSize, position.IntY() + _halfSize];
+        colorizeTile(tile);
+    }
+
+    private void applyCurrentEffect(Vector2 position)
+    {
+        LevelGraphTile tile = _grid[position.IntX() + _halfSize, position.IntY() + _halfSize];
+        tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
+    }
+
+    private void colorizeTile(LevelGraphTile tile)
+    {
+        Color outline = this.BaseColor;
+        Color center = Color.clear;
+
+        if (tile.State == TileState.Complete)
+        {
+            center = this.PlayerColor;
+        }
+        else
+        {
+            if (tile.State == TileState.Available)
+                outline = this.AvailableColor;
+
+            if (tile.HasTrait(TileTrait.Boss))
+                center = this.BossColor;
+        }
+
+        tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(outline);
+        tile.GameObject.transform.Find("Center").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(center);
+    }
+    
     private void blinkCurrentTileOn()
     {
-        GameObject current = getCurrentTileObject();
-        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
-        currentColorizer.Color = this.PlayerColor;
-        currentColorizer.UpdateColor();
+        LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
+        currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
         _timeSinceBlink = 0.0f;
         _currentBlinkingOff = false;
     }
 
     private void blinkCurrentTileOff()
     {
-        GameObject current = getCurrentTileObject();
-        LevelSelectColorizer currentColorizer = current.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>();
-        currentColorizer.Color = Color.clear;
-        currentColorizer.UpdateColor();
+        LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
+        currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(Color.clear);
         _timeSinceBlink = 0.0f;
         _currentBlinkingOff = true;
-    }*/
+    }
 }
