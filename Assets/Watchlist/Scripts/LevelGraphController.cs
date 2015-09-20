@@ -39,6 +39,7 @@ public class LevelGraphController : VoBehavior
         public GameObject GameObject;
         public TileState State;
         public TileTrait[] Traits;
+        public List<LevelGraphPath> NeighborPaths; // For caching
 
         public bool HasTrait(TileTrait trait)
         {
@@ -148,7 +149,7 @@ public class LevelGraphController : VoBehavior
                         go.transform.parent = this.transform;
                         go.transform.localPosition = new Vector3(this.GridSpaceDistance * (x - _halfSize) + this.GridSpaceDistance / 2.0f, this.GridSpaceDistance * (y - _halfSize), 0);
                         TileState pathState = state == TileState.Complete && eastCompleted ? TileState.Complete : TileState.Available;
-                        _paths[x * 2, y * 2 + 1] = createPath(new Vector2((x - _halfSize) * 2 + 1, (y - _halfSize) * 2), go, pathState);
+                        _paths[x * 2 + 1, y * 2] = createPath(new Vector2((x - _halfSize) * 2 + 1, (y - _halfSize) * 2), go, pathState);
                     }
                 }
             }
@@ -227,6 +228,36 @@ public class LevelGraphController : VoBehavior
         return false;
     }
 
+    private List<LevelGraphPath> neighborPaths(LevelGraphTile tile)
+    {
+        if (tile.NeighborPaths != null)
+            return tile.NeighborPaths;
+
+        int x = tile.Position.IntX();
+        int y = tile.Position.IntY();
+        int pathX = (x + _halfSize) * 2;
+        int pathY = (y + _halfSize) * 2;
+        tile.NeighborPaths = new List<LevelGraphPath>();
+        
+        // left
+        if (x > -_halfSize && _paths[pathX - 1, pathY] != null)
+            tile.NeighborPaths.Add(_paths[pathX - 1, pathY]);
+
+        // right
+        if (x < _halfSize && _paths[pathX + 1, pathY] != null)
+            tile.NeighborPaths.Add(_paths[pathX + 1, pathY]);
+
+        // down
+        if (y > -_halfSize && _paths[pathX, pathY - 1] != null)
+            tile.NeighborPaths.Add(_paths[pathX, pathY - 1]);
+
+        // up
+        if (y < _halfSize && _paths[pathX, pathY + 1] != null)
+            tile.NeighborPaths.Add(_paths[pathX, pathY + 1]);
+        
+        return tile.NeighborPaths;
+    }
+
     private LevelGraphTile createTile(Vector2 position, GameObject go, TileState state, TileTrait[] traits)
     {
         LevelGraphTile tile = new LevelGraphTile();
@@ -246,7 +277,7 @@ public class LevelGraphController : VoBehavior
         path.GameObject = go;
         path.State = state;
 
-        go.GetComponent<LevelSelectColorizer>().UpdateColor(state == TileState.Complete ? this.PlayerColor : this.AvailableColor);
+        colorizePath(path);
 
         if (Math.Abs(position.IntX()) % 2 == 1)
             go.transform.localRotation = Quaternion.AngleAxis(90.0f, new Vector3(0, 0, 1));
@@ -269,12 +300,24 @@ public class LevelGraphController : VoBehavior
     {
         LevelGraphTile tile = _grid[position.IntX() + _halfSize, position.IntY() + _halfSize];
         colorizeTile(tile);
+
+        if (tile.State == TileState.Available)
+        {
+            foreach (LevelGraphPath path in neighborPaths(tile))
+                colorizePath(path);
+        }
     }
 
     private void applyCurrentEffect(Vector2 position)
     {
         LevelGraphTile tile = _grid[position.IntX() + _halfSize, position.IntY() + _halfSize];
         tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
+
+        if (tile.State == TileState.Available)
+        {
+            foreach (LevelGraphPath path in neighborPaths(tile))
+                path.GameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
+        }
     }
 
     private void colorizeTile(LevelGraphTile tile)
@@ -298,11 +341,23 @@ public class LevelGraphController : VoBehavior
         tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(outline);
         tile.GameObject.transform.Find("Center").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(center);
     }
+
+    private void colorizePath(LevelGraphPath path)
+    {
+        path.GameObject.GetComponent<LevelSelectColorizer>().UpdateColor(path.State == TileState.Complete ? this.PlayerColor : this.AvailableColor);
+    }
     
     private void blinkCurrentTileOn()
     {
         LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
         currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
+
+        if (currentTile.State == TileState.Available)
+        {
+            foreach (LevelGraphPath path in neighborPaths(currentTile))
+                path.GameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
+        }
+
         _timeSinceBlink = 0.0f;
         _currentBlinkingOff = false;
     }
@@ -311,6 +366,13 @@ public class LevelGraphController : VoBehavior
     {
         LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
         currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(Color.clear);
+
+        if (currentTile.State == TileState.Available)
+        {
+            foreach (LevelGraphPath path in neighborPaths(currentTile))
+                path.GameObject.GetComponent<LevelSelectColorizer>().UpdateColor(Color.clear);
+        }
+
         _timeSinceBlink = 0.0f;
         _currentBlinkingOff = true;
     }
