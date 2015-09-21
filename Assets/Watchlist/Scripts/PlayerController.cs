@@ -115,7 +115,7 @@ public class PlayerController : VoBehavior
     private float _acceleration;
     private float _shotCooldown;
     private bool _usingMovingSprite;
-
+    
     private Vector2 getAimingAxis()
     {
         Vector2 aimAxis = new Vector2();
