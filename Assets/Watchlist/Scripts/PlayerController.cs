@@ -24,7 +24,7 @@ public class PlayerController : VoBehavior
 
     void Update()
     {
-        Vector2 movementAxis = this.GetMovementAxis();
+        Vector2 movementAxis = GameplayInput.GetMovementAxis();
 
         float targetX = movementAxis.x * this.MaxSpeed;
         float targetY = movementAxis.y * this.MaxSpeed;
@@ -58,7 +58,7 @@ public class PlayerController : VoBehavior
         if (_shotCooldown <= 0.0f)
         {
             _shotCooldown = this.ShotCooldown;
-            Vector2 aimAxis = getAimingAxis();
+            Vector2 aimAxis = GameplayInput.GetAimingAxis();
 
             if (aimAxis.x != 0 || aimAxis.y != 0)
             {
@@ -72,42 +72,6 @@ public class PlayerController : VoBehavior
             _shotCooldown -= Time.deltaTime;
         }
     }
-    
-    // Move to player input handling file which calculates things like axes in pre update?
-    public Vector2 GetMovementAxis()
-    {
-        Vector2 movementAxis = new Vector2();
-
-        if (Input.anyKey)
-        {
-            // Construct movment axis from 4-directional keyboard input
-            float x = 0;
-            float y = 0;
-
-            if (Input.GetKey(KeyCode.W)) y += 1;
-            if (Input.GetKey(KeyCode.A)) x -= 1;
-            if (Input.GetKey(KeyCode.S)) y -= 1;
-            if (Input.GetKey(KeyCode.D)) x += 1;
-
-            if (y != 0 && x != 0)
-            {
-                x = Mathf.Sign(x) * 0.70710678f;
-                y = Mathf.Sign(y) * 0.70710678f;
-            }
-
-            movementAxis.x = x;
-            movementAxis.y = y;
-        }
-
-        else
-        {
-            // Use controller input
-            movementAxis.x = Input.GetAxis("Horizontal");
-            movementAxis.y = Input.GetAxis("Vertical");
-        }
-
-        return movementAxis;
-    }
 
     /**
      * Private
@@ -115,40 +79,4 @@ public class PlayerController : VoBehavior
     private float _acceleration;
     private float _shotCooldown;
     private bool _usingMovingSprite;
-    
-    private Vector2 getAimingAxis()
-    {
-        Vector2 aimAxis = new Vector2();
-
-        if (Input.anyKey)
-        {
-            // Construct movment axis from 4-directional keyboard input
-            float x = 0;
-            float y = 0;
-
-            if (Input.GetKey(KeyCode.UpArrow)) y += 1;
-            if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
-            if (Input.GetKey(KeyCode.DownArrow)) y -= 1;
-            if (Input.GetKey(KeyCode.RightArrow)) x += 1;
-
-            if (y != 0 && x != 0)
-            {
-                x = Mathf.Sign(x) * 0.70710678f;
-                y = Mathf.Sign(y) * 0.70710678f;
-            }
-
-            aimAxis.x = x;
-            aimAxis.y = y;
-        }
-
-        else
-        {
-            // Use controller input
-            aimAxis.x = Input.GetAxis("Horizontal 2");
-            aimAxis.y = Input.GetAxis("Vertical 2");
-            aimAxis.Normalize();
-        }
-
-        return aimAxis;
-    }
 }

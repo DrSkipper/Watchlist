@@ -15,7 +15,7 @@ public class PlayerSpriteController : VoBehavior
 
     void Update()
     {
-        Vector2 movementAxis = _playerController.GetMovementAxis();
+        Vector2 movementAxis = GameplayInput.GetMovementAxis();
 
         // Detect if we're moving enough for sprite change
         if (Mathf.Abs(movementAxis.x) > 0.001f || Mathf.Abs(movementAxis.y) > 0.001f)
