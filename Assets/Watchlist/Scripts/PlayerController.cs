@@ -10,6 +10,7 @@ public class PlayerController : VoBehavior
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotCooldown = 0.2f;
     public float ShotSpeed = 1.5f;
+    public float ShotStartDistance = 1.0f;
     public Vector3 Up = Vector3.up;
 
     public GameObject BulletPrefab;
@@ -63,7 +64,8 @@ public class PlayerController : VoBehavior
             if (aimAxis.x != 0 || aimAxis.y != 0)
             {
                 // Create instance of bullet prefab and set velocity on it's BulletController component
-                GameObject bullet = Instantiate(BulletPrefab, this.transform.position, Quaternion.identity) as GameObject;
+                Vector3 position = this.transform.position + ((new Vector3(aimAxis.x, 0, 0) + (aimAxis.y * this.Up)) * this.ShotStartDistance);
+                GameObject bullet = Instantiate(BulletPrefab, position, Quaternion.identity) as GameObject;
                 bullet.GetComponent<BulletController>().Velocity = new Vector2(aimAxis.x * this.ShotSpeed, aimAxis.y * this.ShotSpeed);
             }
         }

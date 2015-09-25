@@ -10,7 +10,7 @@ public class PlayerSpriteController : VoBehavior
     void Start()
     {
         _playerController = this.GetComponent<PlayerController>();
-        _inverseCardinalCutoff = 1.0f / 2.0f;
+        _inverseCardinalCutoff = 1.0f / this.CardinalCutoff;
     }
 
     void Update()
