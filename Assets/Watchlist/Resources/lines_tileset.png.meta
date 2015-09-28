@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a00a4fdace9d5f941ba242eeb5ef459a
-timeCreated: 1443425476
+timeCreated: 1443474886
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -17,6 +17,11 @@ TextureImporter:
     21300020: tip_top
     21300022: tip_left
     21300024: tip_right
+    21300026: t_up
+    21300028: t_down
+    21300030: t_left
+    21300032: t_right
+    21300034: cross
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -156,8 +161,8 @@ TextureImporter:
     - name: tip_bottom
       rect:
         serializedVersion: 2
-        x: 8
-        y: 15
+        x: 1
+        y: 22
         width: 5
         height: 5
       alignment: 0
@@ -186,8 +191,58 @@ TextureImporter:
     - name: tip_right
       rect:
         serializedVersion: 2
-        x: 1
+        x: 8
+        y: 15
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: t_up
+      rect:
+        serializedVersion: 2
+        x: 8
         y: 22
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: t_down
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 22
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: t_left
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 22
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: t_right
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 26
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cross
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 26
         width: 5
         height: 5
       alignment: 0

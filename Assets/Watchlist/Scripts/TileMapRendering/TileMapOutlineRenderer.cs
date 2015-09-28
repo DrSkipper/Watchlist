@@ -21,7 +21,6 @@ public class TileMapOutlineRenderer : VoBehavior
 	void Start()
     {
         //this.CreateMap();
-        _sprites = this.Atlas.GetSprites();
     }
 
     public void CreateEmptyMap()
@@ -32,7 +31,8 @@ public class TileMapOutlineRenderer : VoBehavior
     public void CreateMapWithGrid(int [,] grid)
     {
         this.Clear();
-
+        
+        _sprites = this.Atlas.GetSprites();
         this.Width = grid.GetLength(0);
         this.Height = grid.GetLength(1);
 
@@ -41,8 +41,8 @@ public class TileMapOutlineRenderer : VoBehavior
 
     public void Clear()
     {
+        _sprites = null;
         this.GetComponent<MeshFilter>().mesh = null;
-        this.renderer.material.mainTexture = null;
     }
 
 
@@ -155,6 +155,7 @@ public class TileMapOutlineRenderer : VoBehavior
 
     private Vector2[] getUVsForSprite(int[,] neighbors)
     {
+        // Empty tile
         if (neighbors[1, 1] == 0)
             return _sprites["empty"].uv;
 
@@ -164,80 +165,133 @@ public class TileMapOutlineRenderer : VoBehavior
         bool right = neighbors[2, 1] != 0;
         bool anyCornerEmpty = neighbors[0, 0] == 0 || neighbors[0, 2] == 0 || neighbors[2, 0] == 0 || neighbors[2, 2] == 0;
 
+        // Completely surrounded
         if (!anyCornerEmpty && bottom && left && top && right)
             return _sprites["filled"].uv;
-
-        if (anyCornerEmpty)
+        
+        // Cross intersection
+        if (anyCornerEmpty && bottom && top && left && right)
         {
-            if (bottom && left)
-            {
-                if (!top && !right)
-                {
-                    if (neighbors[0, 0] != 0)
-                        return _sprites["corner_bottom_right"].uv;
-                }
-                else
-                {
-                    if (neighbors[0, 0] == 0)
-                        return _sprites["corner_bottom_right"].uv;
-                }
-            }
+            if ((neighbors[0, 0] == 0 && neighbors[2, 2] == 0) || (neighbors[2, 0] == 0 && neighbors[0, 2] == 0))
+                return _sprites["cross"].uv;
+        }
 
-            if (bottom && right)
+        // Corners and T-intersections
+        if (bottom && left)
+        {
+            if (!top && !right && neighbors[0, 0] != 0)
             {
-                if (!top && !left)
-                {
-                    if (neighbors[2, 0] != 0)
-                        return _sprites["corner_bottom_left"].uv;
-                }
-                else
-                {
-                    if (neighbors[2, 0] == 0)
-                        return _sprites["corner_bottom_left"].uv;
-                }
+                return _sprites["corner_bottom_right"].uv;
             }
-            if (top && left)
+            else if (!top && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
             {
-                if (!bottom && !right)
-                {
-                    if (neighbors[0, 2] != 0)
-                        return _sprites["corner_top_right"].uv;
-                }
-                else
-                {
-                    if (neighbors[0, 2] == 0)
-                        return _sprites["corner_top_right"].uv;
-                }
+                return _sprites["t_up"].uv;
             }
-            if (top && right)
+            else if (!right && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
             {
-                if (!bottom && !left)
-                {
-                    if (neighbors[2, 2] != 0)
-                        return _sprites["corner_top_left"].uv;
-                }
-                else
-                {
-                    if (neighbors[2, 2] == 0)
-                        return _sprites["corner_top_left"].uv;
-                }
+                return _sprites["t_left"].uv;
+            }
+            else
+            {
+                if (neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
+                    return _sprites["t_up"].uv;
+                if (neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
+                    return _sprites["t_left"].uv;
+                if (neighbors[0, 0] == 0)
+                    return _sprites["corner_bottom_right"].uv;
+            }
+        }
+
+        if (bottom && right)
+        {
+            if (!top && !left && neighbors[2, 0] != 0)
+            {
+                return _sprites["corner_bottom_left"].uv;
+            }
+            else if (!top && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
+            {
+                return _sprites["t_up"].uv;
+            }
+            else if (!left && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
+            {
+                return _sprites["t_right"].uv;
+            }
+            else
+            {
+                if (neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
+                    return _sprites["t_up"].uv;
+                if (neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
+                    return _sprites["t_right"].uv;
+                if (neighbors[2, 0] == 0)
+                    return _sprites["corner_bottom_left"].uv;
+            }
+        }
+        if (top && left)
+        {
+            if (!bottom && !right && neighbors[0, 2] != 0)
+            {
+                return _sprites["corner_top_right"].uv;
+            }
+            else if (!bottom && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
+            {
+                return _sprites["t_down"].uv;
+            }
+            else if (!right && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
+            {
+                return _sprites["t_left"].uv;
+            }
+            else
+            {
+                if (neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
+                    return _sprites["t_down"].uv;
+                if (neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
+                    return _sprites["t_left"].uv;
+                if (neighbors[0, 2] == 0)
+                    return _sprites["corner_top_right"].uv;
+            }
+        }
+        if (top && right)
+        {
+            if (!bottom && !left && neighbors[2, 2] != 0)
+            {
+                return _sprites["corner_top_left"].uv;
+            }
+            else if (!bottom && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
+            {
+                return _sprites["t_down"].uv;
+            }
+            else if (!left && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
+            {
+                return _sprites["t_right"].uv;
+            }
+            else
+            {
+                if (neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
+                    return _sprites["t_down"].uv;
+                if (neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
+                    return _sprites["t_right"].uv;
+                if (neighbors[2, 2] == 0)
+                    return _sprites["corner_top_left"].uv;
             }
         }
         
+        // Sides
         if (bottom && top)
             return _sprites["side_vertical"].uv;
         if (left && right)
             return _sprites["side_horizontal"].uv;
 
+        // Tips
         if (bottom && !top && !left && !right)
-            return _sprites["tip_top"].uv;
-        if (!bottom && top && !left && !right)
             return _sprites["tip_bottom"].uv;
+        if (!bottom && top && !left && !right)
+            return _sprites["tip_top"].uv;
         if (!bottom && !top && left && !right)
-            return _sprites["tip_left"].uv;
-        if (!bottom && !top && !left && right)
             return _sprites["tip_right"].uv;
+        if (!bottom && !top && !left && right)
+            return _sprites["tip_left"].uv;
 
+        // Lone tile
         //if (!bottom && !left && !top && !right)
         return _sprites["lone"].uv;
     }
