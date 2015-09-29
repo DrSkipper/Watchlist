@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(TileMapOutlineRenderer))]
+[ExecuteInEditMode]
 public class TestLevelLayout : VoBehavior
 {
     public Vector2 Size;
@@ -9,6 +10,14 @@ public class TestLevelLayout : VoBehavior
 
     void Start()
     {
+        this.CreateGeometry();
+    }
+
+    public void CreateGeometry()
+    {
+        TileMapOutlineRenderer outlineRenderer = this.GetComponent<TileMapOutlineRenderer>();
+        outlineRenderer.Clear();
+
         _levelLayout = new int[Size.IntX(), Size.IntY()];
 
         for (int x = 0; x < Size.IntX(); ++x)
@@ -20,7 +29,7 @@ public class TestLevelLayout : VoBehavior
             _levelLayout[wall.IntX(), wall.IntY()] = 1;
         }
 
-        this.GetComponent<TileMapOutlineRenderer>().CreateMapWithGrid(_levelLayout);
+        outlineRenderer.CreateMapWithGrid(_levelLayout);
     }
 
     /**

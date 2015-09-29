@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[ExecuteInEditMode]
 public class TileMapOutlineRenderer : VoBehavior
 {
     public enum TilingMethod
@@ -22,7 +22,6 @@ public class TileMapOutlineRenderer : VoBehavior
 	void Start()
     {
         //this.CreateMap();
-        _initialPosition = this.transform.position;
     }
 
     public void CreateEmptyMap()
@@ -52,7 +51,7 @@ public class TileMapOutlineRenderer : VoBehavior
         this.GetComponent<MeshFilter>().mesh = null;
         
         if (this.OffsetTilesToCenter)
-            this.transform.position = new Vector3(_initialPosition.x, _initialPosition.y, _initialPosition.z);
+            this.transform.position = new Vector3(0, 0, this.transform.position.z);
     }
 
 
@@ -60,11 +59,9 @@ public class TileMapOutlineRenderer : VoBehavior
      * Private
      */
     private Dictionary<string, Sprite> _sprites;
-    private Vector3 _initialPosition;
 
     private void createMapUsingMesh(int[,] grid)
     {
-        
         float originX = this.transform.position.x;
         float originY = this.transform.position.y;
         float originZ = this.transform.position.z;
@@ -109,7 +106,7 @@ public class TileMapOutlineRenderer : VoBehavior
                 // Handle UVs
                 int[,] neighbors = getNeighbors(grid, x, y);
                 Vector2[] spriteUVs = getUVsForSprite(neighbors);
-                Debug.Log("spriteUVs = " + spriteUVs);
+
                 Vector2 bottomLeftUV = spriteUVs[0];
                 Vector2 bottomRightUV = spriteUVs[1];
                 Vector2 topLeftUV = spriteUVs[2];
