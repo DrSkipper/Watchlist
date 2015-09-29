@@ -16,11 +16,13 @@ public class TileMapOutlineRenderer : VoBehavior
     public int Height = 50;
     public int TileRenderSize = 64;
     public bool OffMapIsFilled = true;
+    public bool OffsetTilesToCenter = true;
     public Texture2D Atlas = null;
 
 	void Start()
     {
         //this.CreateMap();
+        _initialPosition = this.transform.position;
     }
 
     public void CreateEmptyMap()
@@ -37,12 +39,20 @@ public class TileMapOutlineRenderer : VoBehavior
         this.Height = grid.GetLength(1);
 
         createMapUsingMesh(grid);
+
+        if (this.OffsetTilesToCenter)
+        {
+            this.transform.position = new Vector3(this.transform.position.x - this.TileRenderSize * this.Width / 2, this.transform.position.y - this.TileRenderSize * this.Height / 2, this.transform.position.z);
+        }
     }
 
     public void Clear()
     {
         _sprites = null;
         this.GetComponent<MeshFilter>().mesh = null;
+        
+        if (this.OffsetTilesToCenter)
+            this.transform.position = new Vector3(_initialPosition.x, _initialPosition.y, _initialPosition.z);
     }
 
 
@@ -50,6 +60,7 @@ public class TileMapOutlineRenderer : VoBehavior
      * Private
      */
     private Dictionary<string, Sprite> _sprites;
+    private Vector3 _initialPosition;
 
     private void createMapUsingMesh(int[,] grid)
     {
@@ -183,19 +194,19 @@ public class TileMapOutlineRenderer : VoBehavior
             {
                 return _sprites["corner_bottom_right"].uv;
             }
-            else if (!top && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
+            else if (!top && right && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
             {
                 return _sprites["t_up"].uv;
             }
-            else if (!right && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
+            else if (!right && top && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
             {
                 return _sprites["t_left"].uv;
             }
             else
             {
-                if (neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
+                if (right && neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
                     return _sprites["t_up"].uv;
-                if (neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
+                if (top && neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
                     return _sprites["t_left"].uv;
                 if (neighbors[0, 0] == 0)
                     return _sprites["corner_bottom_right"].uv;
@@ -208,19 +219,19 @@ public class TileMapOutlineRenderer : VoBehavior
             {
                 return _sprites["corner_bottom_left"].uv;
             }
-            else if (!top && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
+            else if (!top && left && (neighbors[0, 0] == 0 || neighbors[2, 0] == 0))
             {
                 return _sprites["t_up"].uv;
             }
-            else if (!left && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
+            else if (!left && top && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
             {
                 return _sprites["t_right"].uv;
             }
             else
             {
-                if (neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
+                if (left && neighbors[0, 0] == 0 && neighbors[2, 0] == 0)
                     return _sprites["t_up"].uv;
-                if (neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
+                if (top && neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
                     return _sprites["t_right"].uv;
                 if (neighbors[2, 0] == 0)
                     return _sprites["corner_bottom_left"].uv;
@@ -232,19 +243,19 @@ public class TileMapOutlineRenderer : VoBehavior
             {
                 return _sprites["corner_top_right"].uv;
             }
-            else if (!bottom && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
+            else if (!bottom && right && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
             {
                 return _sprites["t_down"].uv;
             }
-            else if (!right && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
+            else if (!right && bottom && (neighbors[0, 0] == 0 || neighbors[0, 2] == 0))
             {
                 return _sprites["t_left"].uv;
             }
             else
             {
-                if (neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
+                if (right && neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
                     return _sprites["t_down"].uv;
-                if (neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
+                if (bottom && neighbors[0, 0] == 0 && neighbors[0, 2] == 0)
                     return _sprites["t_left"].uv;
                 if (neighbors[0, 2] == 0)
                     return _sprites["corner_top_right"].uv;
@@ -256,19 +267,19 @@ public class TileMapOutlineRenderer : VoBehavior
             {
                 return _sprites["corner_top_left"].uv;
             }
-            else if (!bottom && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
+            else if (!bottom && left && (neighbors[0, 2] == 0 || neighbors[2, 2] == 0))
             {
                 return _sprites["t_down"].uv;
             }
-            else if (!left && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
+            else if (!left && bottom && (neighbors[2, 0] == 0 || neighbors[2, 2] == 0))
             {
                 return _sprites["t_right"].uv;
             }
             else
             {
-                if (neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
+                if (left && neighbors[0, 2] == 0 && neighbors[2, 2] == 0)
                     return _sprites["t_down"].uv;
-                if (neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
+                if (bottom && neighbors[2, 0] == 0 && neighbors[2, 2] == 0)
                     return _sprites["t_right"].uv;
                 if (neighbors[2, 2] == 0)
                     return _sprites["corner_top_left"].uv;
