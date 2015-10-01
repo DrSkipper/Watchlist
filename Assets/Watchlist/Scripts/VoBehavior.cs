@@ -25,9 +25,14 @@ public class VoBehavior : MonoBehaviour
 			return _spriteRenderer;
 	} }
 
-    public BoxCollider2D boxCollider2D { get {
-            if (!_boxCollider2D) _boxCollider2D = base.GetComponent<BoxCollider2D>();
-            return _boxCollider2D;
+    public new Collider2D collider2D { get {
+            if (!_collider2D) _collider2D = base.GetComponent<Collider2D>();
+            return _collider2D;
+    } }
+
+    public LocalEventNotifier localNotifier {  get {
+            if (!_localNotifier) _localNotifier = base.GetComponent<LocalEventNotifier>();
+            return _localNotifier;
     } }
 
     /**
@@ -37,5 +42,6 @@ public class VoBehavior : MonoBehaviour
     private Transform _transform;
     private Renderer _renderer;
     private SpriteRenderer _spriteRenderer;
-    private BoxCollider2D _boxCollider2D;
+    private Collider2D _collider2D;
+    private LocalEventNotifier _localNotifier;
 }
