@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class Actor2D : VoBehavior
@@ -7,35 +8,127 @@ public class Actor2D : VoBehavior
     public LayerMask HaltMovementMask;
     public LayerMask CollisionMask;
 
+    public const float MAX_POSITION_INCREMENT = 1.0f;
+
     void Update()
     {
         if (this.Velocity.x != 0.0f || this.Velocity.y != 0.0f)
         {
-            RaycastHit2D? haltingHit = null;
+            Move(this.Velocity * Time.deltaTime);
+        }
+    }
 
-            BoxCollider2D boxCollider = this.collider2D as BoxCollider2D;
-            Vector2 position = new Vector2(this.transform.position.x, this.transform.position.y);
-            Vector2 direction = this.Velocity.normalized;
+    public void Move(Vector2 d)
+    {
+        float incX = d.x;
+        float incY = d.y;
 
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(position, boxCollider.size, 0.0f, direction, this.Velocity.magnitude * Time.deltaTime);
+        if (Mathf.Abs(incX) > MAX_POSITION_INCREMENT || Mathf.Abs(incY) > MAX_POSITION_INCREMENT)
+        {
+            Vector2 dNormalized = d.normalized * MAX_POSITION_INCREMENT;
+            incX = dNormalized.x;
+            incY = dNormalized.y;
+        }
 
-            foreach (RaycastHit2D hit in hits)
+        Vector2 soFar = Vector2.zero;
+
+        while (true)
+        {
+            Vector2 difference = d - soFar;
+            if (difference.magnitude == 0.0f)
+                break;
+
+            if (difference.magnitude < 0.0f)
             {
-                if ((hit.collider.gameObject.layer & this.HaltMovementMask) != 0)
+                moveX(difference.x, _collisionsFromMove);
+                moveY(difference.y, _collisionsFromMove);
+                break;
+            }
+
+            bool haltX = moveX(incX, _collisionsFromMove);
+            bool haltY = moveY(incY, _collisionsFromMove);
+
+            if (haltX || haltY)
+                break;
+        }
+
+        if (_collisionsFromMove.Count > 0)
+        {
+            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray()));
+            _collisionsFromMove.Clear();
+        }
+    }
+
+    /**
+     * Private
+     */
+    private Vector2 _positionModifier = Vector2.zero;
+    private List<GameObject> _collisionsFromMove = new List<GameObject>();
+    
+    // Returns true if movement was halted
+    private bool moveX(float dx, List<GameObject> collisions)
+    {
+        _positionModifier.x += dx;
+        int unitMove = Mathf.RoundToInt(_positionModifier.x);
+
+        if (unitMove != 0)
+        {
+            int unitDir = Math.Sign(unitMove);
+            _positionModifier.x -= unitMove;
+
+            while (unitMove != 0)
+            {
+                GameObject collidedObject = this.boxCollider2D.CollideFirst(unitDir, 0, this.CollisionMask);
+
+                if (collidedObject)
                 {
-                    haltingHit = hit;
-                    break;
+                    if (!collisions.Contains(collidedObject))
+                        collisions.Add(collidedObject);
+
+                    if ((collidedObject.layer & this.HaltMovementMask) != 0)
+                    {
+                        _positionModifier.x = 0.0f;
+                        return true;
+                    }
                 }
-            }
 
-            if (haltingHit.HasValue)
-            {
-
-            }
-            else
-            {
-                this.transform.position = new Vector3(Mathf.Round(position.x + this.Velocity.x), Mathf.Round(position.y + this.Velocity.y), this.transform.position.z);
+                this.transform.position += new Vector3(unitDir, 0, 0);
+                unitMove -= unitDir;
             }
         }
+
+        return false;
+    }
+    
+    private bool moveY(float dy, List<GameObject> collisions)
+    {
+        _positionModifier.y += dy;
+        int unitMove = Mathf.RoundToInt(_positionModifier.y);
+
+        if (unitMove != 0)
+        {
+            int unitDir = Math.Sign(unitMove);
+            _positionModifier.y -= unitMove;
+
+            while (unitMove != 0)
+            {
+                GameObject collidedObject = this.boxCollider2D.CollideFirst(0, unitDir, this.CollisionMask);
+
+                if (collidedObject)
+                {
+                    collisions.Add(collidedObject);
+                    if ((collidedObject.layer & this.HaltMovementMask) != 0)
+                    {
+                        _positionModifier.y = 0.0f;
+                        return true;
+                    }
+                }
+
+                this.transform.position += new Vector3(0, unitDir, 0);
+                unitMove -= unitDir;
+            }
+        }
+
+        return false;
     }
 }
