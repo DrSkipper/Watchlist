@@ -10,11 +10,12 @@ public class Actor2D : VoBehavior
 
     public const float MAX_POSITION_INCREMENT = 1.0f;
 
-    void Update()
+    public virtual void Update()
     {
         if (this.Velocity.x != 0.0f || this.Velocity.y != 0.0f)
         {
             Move(this.Velocity * Time.deltaTime);
+            //this.transform.position += new Vector3(this.Velocity.x * Time.deltaTime, this.Velocity.y * Time.deltaTime, 0);
         }
     }
 
@@ -31,30 +32,37 @@ public class Actor2D : VoBehavior
         }
 
         Vector2 soFar = Vector2.zero;
-
+        Vector2 oldVelocity = this.Velocity;
+        
         while (true)
         {
-            Vector2 difference = d - soFar;
-            if (difference.magnitude == 0.0f)
-                break;
-
-            if (difference.magnitude < 0.0f)
-            {
-                moveX(difference.x, _collisionsFromMove);
-                moveY(difference.y, _collisionsFromMove);
-                break;
-            }
-
             bool haltX = moveX(incX, _collisionsFromMove);
             bool haltY = moveY(incY, _collisionsFromMove);
 
             if (haltX || haltY)
+            {
+                this.Velocity = Vector2.zero;
                 break;
+            }
+
+            soFar.x += incX;
+            soFar.y += incY;
+
+            Vector2 difference = d - soFar;
+            if (difference.magnitude == 0.0f)
+                break;
+
+            if (soFar.magnitude > d.magnitude)
+            {
+                moveX(d.x - soFar.x, _collisionsFromMove);
+                moveY(d.y - soFar.y, _collisionsFromMove);
+                break;
+            }
         }
 
         if (_collisionsFromMove.Count > 0)
         {
-            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray()));
+            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray(), oldVelocity));
             _collisionsFromMove.Clear();
         }
     }
@@ -68,34 +76,21 @@ public class Actor2D : VoBehavior
     // Returns true if movement was halted
     private bool moveX(float dx, List<GameObject> collisions)
     {
-        _positionModifier.x += dx;
-        int unitMove = Mathf.RoundToInt(_positionModifier.x);
+        GameObject collidedObject = this.boxCollider2D.CollideFirst(dx, 0, this.CollisionMask);
 
-        if (unitMove != 0)
+        if (collidedObject)
         {
-            int unitDir = Math.Sign(unitMove);
-            _positionModifier.x -= unitMove;
+            if (!collisions.Contains(collidedObject))
+                collisions.Add(collidedObject);
 
-            while (unitMove != 0)
+            if ((collidedObject.layer & this.HaltMovementMask) != 0)
             {
-                GameObject collidedObject = this.boxCollider2D.CollideFirst(unitDir, 0, this.CollisionMask);
-
-                if (collidedObject)
-                {
-                    if (!collisions.Contains(collidedObject))
-                        collisions.Add(collidedObject);
-
-                    if ((collidedObject.layer & this.HaltMovementMask) != 0)
-                    {
-                        _positionModifier.x = 0.0f;
-                        return true;
-                    }
-                }
-
-                this.transform.position += new Vector3(unitDir, 0, 0);
-                unitMove -= unitDir;
+                _positionModifier.x = 0.0f;
+                return true;
             }
         }
+
+        this.transform.position += new Vector3(dx, 0, 0);
 
         return false;
     }
@@ -112,7 +107,7 @@ public class Actor2D : VoBehavior
 
             while (unitMove != 0)
             {
-                GameObject collidedObject = this.boxCollider2D.CollideFirst(0, unitDir, this.CollisionMask);
+                /*GameObject collidedObject = this.boxCollider2D.CollideFirst(0, unitDir, this.CollisionMask);
 
                 if (collidedObject)
                 {
@@ -122,7 +117,7 @@ public class Actor2D : VoBehavior
                         _positionModifier.y = 0.0f;
                         return true;
                     }
-                }
+                }*/
 
                 this.transform.position += new Vector3(0, unitDir, 0);
                 unitMove -= unitDir;

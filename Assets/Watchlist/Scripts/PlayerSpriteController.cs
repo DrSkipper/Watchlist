@@ -9,6 +9,7 @@ public class PlayerSpriteController : VoBehavior
 
     void Start()
     {
+        _depth = new Vector3(0, 0, 1);
         _playerController = this.GetComponent<PlayerController>();
         _inverseCardinalCutoff = 1.0f / this.CardinalCutoff;
     }
@@ -20,8 +21,6 @@ public class PlayerSpriteController : VoBehavior
         // Detect if we're moving enough for sprite change
         if (Mathf.Abs(movementAxis.x) > 0.001f || Mathf.Abs(movementAxis.y) > 0.001f)
         {
-            Vector3 depth = _playerController.Up.y > 0 ? new Vector3(0, 0, 1) : new Vector3(0, 1, 0);
-
             // Detect if predominantly cardinal or diagonal movement
             float xyRatio = movementAxis.x / movementAxis.y;
             if (xyRatio >= this.CardinalCutoff || xyRatio <= _inverseCardinalCutoff)
@@ -32,7 +31,7 @@ public class PlayerSpriteController : VoBehavior
 
                 float rotation = Mathf.Atan2(movementAxis.y, movementAxis.x) * 180.0f / Mathf.PI + -90.0f;
                 float rotationMod = rotation % 90.0f;
-                this.transform.rotation = Quaternion.AngleAxis(rotation - rotationMod, depth);
+                this.transform.rotation = Quaternion.AngleAxis(rotation - rotationMod, _depth);
             }
             else if (this.DiagonalSprite != null)
             {
@@ -54,4 +53,5 @@ public class PlayerSpriteController : VoBehavior
      */
     private PlayerController _playerController;
     private float _inverseCardinalCutoff;
+    private Vector3 _depth;
 }

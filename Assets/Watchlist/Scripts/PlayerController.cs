@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerController : VoBehavior
+public class PlayerController : Actor2D
 {
     public float AccelerationDuration = 0.5f;
     public float MaxSpeed = 1.0f;
@@ -11,19 +11,15 @@ public class PlayerController : VoBehavior
     public float ShotCooldown = 0.2f;
     public float ShotSpeed = 1.5f;
     public float ShotStartDistance = 1.0f;
-    public Vector3 Up = Vector3.up;
 
     public GameObject BulletPrefab;
-
-    // Made public for display/debugging/editor purposes only
-    public Vector2 Velocity = new Vector2();
 
     void Start()
     {
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
     }
 
-    void Update()
+    public override void Update()
     {
         Vector2 movementAxis = GameplayInput.GetMovementAxis();
 
@@ -50,9 +46,7 @@ public class PlayerController : VoBehavior
             }
         }
 
-        this.transform.position = new Vector3(this.transform.position.x + this.Velocity.x * Time.deltaTime, 
-                                              this.transform.position.y,
-                                              this.transform.position.z) + this.Up * (this.Velocity.y * Time.deltaTime);
+        base.Update();
 
         // Shooting
         //TODO - fcole - Weapon behaviors should be handled in own class(es)
@@ -64,7 +58,7 @@ public class PlayerController : VoBehavior
             if (aimAxis.x != 0 || aimAxis.y != 0)
             {
                 // Create instance of bullet prefab and set velocity on it's BulletController component
-                Vector3 position = this.transform.position + ((new Vector3(aimAxis.x, 0, 0) + (aimAxis.y * this.Up)) * this.ShotStartDistance);
+                Vector3 position = this.transform.position + (new Vector3(aimAxis.x, aimAxis.y, 0) * this.ShotStartDistance);
                 GameObject bullet = Instantiate(BulletPrefab, position, Quaternion.identity) as GameObject;
                 bullet.GetComponent<BulletController>().Velocity = new Vector2(aimAxis.x * this.ShotSpeed, aimAxis.y * this.ShotSpeed);
             }

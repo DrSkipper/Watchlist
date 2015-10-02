@@ -1,0 +1,17 @@
+Watchlist ideas:
+
+Weapon to enemy type counters:
+Bounce shot (same shot timer as normal) => stationary enemies (especially that shoot at player)
+Spread shot (slightly slower shot timer) => many small low health enemies, zig zag enemies
+Laser (penetrates, fast shot, slower shot timer, ) => enemies in lines or with shields
+Bomb (slow moving and slows over time, slowest shot timer, high damage) => Large, slow, high HP enemies
+
+Weapon concept idea:
+Have two weapon slots, but they bascially combine for weapon effect.
+Example:
+- Start with slot 1: "normal", slot 2: empty
+- Pick up Bounce, now have slot 1: normal, slot 2 bounce. Your shots now bounce once.
+- Pick up another Bounce, now have both slots bounce. Your shots now bounce twice. (3 times cuz of bonus for same type pairing?)
+- Pick up a spread shot, it fills slot 2 (least recent filled? or maybe you can highlight which one to fill?). You now shoot 3 bullets at once, and they each bounce once.
+- I think maybe bombs bascially make your bullets large, slow down your shot timer, and lose velocity over time after shot fairly quickly so they'll sorta slide and slow down, blink a bit and explode.
+- Possible you start with one slot, gain another after beating x levels, gain a third after beating y levels.

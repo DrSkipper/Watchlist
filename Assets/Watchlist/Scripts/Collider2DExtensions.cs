@@ -9,7 +9,7 @@ public static class Collider2DExtensions
     public static int TopY(this BoxCollider2D self) { return Mathf.RoundToInt(self.bounds.max.y); }
     public static int BottomY(this BoxCollider2D self) { return Mathf.RoundToInt(self.bounds.min.y); }
     
-    public static GameObject CollideFirst(this BoxCollider2D self, int offsetX = 0, int offsetY = 0, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null)
+    public static GameObject CollideFirst(this BoxCollider2D self, float offsetX = 0, float offsetY = 0, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         // Overlap an area significantly larger than our bounding box so we can directly compare bounds with collision candidates
         // (Relying purely on OverlapAreaAll for collision seems to be inconsistent at times)
@@ -26,8 +26,8 @@ public static class Collider2DExtensions
         if (colliders.Length <= 1)
             return null;
             
-        // Apply offset to our bounds and make sure we're using integer/pixel-perfect math
-        bounds.center = new Vector3(Mathf.Round(bounds.center.x) + offsetX, Mathf.Round(bounds.center.y) + offsetY, Mathf.Round(bounds.center.z));
+        // Apply offset to our bounds
+        bounds.center = new Vector3(bounds.center.x + offsetX, bounds.center.y + offsetY, bounds.center.z);
 
         // Account for bounds intersections marking true when colliders end at same point
         bounds.size = new Vector3(bounds.size.x - 2, bounds.size.y - 2, bounds.size.z);
@@ -36,11 +36,7 @@ public static class Collider2DExtensions
         {
             if (collider != self && (objectTag == null || collider.tag == objectTag))
             {
-                // Make sure we're using integer/pixel-perfect math
-                Bounds otherBounds = collider.bounds;
-                otherBounds.center = new Vector3(Mathf.Round(otherBounds.center.x), Mathf.Round(otherBounds.center.y), Mathf.Round(otherBounds.center.z));
-
-                if (bounds.Intersects(otherBounds))
+                if (bounds.Intersects(collider.bounds))
                     return collider.gameObject;
             }
         }

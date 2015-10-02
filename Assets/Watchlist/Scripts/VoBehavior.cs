@@ -31,7 +31,12 @@ public class VoBehavior : MonoBehaviour
     } }
 
     public LocalEventNotifier localNotifier {  get {
-            if (!_localNotifier) _localNotifier = base.GetComponent<LocalEventNotifier>();
+            if (!_localNotifier)
+            {
+                _localNotifier = base.GetComponent<LocalEventNotifier>();
+                if (!_localNotifier)
+                    _localNotifier = base.gameObject.AddComponent<LocalEventNotifier>();
+            }
             return _localNotifier;
     } }
 
