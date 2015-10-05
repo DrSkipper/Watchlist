@@ -57,8 +57,7 @@ public class Actor2D : VoBehavior
 
             if (haltX && haltY)
                 break;
-
-            Vector2 difference = d - soFar;
+            
             if (soFar.magnitude >= dMagnitude)
                 break;
         }
@@ -103,8 +102,7 @@ public class Actor2D : VoBehavior
                 {
                     for (int i = oldCount; i < horizontalCollisions.Count; ++i)
                     {
-                        if (!collisions.Contains(horizontalCollisions[i]))
-                            collisions.Add(horizontalCollisions[i]);
+                        collisions.AddUnique(horizontalCollisions[i]);
 
                         if (((1 << horizontalCollisions[i].layer) & this.HaltMovementMask) != 0)
                         {
@@ -141,8 +139,7 @@ public class Actor2D : VoBehavior
                 {
                     for (int i = oldCount; i < verticalCollisions.Count; ++i)
                     {
-                        if (!collisions.Contains(verticalCollisions[i]))
-                            collisions.Add(verticalCollisions[i]);
+                        collisions.AddUnique(verticalCollisions[i]);
 
                         if (((1 << collisions[i].layer) & this.HaltMovementMask) != 0)
                         {

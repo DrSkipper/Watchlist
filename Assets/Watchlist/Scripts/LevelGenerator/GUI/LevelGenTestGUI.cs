@@ -11,7 +11,6 @@ public class LevelGenTestGUI : LevelGenBehavior
 	void Awake()
 	{
 		_generators = this.GetComponents<BaseLevelGenerator>().ToList();
-		_renderer = this.GetComponent<LevelGenTestRenderer>();
 	}
 
 	void Start()
@@ -65,6 +64,5 @@ public class LevelGenTestGUI : LevelGenBehavior
 	 * Private
 	 */
 	private List<BaseLevelGenerator> _generators;
-	private LevelGenTestRenderer _renderer;
 	private bool _beganGeneration;
 }

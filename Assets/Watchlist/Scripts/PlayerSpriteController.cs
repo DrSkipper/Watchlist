@@ -10,7 +10,6 @@ public class PlayerSpriteController : VoBehavior
     void Start()
     {
         _depth = new Vector3(0, 0, 1);
-        _playerController = this.GetComponent<PlayerController>();
         _inverseCardinalCutoff = 1.0f / this.CardinalCutoff;
     }
 
@@ -51,7 +50,6 @@ public class PlayerSpriteController : VoBehavior
     /**
      * Private
      */
-    private PlayerController _playerController;
     private float _inverseCardinalCutoff;
     private Vector3 _depth;
 }

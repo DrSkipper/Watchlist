@@ -63,8 +63,8 @@ public class IntegerRectCollider : VoBehavior
         {
             if (collider != this && (objectTag == null || collider.tag == objectTag))
             {
-                if (bounds.Overlaps(collider.Bounds) && !collisions.Contains(collider.gameObject))
-                    collisions.Add(collider.gameObject);
+                if (bounds.Overlaps(collider.Bounds))
+                    collisions.AddUnique(collider.gameObject);
             }
         }
     }

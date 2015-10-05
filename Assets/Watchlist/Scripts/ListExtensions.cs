@@ -15,4 +15,10 @@ public static class ListExtensions
             self[randomIndex] = temp;
         }
     }
+
+    public static void AddUnique<T>(this List<T> self, T toAdd)
+    {
+        if (!self.Contains(toAdd))
+            self.Add(toAdd);
+    }
 }
