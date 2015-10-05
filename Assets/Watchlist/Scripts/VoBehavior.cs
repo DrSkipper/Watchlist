@@ -25,9 +25,9 @@ public class VoBehavior : MonoBehaviour
 			return _spriteRenderer;
 	} }
 
-    public BoxCollider2D boxCollider2D { get {
-            if (!_boxCollider2D) _boxCollider2D = base.GetComponent<BoxCollider2D>();
-            return _boxCollider2D;
+    public IntegerRectCollider rectCollider { get {
+            if (!_rectCollider) _rectCollider = base.GetComponent<IntegerRectCollider>();
+            return _rectCollider;
     } }
 
     public LocalEventNotifier localNotifier {  get {
@@ -44,6 +44,10 @@ public class VoBehavior : MonoBehaviour
             return new IntegerVector(this.transform.position);
     } }
 
+    public LayerMask layerMask { get {
+            return 1 << this.gameObject.layer;
+    } }
+
     /**
      * Private
      */
@@ -51,6 +55,6 @@ public class VoBehavior : MonoBehaviour
     private Transform _transform;
     private Renderer _renderer;
     private SpriteRenderer _spriteRenderer;
-    private BoxCollider2D _boxCollider2D;
+    private IntegerRectCollider _rectCollider;
     private LocalEventNotifier _localNotifier;
 }
