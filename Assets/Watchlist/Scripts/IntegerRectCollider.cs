@@ -18,6 +18,12 @@ public class IntegerRectCollider : VoBehavior
         this.CollisionManager.AddCollider(this.layerMask, this);
     }
 
+    void OnDestroy()
+    {
+        if (this.CollisionManager)
+            this.CollisionManager.RemoveCollider(this.layerMask, this);
+    }
+
     void OnDrawGizmosSelected()
     {
         IntegerRect bounds = this.Bounds;

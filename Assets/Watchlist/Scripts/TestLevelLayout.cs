@@ -30,6 +30,7 @@ public class TestLevelLayout : VoBehavior
         }
 
         outlineRenderer.CreateMapWithGrid(_levelLayout);
+        this.GetComponent<TileGeometryCreator>().CreateMapWithGrid(_levelLayout);
     }
 
     /**
