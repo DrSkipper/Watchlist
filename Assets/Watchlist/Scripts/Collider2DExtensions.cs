@@ -2,7 +2,7 @@
 
 public static class Collider2DExtensions
 {
-    public const int MIN_OVERLAP_AREA_CHECK = 10;
+    public const int MIN_OVERLAP_AREA_CHECK = 30;
     
     public static int LeftX(this BoxCollider2D self) { return Mathf.RoundToInt(self.bounds.min.x); }
     public static int RightX(this BoxCollider2D self) { return Mathf.RoundToInt(self.bounds.max.x); }
@@ -18,7 +18,7 @@ public static class Collider2DExtensions
         Bounds bounds = self.bounds;
         float overlapSizeX = Mathf.Max(bounds.size.x, MIN_OVERLAP_AREA_CHECK);
         float overlapSizeY = Mathf.Max(bounds.size.y, MIN_OVERLAP_AREA_CHECK);
-        Vector2 corner1 = new Vector2(bounds.min.x - overlapSizeX + offsetX, bounds.min.y - overlapSizeY * 3 + offsetY);
+        Vector2 corner1 = new Vector2(bounds.min.x - overlapSizeX + offsetX, bounds.min.y - overlapSizeY + offsetY);
         Vector2 corner2 = new Vector2(bounds.max.x + overlapSizeX + offsetX, bounds.max.y + overlapSizeY + offsetY);
         Collider2D[] colliders = Physics2D.OverlapAreaAll(corner1, corner2, layerMask);
 
