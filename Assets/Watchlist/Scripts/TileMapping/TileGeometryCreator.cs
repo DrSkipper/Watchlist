@@ -30,7 +30,7 @@ public class TileGeometryCreator : VoBehavior
 
     public TileGeometryPrefabs GeometryPrefabs;
 
-    void Start()
+    void Awake()
     {
         _tileRenderer = this.GetComponent<TileMapOutlineRenderer>();
         this.Clear();
@@ -57,7 +57,10 @@ public class TileGeometryCreator : VoBehavior
 
     public void CreateMapWithGrid(int[,] grid)
     {
-        this.Clear();
+        if (_tileRenderer == null)
+            this.Awake();
+        else
+            this.Clear();
 
         for (int x = 0; x < grid.GetLength(0); ++x)
         {
