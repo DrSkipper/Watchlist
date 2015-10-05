@@ -45,17 +45,18 @@ public class Actor2D : VoBehavior
             {
                 if (!haltX) moveX(d.x - soFar.x, _collisionsFromMove, _horizontalCollisions);
                 if (!haltY) moveY(d.y - soFar.y, _collisionsFromMove, _verticalCollisions);
+                soFar = d;
                 break;
             }
 
             if (!haltX) haltX = moveX(incX, _collisionsFromMove, _horizontalCollisions);
             if (!haltY) haltY = moveY(incY, _collisionsFromMove, _verticalCollisions);
 
-            if (haltX && haltY)
-                break;
-
             soFar.x += incX;
             soFar.y += incY;
+
+            if (haltX && haltY)
+                break;
 
             Vector2 difference = d - soFar;
             if (soFar.magnitude >= dMagnitude)
@@ -67,7 +68,7 @@ public class Actor2D : VoBehavior
 
         if (_collisionsFromMove.Count > 0)
         {
-            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray(), oldVelocity));
+            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray(), oldVelocity, soFar));
             _collisionsFromMove.Clear();
             _horizontalCollisions.Clear();
             _verticalCollisions.Clear();
