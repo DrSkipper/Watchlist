@@ -13,10 +13,7 @@ public class Actor2D : VoBehavior
     public virtual void Update()
     {
         if (this.Velocity.x != 0.0f || this.Velocity.y != 0.0f)
-        {
             Move(this.Velocity * Time.deltaTime);
-            //this.transform.position += new Vector3(this.Velocity.x * Time.deltaTime, this.Velocity.y * Time.deltaTime, 0);
-        }
     }
 
     public void Move(Vector2 d)

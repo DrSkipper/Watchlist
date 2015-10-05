@@ -40,6 +40,10 @@ public class VoBehavior : MonoBehaviour
             return _localNotifier;
     } }
 
+    public IntegerVector integerPosition { get {
+            return new IntegerVector(this.transform.position);
+    } }
+
     /**
      * Private
      */

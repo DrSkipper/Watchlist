@@ -58,7 +58,7 @@ public static class Collider2DExtensions
         bounds.center = new Vector3(Mathf.Round(bounds.center.x) + offsetX, Mathf.Round(bounds.center.y) + offsetY, Mathf.Round(bounds.center.z));
 
         // Account for bounds intersections marking true when colliders end at same point
-        bounds.size = new Vector3(bounds.size.x - 2, bounds.size.y - 2, bounds.size.z);
+        bounds.size = new Vector3(Mathf.RoundToInt(bounds.size.x), Mathf.RoundToInt(bounds.size.y), bounds.size.z);
 
         foreach (Collider2D collider in potentialCollisions)
         {
@@ -68,7 +68,7 @@ public static class Collider2DExtensions
                 Bounds otherBounds = collider.bounds;
                 otherBounds.center = new Vector3(Mathf.Round(otherBounds.center.x), Mathf.Round(otherBounds.center.y), Mathf.Round(otherBounds.center.z));
 
-                if (bounds.Intersects(otherBounds))
+                if (bounds.Overlaps(otherBounds))
                 {
                     GameObject collidedObject = collider.gameObject;
                     if (!collisions.Contains(collidedObject))
@@ -108,10 +108,26 @@ public static class Collider2DExtensions
 
             // Account for bounds intersections marking true when colliders end at same point
             bounds.size = new Vector3(bounds.size.x - 2, bounds.size.y - 2, bounds.size.z);
-
+            
             return bounds.Intersects(otherBounds);
         }
 
         return false;
+    }
+
+    public static bool Overlaps(this Bounds self, Bounds other)
+    {
+        int selfMinX = Mathf.RoundToInt(self.min.x);
+        int selfMaxX = Mathf.RoundToInt(self.max.x);
+        int selfMinY = Mathf.RoundToInt(self.min.y);
+        int selfMaxY = Mathf.RoundToInt(self.max.y);
+        int otherMinX = Mathf.RoundToInt(other.min.x);
+        int otherMaxX = Mathf.RoundToInt(other.max.x);
+        int otherMinY = Mathf.RoundToInt(other.min.y);
+        int otherMaxY = Mathf.RoundToInt(other.max.y);
+
+        bool x = (otherMinX >= selfMinX && otherMinX < selfMaxX) || (otherMaxX > selfMinX && otherMaxX <= selfMaxX) || (selfMinX >= otherMinX && selfMinX < otherMaxX) || (selfMaxX > otherMinX && selfMaxX <= otherMaxX);
+        bool y = (otherMinY >= selfMinY && otherMinY < selfMaxY) || (otherMaxY > selfMinY && otherMaxY <= selfMaxY) || (selfMinY >= otherMinY && selfMinY < otherMaxY) || (selfMaxY > otherMinY && selfMaxY <= otherMaxY);
+        return x && y;
     }
 }
