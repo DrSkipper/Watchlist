@@ -76,21 +76,32 @@ public class Actor2D : VoBehavior
     // Returns true if movement was halted
     private bool moveX(float dx, List<GameObject> collisions)
     {
-        GameObject collidedObject = this.boxCollider2D.CollideFirst(dx, 0, this.CollisionMask);
+        _positionModifier.x += dx;
+        int unitMove = Mathf.RoundToInt(_positionModifier.x);
 
-        if (collidedObject)
+        if (unitMove != 0)
         {
-            if (!collisions.Contains(collidedObject))
-                collisions.Add(collidedObject);
+            int unitDir = Math.Sign(unitMove);
+            _positionModifier.x -= unitMove;
 
-            if ((collidedObject.layer & this.HaltMovementMask) != 0)
+            while (unitMove != 0)
             {
-                _positionModifier.x = 0.0f;
-                return true;
+                GameObject collidedObject = this.boxCollider2D.CollideFirst(unitDir, 0, this.CollisionMask);
+
+                if (collidedObject)
+                {
+                    collisions.Add(collidedObject);
+                    if ((collidedObject.layer & this.HaltMovementMask) != 0)
+                    {
+                        _positionModifier.x = 0.0f;
+                        return true;
+                    }
+                }
+
+                this.transform.position += new Vector3(unitDir, 0, 0);
+                unitMove -= unitDir;
             }
         }
-
-        this.transform.position += new Vector3(dx, 0, 0);
 
         return false;
     }
@@ -107,7 +118,7 @@ public class Actor2D : VoBehavior
 
             while (unitMove != 0)
             {
-                /*GameObject collidedObject = this.boxCollider2D.CollideFirst(0, unitDir, this.CollisionMask);
+                GameObject collidedObject = this.boxCollider2D.CollideFirst(0, unitDir, this.CollisionMask);
 
                 if (collidedObject)
                 {
@@ -117,7 +128,7 @@ public class Actor2D : VoBehavior
                         _positionModifier.y = 0.0f;
                         return true;
                     }
-                }*/
+                }
 
                 this.transform.position += new Vector3(0, unitDir, 0);
                 unitMove -= unitDir;
