@@ -15,10 +15,28 @@ public class Weapon : VoBehavior
             {
                 direction.Normalize();
 
-                // Create instance of bullet prefab and set velocity on it's BulletController component
-                Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
-                GameObject bullet = Instantiate(BulletPrefab, position, Quaternion.identity) as GameObject;
-                bullet.GetComponent<BulletController>().Velocity = new Vector2(direction.x * this.WeaponType.ShotSpeed, direction.y * this.WeaponType.ShotSpeed);
+                int shotCount = this.WeaponType.ShotCount;
+                float shotAngle = this.WeaponType.AngleBetweenShots;
+                bool oddCount = shotCount % 2 == 1;
+
+                if (oddCount)
+                {
+                    createBullet(direction, shotStartDistance);
+                    shotCount -= 1;
+                }
+                else
+                {
+                    shotAngle /= 2.0f;
+                }
+
+                while (shotCount > 0)
+                {
+                    createBullet(direction.VectorAtAngle(shotAngle), shotStartDistance);
+                    createBullet(direction.VectorAtAngle(-shotAngle), shotStartDistance);
+
+                    shotCount -= 2;
+                    shotAngle += this.WeaponType.AngleBetweenShots;
+                }
             }
         }
         else
@@ -31,4 +49,12 @@ public class Weapon : VoBehavior
      * Private
      */
     private float _shotCooldown;
+
+    private void createBullet(Vector2 direction, float shotStartDistance)
+    {
+        // Create instance of bullet prefab and set velocity on it's BulletController component
+        Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
+        GameObject bullet = Instantiate(BulletPrefab, position, Quaternion.identity) as GameObject;
+        bullet.GetComponent<BulletController>().Velocity = new Vector2(direction.x * this.WeaponType.ShotSpeed, direction.y * this.WeaponType.ShotSpeed);
+    }
 }
