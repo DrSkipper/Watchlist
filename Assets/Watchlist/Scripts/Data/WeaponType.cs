@@ -20,7 +20,7 @@ public class WeaponType
     public int MaximumBounces = 0;
     public float VelocityFallOff = 0.0f;
     public float DurationTime = 5.0f;
-    public float DurationDistance = 100.0f;
+    public float DurationDistance = 500.0f;
     public string TravelType = TRAVEL_TYPE_NORMAL;
     public string SpecialEffect = SPECIAL_NONE;
     public float SpecialEffectParameter = 0.0f;

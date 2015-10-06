@@ -15,8 +15,12 @@ public class LocalEventNotifier : MonoBehaviour
         if (_listenersByEventName == null)
             _listenersByEventName = new Dictionary<string, List<Listener>>();
 
-        List<Listener> listeners = _listenersByEventName[eventName];
-        if (listeners == null)
+        List<Listener> listeners = null;
+        if (_listenersByEventName.ContainsKey(eventName))
+        {
+            listeners = _listenersByEventName[eventName];
+        }
+        else
         {
             listeners = new List<Listener>();
             _listenersByEventName[eventName] = listeners;
@@ -40,11 +44,10 @@ public class LocalEventNotifier : MonoBehaviour
     {
         if (_listenersByEventName == null)
             return;
-
-        List<Listener> listeners = _listenersByEventName[localEvent.Name];
-        if (listeners != null)
+        
+        if (_listenersByEventName.ContainsKey(localEvent.Name))
         {
-            foreach (Listener listener in listeners)
+            foreach (Listener listener in _listenersByEventName[localEvent.Name])
             {
                 listener.Callback(localEvent);
             }

@@ -3,6 +3,7 @@
 public class Weapon : VoBehavior
 {
     public WeaponType WeaponType = new WeaponType();
+    public string Allegiance = "Player";
     public GameObject BulletPrefab;
 
     public void Fire(Vector2 direction, float shotStartDistance = 0.0f)
@@ -55,6 +56,6 @@ public class Weapon : VoBehavior
         // Create instance of bullet prefab and set velocity on it's BulletController component
         Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
         GameObject bullet = Instantiate(BulletPrefab, position, Quaternion.identity) as GameObject;
-        bullet.GetComponent<BulletController>().Velocity = new Vector2(direction.x * this.WeaponType.ShotSpeed, direction.y * this.WeaponType.ShotSpeed);
+        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.Allegiance);
     }
 }
