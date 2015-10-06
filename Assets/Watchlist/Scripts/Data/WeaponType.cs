@@ -14,7 +14,7 @@ public class WeaponType
     [XmlAttribute("name")]
     public string Name = "blank";
     public float ShotSpeed = 1.0f;
-    public float ShootCooldown = 1.0f;
+    public float ShotCooldown = 1.0f;
     public int ShotCount = 1;
     public float AngleBetweenShots = 10.0f;
     public int MaximumBounces = 0;
