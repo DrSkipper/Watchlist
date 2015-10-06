@@ -2,7 +2,7 @@
 
 public class Weapon : VoBehavior
 {
-    public WeaponType WeaponType = new WeaponType();
+    public WeaponType WeaponType;
     public string Allegiance = "Player";
     public GameObject BulletPrefab;
 

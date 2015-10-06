@@ -33,9 +33,6 @@ public class Actor2D : VoBehavior
         Vector2 oldVelocity = this.Velocity;
         float dMagnitude = d.magnitude;
 
-        bool haltX = false;
-        bool haltY = false;
-
         while (true)
         {
             projected.x += incX;
@@ -43,34 +40,34 @@ public class Actor2D : VoBehavior
 
             if (projected.magnitude > dMagnitude)
             {
-                if (!haltX) moveX(d.x - soFar.x, _collisionsFromMove, _horizontalCollisions);
-                if (!haltY) moveY(d.y - soFar.y, _collisionsFromMove, _verticalCollisions);
+                if (!_haltX) moveX(d.x - soFar.x, _collisionsFromMove, _horizontalCollisions);
+                if (!_haltY) moveY(d.y - soFar.y, _collisionsFromMove, _verticalCollisions);
                 soFar = d;
                 break;
             }
 
-            if (!haltX) haltX = moveX(incX, _collisionsFromMove, _horizontalCollisions);
-            if (!haltY) haltY = moveY(incY, _collisionsFromMove, _verticalCollisions);
+            if (!_haltX) soFar.x += moveX(incX, _collisionsFromMove, _horizontalCollisions);
+            if (!_haltY) soFar.y += moveY(incY, _collisionsFromMove, _verticalCollisions);
 
-            soFar.x += incX;
-            soFar.y += incY;
-
-            if (haltX && haltY)
+            if (_haltX && _haltY)
                 break;
             
             if (soFar.magnitude >= dMagnitude)
                 break;
         }
 
-        if (haltX) this.Velocity.x = 0;
-        if (haltY) this.Velocity.y = 0;
+        if (_haltX) this.Velocity.x = 0;
+        if (_haltY) this.Velocity.y = 0;
 
         if (_collisionsFromMove.Count > 0)
         {
-            this.localNotifier.SendEvent(new CollisionEvent(_collisionsFromMove.ToArray(), oldVelocity, soFar));
+            GameObject[] collisions = _collisionsFromMove.ToArray();
+            _haltX = false;
+            _haltY = false;
             _collisionsFromMove.Clear();
             _horizontalCollisions.Clear();
             _verticalCollisions.Clear();
+            this.localNotifier.SendEvent(new CollisionEvent(collisions, oldVelocity, soFar));
         }
     }
 
@@ -81,15 +78,18 @@ public class Actor2D : VoBehavior
     private List<GameObject> _collisionsFromMove = new List<GameObject>();
     private List<GameObject> _horizontalCollisions = new List<GameObject>();
     private List<GameObject> _verticalCollisions = new List<GameObject>();
+    private bool _haltX;
+    private bool _haltY;
     
-    // Returns true if movement was halted
-    private bool moveX(float dx, List<GameObject> collisions, List<GameObject> horizontalCollisions)
+    // Returns actual amount applied to movement
+    private float moveX(float dx, List<GameObject> collisions, List<GameObject> horizontalCollisions)
     {
         _positionModifier.x += dx;
         int unitMove = Mathf.RoundToInt(_positionModifier.x);
 
         if (unitMove != 0)
         {
+            int moves = 0;
             int unitDir = Math.Sign(unitMove);
             _positionModifier.x -= unitMove;
 
@@ -107,26 +107,29 @@ public class Actor2D : VoBehavior
                         if (((1 << horizontalCollisions[i].layer) & this.HaltMovementMask) != 0)
                         {
                             _positionModifier.x = 0.0f;
-                            return true;
+                            _haltX = true;
+                            return moves;
                         }
                     }
                 }
 
                 this.transform.position += new Vector3(unitDir, 0, 0);
                 unitMove -= unitDir;
+                ++moves;
             }
         }
 
-        return false;
+        return dx;
     }
     
-    private bool moveY(float dy, List<GameObject> collisions, List<GameObject> verticalCollisions)
+    private float moveY(float dy, List<GameObject> collisions, List<GameObject> verticalCollisions)
     {
         _positionModifier.y += dy;
         int unitMove = Mathf.RoundToInt(_positionModifier.y);
 
         if (unitMove != 0)
         {
+            int moves = 0;
             int unitDir = Math.Sign(unitMove);
             _positionModifier.y -= unitMove;
 
@@ -141,19 +144,21 @@ public class Actor2D : VoBehavior
                     {
                         collisions.AddUnique(verticalCollisions[i]);
 
-                        if (((1 << collisions[i].layer) & this.HaltMovementMask) != 0)
+                        if (((1 << verticalCollisions[i].layer) & this.HaltMovementMask) != 0)
                         {
                             _positionModifier.y = 0.0f;
-                            return true;
+                            _haltY = true;
+                            return moves;
                         }
                     }
                 }
 
                 this.transform.position += new Vector3(0, unitDir, 0);
                 unitMove -= unitDir;
+                ++moves;
             }
         }
 
-        return false;
+        return dy;
     }
 }
