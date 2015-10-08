@@ -12,7 +12,9 @@ public class Bullet : Actor2D
     public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, string allegiance)
     {
         this.WeaponType = weaponType;
-        this.Velocity = new Vector2(direction.x * weaponType.ShotSpeed, direction.y * weaponType.ShotSpeed);
+        this.Velocity = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? Vector2.zero : 
+            new Vector2(direction.x * weaponType.ShotSpeed, direction.y * weaponType.ShotSpeed);
+
         _bouncesRemaining = weaponType.MaximumBounces;
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
 
@@ -25,6 +27,19 @@ public class Bullet : Actor2D
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
         this.CollisionMask = everything & (~alliedLayers);
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
+
+        // Draw the laser if appropriate
+        if (weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
+        {
+            LineRenderer line = this.GetComponent<LineRenderer>();
+            IntegerVector origin = this.integerPosition;
+            CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask);
+
+            if (raycast.Collided)
+                line.SetPosition(1, new Vector3(raycast.FarthestPointReached.X - origin.X, raycast.FarthestPointReached.Y - origin.Y, 0));
+            else
+                line.SetPosition(1, new Vector3(direction.x * weaponType.DurationDistance, direction.y * weaponType.DurationDistance, 0));
+        }
     }
 
     public override void Update()

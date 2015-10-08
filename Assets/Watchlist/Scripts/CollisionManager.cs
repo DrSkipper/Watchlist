@@ -84,8 +84,8 @@ public class CollisionManager : VoBehavior
     public RaycastResult RaycastFirst(IntegerVector origin, Vector2 direction, float range = 100000.0f, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         Vector2 d = direction * range;
-        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(d.x + 2.0f), Mathf.RoundToInt(d.y + 2.0f));
-        IntegerVector halfwayPoint = (origin + rangeVector) / 2;
+        IntegerVector halfwayPoint = new IntegerVector(d / 2.0f) + origin;
+        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(d.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(d.y) + 2.5f));
         List<IntegerRectCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
 
         Vector2 positionModifier = Vector2.zero;
@@ -106,6 +106,7 @@ public class CollisionManager : VoBehavior
         float dMagnitude = d.magnitude;
         RaycastResult result = new RaycastResult();
         bool endReached = false;
+        int totalXs = 0;
 
         while (true)
         {
@@ -125,9 +126,13 @@ public class CollisionManager : VoBehavior
             positionModifier.x -= move;
             int unitDir = Math.Sign(move);
 
-            while (move > 0)
+            while (move != 0)
             {
                 IntegerVector checkPos = new IntegerVector(position.X + unitDir, position.Y);
+                if (checkPos.X == -15)
+                {
+                    Debug.Log("k");
+                }
                 GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
@@ -138,7 +143,9 @@ public class CollisionManager : VoBehavior
                     hit.CollidedX = true;
                 }
 
+                ++totalXs;
                 position = checkPos;
+                move -= unitDir;
             }
 
             positionModifier.y += incY;
@@ -147,7 +154,7 @@ public class CollisionManager : VoBehavior
             positionModifier.y -= move;
             unitDir = Math.Sign(move);
 
-            while (move > 0)
+            while (move != 0)
             {
                 IntegerVector checkPos = new IntegerVector(position.X, position.Y + unitDir);
                 GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
@@ -170,13 +177,12 @@ public class CollisionManager : VoBehavior
                 position = checkPos;
 
                 if (result.Collided)
-                {
-                    endReached = true;
                     break;
-                }
+
+                move -= unitDir;
             }
 
-            if (endReached)
+            if (result.Collided || endReached)
                 break;
 
             soFar.x = projected.x;

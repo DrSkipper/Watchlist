@@ -7,12 +7,6 @@ public class IntegerRectCollider : VoBehavior
     public IntegerVector Size = IntegerVector.Zero;
     public IntegerRect Bounds { get { return new IntegerRect(this.integerPosition + this.Offset, this.Size); } }
 
-    public CollisionManager CollisionManager { get {
-            if (_collisionManager == null)
-                _collisionManager = FindObjectOfType<CollisionManager>();
-            return _collisionManager;
-    } }
-
     void Start()
     {
         this.CollisionManager.AddCollider(this.layerMask, this);
@@ -90,9 +84,4 @@ public class IntegerRectCollider : VoBehavior
         bounds.Center.Y += offsetY;
         return other && this.Bounds.Overlaps(other.Bounds);
     }
-
-    /**
-     * Private
-     */
-    private CollisionManager _collisionManager = null;
 }

@@ -47,6 +47,12 @@ public class VoBehavior : MonoBehaviour
     public LayerMask layerMask { get {
             return 1 << this.gameObject.layer;
     } }
+    
+    public CollisionManager CollisionManager { get {
+            if (_collisionManager == null)
+                _collisionManager = FindObjectOfType<CollisionManager>();
+            return _collisionManager;
+    } }
 
     /**
      * Private
@@ -57,4 +63,5 @@ public class VoBehavior : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private IntegerRectCollider _rectCollider;
     private LocalEventNotifier _localNotifier;
+    private CollisionManager _collisionManager;
 }
