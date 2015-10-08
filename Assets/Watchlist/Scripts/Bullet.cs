@@ -27,8 +27,7 @@ public class Bullet : Actor2D
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
         this.CollisionMask = everything & (~alliedLayers);
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
-
-        // Draw the laser if appropriate
+        
         if (weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
             handleLaserCast(direction);
     }
