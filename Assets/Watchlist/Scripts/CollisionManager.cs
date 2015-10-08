@@ -136,11 +136,19 @@ public class CollisionManager : VoBehavior
                     hit.CollidedObject = collision;
                     hit.CollisionPoint = position;
                     hit.CollidedX = true;
+                    result.Collisions[0] = hit;
                 }
                 
                 position = checkPos;
+
+                if (result.Collided)
+                    break;
+
                 move -= unitDir;
             }
+            
+            if (result.Collided)
+                break;
 
             positionModifier.y += incY;
             move = (int)positionModifier.y;
@@ -165,6 +173,7 @@ public class CollisionManager : VoBehavior
                         hit.CollidedObject = collision;
                         hit.CollisionPoint = position;
                         hit.CollidedY = true;
+                        result.Collisions[0] = hit;
                     }
                 }
 

@@ -16,3 +16,17 @@ public class CollisionEvent : LocalEventNotifier.Event
         this.VelocityApplied = velocityApplied;
     }
 }
+
+public class LaserCastEvent : LocalEventNotifier.Event
+{
+    public static string NAME = "LASER_CAST";
+    public CollisionManager.RaycastResult RaycastResult;
+    public IntegerVector Origin;
+
+    public LaserCastEvent(CollisionManager.RaycastResult raycastResult, IntegerVector origin)
+    {
+        this.Name = NAME;
+        this.RaycastResult = raycastResult;
+        this.Origin = origin;
+    }
+}

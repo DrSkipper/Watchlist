@@ -54,6 +54,12 @@ public class VoBehavior : MonoBehaviour
             return _collisionManager;
     } }
 
+    void OnDestroy()
+    {
+        if (_localNotifier)
+            _localNotifier.RemoveAllListenersForOwner(this);
+    }
+
     /**
      * Private
      */

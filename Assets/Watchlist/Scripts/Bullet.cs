@@ -30,16 +30,7 @@ public class Bullet : Actor2D
 
         // Draw the laser if appropriate
         if (weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
-        {
-            LineRenderer line = this.GetComponent<LineRenderer>();
-            IntegerVector origin = this.integerPosition;
-            CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask);
-
-            if (raycast.Collided)
-                line.SetPosition(1, new Vector3(raycast.FarthestPointReached.X - origin.X, raycast.FarthestPointReached.Y - origin.Y, 0));
-            else
-                line.SetPosition(1, new Vector3(direction.x * weaponType.DurationDistance, direction.y * weaponType.DurationDistance, 0));
-        }
+            handleLaserCast(direction);
     }
 
     public override void Update()
@@ -67,10 +58,7 @@ public class Bullet : Actor2D
     void LateUpdate()
     {
         if (_destructionScheduled)
-        {
-            this.localNotifier.RemoveAllListenersForOwner(this);
             Destroy(this.gameObject);
-        }
     }
 
     public void OnCollide(LocalEventNotifier.Event localEvent)
@@ -120,6 +108,50 @@ public class Bullet : Actor2D
             this.Velocity.y = -this.Velocity.y;
         
         this.Move(this.Velocity.normalized * remainingSpeed);
+    }
+
+    private void handleLaserCast(Vector2 direction)
+    {
+        IntegerVector origin = this.integerPosition;
+        CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask & this.BounceLayerMask);
+        this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+
+        if (raycast.Collided && _bouncesRemaining > 0)
+        {
+            IntegerVector distanceTravelled = raycast.FarthestPointReached - origin;
+            float distanceSoFar = new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
+
+            while (raycast.Collided && _bouncesRemaining > 0 && distanceSoFar < this.WeaponType.DurationDistance)
+            {
+                --_bouncesRemaining;
+                origin = raycast.FarthestPointReached;
+
+                if (raycast.Collisions[0].CollidedX)
+                    direction.x = -direction.x;
+                if (raycast.Collisions[0].CollidedY)
+                    direction.y = -direction.y;
+
+                // Find point along bounce path that is at least 1 unit forward in both x and y, to prevent immediate collision with same object
+                IntegerVector raycastOrigin = origin;
+                float min = Mathf.Min(Mathf.Abs(direction.x), Mathf.Abs(direction.y));
+                float multiplier = 1.0f / min;
+                Vector2 multipliedDirection = direction * multiplier;
+                float distanceRemaining = this.WeaponType.DurationDistance - distanceSoFar;
+                float multipliedMagnitude = multipliedDirection.magnitude;
+                if (multipliedDirection.magnitude + 0.5f < distanceRemaining)
+                {
+                    raycastOrigin = new IntegerVector(Mathf.RoundToInt(direction.x * multiplier), Mathf.RoundToInt(direction.y * multiplier)) + origin;
+                    distanceRemaining -= multipliedDirection.magnitude;
+                }
+
+                // Raycast the bounce shot
+                raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask & this.BounceLayerMask);
+                this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+
+                distanceTravelled = raycast.FarthestPointReached - origin;
+                distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
+            }
+        }
     }
     
     private static LayerMask MISSILE_LAYERS = 0;
