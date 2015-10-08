@@ -18,6 +18,7 @@ public class WeaponType
     public int ShotCount = 1;
     public float AngleBetweenShots = 10.0f;
     public int MaximumBounces = 0;
+    public float MinimumBounceAngle = 0.0f;
     public float VelocityFallOff = 0.0f;
     public float DurationTime = 5.0f;
     public float DurationDistance = 500.0f;

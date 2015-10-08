@@ -105,8 +105,17 @@ public class Bullet : Actor2D
 
         if (horizontalPlane)
             this.Velocity.y = -this.Velocity.y;
-        
-        this.Move(this.Velocity.normalized * remainingSpeed);
+
+        // Only continue the bounce if our angle is within bounce range
+        if (Mathf.Abs(180.0f - Vector2.Angle(origVelocity, this.Velocity)) < this.WeaponType.MinimumBounceAngle)
+        {
+            this.Velocity = Vector2.zero;
+            _destructionScheduled = true;
+        }
+        else
+        {
+            this.Move(this.Velocity.normalized * remainingSpeed);
+        }
     }
 
     private void handleLaserCast(Vector2 direction)
@@ -124,11 +133,16 @@ public class Bullet : Actor2D
             {
                 --_bouncesRemaining;
                 origin = raycast.FarthestPointReached;
+                Vector2 origDirection = direction;
 
                 if (raycast.Collisions[0].CollidedX)
                     direction.x = -direction.x;
                 if (raycast.Collisions[0].CollidedY)
                     direction.y = -direction.y;
+
+                // Only continue the bounce if our angle is within bounce range
+                if (Mathf.Abs(180.0f - Vector2.Angle(origDirection, direction)) < this.WeaponType.MinimumBounceAngle)
+                    break;
 
                 // Find point along bounce path that is at least 1 unit forward in both x and y, to prevent immediate collision with same object
                 IntegerVector raycastOrigin = origin;
