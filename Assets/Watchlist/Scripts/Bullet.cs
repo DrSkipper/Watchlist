@@ -116,12 +116,12 @@ public class Bullet : Actor2D
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask & this.BounceLayerMask);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
 
-        if (raycast.Collided && _bouncesRemaining > 0)
+        if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
         {
             IntegerVector distanceTravelled = raycast.FarthestPointReached - origin;
             float distanceSoFar = new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
 
-            while (raycast.Collided && _bouncesRemaining > 0 && distanceSoFar < this.WeaponType.DurationDistance)
+            while (raycast.Collided && _bouncesRemaining > 0 && distanceSoFar < this.WeaponType.DurationDistance && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
             {
                 --_bouncesRemaining;
                 origin = raycast.FarthestPointReached;
