@@ -31,10 +31,10 @@ public class IntegerRectCollider : VoBehavior
         Gizmos.DrawWireCube(new Vector3(bounds.Center.X, bounds.Center.Y), new Vector3(this.Size.X, this.Size.Y));
     }
 
-    public GameObject CollideFirst(int offsetX = 0, int offsetY = 0, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerRectCollider> potentialCollisions = null)
+    public GameObject CollideFirst(int offsetX = 0, int offsetY = 0, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerRectCollider> potentialCollisions = null)
     {
         if (potentialCollisions == null)
-            potentialCollisions = this.GetPotentialCollisions(0, 0, offsetX, offsetY, layerMask);
+            potentialCollisions = this.GetPotentialCollisions(0, 0, offsetX, offsetY, mask);
         
         if (potentialCollisions.Count == 0 || (potentialCollisions.Count == 1 && potentialCollisions[0] == this))
             return null;
@@ -54,10 +54,10 @@ public class IntegerRectCollider : VoBehavior
         return null;
     }
 
-    public void Collide(List<GameObject> collisions, int offsetX = 0, int offsetY = 0, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerRectCollider> potentialCollisions = null)
+    public void Collide(List<GameObject> collisions, int offsetX = 0, int offsetY = 0, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerRectCollider> potentialCollisions = null)
     {
         if (potentialCollisions == null)
-            potentialCollisions = this.GetPotentialCollisions(0, 0, offsetX, offsetY, layerMask);
+            potentialCollisions = this.GetPotentialCollisions(0, 0, offsetX, offsetY, mask);
         
         if (potentialCollisions.Count == 0 || (potentialCollisions.Count == 1 && potentialCollisions[0] == this))
             return;
@@ -75,11 +75,11 @@ public class IntegerRectCollider : VoBehavior
         }
     }
 
-    public List<IntegerRectCollider> GetPotentialCollisions(float vx, float vy, int offsetX = 0, int offsetY = 0, int layerMask = Physics2D.DefaultRaycastLayers)
+    public List<IntegerRectCollider> GetPotentialCollisions(float vx, float vy, int offsetX = 0, int offsetY = 0, int mask = Physics2D.DefaultRaycastLayers)
     {
         IntegerRect bounds = this.Bounds;
         IntegerRect range = new IntegerRect(bounds.Center.X + offsetX, bounds.Center.Y + offsetY, this.Size.X + Mathf.RoundToInt(Mathf.Abs(vx) + 0.55f), this.Size.Y + (Mathf.RoundToInt(Mathf.Abs(vy) + 0.55f)));
-        return this.CollisionManager.GetCollidersInRange(layerMask, range);
+        return this.CollisionManager.GetCollidersInRange(range, mask);
     }
 
     public bool CollideCheck(GameObject checkObject, int offsetX = 0, int offsetY = 0)

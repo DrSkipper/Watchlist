@@ -53,6 +53,13 @@ public struct IntegerRect
                ((otherMin.Y >= selfMin.Y && otherMin.Y < selfMax.Y) || (otherMax.Y > selfMin.Y && otherMax.Y <= selfMax.Y) || 
                 (selfMin.Y >= otherMin.Y && selfMin.Y < otherMax.Y) || (selfMax.Y > otherMin.Y && selfMax.Y <= otherMax.Y));
     }
+
+    public bool Contains(IntegerVector point)
+    {
+        IntegerVector selfMin = this.Min;
+        IntegerVector selfMax = this.Max;
+        return point.X >= selfMin.X && point.X <= selfMax.X && point.Y >= selfMin.Y && point.Y <= selfMax.Y;
+    }
 }
 
 [System.Serializable]

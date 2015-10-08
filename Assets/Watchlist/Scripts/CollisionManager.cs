@@ -6,11 +6,18 @@ public class CollisionManager : VoBehavior
 {
     public const float RAYCAST_MAX_POSITION_INCREMENT = 1.0f;
 
+    public struct RaycastCollision
+    {
+        public GameObject CollidedObject;
+        public IntegerVector CollisionPoint;
+        public bool CollidedX;
+        public bool CollidedY;
+    }
+
     public struct RaycastResult
     {
-        public bool Collided { get { return this.CollidedObjects != null && this.CollidedObjects.Length != 0; } }
-        public GameObject[] CollidedObjects;
-        public IntegerVector[] PointsBeforeCollisions;
+        public bool Collided { get { return this.Collisions != null && this.Collisions.Length != 0; } }
+        public RaycastCollision[] Collisions;
         public IntegerVector FarthestPointReached;
     }
 
@@ -27,7 +34,7 @@ public class CollisionManager : VoBehavior
             _collidersByLayer[layer].Remove(collider);
     }
 
-    public List<IntegerRectCollider> GetCollidersInRange(LayerMask mask, IntegerRect range)
+    public List<IntegerRectCollider> GetCollidersInRange(IntegerRect range, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         List<IntegerRectCollider> colliders = new List<IntegerRectCollider>();
 
@@ -37,7 +44,8 @@ public class CollisionManager : VoBehavior
             {
                 foreach (IntegerRectCollider collider in _collidersByLayer[key])
                 {
-                    if (collider.Bounds.Overlaps(range))
+                    if ((objectTag == null || collider.tag == objectTag) && 
+                        collider.Bounds.Overlaps(range))
                         colliders.Add(collider);
                 }
             }
@@ -46,17 +54,39 @@ public class CollisionManager : VoBehavior
         return colliders;
     }
 
-    public GameObject CollidePointFirst(IntegerVector point, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerRectCollider> potentialCollisions = null)
+    public GameObject CollidePointFirst(IntegerVector point, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
+        foreach (LayerMask key in _collidersByLayer.Keys)
+        {
+            if ((key & mask) != 0)
+            {
+                foreach (IntegerRectCollider collider in _collidersByLayer[key])
+                {
+                    if ((objectTag == null || collider.tag == objectTag) && 
+                        collider.Bounds.Contains(point))
+                        return collider.gameObject;
+                }
+            }
+        }
         return null;
     }
 
-    public RaycastResult RaycastFirst(IntegerVector origin, Vector2 direction, float range = 100000.0f, int layerMask = Physics2D.DefaultRaycastLayers, string objectTag = null)
+    public GameObject CollidePointFirst(IntegerVector point, List<IntegerRectCollider> potentialCollisions)
+    {
+        foreach (IntegerRectCollider collider in potentialCollisions)
+        {
+            if (collider.Bounds.Contains(point))
+                return collider.gameObject;
+        }
+        return null;
+    }
+    
+    public RaycastResult RaycastFirst(IntegerVector origin, Vector2 direction, float range = 100000.0f, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         Vector2 d = direction * range;
         IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(d.x + 2.0f), Mathf.RoundToInt(d.y + 2.0f));
         IntegerVector halfwayPoint = (origin + rangeVector) / 2;
-        List<IntegerRectCollider> possibleCollisions = this.GetCollidersInRange(layerMask, new IntegerRect(halfwayPoint, rangeVector));
+        List<IntegerRectCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
 
         Vector2 positionModifier = Vector2.zero;
         IntegerVector position = origin;
@@ -98,14 +128,14 @@ public class CollisionManager : VoBehavior
             while (move > 0)
             {
                 IntegerVector checkPos = new IntegerVector(position.X + unitDir, position.Y);
-                GameObject collision = this.CollidePointFirst(checkPos, layerMask, objectTag, possibleCollisions);
+                GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
-                    result.CollidedObjects = new GameObject[1];
-                    result.PointsBeforeCollisions = new IntegerVector[1];
-                    result.CollidedObjects[0] = collision;
-                    result.PointsBeforeCollisions[0] = position;
-                    break;
+                    result.Collisions = new RaycastCollision[1];
+                    RaycastCollision hit = new RaycastCollision();
+                    hit.CollidedObject = collision;
+                    hit.CollisionPoint = position;
+                    hit.CollidedX = true;
                 }
 
                 position = checkPos;
@@ -120,17 +150,30 @@ public class CollisionManager : VoBehavior
             while (move > 0)
             {
                 IntegerVector checkPos = new IntegerVector(position.X, position.Y + unitDir);
-                GameObject collision = this.CollidePointFirst(checkPos, layerMask, objectTag, possibleCollisions);
+                GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
-                    result.CollidedObjects = new GameObject[1];
-                    result.PointsBeforeCollisions = new IntegerVector[1];
-                    result.CollidedObjects[0] = collision;
-                    result.PointsBeforeCollisions[0] = position;
-                    break;
+                    if (result.Collided)
+                    {
+                        result.Collisions[0].CollidedY = true;
+                    }
+                    else
+                    {
+                        result.Collisions = new RaycastCollision[1];
+                        RaycastCollision hit = new RaycastCollision();
+                        hit.CollidedObject = collision;
+                        hit.CollisionPoint = position;
+                        hit.CollidedY = true;
+                    }
                 }
 
                 position = checkPos;
+
+                if (result.Collided)
+                {
+                    endReached = true;
+                    break;
+                }
             }
 
             if (endReached)
