@@ -97,8 +97,8 @@ public class Bullet : Actor2D
         int unitDirX = Math.Sign(origVelocity.x) * BOUNCE_DETECTION_RANGE;
         int unitDirY = Math.Sign(origVelocity.y) * BOUNCE_DETECTION_RANGE;
 
-        bool verticalPlane = unitDirX != 0 && this.rectCollider.CollideFirst(unitDirX, 0, this.BounceLayerMask) != null;
-        bool horizontalPlane = unitDirY != 0 && this.rectCollider.CollideFirst(0, unitDirY, this.BounceLayerMask) != null;
+        bool verticalPlane = unitDirX != 0 && this.integerCollider.CollideFirst(unitDirX, 0, this.BounceLayerMask) != null;
+        bool horizontalPlane = unitDirY != 0 && this.integerCollider.CollideFirst(0, unitDirY, this.BounceLayerMask) != null;
 
         if (verticalPlane)
             this.Velocity.x = -this.Velocity.x;
@@ -151,10 +151,10 @@ public class Bullet : Actor2D
                 Vector2 multipliedDirection = direction * multiplier;
                 float distanceRemaining = this.WeaponType.DurationDistance - distanceSoFar;
                 float multipliedMagnitude = multipliedDirection.magnitude;
-                if (multipliedDirection.magnitude + 0.5f < distanceRemaining)
+                if (multipliedMagnitude + 0.5f < distanceRemaining)
                 {
                     raycastOrigin = new IntegerVector(Mathf.RoundToInt(direction.x * multiplier), Mathf.RoundToInt(direction.y * multiplier)) + origin;
-                    distanceRemaining -= multipliedDirection.magnitude;
+                    distanceRemaining -= multipliedMagnitude;
                 }
 
                 // Raycast the bounce shot

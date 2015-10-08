@@ -25,9 +25,9 @@ public class VoBehavior : MonoBehaviour
 			return _spriteRenderer;
 	} }
 
-    public IntegerRectCollider rectCollider { get {
-            if (!_rectCollider) _rectCollider = base.GetComponent<IntegerRectCollider>();
-            return _rectCollider;
+    public IntegerCollider integerCollider { get {
+            if (!_integerCollider) _integerCollider = base.GetComponent<IntegerCollider>();
+            return _integerCollider;
     } }
 
     public LocalEventNotifier localNotifier {  get {
@@ -54,7 +54,7 @@ public class VoBehavior : MonoBehaviour
             return _collisionManager;
     } }
 
-    void OnDestroy()
+    public virtual void OnDestroy()
     {
         if (_localNotifier)
             _localNotifier.RemoveAllListenersForOwner(this);
@@ -67,7 +67,7 @@ public class VoBehavior : MonoBehaviour
     private Transform _transform;
     private Renderer _renderer;
     private SpriteRenderer _spriteRenderer;
-    private IntegerRectCollider _rectCollider;
+    private IntegerCollider _integerCollider;
     private LocalEventNotifier _localNotifier;
     private CollisionManager _collisionManager;
 }

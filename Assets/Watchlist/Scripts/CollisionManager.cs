@@ -21,28 +21,28 @@ public class CollisionManager : VoBehavior
         public IntegerVector FarthestPointReached;
     }
 
-    public void AddCollider(LayerMask layer, IntegerRectCollider collider)
+    public void AddCollider(LayerMask layer, IntegerCollider collider)
     {
         if (!_collidersByLayer.ContainsKey(layer))
-            _collidersByLayer.Add(layer, new List<IntegerRectCollider>());
+            _collidersByLayer.Add(layer, new List<IntegerCollider>());
         _collidersByLayer[layer].Add(collider);
     }
 
-    public void RemoveCollider(LayerMask layer, IntegerRectCollider collider)
+    public void RemoveCollider(LayerMask layer, IntegerCollider collider)
     {
         if (_collidersByLayer.ContainsKey(layer))
             _collidersByLayer[layer].Remove(collider);
     }
 
-    public List<IntegerRectCollider> GetCollidersInRange(IntegerRect range, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
+    public List<IntegerCollider> GetCollidersInRange(IntegerRect range, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
-        List<IntegerRectCollider> colliders = new List<IntegerRectCollider>();
+        List<IntegerCollider> colliders = new List<IntegerCollider>();
 
         foreach (LayerMask key in _collidersByLayer.Keys)
         {
             if ((key & mask) != 0)
             {
-                foreach (IntegerRectCollider collider in _collidersByLayer[key])
+                foreach (IntegerCollider collider in _collidersByLayer[key])
                 {
                     if ((objectTag == null || collider.tag == objectTag) && 
                         collider.Bounds.Overlaps(range))
@@ -60,10 +60,10 @@ public class CollisionManager : VoBehavior
         {
             if ((key & mask) != 0)
             {
-                foreach (IntegerRectCollider collider in _collidersByLayer[key])
+                foreach (IntegerCollider collider in _collidersByLayer[key])
                 {
                     if ((objectTag == null || collider.tag == objectTag) && 
-                        collider.Bounds.Contains(point))
+                        collider.Contains(point))
                         return collider.gameObject;
                 }
             }
@@ -71,11 +71,11 @@ public class CollisionManager : VoBehavior
         return null;
     }
 
-    public GameObject CollidePointFirst(IntegerVector point, List<IntegerRectCollider> potentialCollisions)
+    public GameObject CollidePointFirst(IntegerVector point, List<IntegerCollider> potentialCollisions)
     {
-        foreach (IntegerRectCollider collider in potentialCollisions)
+        foreach (IntegerCollider collider in potentialCollisions)
         {
-            if (collider.Bounds.Contains(point))
+            if (collider.Contains(point))
                 return collider.gameObject;
         }
         return null;
@@ -86,7 +86,7 @@ public class CollisionManager : VoBehavior
         Vector2 d = direction * range;
         IntegerVector halfwayPoint = new IntegerVector(d / 2.0f) + origin;
         IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(d.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(d.y) + 2.5f));
-        List<IntegerRectCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
+        List<IntegerCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
 
         Vector2 positionModifier = Vector2.zero;
         IntegerVector position = origin;
@@ -199,5 +199,5 @@ public class CollisionManager : VoBehavior
     /**
      * Private
      */
-    private Dictionary<LayerMask, List<IntegerRectCollider>> _collidersByLayer = new Dictionary<LayerMask, List<IntegerRectCollider>>();
+    private Dictionary<LayerMask, List<IntegerCollider>> _collidersByLayer = new Dictionary<LayerMask, List<IntegerCollider>>();
 }

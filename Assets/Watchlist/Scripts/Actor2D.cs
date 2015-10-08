@@ -96,7 +96,7 @@ public class Actor2D : VoBehavior
             while (unitMove != 0)
             {
                 int oldCount = horizontalCollisions.Count;
-                this.rectCollider.Collide(horizontalCollisions, unitDir, 0, this.CollisionMask);
+                this.integerCollider.Collide(horizontalCollisions, unitDir, 0, this.CollisionMask);
 
                 if (horizontalCollisions.Count > oldCount)
                 {
@@ -136,7 +136,7 @@ public class Actor2D : VoBehavior
             while (unitMove != 0)
             {
                 int oldCount = verticalCollisions.Count;
-                this.rectCollider.Collide(verticalCollisions, 0, unitDir, this.CollisionMask);
+                this.integerCollider.Collide(verticalCollisions, 0, unitDir, this.CollisionMask);
 
                 if (verticalCollisions.Count > oldCount)
                 {
