@@ -106,7 +106,6 @@ public class CollisionManager : VoBehavior
         float dMagnitude = d.magnitude;
         RaycastResult result = new RaycastResult();
         bool endReached = false;
-        int totalXs = 0;
 
         while (true)
         {
@@ -129,10 +128,6 @@ public class CollisionManager : VoBehavior
             while (move != 0)
             {
                 IntegerVector checkPos = new IntegerVector(position.X + unitDir, position.Y);
-                if (checkPos.X == -15)
-                {
-                    Debug.Log("k");
-                }
                 GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
@@ -142,8 +137,7 @@ public class CollisionManager : VoBehavior
                     hit.CollisionPoint = position;
                     hit.CollidedX = true;
                 }
-
-                ++totalXs;
+                
                 position = checkPos;
                 move -= unitDir;
             }
