@@ -6,6 +6,7 @@ public class Bullet : Actor2D
 {
     public WeaponType WeaponType;
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
+    public GameObject ExplosionPrefab;
 
     public const int BOUNCE_DETECTION_RANGE = 1;
 
@@ -41,7 +42,7 @@ public class Bullet : Actor2D
 
         if (_lifetime >= this.WeaponType.DurationTime || _distance.magnitude >= this.WeaponType.DurationDistance)
         {
-            _destructionScheduled = true;
+            scheduleDestruction(this.transform.position);
         }
         else if (this.WeaponType.VelocityFallOff > 0.0f)
         {
@@ -75,7 +76,7 @@ public class Bullet : Actor2D
             }
             else if ((hitLayerMask & this.HaltMovementMask) != 0)
             {
-                _destructionScheduled = true;
+                scheduleDestruction(this.transform.position);
             }
         }
     }
@@ -87,6 +88,15 @@ public class Bullet : Actor2D
     private bool _destructionScheduled;
     private Vector2 _distance = Vector2.zero;
     private int _bouncesRemaining;
+    private bool _hasExploded;
+
+    private void scheduleDestruction(Vector3 location)
+    {
+        _destructionScheduled = true;
+
+        if (!_hasExploded && this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION)
+            triggerExplosion(location);
+    }
 
     private void bounce(GameObject hit, Vector2 origVelocity, Vector2 appliedVelocity)
     {
@@ -110,7 +120,7 @@ public class Bullet : Actor2D
         if (Mathf.Abs(180.0f - Vector2.Angle(origVelocity, this.Velocity)) < this.WeaponType.MinimumBounceAngle)
         {
             this.Velocity = Vector2.zero;
-            _destructionScheduled = true;
+            scheduleDestruction(this.transform.position);
         }
         else
         {
@@ -165,6 +175,12 @@ public class Bullet : Actor2D
                 distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
             }
         }
+    }
+
+    private void triggerExplosion(Vector3 position)
+    {
+        GameObject bullet = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
+        bullet.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer);
     }
     
     private static LayerMask MISSILE_LAYERS = 0;
