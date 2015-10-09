@@ -34,6 +34,11 @@ public abstract class IntegerCollider : VoBehavior
         return bounds.Contains(point);
     }
 
+    public virtual IntegerVector ClosestContainedPoint(IntegerVector point)
+    {
+        return this.Bounds.ClosestContainedPoint(point);
+    }
+
     public GameObject CollideFirst(int offsetX = 0, int offsetY = 0, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null, List<IntegerCollider> potentialCollisions = null)
     {
         if (potentialCollisions == null)

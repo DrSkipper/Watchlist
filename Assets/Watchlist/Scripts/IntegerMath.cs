@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 [System.Serializable]
 public struct IntegerRect
@@ -60,6 +61,29 @@ public struct IntegerRect
         IntegerVector selfMax = this.Max;
         return point.X >= selfMin.X && point.X <= selfMax.X && point.Y >= selfMin.Y && point.Y <= selfMax.Y;
     }
+
+    //http://stackoverflow.com/questions/20453545/how-to-find-the-nearest-point-in-the-perimeter-of-a-rectangle-to-a-given-point
+    public IntegerVector ClosestContainedPoint(IntegerVector point)
+    {
+        if (this.Contains(point))
+            return point;
+
+        IntegerVector selfMin = this.Min;
+        IntegerVector selfMax = this.Max;
+        int clampedX = Mathf.Clamp(point.X, selfMin.X, selfMax.X);
+        int clampedY = Mathf.Clamp(point.Y, selfMin.Y, selfMax.Y);
+
+        int dl = Math.Abs(selfMin.X - point.X);
+        int dr = Math.Abs(point.X - selfMax.X);
+        int db = Math.Abs(selfMin.Y - point.Y);
+        int dt = Math.Abs(point.Y - selfMax.Y);
+
+        int min = Mathf.Min(new int[] {dl, dr, db, dt});
+        if (min == db) return new IntegerVector(point.X, selfMin.Y);
+        if (min == dt) return new IntegerVector(point.X, selfMax.Y);
+        if (min == dl) return new IntegerVector(selfMin.X, point.Y);
+        return new IntegerVector(selfMax.X, point.Y);
+    }
 }
 
 [System.Serializable]
@@ -98,6 +122,11 @@ public struct IntegerVector
     public static IntegerVector operator /(IntegerVector v, int i)
     {
         return new IntegerVector(v.X / i, v.Y / i);
+    }
+
+    public static implicit operator Vector2 (IntegerVector v)
+    {
+        return new Vector2(v.X, v.Y);
     }
 
     public static IntegerVector Zero { get { return new IntegerVector(); } }
