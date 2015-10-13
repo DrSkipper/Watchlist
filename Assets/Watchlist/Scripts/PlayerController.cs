@@ -9,6 +9,9 @@ public class PlayerController : Actor2D
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotStartDistance = 1.0f;
+    public int[] Slots = { 0, 0, 0, 0 };
+    public int WeaponTypeId = 1; // Exposed for debugging
+    public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
 
     public GameObject BulletPrefab;
 
@@ -16,6 +19,10 @@ public class PlayerController : Actor2D
     {
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
+
+        this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
+        if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
+            _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
     }
 
     public override void Update()

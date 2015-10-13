@@ -42,6 +42,22 @@ public class WeaponData
     [XmlIgnoreAttribute]
     public Dictionary<int, WeaponType> WeaponTypes;
 
+    public static int WeaponTypeIdFromSlots(int[] slots)
+    {
+        List<int> slotsList = new List<int>(slots);
+        slotsList.RemoveAll(slot => slot == 0);
+        slotsList.Sort();
+
+        int id = 1000000;
+        int multiplier = 1;
+        foreach (int slot in slotsList)
+        {
+            id += slot * multiplier;
+            multiplier *= 10;
+        }
+        return id;
+    }
+
     /**
      * XML
      */

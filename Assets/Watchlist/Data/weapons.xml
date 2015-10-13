@@ -12,7 +12,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -33,7 +33,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -54,7 +54,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -75,7 +75,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -96,7 +96,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -117,7 +117,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -138,7 +138,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -159,7 +159,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -180,7 +180,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -201,7 +201,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -222,7 +222,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -243,7 +243,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -264,7 +264,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -285,7 +285,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -306,7 +306,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -327,7 +327,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -348,7 +348,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -369,7 +369,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -390,7 +390,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -411,7 +411,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -432,7 +432,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -453,7 +453,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -474,7 +474,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -495,7 +495,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -516,7 +516,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -537,7 +537,7 @@
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -558,7 +558,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -579,7 +579,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -600,7 +600,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -621,7 +621,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -642,7 +642,7 @@
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -663,7 +663,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -684,7 +684,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -705,7 +705,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -726,7 +726,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -747,7 +747,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -768,7 +768,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -789,7 +789,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -810,7 +810,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -831,7 +831,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -852,7 +852,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -873,7 +873,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -894,7 +894,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -915,7 +915,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -936,7 +936,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -957,7 +957,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -978,7 +978,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -999,7 +999,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1020,7 +1020,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1041,7 +1041,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1062,7 +1062,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1083,7 +1083,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1104,7 +1104,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1125,7 +1125,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1146,7 +1146,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1167,7 +1167,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1188,7 +1188,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1209,7 +1209,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1230,7 +1230,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1251,7 +1251,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1272,7 +1272,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1293,7 +1293,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1314,7 +1314,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1335,7 +1335,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1356,7 +1356,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1377,7 +1377,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1398,7 +1398,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1419,7 +1419,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1440,7 +1440,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -1461,7 +1461,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
-      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
