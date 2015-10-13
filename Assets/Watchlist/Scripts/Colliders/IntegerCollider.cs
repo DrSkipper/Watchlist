@@ -80,7 +80,7 @@ public abstract class IntegerCollider : VoBehavior
     public List<IntegerCollider> GetPotentialCollisions(float vx, float vy, int offsetX = 0, int offsetY = 0, int mask = Physics2D.DefaultRaycastLayers)
     {
         IntegerRect bounds = this.Bounds;
-        IntegerRect range = new IntegerRect(bounds.Center.X + offsetX, bounds.Center.Y + offsetY, this.Bounds.Size.X + Mathf.RoundToInt(Mathf.Abs(vx) + 0.55f), this.Bounds.Size.Y + (Mathf.RoundToInt(Mathf.Abs(vy) + 0.55f)));
+        IntegerRect range = new IntegerRect(bounds.Center.X + offsetX, bounds.Center.Y + offsetY, this.Bounds.Size.X + Mathf.RoundToInt(Mathf.Abs(vx * 2) + 1.55f), this.Bounds.Size.Y + (Mathf.RoundToInt(Mathf.Abs(vy * 2) + 1.55f)));
         return this.CollisionManager.GetCollidersInRange(range, mask);
     }
 

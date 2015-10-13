@@ -21,11 +21,15 @@ public class Actor2D : VoBehavior
         float incX = d.x;
         float incY = d.y;
 
+        List<IntegerCollider> potentialCollisions = null;
+
         if (Mathf.Abs(incX) > MAX_POSITION_INCREMENT || Mathf.Abs(incY) > MAX_POSITION_INCREMENT)
         {
             Vector2 dNormalized = d.normalized * MAX_POSITION_INCREMENT;
             incX = dNormalized.x;
             incY = dNormalized.y;
+
+            potentialCollisions = this.integerCollider.GetPotentialCollisions(d.x, d.y, 0, 0, this.CollisionMask);
         }
 
         Vector2 soFar = Vector2.zero;
@@ -40,14 +44,14 @@ public class Actor2D : VoBehavior
 
             if (projected.magnitude > dMagnitude)
             {
-                if (!_haltX) moveX(d.x - soFar.x, _collisionsFromMove, _horizontalCollisions);
-                if (!_haltY) moveY(d.y - soFar.y, _collisionsFromMove, _verticalCollisions);
+                if (!_haltX) moveX(d.x - soFar.x, _collisionsFromMove, _horizontalCollisions, potentialCollisions);
+                if (!_haltY) moveY(d.y - soFar.y, _collisionsFromMove, _verticalCollisions, potentialCollisions);
                 soFar = d;
                 break;
             }
 
-            if (!_haltX) soFar.x += moveX(incX, _collisionsFromMove, _horizontalCollisions);
-            if (!_haltY) soFar.y += moveY(incY, _collisionsFromMove, _verticalCollisions);
+            if (!_haltX) soFar.x += moveX(incX, _collisionsFromMove, _horizontalCollisions, potentialCollisions);
+            if (!_haltY) soFar.y += moveY(incY, _collisionsFromMove, _verticalCollisions, potentialCollisions);
 
             if (_haltX && _haltY)
                 break;
@@ -82,7 +86,7 @@ public class Actor2D : VoBehavior
     private bool _haltY;
     
     // Returns actual amount applied to movement
-    private float moveX(float dx, List<GameObject> collisions, List<GameObject> horizontalCollisions)
+    private float moveX(float dx, List<GameObject> collisions, List<GameObject> horizontalCollisions, List<IntegerCollider> potentialCollisions)
     {
         _positionModifier.x += dx;
         int unitMove = Mathf.RoundToInt(_positionModifier.x);
@@ -96,7 +100,7 @@ public class Actor2D : VoBehavior
             while (unitMove != 0)
             {
                 int oldCount = horizontalCollisions.Count;
-                this.integerCollider.Collide(horizontalCollisions, unitDir, 0, this.CollisionMask);
+                this.integerCollider.Collide(horizontalCollisions, unitDir, 0, this.CollisionMask, null, potentialCollisions);
 
                 if (horizontalCollisions.Count > oldCount)
                 {
@@ -122,7 +126,7 @@ public class Actor2D : VoBehavior
         return dx;
     }
     
-    private float moveY(float dy, List<GameObject> collisions, List<GameObject> verticalCollisions)
+    private float moveY(float dy, List<GameObject> collisions, List<GameObject> verticalCollisions, List<IntegerCollider> potentialCollisions)
     {
         _positionModifier.y += dy;
         int unitMove = Mathf.RoundToInt(_positionModifier.y);
@@ -136,7 +140,7 @@ public class Actor2D : VoBehavior
             while (unitMove != 0)
             {
                 int oldCount = verticalCollisions.Count;
-                this.integerCollider.Collide(verticalCollisions, 0, unitDir, this.CollisionMask);
+                this.integerCollider.Collide(verticalCollisions, 0, unitDir, this.CollisionMask, null, potentialCollisions);
 
                 if (verticalCollisions.Count > oldCount)
                 {
