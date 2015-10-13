@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using UnityEngine;
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class WeaponType
@@ -13,6 +16,10 @@ public class WeaponType
 
     [XmlAttribute("name")]
     public string Name = "blank";
+    public int Id = 1;
+    public int Damage = 1;
+    public int Knockback = 1;
+    public float HitInvincibilityDuration = 1.0f;
     public float ShotSpeed = 1.0f;
     public float ShotCooldown = 1.0f;
     public int ShotCount = 1;
@@ -24,31 +31,54 @@ public class WeaponType
     public float DurationDistance = 500.0f;
     public string TravelType = TRAVEL_TYPE_NORMAL;
     public string SpecialEffect = SPECIAL_NONE;
-    public float SpecialEffectParameter = 0.0f;
+    public float SpecialEffectParameter1 = 0.0f;
+    public float SpecialEffectParameter2 = 0.0f;
 }
 
 [XmlRoot("WeaponData")]
 [System.Serializable]
 public class WeaponData
 {
-    [XmlArray("WeaponTypes"), XmlArrayItem("WeaponType")]
-    public WeaponType[] WeaponTypes;
+    [XmlIgnoreAttribute]
+    public Dictionary<int, WeaponType> WeaponTypes;
 
-    /*public void Save(string path)
+    /**
+     * XML
+     */
+    [XmlArray("WeaponTypes"), XmlArrayItem("WeaponType")]
+    public WeaponType[] WeaponTypeArray;
+
+    public void Save(string path)
     {
         var serializer = new XmlSerializer(typeof(WeaponData));
         using (var stream = new FileStream(path, FileMode.Create))
         {
             serializer.Serialize(stream, this);
         }
-    }*/
+    }
 
     public static WeaponData Load(string path)
     {
+        WeaponData weaponData = null;
         var serializer = new XmlSerializer(typeof(WeaponData));
         using (var stream = new FileStream(path, FileMode.Open))
         {
-            return serializer.Deserialize(stream) as WeaponData;
+            weaponData = serializer.Deserialize(stream) as WeaponData;
         }
+
+        weaponData.WeaponTypes = new Dictionary<int, WeaponType>();
+        foreach (WeaponType type in weaponData.WeaponTypeArray)
+        {
+            /*try
+            {*/
+                weaponData.WeaponTypes.Add(type.Id, type);
+            /*}
+            catch (ArgumentException e)
+            {
+                Debug.Log("ArgumentException: " + e.Message);
+            }*/
+        }
+
+        return weaponData;
     }
 }

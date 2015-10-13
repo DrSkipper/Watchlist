@@ -11,7 +11,7 @@ public class Explosion : VoBehavior
     public void DetonateWithWeaponType(WeaponType weaponType, int layer)
     {
         this.gameObject.layer = layer;
-        _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter;
+        _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter1;
         _growthRate = _finalRadius / this.ExplosionDuration;
     }
 

@@ -131,7 +131,7 @@ public class Bullet : Actor2D
     private void handleLaserCast(Vector2 direction)
     {
         IntegerVector origin = this.integerPosition;
-        CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask & this.BounceLayerMask);
+        CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
 
         if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
@@ -168,7 +168,7 @@ public class Bullet : Actor2D
                 }
 
                 // Raycast the bounce shot
-                raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask & this.BounceLayerMask);
+                raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
                 this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
 
                 distanceTravelled = raycast.FarthestPointReached - origin;
