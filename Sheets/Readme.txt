@@ -8,7 +8,7 @@ Sheet-to-Game:
 2) http://www.convertcsv.com/csv-to-xml.htm - Change 'Top-level Root Name' to something like "WeaponTypes", change 'Each Record XML Name' to something like "WeaponType". Paste the entire .csv contents into the input field and press 'Convert CSV to XML'.
 3) Highlight the contents of the output field except for the first line and copy it. In the XML file in Assets/Data, highlight the inner section (between something like <WeaponData> and </WeaponData>), and paste over the contents.
 4) Open the game in Unity, open the PrototypeSandbox2d scene, run and stop it once to make sure Unity's file system has updated, highlight the DataExaminer game object, and press 'Load'. Check some of the changes you made using the inspector for that game object, make sure they seem ok and that no errors were generated in the process.
-5) Apply the changes to DataExaminer to its prefab, save the scene, commit/push your changes to Git. To make sure unity registers the change, you might have to change some arbitrary field, then change it back, then Apply the change to prefab, then save the scene.
+5) Apply the changes to DataExaminer to its prefab, save the scene, commit/push your changes to Git. To make sure unity registers the change, you might have to delete the prefab and re-drag the object into the Prefabs folder, then save the scene.
 
 Game-to-Sheet:
 (If you have a change to a data-driven object within Unity you'd like to apply to the static data)
