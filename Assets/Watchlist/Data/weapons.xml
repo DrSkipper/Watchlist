@@ -17,6 +17,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -37,6 +38,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -57,6 +59,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -77,6 +80,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -97,6 +101,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -117,6 +122,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -137,6 +143,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -157,6 +164,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -177,6 +185,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -197,6 +206,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -217,6 +227,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -237,6 +248,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -257,6 +269,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -277,6 +290,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -297,6 +311,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -317,6 +332,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -337,6 +353,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -357,6 +374,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -377,6 +395,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -397,6 +416,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -417,6 +437,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -437,6 +458,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -457,6 +479,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -477,6 +500,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -497,6 +521,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -517,6 +542,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -537,6 +563,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -557,6 +584,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -577,6 +605,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -597,6 +626,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -617,6 +647,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -637,6 +668,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -657,6 +689,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -677,6 +710,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -697,6 +731,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -717,6 +752,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -737,6 +773,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -757,6 +794,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -777,6 +815,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -797,6 +836,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -817,6 +857,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -837,6 +878,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -857,6 +899,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -877,6 +920,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -897,6 +941,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -917,6 +962,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -937,6 +983,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -957,6 +1004,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -977,6 +1025,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -997,6 +1046,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1017,6 +1067,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1037,6 +1088,7 @@
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1057,6 +1109,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1077,6 +1130,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1097,6 +1151,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1117,6 +1172,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1137,6 +1193,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1157,6 +1214,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1177,6 +1235,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1197,6 +1256,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1217,6 +1277,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1237,6 +1298,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1257,6 +1319,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1277,6 +1340,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1297,6 +1361,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1317,6 +1382,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1337,6 +1403,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1357,6 +1424,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1377,6 +1445,7 @@
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
@@ -1397,6 +1466,7 @@
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>

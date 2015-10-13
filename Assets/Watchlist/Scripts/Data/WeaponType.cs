@@ -29,6 +29,7 @@ public class WeaponType
     public float DurationTime = 5.0f;
     public float DurationDistance = 500.0f;
     public string TravelType = TRAVEL_TYPE_NORMAL;
+    public int TravelTypeParameter = 0;
     public string SpecialEffect = SPECIAL_NONE;
     public float SpecialEffectParameter1 = 0.0f;
     public float SpecialEffectParameter2 = 0.0f;
