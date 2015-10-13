@@ -39,20 +39,29 @@ public class WeaponType
 [System.Serializable]
 public class WeaponData
 {
+    public enum Slot
+    {
+        Empty = 0,
+        Bounce = 1,
+        Spreadshot = 2,
+        Laser = 3,
+        Bomb = 4
+    };
+
     [XmlIgnoreAttribute]
     public Dictionary<int, WeaponType> WeaponTypes;
 
-    public static int WeaponTypeIdFromSlots(int[] slots)
+    public static int WeaponTypeIdFromSlots(Slot[] slots)
     {
-        List<int> slotsList = new List<int>(slots);
-        slotsList.RemoveAll(slot => slot == 0);
+        List<Slot> slotsList = new List<Slot>(slots);
+        slotsList.RemoveAll(slot => slot == Slot.Empty);
         slotsList.Sort();
 
         int id = 1000000;
         int multiplier = 1;
-        foreach (int slot in slotsList)
+        foreach (Slot slot in slotsList)
         {
-            id += slot * multiplier;
+            id += ((int)slot) * multiplier;
             multiplier *= 10;
         }
         return id;

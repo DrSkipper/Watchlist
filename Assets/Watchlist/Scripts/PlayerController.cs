@@ -9,7 +9,7 @@ public class PlayerController : Actor2D
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotStartDistance = 1.0f;
-    public int[] Slots = { 0, 0, 0, 0 };
+    public WeaponData.Slot[] Slots = { WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty };
     public int WeaponTypeId = 1; // Exposed for debugging
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
 
