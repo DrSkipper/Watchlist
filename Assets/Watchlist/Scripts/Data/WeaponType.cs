@@ -13,8 +13,7 @@ public class WeaponType
 
     public const string SPECIAL_NONE = "none";
     public const string SPECIAL_EXPLOSION = "explosion";
-
-    [XmlAttribute("name")]
+    
     public string Name = "blank";
     public int Id = 1;
     public int Damage = 1;

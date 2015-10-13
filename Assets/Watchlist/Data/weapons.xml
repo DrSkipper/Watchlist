@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <WeaponData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WeaponTypes>
-    <WeaponType name="Normal">
+    <WeaponType>
+      <Name>Normal</Name>
       <Id>1000000</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
@@ -11,7 +12,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -20,7 +21,8 @@
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1">
+    <WeaponType>
+      <Name>Bounce 1</Name>
       <Id>1000001</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
@@ -39,7 +41,8 @@
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 1">
+    <WeaponType>
+      <Name>Spreadshot 1</Name>
       <Id>1000002</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
@@ -49,7 +52,7 @@
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -58,17 +61,18 @@
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 1">
+    <WeaponType>
+      <Name>Laser 1</Name>
       <Id>1000003</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>0</ShotCount>
+      <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -77,7 +81,8 @@
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 1">
+    <WeaponType>
+      <Name>Bomb 1</Name>
       <Id>1000004</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
@@ -87,7 +92,7 @@
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
@@ -96,1239 +101,1304 @@
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2">
+    <WeaponType>
+      <Name>Bounce 2</Name>
       <Id>1000011</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2">
+    <WeaponType>
+      <Name>Spreadshot 2</Name>
       <Id>1000022</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2">
+    <WeaponType>
+      <Name>Laser 2</Name>
       <Id>1000033</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2">
+    <WeaponType>
+      <Name>Bomb 2</Name>
       <Id>1000044</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Spreadshot 1">
+    <WeaponType>
+      <Name>Bounce 1 Spreadshot 1</Name>
       <Id>1000021</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Laser 1">
+    <WeaponType>
+      <Name>Bounce 1 Laser 1</Name>
       <Id>1000031</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 1 Bomb 1</Name>
       <Id>1000041</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 1 Laser 1">
+    <WeaponType>
+      <Name>Spreadshot 1 Laser 1</Name>
       <Id>1000032</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 1 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 1 Bomb 1</Name>
       <Id>1000042</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Laser 1 Bomb 1</Name>
       <Id>1000043</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 3">
+    <WeaponType>
+      <Name>Bounce 3</Name>
       <Id>1000111</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 3">
+    <WeaponType>
+      <Name>Spreadshot 3</Name>
       <Id>1000222</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 3">
+    <WeaponType>
+      <Name>Laser 3</Name>
       <Id>1000333</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 3">
+    <WeaponType>
+      <Name>Bomb 3</Name>
       <Id>1000444</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Spreadshot 1">
+    <WeaponType>
+      <Name>Bounce 2 Spreadshot 1</Name>
       <Id>1000211</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Laser 1">
+    <WeaponType>
+      <Name>Bounce 2 Laser 1</Name>
       <Id>1000311</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 2 Bomb 1</Name>
       <Id>1000411</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Bounce 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Bounce 1</Name>
       <Id>1000221</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Laser 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Laser 1</Name>
       <Id>1000322</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Bomb 1</Name>
       <Id>1000422</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Bounce 1">
+    <WeaponType>
+      <Name>Laser 2 Bounce 1</Name>
       <Id>1000331</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Spreadshot 1">
+    <WeaponType>
+      <Name>Laser 2 Spreadshot 1</Name>
       <Id>1000332</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Bomb 1">
+    <WeaponType>
+      <Name>Laser 2 Bomb 1</Name>
       <Id>1000433</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Bounce 1">
+    <WeaponType>
+      <Name>Bomb 2 Bounce 1</Name>
       <Id>1000441</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Spreadshot 1">
+    <WeaponType>
+      <Name>Bomb 2 Spreadshot 1</Name>
       <Id>1000442</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Laser 1">
+    <WeaponType>
+      <Name>Bomb 2 Laser 1</Name>
       <Id>1000443</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Spreadshot 1 Laser 1">
+    <WeaponType>
+      <Name>Bounce 1 Spreadshot 1 Laser 1</Name>
       <Id>1000321</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Spreadshot 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 1 Spreadshot 1 Bomb 1</Name>
       <Id>1000421</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 1 Laser 1 Bomb 1</Name>
       <Id>1000431</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 1 Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 1 Laser 1 Bomb 1</Name>
       <Id>1000432</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 4">
+    <WeaponType>
+      <Name>Bounce 4</Name>
       <Id>1001111</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 4">
+    <WeaponType>
+      <Name>Spreadshot 4</Name>
       <Id>1002222</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 4">
+    <WeaponType>
+      <Name>Laser 4</Name>
       <Id>1003333</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 4">
+    <WeaponType>
+      <Name>Bomb 4</Name>
       <Id>1004444</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 3 Spreadshot 1">
+    <WeaponType>
+      <Name>Bounce 3 Spreadshot 1</Name>
       <Id>1002111</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 3 Laser 1">
+    <WeaponType>
+      <Name>Bounce 3 Laser 1</Name>
       <Id>1003111</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 3 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 3 Bomb 1</Name>
       <Id>1004111</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 3 Bounce 1">
+    <WeaponType>
+      <Name>Spreadshot 3 Bounce 1</Name>
       <Id>1002221</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 3 Laser 1">
+    <WeaponType>
+      <Name>Spreadshot 3 Laser 1</Name>
       <Id>1003222</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 3 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 3 Bomb 1</Name>
       <Id>1004222</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 3 Bounce 1">
+    <WeaponType>
+      <Name>Laser 3 Bounce 1</Name>
       <Id>1003331</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 3 Spreadshot 1">
+    <WeaponType>
+      <Name>Laser 3 Spreadshot 1</Name>
       <Id>1003332</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 3 Bomb 1">
+    <WeaponType>
+      <Name>Laser 3 Bomb 1</Name>
       <Id>1004333</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 3 Bounce 1">
+    <WeaponType>
+      <Name>Bomb 3 Bounce 1</Name>
       <Id>1004441</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 3 Spreadshot 1">
+    <WeaponType>
+      <Name>Bomb 3 Spreadshot 1</Name>
       <Id>1004442</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 3 Laser 1">
+    <WeaponType>
+      <Name>Bomb 3 Laser 1</Name>
       <Id>1004443</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Spreadshot 2">
+    <WeaponType>
+      <Name>Bounce 2 Spreadshot 2</Name>
       <Id>1002211</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>600</ShotSpeed>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Laser 2">
+    <WeaponType>
+      <Name>Bounce 2 Laser 2</Name>
       <Id>1003311</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Bomb 2">
+    <WeaponType>
+      <Name>Bounce 2 Bomb 2</Name>
       <Id>1004411</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Laser 2">
+    <WeaponType>
+      <Name>Spreadshot 2 Laser 2</Name>
       <Id>1003322</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Bomb 2">
+    <WeaponType>
+      <Name>Spreadshot 2 Bomb 2</Name>
       <Id>1004422</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Bomb 2">
+    <WeaponType>
+      <Name>Laser 2 Bomb 2</Name>
       <Id>1004433</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Spreadshot 1 Laser 1">
+    <WeaponType>
+      <Name>Bounce 2 Spreadshot 1 Laser 1</Name>
       <Id>1003211</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Spreadshot 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 2 Spreadshot 1 Bomb 1</Name>
       <Id>1004211</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 2 Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 2 Laser 1 Bomb 1</Name>
       <Id>1004311</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Bounce 1 Laser 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Bounce 1 Laser 1</Name>
       <Id>1003221</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Bounce 1 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Bounce 1 Bomb 1</Name>
       <Id>1004221</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Spreadshot 2 Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Spreadshot 2 Laser 1 Bomb 1</Name>
       <Id>1004322</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Bounce 1 Spreadshot 1">
+    <WeaponType>
+      <Name>Laser 2 Bounce 1 Spreadshot 1</Name>
       <Id>1003321</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Bounce 1 Bomb 1">
+    <WeaponType>
+      <Name>Laser 2 Bounce 1 Bomb 1</Name>
       <Id>1004331</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Laser 2 Spreadshot 1 Bomb 1">
+    <WeaponType>
+      <Name>Laser 2 Spreadshot 1 Bomb 1</Name>
       <Id>1004332</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Bounce 1 Spreadshot 1">
+    <WeaponType>
+      <Name>Bomb 2 Bounce 1 Spreadshot 1</Name>
       <Id>1004421</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Bounce 1 Laser 1">
+    <WeaponType>
+      <Name>Bomb 2 Bounce 1 Laser 1</Name>
       <Id>1004431</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bomb 2 Spreadshot 1 Laser 1">
+    <WeaponType>
+      <Name>Bomb 2 Spreadshot 1 Laser 1</Name>
       <Id>1004432</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0.5</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
+      <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
-    <WeaponType name="Bounce 1 Spreadshot 1 Laser 1 Bomb 1">
+    <WeaponType>
+      <Name>Bounce 1 Spreadshot 1 Laser 1 Bomb 1</Name>
       <Id>1004321</Id>
       <Damage>1</Damage>
       <Knockback>1</Knockback>
       <HitInvincibilityDuration>1</HitInvincibilityDuration>
-      <ShotSpeed>1</ShotSpeed>
-      <ShotCooldown>1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>0</MaximumBounces>
-      <MinimumBounceAngle>0</MinimumBounceAngle>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>20</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
-      <DurationDistance>500</DurationDistance>
-      <TravelType>normal</TravelType>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
   </WeaponTypes>

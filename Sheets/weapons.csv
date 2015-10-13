@@ -1,0 +1,71 @@
+Id,Name,Knockback,HitInvincibilityDuration,ShotSpeed,ShotCooldown,ShotCount,AngleBetweenShots,MaximumBounces,MinimumBounceAngle,VelocityFallOff,DurationTime,DurationDistance,TravelType,SpecialEffect,SpecialEffectParameter1,SpecialEffectParameter2
+1000000,Normal,1,1,600,0.15,1,10,0,20,0,5,1000,normal,none,0,0
+1000001,Bounce 1,1,1,600,0.15,1,10,1,20,0,5,1000,normal,none,0,0
+1000002,Spreadshot 1,1,1,600,0.15,3,10,0,20,0,5,1000,normal,none,0,0
+1000003,Laser 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1000004,Bomb 1,1,1,300,0.5,1,10,0,20,280,1,1000,normal,explosion,15,0
+1000011,Bounce 2,1,1,600,0.15,1,10,1,20,0,5,1000,normal,none,0,0
+1000022,Spreadshot 2,1,1,600,0.15,3,10,0,20,0,5,1000,normal,none,0,0
+1000033,Laser 2,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1000044,Bomb 2,1,1,300,0.5,1,10,0,20,280,1,1000,normal,explosion,15,0
+1000021,Bounce 1 Spreadshot 1,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1000031,Bounce 1 Laser 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,normal,none,0,0
+1000041,Bounce 1 Bomb 1,1,1,300,0.5,1,10,1,20,0,5,1000,normal,none,0,0
+1000032,Spreadshot 1 Laser 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1000042,Spreadshot 1 Bomb 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1000043,Laser 1 Bomb 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1000111,Bounce 3,1,1,600,0.15,1,10,1,20,0,5,1000,normal,none,0,0
+1000222,Spreadshot 3,1,1,600,0.15,3,10,0,20,0,5,1000,normal,none,0,0
+1000333,Laser 3,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1000444,Bomb 3,1,1,300,0.5,1,10,0,20,280,1,1000,normal,explosion,15,0
+1000211,Bounce 2 Spreadshot 1,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1000311,Bounce 2 Laser 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,none,0,0
+1000411,Bounce 2 Bomb 1,1,1,300,0.5,1,10,1,20,280,1,1000,normal,explosion,15,0
+1000221,Spreadshot 2 Bounce 1,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1000322,Spreadshot 2 Laser 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,none,0,0
+1000422,Spreadshot 2 Bomb 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1000331,Laser 2 Bounce 1,1,1,0,0.0333,0,10,1,20,0,0.0333,1000,laser,none,0,0
+1000332,Laser 2 Spreadshot 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1000433,Laser 2 Bomb 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1000441,Bomb 2 Bounce 1,1,1,300,0.5,1,10,1,20,280,1,1000,normal,explosion,15,0
+1000442,Bomb 2 Spreadshot 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1000443,Bomb 2 Laser 1,1,1,0,0.0333,0,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1000321,Bounce 1 Spreadshot 1 Laser 1,1,1,0,0.0333,3,10,1,20,0,0.0333,1000,laser,none,0,0
+1000421,Bounce 1 Spreadshot 1 Bomb 1,1,1,300,0.5,3,10,1,20,280,1,1000,normal,explosion,15,0
+1000431,Bounce 1 Laser 1 Bomb 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,explosion,15,0
+1000432,Spreadshot 1 Laser 1 Bomb 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1001111,Bounce 4,1,1,600,0.15,1,10,1,20,0,5,1000,normal,none,0,0
+1002222,Spreadshot 4,1,1,600,0.15,3,10,0,20,0,5,1000,normal,none,0,0
+1003333,Laser 4,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,none,0,0
+1004444,Bomb 4,1,1,300,0.5,1,10,0,20,280,1,1000,normal,explosion,15,0
+1002111,Bounce 3 Spreadshot 1,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1003111,Bounce 3 Laser 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,none,0,0
+1004111,Bounce 3 Bomb 1,1,1,300,0.5,1,10,1,20,280,1,1000,normal,explosion,15,0
+1002221,Spreadshot 3 Bounce 1,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1003222,Spreadshot 3 Laser 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,none,0,0
+1004222,Spreadshot 3 Bomb 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1003331,Laser 3 Bounce 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,none,0,0
+1003332,Laser 3 Spreadshot 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,none,0,0
+1004333,Laser 3 Bomb 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1004441,Bomb 3 Bounce 1,1,1,300,0.5,1,10,1,20,280,1,1000,normal,explosion,15,0
+1004442,Bomb 3 Spreadshot 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1004443,Bomb 3 Laser 1,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1002211,Bounce 2 Spreadshot 2,1,1,600,0.15,3,10,1,20,0,5,1000,normal,none,0,0
+1003311,Bounce 2 Laser 2,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,none,0,0
+1004411,Bounce 2 Bomb 2,1,1,300,0.5,1,10,1,20,280,1,1000,normal,explosion,15,0
+1003322,Spreadshot 2 Laser 2,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,none,0,0
+1004422,Spreadshot 2 Bomb 2,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1004433,Laser 2 Bomb 2,1,1,0,0.0333,1,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1003211,Bounce 2 Spreadshot 1 Laser 1,1,1,0,0.0333,3,10,1,20,0,0.0333,1000,laser,none,0,0
+1004211,Bounce 2 Spreadshot 1 Bomb 1,1,1,300,0.5,3,10,1,20,280,1,1000,normal,explosion,15,0
+1004311,Bounce 2 Laser 1 Bomb 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,explosion,15,0
+1003221,Spreadshot 2 Bounce 1 Laser 1,1,1,0,0.0333,3,10,1,20,0,0.0333,1000,laser,none,0,0
+1004221,Spreadshot 2 Bounce 1 Bomb 1,1,1,300,0.5,3,10,1,20,280,1,1000,normal,explosion,15,0
+1004322,Spreadshot 2 Laser 1 Bomb 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1003321,Laser 2 Bounce 1 Spreadshot 1,1,1,0,0.0333,3,10,1,20,0,0.0333,1000,laser,none,0,0
+1004331,Laser 2 Bounce 1 Bomb 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,explosion,15,0
+1004332,Laser 2 Spreadshot 1 Bomb 1,1,1,0,0.0333,3,10,0,20,0,0.0333,1000,laser,explosion,15,0
+1004421,Bomb 2 Bounce 1 Spreadshot 1,1,1,300,0.5,3,10,1,20,280,1,1000,normal,explosion,15,0
+1004431,Bomb 2 Bounce 1 Laser 1,1,1,0,0.0333,1,10,1,20,0,0.0333,1000,laser,explosion,15,0
+1004432,Bomb 2 Spreadshot 1 Laser 1,1,1,300,0.5,3,10,0,20,280,1,1000,normal,explosion,15,0
+1004321,Bounce 1 Spreadshot 1 Laser 1 Bomb 1,1,1,0,0.0333,3,10,1,20,0,0.0333,1000,laser,explosion,15,0
