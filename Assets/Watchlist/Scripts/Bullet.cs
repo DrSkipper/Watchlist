@@ -26,11 +26,11 @@ public class Bullet : Actor2D
         LayerMask nothing = 0;
         LayerMask alliedLayers = alliedVulnerable | GetMissileLayers();
 
-        Damager damager = this.GetComponent<Damager>();
-        damager.DamagableLayers = (~alliedVulnerable) & GetVulnerableLayers();
-        damager.Damage = weaponType.Damage;
-        damager.Knockback = weaponType.Knockback;
-        damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
+        _damager = this.GetComponent<Damager>();
+        _damager.DamagableLayers = (~alliedVulnerable) & GetVulnerableLayers();
+        _damager.Damage = weaponType.Damage;
+        _damager.Knockback = weaponType.Knockback;
+        _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
         this.CollisionMask = everything & (~alliedLayers);
@@ -96,6 +96,7 @@ public class Bullet : Actor2D
     private Vector2 _distance = Vector2.zero;
     private int _bouncesRemaining;
     private bool _hasExploded;
+    private Damager _damager;
 
     private void scheduleDestruction(Vector3 location)
     {
@@ -198,7 +199,7 @@ public class Bullet : Actor2D
     {
         _hasExploded = true;
         GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
-        explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer);
+        explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
     }
     
     private static LayerMask MISSILE_LAYERS = 0;

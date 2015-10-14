@@ -90,7 +90,8 @@ public class Damagable : VoBehavior
             if (!this.Stationary)
             {
                 Vector2 difference = this.integerPosition - other.integerPosition;
-                Vector2 otherV = other.gameObject.GetComponent<Actor2D>().Velocity;
+                Actor2D otherActor = other.gameObject.GetComponent<Actor2D>();
+                Vector2 otherV = otherActor != null ? otherActor.Velocity : Vector2.zero;
                 difference.Normalize();
                 otherV.Normalize();
                 _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier((difference + otherV).normalized * other.Knockback, VelocityModifier.CollisionBehavior.bounce));

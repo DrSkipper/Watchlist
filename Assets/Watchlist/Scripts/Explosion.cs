@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(IntegerCircleCollider))]
 public class Explosion : VoBehavior
@@ -8,11 +9,17 @@ public class Explosion : VoBehavior
     public float RadiusToPowerMultiplier = 1.0f;
     public WeaponType WeaponType;
 
-    public void DetonateWithWeaponType(WeaponType weaponType, int layer)
+    public void DetonateWithWeaponType(WeaponType weaponType, int layer, LayerMask damagableLayers)
     {
         this.gameObject.layer = layer;
         _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter1;
         _growthRate = _finalRadius / this.ExplosionDuration;
+        
+        _damager = this.GetComponent<Damager>();
+        _damager.DamagableLayers = damagableLayers;
+        _damager.Damage = weaponType.Damage;
+        _damager.Knockback = weaponType.Knockback;
+        _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
     }
 
     void Update()
@@ -24,7 +31,14 @@ public class Explosion : VoBehavior
         else
         {
             _trueRadius += _growthRate * Time.deltaTime;
-            ((IntegerCircleCollider)this.integerCollider).Radius = Mathf.RoundToInt(_trueRadius);
+            IntegerCircleCollider circleCollider = this.integerCollider as IntegerCircleCollider;
+            circleCollider.Radius = Mathf.RoundToInt(_trueRadius);
+
+            int prevCount = _collisions.Count;
+            circleCollider.Collide(_collisions, 0, 0, _damager.DamagableLayers);
+
+            for (int i = prevCount; i < _collisions.Count; ++i)
+                this.localNotifier.SendEvent(new HitEvent(_collisions[i]));
         }
     }
 
@@ -41,4 +55,6 @@ public class Explosion : VoBehavior
     private float _trueRadius;
     private float _finalRadius;
     private bool _destructionScheduled;
+    private Damager _damager;
+    private List<GameObject> _collisions = new List<GameObject>();
 }
