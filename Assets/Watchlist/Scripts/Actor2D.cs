@@ -12,6 +12,10 @@ public class Actor2D : VoBehavior
 
     public virtual void Update()
     {
+        Vector2 modifiedVelocity = this.Velocity;
+        foreach (Vector2 modifier in _velocityModifiers.Values)
+            modifiedVelocity += modifier;
+
         if (this.Velocity.x != 0.0f || this.Velocity.y != 0.0f)
             Move(this.Velocity * Time.deltaTime);
     }
@@ -75,6 +79,26 @@ public class Actor2D : VoBehavior
         }
     }
 
+    public void SetVelocityModifier(string key, Vector2 v)
+    {
+        if (_velocityModifiers.ContainsKey(key))
+            _velocityModifiers[key] = v;
+        else
+            _velocityModifiers.Add(key, v);
+    }
+
+    public Vector2 GetVelocityModifier(string key)
+    {
+        if (_velocityModifiers.ContainsKey(key))
+            return _velocityModifiers[key];
+        return Vector2.zero;
+    }
+
+    public void RemoveVelocityModifier(string key)
+    {
+        _velocityModifiers.Remove(key);
+    }
+
     /**
      * Private
      */
@@ -82,6 +106,7 @@ public class Actor2D : VoBehavior
     private List<GameObject> _collisionsFromMove = new List<GameObject>();
     private List<GameObject> _horizontalCollisions = new List<GameObject>();
     private List<GameObject> _verticalCollisions = new List<GameObject>();
+    private Dictionary<string, Vector2> _velocityModifiers = new Dictionary<string, Vector2>();
     private bool _haltX;
     private bool _haltY;
     

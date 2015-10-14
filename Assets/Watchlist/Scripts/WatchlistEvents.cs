@@ -30,3 +30,15 @@ public class LaserCastEvent : LocalEventNotifier.Event
         this.Origin = origin;
     }
 }
+
+public class HitEvent : LocalEventNotifier.Event
+{
+    public static string NAME = "DAMAGE";
+    public GameObject Hit;
+
+    public HitEvent(GameObject hit)
+    {
+        this.Name = NAME;
+        this.Hit = hit;
+    }
+}
