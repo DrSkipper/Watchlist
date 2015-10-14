@@ -12,6 +12,7 @@ public class Damagable : VoBehavior
 
     void Start()
     {
+        _actor = this.GetComponent<Actor2D>();
         this.localNotifier.Listen(HitEvent.NAME, this, this.OnHit);
     }
 
@@ -36,8 +37,22 @@ public class Damagable : VoBehavior
     {
         if (_invincibilityTimer > 0.0f)
             _invincibilityTimer -= Time.deltaTime;
-
-        //TODO - Update actor's velocity modifier according to friction
+        
+        if (this.Invincible && !this.Stationary)
+        {
+            VelocityModifier v = _actor.GetVelocityModifier(VELOCITY_MODIFIER_KEY);
+            float vMag = v.Modifier.magnitude;
+            vMag -= this.Friction * Time.deltaTime;
+            if (vMag <= 0.0f)
+            {
+                _actor.RemoveVelocityModifier(VELOCITY_MODIFIER_KEY);
+            }
+            else
+            {
+                v.Modifier = v.Modifier.normalized * vMag;
+                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, v);
+            }
+        }
     }
 
     void LateUpdate()
@@ -45,9 +60,10 @@ public class Damagable : VoBehavior
         if (this.Invincible && _invincibilityTimer <= 0.0f)
         {
             this.Invincible = false;
-            this.GetComponent<Actor2D>().CollisionMask = _nonInvincibleCollisionMask;
-
-            //TODO - Have integer collider add self back into collision pool
+            _actor.CollisionMask = _nonInvincibleCollisionMask;
+            _actor.RemoveVelocityModifier(VELOCITY_MODIFIER_KEY);
+            this.integerCollider.AddToCollisionPool();
+            this.localNotifier.SendEvent(new InvincibilityToggleEvent(false));
         }
 
         _alreadyHitThisUpdate.Clear();
@@ -57,7 +73,7 @@ public class Damagable : VoBehavior
     {
         _alreadyHitThisUpdate.Add(other.gameObject);
 
-        //this.Health -= other.Damage;
+        this.Health -= other.Damage;
 
         if (this.Health <= 0)
         {
@@ -66,15 +82,22 @@ public class Damagable : VoBehavior
         }
         else
         {
-            Actor2D actor = this.GetComponent<Actor2D>();
-            actor.SetVelocityModifier("damagable", Vector2.up);
+            if (!this.Stationary)
+            {
+                Vector2 difference = this.integerPosition - other.integerPosition;
+                Vector2 otherV = other.gameObject.GetComponent<Actor2D>().Velocity;
+                difference.Normalize();
+                otherV.Normalize();
+                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier((difference + otherV).normalized * other.Knockback, VelocityModifier.CollisionBehavior.bounce));
+            }
 
             this.Invincible = true;
             _invincibilityTimer = other.HitInvincibilityDuration;
-            _nonInvincibleCollisionMask = actor.CollisionMask;
-            actor.CollisionMask = this.InvincibilityCollisionMask;
+            _nonInvincibleCollisionMask = _actor.CollisionMask;
+            _actor.CollisionMask = this.InvincibilityCollisionMask;
+            this.integerCollider.RemoveFromCollisionPool();
 
-            //TODO - Have integer collider remove self from collision pool
+            this.localNotifier.SendEvent(new InvincibilityToggleEvent(true));
         }
     }
 
@@ -84,4 +107,7 @@ public class Damagable : VoBehavior
     private List<GameObject> _alreadyHitThisUpdate = new List<GameObject>();
     private float _invincibilityTimer;
     private LayerMask _nonInvincibleCollisionMask;
+    private Actor2D _actor;
+
+    private const string VELOCITY_MODIFIER_KEY = "damagable";
 }

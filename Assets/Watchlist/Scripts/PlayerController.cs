@@ -13,8 +13,6 @@ public class PlayerController : Actor2D
     public int WeaponTypeId = 1; // Exposed for debugging
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
 
-    public GameObject BulletPrefab;
-
     void Start()
     {
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
@@ -67,6 +65,5 @@ public class PlayerController : Actor2D
      * Private
      */
     private float _acceleration;
-    private bool _usingMovingSprite;
     private Weapon _weapon;
 }

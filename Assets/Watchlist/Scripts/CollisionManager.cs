@@ -25,7 +25,7 @@ public class CollisionManager : VoBehavior
     {
         if (!_collidersByLayer.ContainsKey(layer))
             _collidersByLayer.Add(layer, new List<IntegerCollider>());
-        _collidersByLayer[layer].Add(collider);
+        _collidersByLayer[layer].AddUnique(collider);
     }
 
     public void RemoveCollider(LayerMask layer, IntegerCollider collider)

@@ -8,7 +8,7 @@ public abstract class IntegerCollider : VoBehavior
 
     void Start()
     {
-        this.CollisionManager.AddCollider(this.layerMask, this);
+        this.AddToCollisionPool();
     }
 
     public override void OnDestroy()
@@ -16,6 +16,16 @@ public abstract class IntegerCollider : VoBehavior
         if (this.CollisionManager)
             this.CollisionManager.RemoveCollider(this.layerMask, this);
         base.OnDestroy();
+    }
+
+    public void AddToCollisionPool()
+    {
+        this.CollisionManager.AddCollider(this.layerMask, this);
+    }
+
+    public void RemoveFromCollisionPool()
+    {
+        this.CollisionManager.RemoveCollider(this.layerMask, this);
     }
 
     public virtual bool Overlaps(IntegerCollider other, int offsetX = 0, int offsetY = 0)

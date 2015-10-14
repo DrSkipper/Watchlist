@@ -40,5 +40,5 @@ public class Damager : VoBehavior
     /**
      * Private
      */
-    List<GameObject> _alreadyHitThisUpdate = new List<GameObject>();
+    private List<GameObject> _alreadyHitThisUpdate = new List<GameObject>();
 }

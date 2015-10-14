@@ -42,3 +42,15 @@ public class HitEvent : LocalEventNotifier.Event
         this.Hit = hit;
     }
 }
+
+public class InvincibilityToggleEvent : LocalEventNotifier.Event
+{
+    public static string NAME = "INVINCIBILITY";
+    public bool ToggledOn;
+
+    public InvincibilityToggleEvent(bool toggledOn)
+    {
+        this.Name = NAME;
+        this.ToggledOn = toggledOn;
+    }
+}

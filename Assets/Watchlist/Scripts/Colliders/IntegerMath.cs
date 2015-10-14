@@ -73,16 +73,16 @@ public struct IntegerRect
         int clampedX = Mathf.Clamp(point.X, selfMin.X, selfMax.X);
         int clampedY = Mathf.Clamp(point.Y, selfMin.Y, selfMax.Y);
 
-        int dl = Math.Abs(selfMin.X - point.X);
-        int dr = Math.Abs(point.X - selfMax.X);
-        int db = Math.Abs(selfMin.Y - point.Y);
-        int dt = Math.Abs(point.Y - selfMax.Y);
+        int dl = Math.Abs(selfMin.X - clampedX);
+        int dr = Math.Abs(clampedX - selfMax.X);
+        int db = Math.Abs(selfMin.Y - clampedY);
+        int dt = Math.Abs(clampedY - selfMax.Y);
 
         int min = Mathf.Min(new int[] {dl, dr, db, dt});
-        if (min == db) return new IntegerVector(point.X, selfMin.Y);
-        if (min == dt) return new IntegerVector(point.X, selfMax.Y);
-        if (min == dl) return new IntegerVector(selfMin.X, point.Y);
-        return new IntegerVector(selfMax.X, point.Y);
+        if (min == db) return new IntegerVector(clampedX, selfMin.Y);
+        if (min == dt) return new IntegerVector(clampedX, selfMax.Y);
+        if (min == dl) return new IntegerVector(selfMin.X, clampedY);
+        return new IntegerVector(selfMax.X, clampedY);
     }
 }
 

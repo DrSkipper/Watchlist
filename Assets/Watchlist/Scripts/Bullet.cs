@@ -20,10 +20,17 @@ public class Bullet : Actor2D
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
 
         this.gameObject.layer = LayerMask.NameToLayer(allegiance + " Missile");
+        LayerMask alliedVulnerable = (1 << LayerMask.NameToLayer(allegiance + " Vulnerable"));
         LayerMask levelGeometryMask = (1 << LayerMask.NameToLayer("Level Geometry"));
         LayerMask everything = int.MaxValue;
         LayerMask nothing = 0;
-        LayerMask alliedLayers = (1 << LayerMask.NameToLayer(allegiance + " Vulnerable")) | GetMissileLayers();
+        LayerMask alliedLayers = alliedVulnerable | GetMissileLayers();
+
+        Damager damager = this.GetComponent<Damager>();
+        damager.DamagableLayers = (~alliedVulnerable) & GetVulnerableLayers();
+        damager.Damage = weaponType.Damage;
+        damager.Knockback = weaponType.Knockback;
+        damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
         this.CollisionMask = everything & (~alliedLayers);
@@ -133,6 +140,9 @@ public class Bullet : Actor2D
         IntegerVector origin = this.integerPosition;
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+        
+        foreach (CollisionManager.RaycastCollision collision in raycast.Collisions)
+            this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
 
         if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
         {
@@ -170,6 +180,9 @@ public class Bullet : Actor2D
                 // Raycast the bounce shot
                 raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
                 this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+                
+                foreach (CollisionManager.RaycastCollision collision in raycast.Collisions)
+                    this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
 
                 distanceTravelled = raycast.FarthestPointReached - origin;
                 distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
@@ -179,11 +192,14 @@ public class Bullet : Actor2D
 
     private void triggerExplosion(Vector3 position)
     {
-        GameObject bullet = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
-        bullet.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer);
+        _hasExploded = true;
+        GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
+        explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer);
     }
     
     private static LayerMask MISSILE_LAYERS = 0;
+    private static LayerMask VULNERABLE_LAYERS = 0;
+
     private static LayerMask GetMissileLayers()
     {
         if (MISSILE_LAYERS == 0)
@@ -199,5 +215,22 @@ public class Bullet : Actor2D
         }
 
         return MISSILE_LAYERS;
+    }
+
+    private static LayerMask GetVulnerableLayers()
+    {
+        if (VULNERABLE_LAYERS == 0)
+        {
+            List<string> vulnerableLayerNames = new List<string>();
+            for (int i = 8; i < 32; ++i)
+            {
+                string layerName = LayerMask.LayerToName(i);
+                if (layerName.Contains("Vulnerable"))
+                    vulnerableLayerNames.Add(layerName);
+            }
+            VULNERABLE_LAYERS = LayerMask.GetMask(vulnerableLayerNames.ToArray());
+        }
+
+        return VULNERABLE_LAYERS;
     }
 }

@@ -13,11 +13,11 @@ public class Actor2D : VoBehavior
     public virtual void Update()
     {
         Vector2 modifiedVelocity = this.Velocity;
-        foreach (Vector2 modifier in _velocityModifiers.Values)
-            modifiedVelocity += modifier;
+        foreach (VelocityModifier modifier in _velocityModifiers.Values)
+            modifiedVelocity += modifier.Modifier;
 
-        if (this.Velocity.x != 0.0f || this.Velocity.y != 0.0f)
-            Move(this.Velocity * Time.deltaTime);
+        if (modifiedVelocity.x != 0.0f || modifiedVelocity.y != 0.0f)
+            Move(modifiedVelocity * Time.deltaTime);
     }
 
     public void Move(Vector2 d)
@@ -64,8 +64,18 @@ public class Actor2D : VoBehavior
                 break;
         }
 
-        if (_haltX) this.Velocity.x = 0;
-        if (_haltY) this.Velocity.y = 0;
+        if (_haltX)
+        {
+            this.Velocity.x = 0;
+            foreach (VelocityModifier modifier in _velocityModifiers.Values)
+                modifier.CollideX();
+        }
+        if (_haltY)
+        {
+            this.Velocity.y = 0;
+            foreach (VelocityModifier modifier in _velocityModifiers.Values)
+                modifier.CollideY();
+        }
 
         if (_collisionsFromMove.Count > 0)
         {
@@ -76,10 +86,13 @@ public class Actor2D : VoBehavior
             _horizontalCollisions.Clear();
             _verticalCollisions.Clear();
             this.localNotifier.SendEvent(new CollisionEvent(collisions, oldVelocity, soFar));
+
+            foreach (GameObject collision in collisions)
+                this.localNotifier.SendEvent(new HitEvent(collision));
         }
     }
 
-    public void SetVelocityModifier(string key, Vector2 v)
+    public void SetVelocityModifier(string key, VelocityModifier v)
     {
         if (_velocityModifiers.ContainsKey(key))
             _velocityModifiers[key] = v;
@@ -87,11 +100,11 @@ public class Actor2D : VoBehavior
             _velocityModifiers.Add(key, v);
     }
 
-    public Vector2 GetVelocityModifier(string key)
+    public VelocityModifier GetVelocityModifier(string key)
     {
         if (_velocityModifiers.ContainsKey(key))
             return _velocityModifiers[key];
-        return Vector2.zero;
+        return VelocityModifier.Zero;
     }
 
     public void RemoveVelocityModifier(string key)
@@ -106,7 +119,7 @@ public class Actor2D : VoBehavior
     private List<GameObject> _collisionsFromMove = new List<GameObject>();
     private List<GameObject> _horizontalCollisions = new List<GameObject>();
     private List<GameObject> _verticalCollisions = new List<GameObject>();
-    private Dictionary<string, Vector2> _velocityModifiers = new Dictionary<string, Vector2>();
+    private Dictionary<string, VelocityModifier> _velocityModifiers = new Dictionary<string, VelocityModifier>();
     private bool _haltX;
     private bool _haltY;
     
