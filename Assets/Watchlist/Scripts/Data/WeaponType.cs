@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Xml;
+using System.Text;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
@@ -76,7 +77,7 @@ public class WeaponData
     public void Save(string path)
     {
         var serializer = new XmlSerializer(typeof(WeaponData));
-        using (var stream = new FileStream(path, FileMode.Create))
+        using (StreamWriter stream = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
         {
             serializer.Serialize(stream, this);
         }
@@ -86,6 +87,7 @@ public class WeaponData
     {
         WeaponData weaponData = null;
         var serializer = new XmlSerializer(typeof(WeaponData));
+
         using (var stream = new FileStream(path, FileMode.Open))
         {
             weaponData = serializer.Deserialize(stream) as WeaponData;

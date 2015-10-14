@@ -6,7 +6,6 @@ public class EnemyShooter : VoBehavior
     public float LookAtRange = 30.0f;
     public float ShootRange = 20.0f;
     public float ShotStartDistance = 0.0f;
-    public GameObject BulletPrefab;
     public Transform[] Targets;
     public bool YIsUp = false;
 
@@ -47,7 +46,6 @@ public class EnemyShooter : VoBehavior
             aimAxis.Normalize();
 
             float angle = Vector2.Angle(Vector2.up, aimAxis);
-            //float angle = Vector2.Angle(ourPosition, theirPosition);
             if ((this.YIsUp && theirPosition.x - ourPosition.x > 0.0f) || (!this.YIsUp && theirPosition.x - ourPosition.x < 0.0f))
                 angle = -angle;
 

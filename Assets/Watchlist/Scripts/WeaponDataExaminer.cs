@@ -14,7 +14,7 @@ public class WeaponDataExaminer : MonoBehaviour
     public void Save()
     {
         StaticData.WeaponData.WeaponTypeArray = this.WeaponTypes;
-        StaticData.WeaponData.Save(Path.Combine(Application.dataPath, StaticData.WEAPON_DATA_PATH));
+        StaticData.WeaponData.Save(Path.Combine(Application.streamingAssetsPath, StaticData.WEAPON_DATA_PATH));
         StaticData.ResetData();
     }
 }
