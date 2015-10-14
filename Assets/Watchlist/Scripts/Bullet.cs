@@ -140,8 +140,10 @@ public class Bullet : Actor2D
         IntegerVector origin = this.integerPosition;
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
-        
-        foreach (CollisionManager.RaycastCollision collision in raycast.Collisions)
+
+        Vector2 castDifference = raycast.FarthestPointReached - origin;
+        CollisionManager.RaycastResult passThroughCast = this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
+        foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
             this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
 
         if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
@@ -180,8 +182,10 @@ public class Bullet : Actor2D
                 // Raycast the bounce shot
                 raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
                 this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
-                
-                foreach (CollisionManager.RaycastCollision collision in raycast.Collisions)
+
+                castDifference = raycast.FarthestPointReached - raycastOrigin;
+                passThroughCast = this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
+                foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
                     this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
 
                 distanceTravelled = raycast.FarthestPointReached - origin;

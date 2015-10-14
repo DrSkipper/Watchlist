@@ -60,8 +60,13 @@ public class Damagable : VoBehavior
         if (this.Invincible && _invincibilityTimer <= 0.0f)
         {
             this.Invincible = false;
-            _actor.CollisionMask = _nonInvincibleCollisionMask;
-            _actor.RemoveVelocityModifier(VELOCITY_MODIFIER_KEY);
+
+            if (!this.Stationary)
+            {
+                _actor.CollisionMask = _nonInvincibleCollisionMask;
+                _actor.RemoveVelocityModifier(VELOCITY_MODIFIER_KEY);
+            }
+
             this.integerCollider.AddToCollisionPool();
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(false));
         }
@@ -89,12 +94,13 @@ public class Damagable : VoBehavior
                 difference.Normalize();
                 otherV.Normalize();
                 _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier((difference + otherV).normalized * other.Knockback, VelocityModifier.CollisionBehavior.bounce));
+
+                _nonInvincibleCollisionMask = _actor.CollisionMask;
+                _actor.CollisionMask = this.InvincibilityCollisionMask;
             }
 
             this.Invincible = true;
             _invincibilityTimer = other.HitInvincibilityDuration;
-            _nonInvincibleCollisionMask = _actor.CollisionMask;
-            _actor.CollisionMask = this.InvincibilityCollisionMask;
             this.integerCollider.RemoveFromCollisionPool();
 
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(true));

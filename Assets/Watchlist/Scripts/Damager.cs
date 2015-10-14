@@ -8,7 +8,7 @@ public class Damager : VoBehavior
     public int Knockback = 1;
     public float HitInvincibilityDuration = 1.0f;
 
-    void Start()
+    void Awake()
     {
         this.localNotifier.Listen(HitEvent.NAME, this, this.OnHit);
     }

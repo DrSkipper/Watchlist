@@ -196,6 +196,105 @@ public class CollisionManager : VoBehavior
         return result;
     }
 
+    public RaycastResult Raycast(IntegerVector origin, Vector2 direction, float range = 100000.0f, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
+    {
+        Vector2 d = direction * range;
+        IntegerVector halfwayPoint = new IntegerVector(d / 2.0f) + origin;
+        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(d.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(d.y) + 2.5f));
+        List<IntegerCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
+
+        Vector2 positionModifier = Vector2.zero;
+        IntegerVector position = origin;
+
+        float incX = d.x;
+        float incY = d.y;
+
+        if (Mathf.Abs(incX) > RAYCAST_MAX_POSITION_INCREMENT || Mathf.Abs(incY) > RAYCAST_MAX_POSITION_INCREMENT)
+        {
+            Vector2 dNormalized = d.normalized * RAYCAST_MAX_POSITION_INCREMENT;
+            incX = dNormalized.x;
+            incY = dNormalized.y;
+        }
+
+        Vector2 projected = Vector2.zero;
+        Vector2 soFar = Vector2.zero;
+        float dMagnitude = d.magnitude;
+        RaycastResult result = new RaycastResult();
+        List<RaycastCollision> collisions = new List<RaycastCollision>();
+        bool endReached = false;
+
+        while (true)
+        {
+            projected.x += incX;
+            projected.y += incY;
+
+            if (projected.magnitude > dMagnitude)
+            {
+                incX = d.x - soFar.x;
+                incY = d.y - soFar.y;
+                endReached = true;
+            }
+
+            positionModifier.x += incX;
+            int move = (int)positionModifier.x;
+
+            positionModifier.x -= move;
+            int unitDir = Math.Sign(move);
+
+            while (move != 0)
+            {
+                IntegerVector checkPos = new IntegerVector(position.X + unitDir, position.Y);
+                GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
+                if (collision)
+                {
+                    possibleCollisions.Remove(collision.GetComponent<IntegerCollider>());
+                    RaycastCollision hit = new RaycastCollision();
+                    hit.CollidedObject = collision;
+                    hit.CollisionPoint = position;
+                    hit.CollidedX = true;
+                    collisions.Add(hit);
+                }
+
+                position = checkPos;
+                move -= unitDir;
+            }
+
+            positionModifier.y += incY;
+            move = (int)positionModifier.y;
+
+            positionModifier.y -= move;
+            unitDir = Math.Sign(move);
+
+            while (move != 0)
+            {
+                IntegerVector checkPos = new IntegerVector(position.X, position.Y + unitDir);
+                GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
+                if (collision)
+                {
+                    possibleCollisions.Remove(collision.GetComponent<IntegerCollider>());
+                    RaycastCollision hit = new RaycastCollision();
+                    hit.CollidedObject = collision;
+                    hit.CollisionPoint = position;
+                    hit.CollidedY = true;
+                    collisions.Add(hit);
+                }
+
+                position = checkPos;
+                move -= unitDir;
+            }
+
+            if (endReached)
+                break;
+
+            soFar.x = projected.x;
+            soFar.y = projected.y;
+        }
+
+        result.Collisions = collisions.ToArray();
+        result.FarthestPointReached = position;
+        return result;
+    }
+
     /**
      * Private
      */
