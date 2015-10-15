@@ -14,7 +14,8 @@ public class Explosion : VoBehavior
         this.gameObject.layer = layer;
         _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter1;
         _growthRate = _finalRadius / this.ExplosionDuration;
-        
+
+        _circleRenderer = this.GetComponent<CircleRenderer>();
         _damager = this.GetComponent<Damager>();
         _damager.DamagableLayers = damagableLayers;
         _damager.Damage = weaponType.Damage;
@@ -33,6 +34,7 @@ public class Explosion : VoBehavior
             _trueRadius += _growthRate * Time.deltaTime;
             IntegerCircleCollider circleCollider = this.integerCollider as IntegerCircleCollider;
             circleCollider.Radius = Mathf.RoundToInt(_trueRadius);
+            _circleRenderer.Radius = _trueRadius;
 
             int prevCount = _collisions.Count;
             circleCollider.Collide(_collisions, 0, 0, _damager.DamagableLayers);
@@ -56,5 +58,6 @@ public class Explosion : VoBehavior
     private float _finalRadius;
     private bool _destructionScheduled;
     private Damager _damager;
+    private CircleRenderer _circleRenderer;
     private List<GameObject> _collisions = new List<GameObject>();
 }
