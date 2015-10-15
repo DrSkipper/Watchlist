@@ -3,7 +3,7 @@
 public static class GameplayInput
 {
     //TODO - Calculates things like axes in pre update?
-    public static Vector2 GetMovementAxis()
+    public static Vector2 GetMovementAxis(bool normalized = false)
     {
         Vector2 movementAxis = new Vector2();
 
@@ -33,12 +33,15 @@ public static class GameplayInput
             // Use controller input
             movementAxis.x = Input.GetAxis("Horizontal");
             movementAxis.y = Input.GetAxis("Vertical");
+
+            if (normalized)
+                movementAxis.Normalize();
         }
 
         return movementAxis;
     }
 
-    public static Vector2 GetAimingAxis()
+    public static Vector2 GetAimingAxis(bool normalized = true)
     {
         Vector2 aimAxis = new Vector2();
 
@@ -68,7 +71,9 @@ public static class GameplayInput
             // Use controller input
             aimAxis.x = Input.GetAxis("Horizontal 2");
             aimAxis.y = Input.GetAxis("Vertical 2");
-            aimAxis.Normalize();
+
+            if (normalized)
+                aimAxis.Normalize();
         }
 
         return aimAxis;
