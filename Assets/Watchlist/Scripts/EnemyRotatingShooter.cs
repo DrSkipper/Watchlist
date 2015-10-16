@@ -7,6 +7,7 @@ public class EnemyRotatingShooter : VoBehavior
     public float ShootRange = 20.0f;
     public float ShotStartDistance = 0.0f;
     public float RotationSpeed = 180.0f;
+    public float ShotRotationOffset = 45.0f;
     public Transform[] Targets;
     public bool YIsUp = false;
 
@@ -50,17 +51,9 @@ public class EnemyRotatingShooter : VoBehavior
             // If close enough, shoot at the target
             if (_weapon != null && distance < this.ShootRange)
             {
-                float rad = _currentAngle * Mathf.PI / 180.0f;
-                //float halfPi = Mathf.PI / 2.0f;
-                Vector2 forward = new Vector2(Mathf.Cos(rad), Mathf.Sign(rad));
-                //Vector2 right = new Vector2(Mathf.Cos(rad + halfPi), Mathf.Sin(rad + halfPi));
-                //Vector2 left = new Vector2(Mathf.Cos(rad - halfPi), Mathf.Sin(rad - halfPi));
-                //Vector2 back = new Vector2(Mathf.Cos(rad + Mathf.PI), Mathf.Sin(rad + Mathf.PI));
-
+                float rad = (_currentAngle + this.ShotRotationOffset) * Mathf.Deg2Rad;
+                Vector2 forward = new Vector2(Mathf.Sin(rad), -Mathf.Cos(rad)).normalized;
                 _weapon.Fire(forward, this.ShotStartDistance);
-                //_weapon.Fire(right, this.ShotStartDistance);
-                //_weapon.Fire(left, this.ShotStartDistance);
-                //_weapon.Fire(back, this.ShotStartDistance);
             }
         }
     }
