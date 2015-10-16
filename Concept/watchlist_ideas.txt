@@ -1,10 +1,10 @@
 Watchlist ideas:
 
 Weapon to enemy type counters:
-Bounce shot (same shot timer as normal) => stationary enemies (especially that shoot at player)
-Spread shot (slightly slower shot timer) => many small low health enemies, zig zag enemies
-Laser (penetrates, fast shot, slower shot timer, ) => enemies in lines or with shields
-Bomb (slow moving and slows over time, slowest shot timer, high damage) => Large, slow, high HP enemies
+Bounce shot (same shot timer as normal) => stationary enemies (especially that shoot at player). Good in areas with cover, angles.
+Spread shot (slightly slower shot timer) => many small low health enemies, zig zag enemies. Good in open areas.
+Laser (penetrates, fast shot, slower shot timer, ) => enemies in lines or with shields. Good at a distance, in straight lines, narrow cooridoors.
+Bomb (slow moving and slows over time, slowest shot timer, high damage) => Large, slow, high HP enemies. Good in open areas with some cover.
 
 Weapon concept idea:
 Have two weapon slots, but they bascially combine for weapon effect.
