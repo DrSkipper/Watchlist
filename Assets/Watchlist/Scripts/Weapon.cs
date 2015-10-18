@@ -42,10 +42,12 @@ public class Weapon : VoBehavior
                 }
             }
         }
-        else
-        {
+    }
+
+    void Update()
+    {
+        if (_shotCooldown > 0.0f)
             _shotCooldown -= Time.deltaTime;
-        }
     }
 
     /**

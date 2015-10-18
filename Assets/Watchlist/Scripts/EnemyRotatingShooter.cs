@@ -8,7 +8,11 @@ public class EnemyRotatingShooter : VoBehavior
     public float ShotStartDistance = 0.0f;
     public float RotationSpeed = 180.0f;
     public float ShotRotationOffset = 45.0f;
+    public int RotationDirection = 1;
     public Transform[] Targets;
+    public float PauseAngle = 45.0f;
+    public float PauseDuration = 0.0f;
+    public bool OnlyShootOnPause = false;
     public bool YIsUp = false;
 
     void Start()
@@ -45,11 +49,32 @@ public class EnemyRotatingShooter : VoBehavior
         // Rotate by rotation speed
         if (distance < this.SpinRange)
         {
-            _currentAngle = _currentAngle + (this.RotationSpeed * Time.deltaTime) % 360.0f;
-            this.transform.localRotation = Quaternion.AngleAxis(_currentAngle % 360.0f, _rotationAxis);
+            if (!_paused)
+            {
+                float additionalAngle = this.RotationDirection * this.RotationSpeed * Time.deltaTime;
+                float distSincePause = _distanceSincePause + additionalAngle;
+
+                if (_usesPauses && distSincePause >= this.PauseAngle)
+                {
+                    additionalAngle = this.PauseAngle - _distanceSincePause;
+                    _distanceSincePause = 0.0f;
+                    _pauseTimer = this.PauseDuration;
+                }
+                else
+                {
+                    _distanceSincePause = distSincePause;
+                }
+
+                _currentAngle = (_currentAngle + additionalAngle) % 360.0f;
+                this.transform.localRotation = Quaternion.AngleAxis(_currentAngle, _rotationAxis);
+            }
+            else
+            {
+                _pauseTimer -= Time.deltaTime;
+            }
 
             // If close enough, shoot at the target
-            if (_weapon != null && distance < this.ShootRange)
+            if (_weapon != null && distance < this.ShootRange && (!this.OnlyShootOnPause || (this.OnlyShootOnPause && _paused)))
             {
                 float rad = (_currentAngle + this.ShotRotationOffset) * Mathf.Deg2Rad;
                 Vector2 forward = new Vector2(Mathf.Sin(rad), -Mathf.Cos(rad)).normalized;
@@ -64,4 +89,10 @@ public class EnemyRotatingShooter : VoBehavior
     private Vector3 _rotationAxis;
     private Weapon _weapon;
     private float _currentAngle;
+    private float _distanceSincePause;
+    private bool _pausing;
+    private float _pauseTimer;
+
+    private bool _usesPauses { get { return this.PauseDuration > 0.0f; } }
+    private bool _paused { get { return _pauseTimer > 0.0f; } }
 }
