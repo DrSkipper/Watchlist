@@ -8,8 +8,6 @@ public class Bullet : Actor2D
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
     public GameObject ExplosionPrefab;
 
-    public const int BOUNCE_DETECTION_RANGE = 1;
-
     public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, string allegiance)
     {
         this.WeaponType = weaponType;
@@ -109,31 +107,8 @@ public class Bullet : Actor2D
     private void bounce(GameObject hit, Vector2 origVelocity, Vector2 appliedVelocity)
     {
         --_bouncesRemaining;
-        this.Velocity = origVelocity;
-        float remainingSpeed = (origVelocity * Time.deltaTime - appliedVelocity).magnitude;
-
-        int unitDirX = Math.Sign(origVelocity.x) * BOUNCE_DETECTION_RANGE;
-        int unitDirY = Math.Sign(origVelocity.y) * BOUNCE_DETECTION_RANGE;
-
-        bool verticalPlane = unitDirX != 0 && this.integerCollider.CollideFirst(unitDirX, 0, this.BounceLayerMask) != null;
-        bool horizontalPlane = unitDirY != 0 && this.integerCollider.CollideFirst(0, unitDirY, this.BounceLayerMask) != null;
-
-        if (verticalPlane)
-            this.Velocity.x = -this.Velocity.x;
-
-        if (horizontalPlane)
-            this.Velocity.y = -this.Velocity.y;
-
-        // Only continue the bounce if our angle is within bounce range
-        if (Mathf.Abs(180.0f - Vector2.Angle(origVelocity, this.Velocity)) < this.WeaponType.MinimumBounceAngle)
-        {
-            this.Velocity = Vector2.zero;
+        if (!this.Bounce(hit, origVelocity, appliedVelocity, this.BounceLayerMask, this.WeaponType.MinimumBounceAngle))
             scheduleDestruction(this.transform.position);
-        }
-        else
-        {
-            this.Move(this.Velocity.normalized * remainingSpeed);
-        }
     }
 
     private void handleLaserCast(Vector2 direction)

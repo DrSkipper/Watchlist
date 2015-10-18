@@ -8,7 +8,7 @@ public class EnemyRotatingShooter : VoBehavior
     public float ShotStartDistance = 0.0f;
     public float RotationSpeed = 180.0f;
     public float ShotRotationOffset = 45.0f;
-    public int RotationDirection = 1;
+    public int[] PossibleRotationDirections = { 1, -1 };
     public Transform[] Targets;
     public float PauseAngle = 45.0f;
     public float PauseDuration = 0.0f;
@@ -20,6 +20,7 @@ public class EnemyRotatingShooter : VoBehavior
         _currentAngle = this.InitialAngle;
         _rotationAxis = this.YIsUp ? new Vector3(0, 0, 1) : new Vector3(0, 1, 0);
         _weapon = this.GetComponent<Weapon>();
+        _rotationDirection = this.PossibleRotationDirections[Random.Range(0, this.PossibleRotationDirections.Length)];
     }
 
     void Update()
@@ -51,7 +52,7 @@ public class EnemyRotatingShooter : VoBehavior
         {
             if (!_paused)
             {
-                float additionalAngle = this.RotationDirection * this.RotationSpeed * Time.deltaTime;
+                float additionalAngle = _rotationDirection * this.RotationSpeed * Time.deltaTime;
                 float distSincePause = _distanceSincePause + additionalAngle;
 
                 if (_usesPauses && distSincePause >= this.PauseAngle)
@@ -92,6 +93,7 @@ public class EnemyRotatingShooter : VoBehavior
     private float _distanceSincePause;
     private bool _pausing;
     private float _pauseTimer;
+    private int _rotationDirection;
 
     private bool _usesPauses { get { return this.PauseDuration > 0.0f; } }
     private bool _paused { get { return _pauseTimer > 0.0f; } }

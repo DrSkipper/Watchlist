@@ -9,6 +9,7 @@ public class Actor2D : VoBehavior
     public LayerMask CollisionMask;
 
     public const float MAX_POSITION_INCREMENT = 1.0f;
+    public const int BOUNCE_DETECTION_RANGE = 1;
 
     public virtual void Update()
     {
@@ -110,6 +111,35 @@ public class Actor2D : VoBehavior
     public void RemoveVelocityModifier(string key)
     {
         _velocityModifiers.Remove(key);
+    }
+
+
+    public bool Bounce(GameObject hit, Vector2 origVelocity, Vector2 appliedVelocity, LayerMask bounceLayerMask, float minimumBounceAngle)
+    {
+        this.Velocity = origVelocity;
+        float remainingSpeed = (origVelocity * Time.deltaTime - appliedVelocity).magnitude;
+
+        int unitDirX = Math.Sign(origVelocity.x) * BOUNCE_DETECTION_RANGE;
+        int unitDirY = Math.Sign(origVelocity.y) * BOUNCE_DETECTION_RANGE;
+
+        bool verticalPlane = unitDirX != 0 && this.integerCollider.CollideFirst(unitDirX, 0, bounceLayerMask) != null;
+        bool horizontalPlane = unitDirY != 0 && this.integerCollider.CollideFirst(0, unitDirY, bounceLayerMask) != null;
+
+        if (verticalPlane)
+            this.Velocity.x = -this.Velocity.x;
+
+        if (horizontalPlane)
+            this.Velocity.y = -this.Velocity.y;
+
+        // Only continue the bounce if our angle is within bounce range
+        if (Mathf.Abs(180.0f - Vector2.Angle(origVelocity, this.Velocity)) < minimumBounceAngle)
+        {
+            this.Velocity = Vector2.zero;
+            return false;
+        }
+
+        this.Move(this.Velocity.normalized * remainingSpeed);
+        return true;
     }
 
     /**
