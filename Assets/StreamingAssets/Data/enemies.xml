@@ -5,6 +5,7 @@
       <Name>Stationary Look At 1</Name>
       <Id>1000001</Id>
       <PrefabName>generic</PrefabName>
+      <SpriteName>enemy_04</SpriteName>
       <Health>5</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -25,6 +26,7 @@
       <Name>Constant Rotating 1</Name>
       <Id>1000002</Id>
       <PrefabName>generic</PrefabName>
+      <SpriteName>enemy_02</SpriteName>
       <Health>5</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -32,7 +34,7 @@
       <SpinRange>300</SpinRange>
       <LookAtRange>0</LookAtRange>
       <ShootRange>280</ShootRange>
-      <ShotStartDistance>0</ShotStartDistance>
+      <ShotStartDistance>4</ShotStartDistance>
       <RotationSpeed>45</RotationSpeed>
       <RotationOffset>45</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>
@@ -45,6 +47,7 @@
       <Name>Pause Rotating 1</Name>
       <Id>1000003</Id>
       <PrefabName>generic</PrefabName>
+      <SpriteName>enemy_02</SpriteName>
       <Health>5</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -52,7 +55,7 @@
       <SpinRange>300</SpinRange>
       <LookAtRange>0</LookAtRange>
       <ShootRange>280</ShootRange>
-      <ShotStartDistance>0</ShotStartDistance>
+      <ShotStartDistance>4</ShotStartDistance>
       <RotationSpeed>180</RotationSpeed>
       <RotationOffset>45</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>
@@ -65,6 +68,7 @@
       <Name>Disc 1</Name>
       <Id>1000004</Id>
       <PrefabName>generic_motion</PrefabName>
+      <SpriteName>enemy_03</SpriteName>
       <Health>5</Health>
       <Friction>150</Friction>
       <MaxSpeed>140</MaxSpeed>

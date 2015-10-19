@@ -7,6 +7,7 @@ public class GenericEnemy : VoBehavior
     public Vector2[] PossibleStartingVelocities;
     public Transform[] Targets;
     public LayerMask BounceLayerMask;
+    public Texture2D SpriteSheet;
     public bool UseDebugWeapon = false;
 
     public WeaponType WeaponType { get {
@@ -55,6 +56,8 @@ public class GenericEnemy : VoBehavior
             damagable.Health = this.EnemyType.Health;
             damagable.Friction = this.EnemyType.Friction;
         }
+
+        this.spriteRenderer.sprite = this.SpriteSheet.GetSprites()[this.EnemyType.SpriteName];
     }
 
     void Update()
