@@ -49,6 +49,7 @@ public class GenericEnemy : VoBehavior
     {
         float distance = MAX_DISTANCE;
         Vector2 aimAxis = Vector2.zero;
+        Vector2 forward = Vector2.zero;
 
         // Find the closest target
         if (this.Targets.Length > 0)
@@ -91,6 +92,7 @@ public class GenericEnemy : VoBehavior
         if (distance < this.LookAtRange)
         {
             aimAxis.Normalize();
+            forward = aimAxis;
 
             _currentAngle = Vector2.Angle(Vector2.up, aimAxis);
             if (aimAxis.x > 0.0f)
@@ -105,7 +107,7 @@ public class GenericEnemy : VoBehavior
         {
             if (!_paused)
             {
-                float additionalAngle = _rotationDirection * this.RotationSpeed * Time.deltaTime;
+                float additionalAngle = this.RotationSpeed * Time.deltaTime;
                 float distSincePause = _distanceSincePause + additionalAngle;
 
                 if (_usesPauses && distSincePause >= this.PauseAngle)
@@ -118,8 +120,8 @@ public class GenericEnemy : VoBehavior
                 {
                     _distanceSincePause = distSincePause;
                 }
-
-                _currentAngle = (_currentAngle + additionalAngle) % 360.0f;
+                
+                _currentAngle = (_currentAngle + additionalAngle * _rotationDirection) % 360.0f;
                 this.transform.localRotation = Quaternion.AngleAxis(_currentAngle, _rotationAxis);
             }
             else
@@ -131,10 +133,9 @@ public class GenericEnemy : VoBehavior
         // If close enough, shoot at the target
         if (_weapon != null && distance < this.ShootRange && (!this.OnlyShootOnPause || (this.OnlyShootOnPause && _paused)))
         {
-            Vector2 forward = aimAxis;
             if (forward.x == 0.0f && forward.y == 0.0f)
             {
-                float rad = (_currentAngle + this.RotationOffset) * Mathf.Deg2Rad;
+                float rad = (_currentAngle + this.RotationOffset + 180.0f) * Mathf.Deg2Rad;
                 forward = new Vector2(Mathf.Sin(rad), -Mathf.Cos(rad)).normalized;
             }
             _weapon.Fire(forward, this.ShotStartDistance);
@@ -162,7 +163,6 @@ public class GenericEnemy : VoBehavior
     private Weapon _weapon;
     private float _currentAngle;
     private float _distanceSincePause;
-    private bool _pausing;
     private float _pauseTimer;
     private int _rotationDirection;
 

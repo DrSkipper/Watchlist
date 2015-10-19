@@ -15,3 +15,7 @@ Example:
 - Pick up a spread shot, it fills slot 2 (least recent filled? or maybe you can highlight which one to fill?). You now shoot 3 bullets at once, and they each bounce once.
 - I think maybe bombs bascially make your bullets large, slow down your shot timer, and lose velocity over time after shot fairly quickly so they'll sorta slide and slow down, blink a bit and explode.
 - Possible you start with one slot, gain another after beating x levels, gain a third after beating y levels.
+
+perturbator
+Night Business
+War Against Machines
