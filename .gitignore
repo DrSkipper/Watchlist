@@ -69,3 +69,4 @@ Assets/UIAttributes/.hg/
 Assets/UIAttributes/.hgignore
 
 *.suo
+.~lock.*

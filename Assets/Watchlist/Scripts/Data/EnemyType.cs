@@ -9,6 +9,8 @@ public class EnemyType
     public string Name = "blank enemy";
     public int Id;
     public string PrefabName = "generic";
+    public int Health = 5;
+    public float Friction = 150.0f;
     public float MaxSpeed = 140.0f;
     public float Acceleration = 280.0f;
     public float SpinRange = 40.0f;

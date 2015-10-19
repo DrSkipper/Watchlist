@@ -1,5 +1,5 @@
-Name,Id,PrefabName,MaxSpeed,Acceleration,SpinRange,LookAtRange,ShootRange,ShotStartDistance,RotationSpeed,RotationOffset,OnlyShootOnPause,PauseAngle,PauseDuration,WeaponTypeId,CollisionWeaponTypeId
-Stationary Look At 1,1000001,generic,0,0,0,300,280,4,0,0,false,45,0,2000001,0
-Constant Rotating 1,1000002,generic,0,0,40,30,20,0,180,45,false,45,0,2000003,0
-Pause Rotating 1,1000003,generic,0,0,40,30,20,0,180,45,false,45,0,2000002,0
-Disc 1,1000004,generic,140,280,40,30,20,0,180,45,false,45,0,0,2000004
+Name,Id,PrefabName,Health,Friction,MaxSpeed,Acceleration,SpinRange,LookAtRange,ShootRange,ShotStartDistance,RotationSpeed,RotationOffset,OnlyShootOnPause,PauseAngle,PauseDuration,WeaponTypeId,CollisionWeaponTypeId
+Stationary Look At 1,1000001,generic,5,150,0,0,0,300,280,4,0,0,false,45,0,2000001,0
+Constant Rotating 1,1000002,generic,5,150,0,0,300,0,280,0,45,45,false,45,0,2000003,0
+Pause Rotating 1,1000003,generic,5,150,0,0,300,0,280,0,180,45,false,45,0,2000002,0
+Disc 1,1000004,generic_motion,5,150,140,280,999999,0,0,0,180,45,false,45,0,0,2000004
