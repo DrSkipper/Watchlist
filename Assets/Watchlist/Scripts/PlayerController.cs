@@ -57,7 +57,10 @@ public class PlayerController : Actor2D
         {
             Vector2 aimAxis = GameplayInput.GetAimingAxis();
             if (aimAxis.x != 0 || aimAxis.y != 0)
-                _weapon.Fire(aimAxis, this.ShotStartDistance);
+            {
+                if (GameplayInput.GetFireButton())
+                    _weapon.Fire(aimAxis, this.ShotStartDistance);
+            }
         }
     }
 

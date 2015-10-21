@@ -28,7 +28,7 @@ public static class GameplayInput
             movementAxis.y = y;
         }
 
-        else
+        if (movementAxis.x == 0.0f && movementAxis.y == 0.0f)
         {
             // Use controller input
             movementAxis.x = Input.GetAxis("Horizontal");
@@ -66,7 +66,7 @@ public static class GameplayInput
             aimAxis.y = y;
         }
 
-        else
+        if (aimAxis.x == 0.0f && aimAxis.y == 0.0f)
         {
             // Use controller input
             aimAxis.x = Input.GetAxis("Horizontal 2");
@@ -77,5 +77,10 @@ public static class GameplayInput
         }
 
         return aimAxis;
+    }
+
+    public static bool GetFireButton()
+    {
+        return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Fire1") > 0.0f;
     }
 }
