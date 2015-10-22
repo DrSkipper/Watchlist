@@ -50,7 +50,7 @@ public class TileGeometryCreator : VoBehavior
         if (this.GeometryPrefabs.Cross != null) _geometryPrefabs["cross"] = this.GeometryPrefabs.Cross;
         if (this.GeometryPrefabs.TipBottom != null) _geometryPrefabs["tip_top"] = this.GeometryPrefabs.TipBottom;
         if (this.GeometryPrefabs.TipLeft != null) _geometryPrefabs["tip_left"] = this.GeometryPrefabs.TipLeft;
-        if (this.GeometryPrefabs.TipTop != null) _geometryPrefabs["tip_bottom"] = this.GeometryPrefabs.TipRight;
+        if (this.GeometryPrefabs.TipTop != null) _geometryPrefabs["tip_bottom"] = this.GeometryPrefabs.TipTop;
         if (this.GeometryPrefabs.TipRight != null) _geometryPrefabs["tip_right"] = this.GeometryPrefabs.TipRight;
         if (this.GeometryPrefabs.Lone != null) _geometryPrefabs["lone"] = this.GeometryPrefabs.Lone;
     }
