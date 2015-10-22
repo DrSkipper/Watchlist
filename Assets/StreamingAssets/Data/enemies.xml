@@ -58,9 +58,9 @@
       <ShotStartDistance>4</ShotStartDistance>
       <RotationSpeed>180</RotationSpeed>
       <RotationOffset>45</RotationOffset>
-      <OnlyShootOnPause>false</OnlyShootOnPause>
+      <OnlyShootOnPause>true</OnlyShootOnPause>
       <PauseAngle>45</PauseAngle>
-      <PauseDuration>0</PauseDuration>
+      <PauseDuration>0.5</PauseDuration>
       <WeaponTypeId>2000002</WeaponTypeId>
       <CollisionWeaponTypeId>0</CollisionWeaponTypeId>
     </EnemyType>
