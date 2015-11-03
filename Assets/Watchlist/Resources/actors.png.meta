@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ac217e1c4aad6b54b84ccb1a68684001
-timeCreated: 1443408443
+timeCreated: 1446524901
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,11 @@ TextureImporter:
     21300010: player_bullet
     21300012: player_reticle
     21300014: enemy_04
+    21300016: pickup_bounce
+    21300018: pickup_bomb
+    21300020: pickup_spread
+    21300022: pickup_laser
+    21300024: pickup_empty
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -137,6 +142,56 @@ TextureImporter:
         height: 4
       alignment: 9
       pivot: {x: .5, y: .375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pickup_bounce
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pickup_bomb
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pickup_spread
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pickup_laser
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pickup_empty
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

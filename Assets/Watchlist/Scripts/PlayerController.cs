@@ -11,6 +11,7 @@ public class PlayerController : Actor2D
     public float ShotStartDistance = 1.0f;
     public WeaponData.Slot[] Slots = { WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty };
     public int WeaponTypeId = 1; // Exposed for debugging
+    public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
 
     void Start()
@@ -18,9 +19,8 @@ public class PlayerController : Actor2D
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
 
-        this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
-        if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
-            _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
+        this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
+        updateSlots();
     }
 
     public override void Update()
@@ -64,9 +64,56 @@ public class PlayerController : Actor2D
         }
     }
 
+    public void OnCollide(LocalEventNotifier.Event localEvent)
+    {
+        foreach (GameObject hit in ((CollisionEvent)localEvent).Hits)
+        {
+            if (((1 << hit.layer) & this.PickupLayer) != 0)
+            {
+                WeaponPickup pickup = hit.GetComponent<WeaponPickup>();
+                if (pickup != null)
+                    pickupWeaponSlot(pickup.SlotType);
+
+                Destroy(hit);
+            }
+        }
+    }
+
     /**
      * Private
      */
+    private int _selectedSlot;
     private float _acceleration;
     private Weapon _weapon;
+
+    private void pickupWeaponSlot(WeaponData.Slot slotType)
+    {
+        bool found = false;
+
+        for (int i = 0; i < this.Slots.Length; ++i)
+        {
+            if (this.Slots[i] == WeaponData.Slot.Empty)
+            {
+                found = true;
+                this.Slots[i] = slotType;
+                _selectedSlot = i + 1 >= this.Slots.Length ? 0 : i + 1;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            this.Slots[_selectedSlot] = slotType;
+            _selectedSlot = _selectedSlot + 1 >= this.Slots.Length ? 0 : _selectedSlot + 1;
+        }
+
+        updateSlots();
+    }
+
+    private void updateSlots()
+    {
+        this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
+        if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
+            _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
+    }
 }

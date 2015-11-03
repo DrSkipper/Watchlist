@@ -4,10 +4,12 @@ public class EnemySpawner : VoBehavior
 {
     public int[] SpawnPool; // If empty, we assume entire enemy pool
     public float SpawnCooldown = 0.0f; // If 0, wait until Spawn is called externally
+    public float SpawnDelay = 0.0f;
     public Transform[] Targets;
 
     public GameObject GenericPrefab;
     public GameObject GenericMotionPrefab;
+    public GameObject SpawnVisualPrefab;
 
     void Update()
     {
@@ -35,6 +37,13 @@ public class EnemySpawner : VoBehavior
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();
         enemyComponent.EnemyType = enemy;
         enemyComponent.Targets = this.Targets;
+
+        if (this.SpawnVisualPrefab != null)
+        {
+            GameObject visual = Instantiate(this.SpawnVisualPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            visual.transform.parent = this.transform;
+            visual.transform.localPosition = Vector3.zero;
+        }
 
         return enemyObject;
     }
