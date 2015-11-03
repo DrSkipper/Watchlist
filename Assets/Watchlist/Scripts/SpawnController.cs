@@ -4,9 +4,11 @@ public class SpawnController : VoBehavior
 {
     public GameObject[] Spawners;
     public float TimeBetweenWaves = 0.0f;
+    public float InitialDelay = 0.0f;
 
 	void Start()
     {
+        _waveCooldown = this.InitialDelay;
         _spawners = new EnemySpawner[this.Spawners.Length];
         for (int i = 0; i < _spawners.Length; ++i)
             _spawners[i] = this.Spawners[i].GetComponent<EnemySpawner>();
@@ -24,6 +26,8 @@ public class SpawnController : VoBehavior
                     enemy.GetComponent<Damagable>().OnDeath = this.EnemyDied;
                     ++enemyCount;
                 }
+
+                _waveCooldown = this.TimeBetweenWaves;
             }
             else
             {
