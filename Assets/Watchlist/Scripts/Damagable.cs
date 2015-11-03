@@ -9,6 +9,9 @@ public class Damagable : VoBehavior
     public bool Stationary = false;
     public float Friction = 1.0f;
     public bool Invincible;
+    public DeathCallback OnDeath;
+
+    public delegate void DeathCallback(Damagable died);
 
     void Start()
     {
@@ -71,6 +74,11 @@ public class Damagable : VoBehavior
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(false));
         }
 
+        if (_markedForDeath)
+        {
+            die();
+        }
+
         _alreadyHitThisUpdate.Clear();
     }
 
@@ -82,8 +90,7 @@ public class Damagable : VoBehavior
 
         if (this.Health <= 0)
         {
-            //TODO - Die gracefully
-            Destroy(this.gameObject);
+            markForDeath();
         }
         else
         {
@@ -115,6 +122,21 @@ public class Damagable : VoBehavior
     private float _invincibilityTimer;
     private LayerMask _nonInvincibleCollisionMask;
     private Actor2D _actor;
+    private bool _markedForDeath;
 
     private const string VELOCITY_MODIFIER_KEY = "damagable";
+
+    private void markForDeath()
+    {
+        _markedForDeath = true;
+    }
+
+    private void die()
+    {
+        if (this.OnDeath != null)
+            this.OnDeath(this);
+
+        //TODO - Trigger death animation/effect
+        Destroy(this.gameObject);
+    }
 }

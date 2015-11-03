@@ -20,7 +20,7 @@ public class EnemySpawner : VoBehavior
         }
     }
 
-    public void Spawn()
+    public GameObject Spawn()
     {
         _cooldownTimer = this.SpawnCooldown;
 
@@ -35,6 +35,8 @@ public class EnemySpawner : VoBehavior
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();
         enemyComponent.EnemyType = enemy;
         enemyComponent.Targets = this.Targets;
+
+        return enemyObject;
     }
 
     /**
