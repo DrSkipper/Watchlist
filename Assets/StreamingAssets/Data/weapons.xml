@@ -261,7 +261,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
