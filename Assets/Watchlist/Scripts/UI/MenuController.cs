@@ -8,15 +8,15 @@ public class MenuController : VoBehavior
     void Start()
     {
         _animators = new Animator[this.MenuElements.Length];
-        _locks = new bool[this.MenuElements.Length];
+        _elements = new MenuElement[this.MenuElements.Length];
 
         for (int i = 0; i < this.MenuElements.Length; ++i)
         {
             Animator animator = this.MenuElements[i].GetComponent<Animator>();
-            bool locked = this.MenuElements[i].GetComponent<MenuElement>().Locked;
+            MenuElement element = this.MenuElements[i].GetComponent<MenuElement>();
             _animators[i] = animator;
-            _locks[i] = locked;
-            animator.SetBool("Locked", locked);
+            _elements[i] = element;
+            animator.SetBool("Locked", element.Locked);
         }
 
         highlightElement(this.CurrentElement);
@@ -24,7 +24,7 @@ public class MenuController : VoBehavior
 
     void Update()
     {
-        if (!_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_locks[this.CurrentElement] ? "Selected (Locked)" : "Selected (UnLocked"))
+        if (!_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked"))
         {
             if (MenuInput.HighlightNextElement())
                 highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
@@ -39,7 +39,7 @@ public class MenuController : VoBehavior
      * Private
      */
     private Animator[] _animators;
-    private bool[] _locks;
+    private MenuElement[] _elements;
 
     private void highlightElement(int nextElement)
     {
@@ -53,5 +53,11 @@ public class MenuController : VoBehavior
     private void selectCurrentElement()
     {
         _animators[this.CurrentElement].SetTrigger("Selected");
+
+        if (_elements[this.CurrentElement].Destination != "")
+        {
+            //TODO - fcole - Wait for some animation to be finished or something
+            Application.LoadLevel(_elements[this.CurrentElement].Destination);
+        }
     }
 }
