@@ -244,13 +244,13 @@
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
-      <VelocityFallOff>0</VelocityFallOff>
-      <DurationTime>5</DurationTime>
+      <VelocityFallOff>280</VelocityFallOff>
+      <DurationTime>1</DurationTime>
       <DurationDistance>1000</DurationDistance>
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
-      <SpecialEffect>none</SpecialEffect>
-      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
     </WeaponType>
     <WeaponType>
