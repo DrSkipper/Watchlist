@@ -20,6 +20,7 @@ public class Bullet : Actor2D
         this.gameObject.layer = LayerMask.NameToLayer(allegiance + " Missile");
         LayerMask alliedVulnerable = (1 << LayerMask.NameToLayer(allegiance + " Vulnerable"));
         LayerMask levelGeometryMask = (1 << LayerMask.NameToLayer("Level Geometry"));
+        LayerMask pickupMask = (1 << LayerMask.NameToLayer("Pickup"));
         LayerMask everything = int.MaxValue;
         LayerMask nothing = 0;
         LayerMask alliedLayers = alliedVulnerable | GetMissileLayers();
@@ -31,7 +32,7 @@ public class Bullet : Actor2D
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
-        this.CollisionMask = everything & (~alliedLayers);
+        this.CollisionMask = everything & (~alliedLayers) & (~pickupMask);
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
         
         if (weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
