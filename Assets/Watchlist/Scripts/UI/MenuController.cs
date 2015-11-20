@@ -54,10 +54,13 @@ public class MenuController : VoBehavior
     {
         _animators[this.CurrentElement].SetTrigger("Selected");
 
-        if (_elements[this.CurrentElement].Destination != "")
+        if (!_elements[this.CurrentElement].Locked)
         {
             //TODO - fcole - Wait for some animation to be finished or something
-            Application.LoadLevel(_elements[this.CurrentElement].Destination);
+            if (_elements[this.CurrentElement].Destination != "")
+                Application.LoadLevel(_elements[this.CurrentElement].Destination);
+            else
+                Application.Quit();
         }
     }
 }
