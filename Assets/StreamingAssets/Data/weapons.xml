@@ -226,7 +226,7 @@
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
-      <TravelType>normal</TravelType>
+      <TravelType>laser</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
