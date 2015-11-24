@@ -81,7 +81,6 @@ public static class GameplayInput
 
     public static bool GetFireButton()
     {
-        float fire = Input.GetAxis("Fire1");
         return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Fire1") != 0.0f;
     }
 }

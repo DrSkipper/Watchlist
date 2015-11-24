@@ -2,9 +2,18 @@
 using System;
 using System.Collections.Generic;
 
+//NOTE - Solids ignore "tag", honestly should probably get rid of tag and just use layer??
 public class CollisionManager : VoBehavior
 {
+    public LayerMask SolidsLayerMask;
+    public int MaxColliderSize = 32;
+    public int RaycastChunkSize = 32;
+
     public const float RAYCAST_MAX_POSITION_INCREMENT = 1.0f;
+    public const int MAX_SOLIDS_X = 64;
+    public const int MAX_SOLIDS_Y = 64;
+    public const int MAX_SOLIDS_X_2 = MAX_SOLIDS_X / 2;
+    public const int MAX_SOLIDS_Y_2 = MAX_SOLIDS_Y / 2;
 
     public struct RaycastCollision
     {
@@ -23,15 +32,38 @@ public class CollisionManager : VoBehavior
 
     public void AddCollider(LayerMask layer, IntegerCollider collider)
     {
-        if (!_collidersByLayer.ContainsKey(layer))
-            _collidersByLayer.Add(layer, new List<IntegerCollider>());
-        _collidersByLayer[layer].AddUnique(collider);
+        if ((layer & this.SolidsLayerMask) != 0)
+        {
+            int x = xPositionToSolidsIndex(collider.Bounds.Center.X);
+            int y = yPositionToSolidsIndex(collider.Bounds.Center.Y);
+
+            if (_solids[x, y] == null)
+                _solids[x, y] = new List<IntegerCollider>();
+            _solids[x, y].Add(collider);
+        }
+        else
+        {
+            if (!_collidersByLayer.ContainsKey(layer))
+                _collidersByLayer.Add(layer, new List<IntegerCollider>());
+            _collidersByLayer[layer].AddUnique(collider);
+        }
     }
 
-    public void RemoveCollider(LayerMask layer, IntegerCollider collider)
+    public void RemoveCollider(LayerMask layer, IntegerCollider collider, bool solid = false)
     {
-        if (_collidersByLayer.ContainsKey(layer))
-            _collidersByLayer[layer].Remove(collider);
+        if ((layer & this.SolidsLayerMask) != 0)
+        {
+            int x = xPositionToSolidsIndex(collider.Bounds.Center.X);
+            int y = yPositionToSolidsIndex(collider.Bounds.Center.Y);
+
+            if (_solids[x, y] != null)
+                _solids[x, y].Remove(collider);
+        }
+        else
+        {
+            if (_collidersByLayer.ContainsKey(layer))
+                _collidersByLayer[layer].Remove(collider);
+        }
     }
 
     public List<IntegerCollider> GetCollidersInRange(IntegerRect range, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
@@ -51,11 +83,45 @@ public class CollisionManager : VoBehavior
             }
         }
 
+        if ((mask & this.SolidsLayerMask) != 0)
+        {
+            for (int x = xPositionToSolidsIndex(range.Min.X - this.MaxColliderSize); x <= xPositionToSolidsIndex(range.Max.X + this.MaxColliderSize); ++x)
+            {
+                for (int y = yPositionToSolidsIndex(range.Min.Y - this.MaxColliderSize); y <= yPositionToSolidsIndex(range.Max.Y + this.MaxColliderSize); ++y)
+                {
+                    if (_solids[x, y] != null)
+                        colliders.AddRange(_solids[x, y]);
+                }
+            }
+        }
+
         return colliders;
     }
 
     public GameObject CollidePointFirst(IntegerVector point, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
+        if ((mask & this.SolidsLayerMask) != 0)
+        {
+            int midX = xPositionToSolidsIndex(point.X);
+            int midY = yPositionToSolidsIndex(point.Y);
+            int minX = midX > 1 ? midX - 1 : 0;
+            int maxX = midX < MAX_SOLIDS_X - 1 ? midX + 1 : MAX_SOLIDS_X - 1;
+            int minY = midY > 1 ? midY - 1 : 0;
+            int maxY = midY < MAX_SOLIDS_Y - 1 ? midY + 1 : MAX_SOLIDS_Y - 1;
+
+            for (int x = minX; x <= maxX; ++x)
+            {
+                for (int y = minY; y <= maxY; ++y)
+                {
+                    foreach (IntegerCollider collider in _solids[x, y])
+                    {
+                        if (collider.Contains(point))
+                            return collider.gameObject;
+                    }
+                }
+            }
+        }
+
         foreach (LayerMask key in _collidersByLayer.Keys)
         {
             if ((key & mask) != 0)
@@ -68,6 +134,7 @@ public class CollisionManager : VoBehavior
                 }
             }
         }
+
         return null;
     }
 
@@ -84,8 +151,10 @@ public class CollisionManager : VoBehavior
     public RaycastResult RaycastFirst(IntegerVector origin, Vector2 direction, float range = 100000.0f, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         Vector2 d = direction * range;
-        IntegerVector halfwayPoint = new IntegerVector(d / 2.0f) + origin;
-        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(d.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(d.y) + 2.5f));
+        Vector2 chunkD = range <= this.RaycastChunkSize ? d : direction * this.RaycastChunkSize;
+
+        IntegerVector halfwayPoint = new IntegerVector(chunkD / 2.0f) + origin;
+        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(chunkD.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(chunkD.y) + 2.5f));
         List<IntegerCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
 
         Vector2 positionModifier = Vector2.zero;
@@ -106,9 +175,19 @@ public class CollisionManager : VoBehavior
         float dMagnitude = d.magnitude;
         RaycastResult result = new RaycastResult();
         bool endReached = false;
+        int chunksSoFar = 1;
 
         while (true)
         {
+            if (soFar.magnitude >= this.RaycastChunkSize * chunksSoFar)
+            {
+                // Recalculate chunk
+                halfwayPoint = new IntegerVector(chunkD / 2.0f) + position;
+                rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(chunkD.x) + 2.55f), Mathf.RoundToInt(Mathf.Abs(chunkD.y) + 2.55f));
+                possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
+                ++chunksSoFar;
+            }
+
             projected.x += incX;
             projected.y += incY;
 
@@ -199,8 +278,10 @@ public class CollisionManager : VoBehavior
     public RaycastResult Raycast(IntegerVector origin, Vector2 direction, float range = 100000.0f, int mask = Physics2D.DefaultRaycastLayers, string objectTag = null)
     {
         Vector2 d = direction * range;
-        IntegerVector halfwayPoint = new IntegerVector(d / 2.0f) + origin;
-        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(d.x) + 2.5f), Mathf.RoundToInt(Mathf.Abs(d.y) + 2.5f));
+        Vector2 chunkD = range <= this.RaycastChunkSize ? d : direction * this.RaycastChunkSize;
+
+        IntegerVector halfwayPoint = new IntegerVector(chunkD / 2.0f) + origin;
+        IntegerVector rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(chunkD.x) + 2.55f), Mathf.RoundToInt(Mathf.Abs(chunkD.y) + 2.55f));
         List<IntegerCollider> possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
 
         Vector2 positionModifier = Vector2.zero;
@@ -221,10 +302,23 @@ public class CollisionManager : VoBehavior
         float dMagnitude = d.magnitude;
         RaycastResult result = new RaycastResult();
         List<RaycastCollision> collisions = new List<RaycastCollision>();
+        List<IntegerCollider> collided = new List<IntegerCollider>();
         bool endReached = false;
+        int chunksSoFar = 1;
 
         while (true)
         {
+            if (soFar.magnitude >= this.RaycastChunkSize * chunksSoFar)
+            {
+                // Recalculate chunk
+                halfwayPoint = new IntegerVector(chunkD / 2.0f) + position;
+                rangeVector = new IntegerVector(Mathf.RoundToInt(Mathf.Abs(chunkD.x) + 2.55f), Mathf.RoundToInt(Mathf.Abs(chunkD.y) + 2.55f));
+                possibleCollisions = this.GetCollidersInRange(new IntegerRect(halfwayPoint, rangeVector), mask);
+                foreach (IntegerCollider collider in collided)
+                    possibleCollisions.Remove(collider);
+                ++chunksSoFar;
+            }
+
             projected.x += incX;
             projected.y += incY;
 
@@ -247,12 +341,14 @@ public class CollisionManager : VoBehavior
                 GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
-                    possibleCollisions.Remove(collision.GetComponent<IntegerCollider>());
+                    IntegerCollider collider = collision.GetComponent<IntegerCollider>();
+                    possibleCollisions.Remove(collider);
                     RaycastCollision hit = new RaycastCollision();
                     hit.CollidedObject = collision;
                     hit.CollisionPoint = position;
                     hit.CollidedX = true;
                     collisions.Add(hit);
+                    collided.Add(collider);
                 }
 
                 position = checkPos;
@@ -271,12 +367,14 @@ public class CollisionManager : VoBehavior
                 GameObject collision = this.CollidePointFirst(checkPos, possibleCollisions);
                 if (collision)
                 {
-                    possibleCollisions.Remove(collision.GetComponent<IntegerCollider>());
+                    IntegerCollider collider = collision.GetComponent<IntegerCollider>();
+                    possibleCollisions.Remove(collider);
                     RaycastCollision hit = new RaycastCollision();
                     hit.CollidedObject = collision;
                     hit.CollisionPoint = position;
                     hit.CollidedY = true;
                     collisions.Add(hit);
+                    collided.Add(collider);
                 }
 
                 position = checkPos;
@@ -299,4 +397,25 @@ public class CollisionManager : VoBehavior
      * Private
      */
     private Dictionary<LayerMask, List<IntegerCollider>> _collidersByLayer = new Dictionary<LayerMask, List<IntegerCollider>>();
+    private List<IntegerCollider>[,] _solids = new List<IntegerCollider>[MAX_SOLIDS_X, MAX_SOLIDS_Y];
+
+    private int xPositionToSolidsIndex(int posX)
+    {
+        int x = posX / this.MaxColliderSize + MAX_SOLIDS_X_2;
+        if (x < 0)
+            x = 0;
+        else if (x >= MAX_SOLIDS_X)
+            x = MAX_SOLIDS_X - 1;
+        return x;
+    }
+
+    private int yPositionToSolidsIndex(int posY)
+    {
+        int y = posY / this.MaxColliderSize + MAX_SOLIDS_Y_2;
+        if (y < 0)
+            y = 0;
+        else if (y >= MAX_SOLIDS_Y)
+            y = MAX_SOLIDS_Y - 1;
+        return y;
+    }
 }
