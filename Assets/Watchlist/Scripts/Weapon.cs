@@ -3,7 +3,7 @@
 public class Weapon : VoBehavior
 {
     public WeaponType WeaponType;
-    public string Allegiance = "Player";
+    public AllegianceInfo AllegianceInfo;
     public GameObject BulletPrefab;
     public GameObject LaserPrefab;
 
@@ -60,6 +60,6 @@ public class Weapon : VoBehavior
         // Create instance of bullet prefab and set it on its way
         Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
         GameObject bullet = Instantiate(prefab, position, Quaternion.identity) as GameObject;
-        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.Allegiance);
+        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo);
     }
 }

@@ -8,17 +8,24 @@ public class Bullet : Actor2D
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
     public GameObject ExplosionPrefab;
 
-    public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, string allegiance)
+    public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, AllegianceInfo allegianceInfo)
     {
         this.WeaponType = weaponType;
         this.Velocity = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? Vector2.zero : 
             new Vector2(direction.x * weaponType.ShotSpeed, direction.y * weaponType.ShotSpeed);
 
+        _allegianceInfo = allegianceInfo;
+        AllegianceColorizer allegianceColorizer = this.GetComponent<AllegianceColorizer>();
+        if (allegianceColorizer != null)
+            allegianceColorizer.UpdateVisual(allegianceInfo);
+
         _bouncesRemaining = weaponType.MaximumBounces;
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
 
-        this.gameObject.layer = LayerMask.NameToLayer(allegiance + " Missile");
-        LayerMask alliedVulnerable = (1 << LayerMask.NameToLayer(allegiance + " Vulnerable"));
+        string allegianceString = allegianceInfo.LayerString;
+        int ourLayer = LayerMask.NameToLayer(allegianceString + " Missile");
+        this.gameObject.layer = ourLayer;
+        LayerMask alliedVulnerable = (1 << LayerMask.NameToLayer(allegianceString + " Vulnerable"));
         LayerMask levelGeometryMask = (1 << LayerMask.NameToLayer("Level Geometry"));
         LayerMask pickupMask = (1 << LayerMask.NameToLayer("Pickup"));
         LayerMask everything = int.MaxValue;
@@ -96,6 +103,7 @@ public class Bullet : Actor2D
     private int _bouncesRemaining;
     private bool _hasExploded;
     private Damager _damager;
+    private AllegianceInfo _allegianceInfo;
 
     private void scheduleDestruction(Vector3 location)
     {
@@ -116,7 +124,7 @@ public class Bullet : Actor2D
     {
         IntegerVector origin = this.integerPosition;
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
-        this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+        this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
 
         Vector2 castDifference = raycast.FarthestPointReached - origin;
         CollisionManager.RaycastResult passThroughCast = this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
@@ -158,7 +166,7 @@ public class Bullet : Actor2D
 
                 // Raycast the bounce shot
                 raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
-                this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin));
+                this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
 
                 castDifference = raycast.FarthestPointReached - raycastOrigin;
                 passThroughCast = this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
@@ -176,6 +184,7 @@ public class Bullet : Actor2D
         _hasExploded = true;
         GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
         explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
+        explosion.GetComponent<AllegianceColorizer>().UpdateVisual(_allegianceInfo);
     }
     
     private static LayerMask MISSILE_LAYERS = 0;

@@ -2,12 +2,12 @@
 
 public class InvincibilityVisualizer : VoBehavior
 {
-    public Color FlashColor = Color.red;
     public float FlashOnDuration = 0.2f;
     public float FlashOffDuration = 0.2f;
 
     void Start()
     {
+        _allegianceColorizer = this.GetComponent<AllegianceColorizer>();
         this.localNotifier.Listen(InvincibilityToggleEvent.NAME, this, this.OnInvincibilityToggle);
     }
 
@@ -51,18 +51,19 @@ public class InvincibilityVisualizer : VoBehavior
     private bool _blinking;
     private Color _normalColor;
     private float _blinkTimer;
+    private AllegianceColorizer _allegianceColorizer;
 
     private void flashOn()
     {
         _blinking = true;
-        this.spriteRenderer.color = this.FlashColor;
+        _allegianceColorizer.UpdateVisual(ColorPaletteState.Damaged);
         _blinkTimer = this.FlashOnDuration;
     }
 
     private void flashOff()
     {
         _blinking = false;
-        this.spriteRenderer.color = _normalColor;
+        _allegianceColorizer.UpdateVisual(ColorPaletteState.Main);
         _blinkTimer = this.FlashOffDuration;
     }
 }

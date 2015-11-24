@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[ExecuteInEditMode]
 public class GameplayPalette : MonoBehaviour
 {
     public Color[] PlayerColor;
@@ -37,6 +38,7 @@ public class GameplayPalette : MonoBehaviour
 
         _wallColor = this.WallColor;
         _pickupColor = this.PickupColor;
+        _backgroundColor = this.BackgroundColor;
     }
 
     public static Color GetPlayerColor(int playerNum)
@@ -125,23 +127,23 @@ public class GameplayPalette : MonoBehaviour
         }
     }
 
-    public static Color GetColorForAllegiance(AllegianceInfo allegianceInfo, ColorPaletteClass colorClass)
+    public static Color GetColorForAllegiance(AllegianceInfo allegianceInfo, ColorPaletteState colorClass)
     {
         string colorClassAddition = "";
 
         switch (colorClass)
         {
             default:
-            case ColorPaletteClass.Main:
+            case ColorPaletteState.Main:
                 colorClassAddition = "";
                 break;
-            case ColorPaletteClass.Projectile:
+            case ColorPaletteState.Projectile:
                 colorClassAddition = "_projectile";
                 break;
-            case ColorPaletteClass.Explosion:
+            case ColorPaletteState.Explosion:
                 colorClassAddition = "_explosion";
                 break;
-            case ColorPaletteClass.Damaged:
+            case ColorPaletteState.Damaged:
                 colorClassAddition = "_damaged";
                 break;
         }

@@ -24,5 +24,6 @@ public class LaserRenderer : VoBehavior
         lineObject.transform.position = new Vector3(castEvent.Origin.X, castEvent.Origin.Y, this.transform.position.z);
         
         lineObject.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycast.FarthestPointReached.X - castEvent.Origin.X, raycast.FarthestPointReached.Y - castEvent.Origin.Y, 0));
+        lineObject.GetComponent<AllegianceColorizer>().UpdateVisual(castEvent.AllegianceInfo);
     }
 }

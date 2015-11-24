@@ -22,12 +22,14 @@ public class LaserCastEvent : LocalEventNotifier.Event
     public static string NAME = "LASER_CAST";
     public CollisionManager.RaycastResult RaycastResult;
     public IntegerVector Origin;
+    public AllegianceInfo AllegianceInfo;
 
-    public LaserCastEvent(CollisionManager.RaycastResult raycastResult, IntegerVector origin)
+    public LaserCastEvent(CollisionManager.RaycastResult raycastResult, IntegerVector origin, AllegianceInfo allegianceInfo)
     {
         this.Name = NAME;
         this.RaycastResult = raycastResult;
         this.Origin = origin;
+        this.AllegianceInfo = allegianceInfo;
     }
 }
 
