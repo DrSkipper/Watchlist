@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 027114cb383c1b243a1c5e4fdfed1abc
+timeCreated: 1448667889
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - PlayerObject: {instanceID: 0}
+  - SlotObject: {instanceID: 0}
+  - SlotContentsObject: {instanceID: 0}
+  - UnlockedSlotSprite: {instanceID: 0}
+  - LockedSlotSprite: {fileID: 21300016, guid: 386cb453dfacaa2438903e7b21ce329c, type: 3}
+  - EmptySlotSprite: {instanceID: 0}
+  - BounceSlotSprite: {fileID: 21300006, guid: 386cb453dfacaa2438903e7b21ce329c, type: 3}
+  - SpreadshotSlotSprite: {fileID: 21300010, guid: 386cb453dfacaa2438903e7b21ce329c,
+      type: 3}
+  - LaserSlotSprite: {fileID: 21300012, guid: 386cb453dfacaa2438903e7b21ce329c, type: 3}
+  - BombSlotSprite: {fileID: 21300008, guid: 386cb453dfacaa2438903e7b21ce329c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

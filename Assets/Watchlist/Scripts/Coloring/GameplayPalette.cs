@@ -17,6 +17,9 @@ public class GameplayPalette : MonoBehaviour
     public Color PickupColor;
     public Color BackgroundColor;
 
+    public Color UIPrimaryColor;
+    public Color UISecondaryColor;
+
     void Awake()
     {
         _playerColor = new Color[this.PlayerColor.Length];
@@ -39,6 +42,9 @@ public class GameplayPalette : MonoBehaviour
         _wallColor = this.WallColor;
         _pickupColor = this.PickupColor;
         _backgroundColor = this.BackgroundColor;
+
+        _uiPrimaryColor = this.UIPrimaryColor;
+        _uiSecondaryColor = this.UISecondaryColor;
     }
 
     public static Color GetPlayerColor(int playerNum)
@@ -96,6 +102,16 @@ public class GameplayPalette : MonoBehaviour
         return _backgroundColor;
     }
 
+    public static Color GetPrimaryUIColor()
+    {
+        return _uiPrimaryColor;
+    }
+
+    public static Color GetSecondaryUIColor()
+    {
+        return _uiSecondaryColor;
+    }
+
     public static Color GetColorFromTag(string tag, int parameter = 0)
     {
         switch (tag.ToLower().Replace(' ', '_'))
@@ -122,6 +138,10 @@ public class GameplayPalette : MonoBehaviour
                 return GetPickupColor();
             case "background":
                 return GetBackgroundColor();
+            case "ui_primary":
+                return GetPrimaryUIColor();
+            case "ui_secondary":
+                return GetSecondaryUIColor();
             default:
                 return Color.white;
         }
@@ -175,4 +195,7 @@ public class GameplayPalette : MonoBehaviour
     private static Color _wallColor;
     private static Color _pickupColor;
     private static Color _backgroundColor;
+
+    private static Color _uiPrimaryColor;
+    private static Color _uiSecondaryColor;
 }

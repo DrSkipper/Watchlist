@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class PlayerController : Actor2D
 {
@@ -11,6 +12,8 @@ public class PlayerController : Actor2D
     public int WeaponTypeId = 1; // Exposed for debugging
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
+
+    public delegate void SlotChangeDelegate(WeaponData.Slot[] newSlots);
 
     void Start()
     {
@@ -77,12 +80,18 @@ public class PlayerController : Actor2D
         }
     }
 
+    public void AddSlotChangeCallback(SlotChangeDelegate callback)
+    {
+        _slotChangeDelegates.Add(callback);
+    }
+
     /**
      * Private
      */
     private int _selectedSlot;
     private float _acceleration;
     private Weapon _weapon;
+    private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();
 
     private void pickupWeaponSlot(WeaponData.Slot slotType)
     {
@@ -113,5 +122,8 @@ public class PlayerController : Actor2D
         this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
         if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
             _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
+
+        foreach (SlotChangeDelegate callback in _slotChangeDelegates)
+            callback(this.Slots);
     }
 }
