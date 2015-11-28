@@ -6,7 +6,7 @@
       <Id>1000001</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_04</SpriteName>
-      <Health>5</Health>
+      <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>
@@ -27,7 +27,7 @@
       <Id>1000002</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_02</SpriteName>
-      <Health>5</Health>
+      <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>
@@ -48,7 +48,7 @@
       <Id>1000003</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_02</SpriteName>
-      <Health>5</Health>
+      <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>
@@ -69,7 +69,7 @@
       <Id>1000004</Id>
       <PrefabName>generic_motion</PrefabName>
       <SpriteName>enemy_03</SpriteName>
-      <Health>5</Health>
+      <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>140</MaxSpeed>
       <Acceleration>280</Acceleration>
