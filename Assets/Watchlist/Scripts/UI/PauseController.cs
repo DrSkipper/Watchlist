@@ -9,6 +9,7 @@ public class PauseController : VoBehavior
 
     public GameObject PauseMenu;
     public bool PauseOnStart = false;
+    public bool AllowPausing = true;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class PauseController : VoBehavior
 
     void Update()
     {
-        if (MenuInput.Pause())
+        if (this.AllowPausing && MenuInput.Pause())
         {
             if (_paused)
                 unpause();

@@ -161,23 +161,23 @@ public class LevelGraphController : VoBehavior
 
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown || Mathf.Abs(Input.GetAxis("Vertical")) > MenuInput.MENU_AXIS_DEADZONE || Mathf.Abs(Input.GetAxis("Horizontal")) > MenuInput.MENU_AXIS_DEADZONE)
         {
             Vector2 newPosition = this.CurrentPosition;
 
-            if (this.CurrentPosition.IntX() > -_halfSize && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+            if (this.CurrentPosition.IntX() > -_halfSize && MenuInput.NavLeft())
             {
                 newPosition.x -= 1;
             }
-            else if (this.CurrentPosition.IntY() > -_halfSize && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)))
+            else if (this.CurrentPosition.IntY() > -_halfSize && MenuInput.NavDown())
             {
                 newPosition.y -= 1;
             }
-            else if (this.CurrentPosition.IntX() < _halfSize && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
+            else if (this.CurrentPosition.IntX() < _halfSize && MenuInput.NavRight())
             {
                 newPosition.x += 1;
             }
-            else if (this.CurrentPosition.IntY() < _halfSize && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
+            else if (this.CurrentPosition.IntY() < _halfSize && MenuInput.NavUp())
             {
                 newPosition.y += 1;
             }
