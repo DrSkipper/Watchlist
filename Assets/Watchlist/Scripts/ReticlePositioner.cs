@@ -14,6 +14,9 @@ public class ReticlePositioner : VoBehavior
 
     void Update()
     {
+        if (PauseController.IsPaused())
+            return;
+
         Vector2 aimAxis = GameplayInput.GetAimingAxis();
 
         if (Mathf.Abs(aimAxis.x) >= 0.001f || Mathf.Abs(aimAxis.y) >= 0.001f)

@@ -16,4 +16,14 @@ public static class MenuInput
     {
         return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space);
     }
+
+    public static bool Pause()
+    {
+        return Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.P);
+    }
+
+    public static bool Exit()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
 }

@@ -26,6 +26,9 @@ public class PlayerController : Actor2D
 
     public override void Update()
     {
+        if (PauseController.IsPaused())
+            return;
+
         Vector2 movementAxis = GameplayInput.GetMovementAxis();
 
         float targetX = movementAxis.x * this.MaxSpeed;
