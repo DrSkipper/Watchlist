@@ -42,7 +42,10 @@ public class Bullet : Actor2D
         this.CollisionMask = everything & (~alliedLayers) & (~pickupMask);
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
         
-        if (weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
+        _explosionRemaining = this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION;
+        _isLaser = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER;
+
+        if (_isLaser)
             handleLaserCast(direction);
     }
 
@@ -101,15 +104,16 @@ public class Bullet : Actor2D
     private bool _destructionScheduled;
     private Vector2 _distance = Vector2.zero;
     private int _bouncesRemaining;
-    private bool _hasExploded;
     private Damager _damager;
     private AllegianceInfo _allegianceInfo;
+    private bool _explosionRemaining;
+    private bool _isLaser;
 
     private void scheduleDestruction(Vector3 location)
     {
         _destructionScheduled = true;
 
-        if (!_hasExploded && this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION)
+        if (_explosionRemaining && !_isLaser)
             triggerExplosion(location);
     }
 
@@ -125,13 +129,20 @@ public class Bullet : Actor2D
         IntegerVector origin = this.integerPosition;
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
+        GameObject raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
 
         Vector2 castDifference = raycast.FarthestPointReached - origin;
         CollisionManager.RaycastResult passThroughCast = this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
+
         foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
+        {
             this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
 
-        if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycast.Collisions[0].CollidedObject.layer) & this.BounceLayerMask) != 0)
+            if (_explosionRemaining && collision.CollidedObject != raycastCollidedObject)
+                triggerExplosion(new Vector3(collision.CollisionPoint.X, collision.CollisionPoint.Y, this.transform.position.z));
+        }
+
+        if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycastCollidedObject.layer) & this.BounceLayerMask) != 0)
         {
             IntegerVector distanceTravelled = raycast.FarthestPointReached - origin;
             float distanceSoFar = new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
@@ -167,21 +178,30 @@ public class Bullet : Actor2D
                 // Raycast the bounce shot
                 raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
                 this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
+                raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
 
                 castDifference = raycast.FarthestPointReached - raycastOrigin;
                 passThroughCast = this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
                 foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
+                {
                     this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
+
+                    if (_explosionRemaining && collision.CollidedObject != raycastCollidedObject)
+                        triggerExplosion(new Vector3(collision.CollisionPoint.X, collision.CollisionPoint.Y, this.transform.position.z));
+                }
 
                 distanceTravelled = raycast.FarthestPointReached - origin;
                 distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
             }
         }
+
+        if (_explosionRemaining)
+            triggerExplosion(new Vector3(raycast.FarthestPointReached.X, raycast.FarthestPointReached.Y, this.transform.position.z));
     }
 
     private void triggerExplosion(Vector3 position)
     {
-        _hasExploded = true;
+        _explosionRemaining = false;
         GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
         explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
         explosion.GetComponent<AllegianceColorizer>().UpdateVisual(_allegianceInfo);
