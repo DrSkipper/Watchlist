@@ -10,6 +10,7 @@ public class Damagable : VoBehavior
     public float Friction = 1.0f;
     public bool Invincible;
     public DeathCallback OnDeath;
+    public GameObject GibsPrefab;
 
     public delegate void DeathCallback(Damagable died);
 
@@ -88,20 +89,29 @@ public class Damagable : VoBehavior
 
         this.Health -= other.Damage;
 
+        Vector2 impactVector = Vector2.zero;
+
+        if (!this.Stationary)
+        {
+            Vector2 difference = this.integerPosition - other.integerPosition;
+            Actor2D otherActor = other.gameObject.GetComponent<Actor2D>();
+            Vector2 otherV = otherActor != null ? otherActor.Velocity : Vector2.zero;
+            difference.Normalize();
+            otherV.Normalize();
+            impactVector = (difference + otherV).normalized;
+        }
+
         if (this.Health <= 0)
         {
+            _deathKnockback = other.Knockback;
+            _deathImpactVector = impactVector;
             markForDeath();
         }
         else
         {
             if (!this.Stationary)
             {
-                Vector2 difference = this.integerPosition - other.integerPosition;
-                Actor2D otherActor = other.gameObject.GetComponent<Actor2D>();
-                Vector2 otherV = otherActor != null ? otherActor.Velocity : Vector2.zero;
-                difference.Normalize();
-                otherV.Normalize();
-                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier((difference + otherV).normalized * other.Knockback, VelocityModifier.CollisionBehavior.bounce));
+                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier(impactVector * other.Knockback, VelocityModifier.CollisionBehavior.bounce));
 
                 _nonInvincibleCollisionMask = _actor.CollisionMask;
                 _actor.CollisionMask = this.InvincibilityCollisionMask;
@@ -123,6 +133,8 @@ public class Damagable : VoBehavior
     private LayerMask _nonInvincibleCollisionMask;
     private Actor2D _actor;
     private bool _markedForDeath;
+    private float _deathKnockback;
+    private Vector2 _deathImpactVector;
 
     private const string VELOCITY_MODIFIER_KEY = "damagable";
 
@@ -136,7 +148,14 @@ public class Damagable : VoBehavior
         if (this.OnDeath != null)
             this.OnDeath(this);
 
-        //TODO - Trigger death animation/effect
+        if (this.GibsPrefab != null)
+        {
+            GameObject gibs = (GameObject)Instantiate(this.GibsPrefab, this.transform.position, this.transform.rotation);
+            GibsBehavior gibsBehavior = gibs.GetComponent<GibsBehavior>();
+            gibsBehavior.Knockback = _deathKnockback;
+            gibsBehavior.ImpactVector = _deathImpactVector;
+        }
+
         Destroy(this.gameObject);
     }
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ac217e1c4aad6b54b84ccb1a68684001
-timeCreated: 1446524901
+timeCreated: 1449532166
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -17,6 +17,7 @@ TextureImporter:
     21300020: pickup_spread
     21300022: pickup_laser
     21300024: pickup_empty
+    21300026: gib
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -190,6 +191,16 @@ TextureImporter:
         y: 41
         width: 7
         height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: gib
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 2
+        width: 1
+        height: 1
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
