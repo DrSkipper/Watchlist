@@ -9,6 +9,7 @@ public class CameraController : VoBehavior
     //public float ApproachBoostDistance = 250.0f;
     public float MaxDistanceForSnap = 0.01f;
     public Vector2 TargetPosition; // Exposed for debugging
+    public Vector2 OffsetPosition;
 
     void Start()
     {
@@ -25,7 +26,7 @@ public class CameraController : VoBehavior
         _lockPosition = Vector2.MoveTowards(_lockPosition, this.TargetPosition, d);
 
         Vector2 finalPosition = _lockPosition + (aimAxis * this.AimingImpact);
-        this.transform.position = new Vector3(finalPosition.x, finalPosition.y, this.transform.position.z);
+        this.transform.position = new Vector3(finalPosition.x + this.OffsetPosition.x, finalPosition.y + this.OffsetPosition.y, this.transform.position.z);
     }
 
     /**

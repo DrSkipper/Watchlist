@@ -11,6 +11,7 @@ public class Damagable : VoBehavior
     public bool Invincible;
     public DeathCallback OnDeath;
     public GameObject GibsPrefab;
+    public float ShakeMagnitudeOnDeath;
 
     public delegate void DeathCallback(Damagable died);
 
@@ -155,6 +156,9 @@ public class Damagable : VoBehavior
             gibsBehavior.Knockback = _deathKnockback;
             gibsBehavior.ImpactVector = _deathImpactVector;
         }
+
+        if (this.ShakeMagnitudeOnDeath > 0.0f)
+            Camera.main.GetComponent<ShakeHandler>().ApplyImpact(this.ShakeMagnitudeOnDeath);
 
         Destroy(this.gameObject);
     }
