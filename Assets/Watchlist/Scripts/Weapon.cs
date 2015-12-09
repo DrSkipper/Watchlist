@@ -6,6 +6,9 @@ public class Weapon : VoBehavior
     public AllegianceInfo AllegianceInfo;
     public GameObject BulletPrefab;
     public GameObject LaserPrefab;
+    public GameObject WeaponAudioObject;
+    public AudioClip AudioOnFire;
+    public float AudioCooldown = 0.5f;
 
     public void Fire(Vector2 direction, float shotStartDistance = 0.0f)
     {
@@ -40,6 +43,14 @@ public class Weapon : VoBehavior
                     shotCount -= 2;
                     shotAngle += this.WeaponType.AngleBetweenShots;
                 }
+
+                if (this.WeaponAudioObject != null && this.AudioOnFire != null && _audioCooldown <= 0.0f)
+                {
+                    _audioCooldown = this.AudioCooldown;
+                    AudioSource audio = this.WeaponAudioObject.GetComponent<AudioSource>();
+                    audio.clip = this.AudioOnFire;
+                    audio.Play();
+                }
             }
         }
     }
@@ -48,12 +59,16 @@ public class Weapon : VoBehavior
     {
         if (_shotCooldown > 0.0f)
             _shotCooldown -= Time.deltaTime;
+
+        if (_audioCooldown > 0.0f)
+            _audioCooldown -= Time.deltaTime;
     }
 
     /**
      * Private
      */
     private float _shotCooldown;
+    private float _audioCooldown;
 
     private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab)
     {
