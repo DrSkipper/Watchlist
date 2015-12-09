@@ -39,14 +39,16 @@ public class PerlinShake : MonoBehaviour {
 			float alpha = randomStart + this.Speed * percentComplete;
 			
 			// map noise to [-1, 1]
-			float x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
-			float y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
-			
-			x *= this.Magnitude * damper;
+			//float x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
+			//float y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
+            float x = Mathf.PerlinNoise(alpha, 0.0f) * 2.0f - 1.0f;
+            float y = Mathf.PerlinNoise(0.0f, alpha) * 2.0f - 1.0f;
+
+            x *= this.Magnitude * damper;
 			y *= this.Magnitude * damper;
 			
 			_cameraController.OffsetPosition = new Vector2(x, y);
-				
+			
 			yield return null;
 		}
 

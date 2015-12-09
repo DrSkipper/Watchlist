@@ -14,6 +14,7 @@ public class ShakeHandler : VoBehavior
     }
 
     public ShakeTier[] Tiers;
+    public int TestTier = -1;
 
     void Start()
     {
@@ -49,23 +50,31 @@ public class ShakeHandler : VoBehavior
 
     public void InitiateShake()
     {
-        float totalMagnitude = 0.0f;
-        foreach (ShakeEntry shake in _currentShakes)
+        ShakeTier? tier = null;
+        if (this.TestTier >= 0)
         {
-            totalMagnitude += shake.impactMagnitude;
+            tier = this.Tiers[this.TestTier];
         }
-
-        for (int i = this.Tiers.Length - 1; i >= 0; --i)
+        else
         {
-            ShakeTier tier = this.Tiers[i];
-            if (totalMagnitude >= tier.TierCutoff)
+            float totalMagnitude = 0.0f;
+            foreach (ShakeEntry shake in _currentShakes)
             {
-                _shaker.PlayShake(tier.ShakeDuration, tier.ShakeSpeed, tier.ShakeAmount);
-                break;
+                totalMagnitude += shake.impactMagnitude;
+            }
+
+            for (int i = this.Tiers.Length - 1; i >= 0; --i)
+            {
+                tier = this.Tiers[i];
+                if (totalMagnitude >= tier.Value.TierCutoff)
+                    break;
             }
         }
-    }
 
+        if (tier.HasValue)
+            _shaker.PlayShake(tier.Value.ShakeDuration, tier.Value.ShakeSpeed, tier.Value.ShakeAmount);
+    }
+    
     /**
      * Private
      */

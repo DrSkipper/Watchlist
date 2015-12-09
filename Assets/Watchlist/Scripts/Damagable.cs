@@ -11,7 +11,9 @@ public class Damagable : VoBehavior
     public bool Invincible;
     public DeathCallback OnDeath;
     public GameObject GibsPrefab;
-    public float ShakeMagnitudeOnDeath;
+    public float ShakeMagnitudeOnDeath = 100;
+    public float BaseShakeHitMagnitude = 0;
+    public float ShakeHitToDamageRatio = 0;
 
     public delegate void DeathCallback(Damagable died);
 
@@ -123,6 +125,11 @@ public class Damagable : VoBehavior
             this.integerCollider.RemoveFromCollisionPool();
 
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(true));
+        }
+
+        if (this.BaseShakeHitMagnitude > 0.0f || this.ShakeHitToDamageRatio > 0.0f)
+        {
+            Camera.main.GetComponent<ShakeHandler>().ApplyImpact(this.BaseShakeHitMagnitude + this.ShakeHitToDamageRatio * other.Damage);
         }
     }
 
