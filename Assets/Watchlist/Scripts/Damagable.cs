@@ -14,12 +14,14 @@ public class Damagable : VoBehavior
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
     public float ShakeHitToDamageRatio = 0;
+    public AudioClip AudioOnHit = null;
 
     public delegate void DeathCallback(Damagable died);
 
     void Start()
     {
         _actor = this.GetComponent<Actor2D>();
+        _audio = this.GetComponent<AudioSource>();
         this.localNotifier.Listen(HitEvent.NAME, this, this.OnHit);
     }
 
@@ -125,6 +127,12 @@ public class Damagable : VoBehavior
             this.integerCollider.RemoveFromCollisionPool();
 
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(true));
+
+            if (_audio != null && this.AudioOnHit != null)
+            {
+                _audio.clip = this.AudioOnHit;
+                _audio.Play();
+            }
         }
 
         if (this.BaseShakeHitMagnitude > 0.0f || this.ShakeHitToDamageRatio > 0.0f)
@@ -143,6 +151,7 @@ public class Damagable : VoBehavior
     private bool _markedForDeath;
     private float _deathKnockback;
     private Vector2 _deathImpactVector;
+    private AudioSource _audio;
 
     private const string VELOCITY_MODIFIER_KEY = "damagable";
 
