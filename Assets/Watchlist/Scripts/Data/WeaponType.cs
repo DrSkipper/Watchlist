@@ -34,6 +34,8 @@ public class WeaponType
     public string SpecialEffect = SPECIAL_NONE;
     public float SpecialEffectParameter1 = 0.0f;
     public float SpecialEffectParameter2 = 0.0f;
+    public int AudioIndex = 0;
+    public float AudioCooldown = 0.0f;
 }
 
 [XmlRoot("WeaponData")]

@@ -7,8 +7,12 @@ public class Weapon : VoBehavior
     public GameObject BulletPrefab;
     public GameObject LaserPrefab;
     public GameObject WeaponAudioObject;
-    public AudioClip AudioOnFire;
-    public float AudioCooldown = 0.5f;
+    public AudioClip[] FireAudio;
+
+    void Start()
+    {
+        _audio = this.WeaponAudioObject.GetComponent<AudioSource>();
+    }
 
     public void Fire(Vector2 direction, float shotStartDistance = 0.0f)
     {
@@ -44,12 +48,12 @@ public class Weapon : VoBehavior
                     shotAngle += this.WeaponType.AngleBetweenShots;
                 }
 
-                if (this.WeaponAudioObject != null && this.AudioOnFire != null && _audioCooldown <= 0.0f)
+                if (this.WeaponAudioObject != null && _audioCooldown <= 0.0f && this.FireAudio.Length > this.WeaponType.AudioIndex)
                 {
-                    _audioCooldown = this.AudioCooldown;
-                    AudioSource audio = this.WeaponAudioObject.GetComponent<AudioSource>();
-                    audio.clip = this.AudioOnFire;
-                    audio.Play();
+                    AudioClip clip = this.FireAudio[this.WeaponType.AudioIndex];
+                    _audioCooldown = this.WeaponType.AudioCooldown <= 0.0f ? clip.length : this.WeaponType.AudioCooldown;
+                    _audio.clip = clip;
+                    _audio.Play();
                 }
             }
         }
@@ -69,6 +73,7 @@ public class Weapon : VoBehavior
      */
     private float _shotCooldown;
     private float _audioCooldown;
+    private AudioSource _audio;
 
     private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab)
     {

@@ -21,6 +21,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1</Name>
@@ -42,6 +44,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 1</Name>
@@ -63,6 +67,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 1</Name>
@@ -84,6 +90,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 1</Name>
@@ -105,6 +113,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2</Name>
@@ -126,6 +136,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2</Name>
@@ -147,6 +159,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2</Name>
@@ -168,6 +182,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2</Name>
@@ -189,6 +205,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Spreadshot 1</Name>
@@ -210,6 +228,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Laser 1</Name>
@@ -231,6 +251,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Bomb 1</Name>
@@ -252,6 +274,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 1 Laser 1</Name>
@@ -273,6 +297,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 1 Bomb 1</Name>
@@ -294,6 +320,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 1 Bomb 1</Name>
@@ -315,6 +343,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 3</Name>
@@ -336,6 +366,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 3</Name>
@@ -357,6 +389,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 3</Name>
@@ -378,6 +412,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 3</Name>
@@ -399,6 +435,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Spreadshot 1</Name>
@@ -420,6 +458,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Laser 1</Name>
@@ -441,6 +481,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Bomb 1</Name>
@@ -462,6 +504,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Bounce 1</Name>
@@ -483,6 +527,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Laser 1</Name>
@@ -504,6 +550,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Bomb 1</Name>
@@ -525,6 +573,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Bounce 1</Name>
@@ -546,6 +596,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Spreadshot 1</Name>
@@ -567,6 +619,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Bomb 1</Name>
@@ -588,6 +642,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Bounce 1</Name>
@@ -609,6 +665,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Spreadshot 1</Name>
@@ -630,6 +688,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Laser 1</Name>
@@ -651,6 +711,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Spreadshot 1 Laser 1</Name>
@@ -672,6 +734,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Spreadshot 1 Bomb 1</Name>
@@ -693,6 +757,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Laser 1 Bomb 1</Name>
@@ -714,6 +780,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 1 Laser 1 Bomb 1</Name>
@@ -735,6 +803,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 4</Name>
@@ -756,6 +826,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 4</Name>
@@ -777,6 +849,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 4</Name>
@@ -798,6 +872,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 4</Name>
@@ -819,6 +895,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 3 Spreadshot 1</Name>
@@ -840,6 +918,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 3 Laser 1</Name>
@@ -861,6 +941,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 3 Bomb 1</Name>
@@ -882,6 +964,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 3 Bounce 1</Name>
@@ -903,6 +987,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 3 Laser 1</Name>
@@ -924,6 +1010,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 3 Bomb 1</Name>
@@ -945,6 +1033,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 3 Bounce 1</Name>
@@ -966,6 +1056,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 3 Spreadshot 1</Name>
@@ -987,6 +1079,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 3 Bomb 1</Name>
@@ -1008,6 +1102,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 3 Bounce 1</Name>
@@ -1029,6 +1125,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 3 Spreadshot 1</Name>
@@ -1050,6 +1148,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 3 Laser 1</Name>
@@ -1071,6 +1171,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Spreadshot 2</Name>
@@ -1092,6 +1194,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Laser 2</Name>
@@ -1113,6 +1217,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Bomb 2</Name>
@@ -1134,6 +1240,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Laser 2</Name>
@@ -1155,6 +1263,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Bomb 2</Name>
@@ -1176,6 +1286,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Bomb 2</Name>
@@ -1197,6 +1309,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Spreadshot 1 Laser 1</Name>
@@ -1218,6 +1332,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Spreadshot 1 Bomb 1</Name>
@@ -1239,6 +1355,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 2 Laser 1 Bomb 1</Name>
@@ -1260,6 +1378,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Bounce 1 Laser 1</Name>
@@ -1281,6 +1401,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Bounce 1 Bomb 1</Name>
@@ -1302,6 +1424,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Spreadshot 2 Laser 1 Bomb 1</Name>
@@ -1323,6 +1447,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Bounce 1 Spreadshot 1</Name>
@@ -1344,6 +1470,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Bounce 1 Bomb 1</Name>
@@ -1365,6 +1493,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Laser 2 Spreadshot 1 Bomb 1</Name>
@@ -1386,6 +1516,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Bounce 1 Spreadshot 1</Name>
@@ -1407,6 +1539,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Bounce 1 Laser 1</Name>
@@ -1428,6 +1562,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bomb 2 Spreadshot 1 Laser 1</Name>
@@ -1449,6 +1585,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Bounce 1 Spreadshot 1 Laser 1 Bomb 1</Name>
@@ -1470,6 +1608,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Enemy Normal 1</Name>
@@ -1491,6 +1631,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Enemy Quad Laser 1</Name>
@@ -1512,6 +1654,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Enemy Quad Bomb 1</Name>
@@ -1533,6 +1677,8 @@
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>15</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
       <Name>Enemy Melee 1</Name>
@@ -1554,6 +1700,8 @@
       <SpecialEffect>none</SpecialEffect>
       <SpecialEffectParameter1>0</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
   </WeaponTypes>
 </WeaponData>
