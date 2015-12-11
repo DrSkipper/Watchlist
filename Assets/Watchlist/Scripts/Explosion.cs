@@ -21,6 +21,8 @@ public class Explosion : VoBehavior
         _damager.Damage = weaponType.Damage;
         _damager.Knockback = weaponType.Knockback;
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
+
+        ExplosionSounder.Detonate();
     }
 
     void Update()
