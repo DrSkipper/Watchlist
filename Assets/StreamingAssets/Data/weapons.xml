@@ -55,7 +55,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -77,7 +77,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -126,7 +126,7 @@
       <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -169,7 +169,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -203,7 +203,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -216,7 +216,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -238,7 +238,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -284,8 +284,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -308,7 +308,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -330,7 +330,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -356,7 +356,7 @@
       <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>3</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -377,7 +377,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>4</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -399,7 +399,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.06</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -433,7 +433,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>25</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -446,9 +446,9 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -468,10 +468,10 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
@@ -494,7 +494,7 @@
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
@@ -537,7 +537,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -583,7 +583,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -606,7 +606,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -629,7 +629,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -663,7 +663,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -676,7 +676,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -686,7 +686,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -698,7 +698,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -709,7 +709,7 @@
       <TravelType>laser</TravelType>
       <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>1</AudioIndex>
       <AudioCooldown>0.07</AudioCooldown>
@@ -721,8 +721,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -745,7 +745,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -767,7 +767,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -790,8 +790,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.3</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -816,7 +816,7 @@
       <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>4</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -837,7 +837,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>5</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -893,7 +893,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>35</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -906,9 +906,9 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>3</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -928,10 +928,10 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>3</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
@@ -954,7 +954,7 @@
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>3</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
@@ -975,7 +975,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>600</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>4</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -997,8 +997,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>4</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1021,7 +1021,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>4</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1043,7 +1043,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.06</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -1066,8 +1066,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.06</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1089,7 +1089,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1123,7 +1123,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>25</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1136,7 +1136,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1146,7 +1146,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>25</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1158,7 +1158,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1169,7 +1169,7 @@
       <TravelType>laser</TravelType>
       <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>25</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>1</AudioIndex>
       <AudioCooldown>0.07</AudioCooldown>
@@ -1184,7 +1184,7 @@
       <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>5</DurationTime>
@@ -1204,10 +1204,10 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
@@ -1230,7 +1230,7 @@
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
@@ -1238,7 +1238,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1250,7 +1250,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1284,7 +1284,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1296,7 +1296,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1307,7 +1307,7 @@
       <TravelType>laser</TravelType>
       <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>1</AudioIndex>
       <AudioCooldown>0.07</AudioCooldown>
@@ -1319,10 +1319,10 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.15</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
@@ -1343,9 +1343,9 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>280</VelocityFallOff>
       <DurationTime>1</DurationTime>
@@ -1365,10 +1365,10 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
-      <MaximumBounces>1</MaximumBounces>
+      <MaximumBounces>2</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>
       <DurationTime>0.0333</DurationTime>
@@ -1388,7 +1388,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.15</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -1434,7 +1434,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1457,8 +1457,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.1</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1480,7 +1480,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -1503,8 +1503,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.2</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1527,7 +1527,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1537,7 +1537,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1549,7 +1549,7 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -1560,7 +1560,7 @@
       <TravelType>laser</TravelType>
       <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>1</AudioIndex>
       <AudioCooldown>0.07</AudioCooldown>
@@ -1572,8 +1572,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
-      <ShotCooldown>0.5</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.3</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1583,7 +1583,7 @@
       <TravelType>normal</TravelType>
       <TravelTypeParameter>0</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
-      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
@@ -1595,8 +1595,8 @@
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
-      <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>3</ShotCount>
+      <ShotCooldown>0.3</ShotCooldown>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
