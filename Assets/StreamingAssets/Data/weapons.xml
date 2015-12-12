@@ -584,7 +584,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
-      <ShotCount>0</ShotCount>
+      <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -607,7 +607,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
-      <ShotCount>1</ShotCount>
+      <ShotCount>2</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -699,7 +699,7 @@
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.15</ShotCooldown>
-      <ShotCount>0</ShotCount>
+      <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
@@ -1577,11 +1577,11 @@
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
-      <VelocityFallOff>280</VelocityFallOff>
-      <DurationTime>1</DurationTime>
+      <VelocityFallOff>0</VelocityFallOff>
+      <DurationTime>0.0333</DurationTime>
       <DurationDistance>1000</DurationDistance>
-      <TravelType>normal</TravelType>
-      <TravelTypeParameter>0</TravelTypeParameter>
+      <TravelType>laser</TravelType>
+      <TravelTypeParameter>1</TravelTypeParameter>
       <SpecialEffect>explosion</SpecialEffect>
       <SpecialEffectParameter1>20</SpecialEffectParameter1>
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
