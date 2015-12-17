@@ -70,7 +70,7 @@ public class TileGeometryCreator : VoBehavior
                 if (_geometryPrefabs.ContainsKey(prefabKey))
                 {
                     GameObject prefab = _geometryPrefabs[prefabKey];
-                    IntegerVector intPosition = positionForTile(x, y);
+                    IntegerVector intPosition = _tileRenderer.PositionForTile(x, y);
                     Vector3 position = new Vector3(intPosition.X, intPosition.Y, 0);
                     GameObject geom = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                     geom.transform.parent = this.transform;
@@ -103,10 +103,4 @@ public class TileGeometryCreator : VoBehavior
      */
     private TileMapOutlineRenderer _tileRenderer;
     private Dictionary<string, GameObject> _geometryPrefabs = new Dictionary<string, GameObject>();
-
-    private IntegerVector positionForTile(int x, int y)
-    {
-        int halfTileSize = _tileRenderer.TileRenderSize / 2;
-        return new IntegerVector(x * _tileRenderer.TileRenderSize + halfTileSize, y * _tileRenderer.TileRenderSize + halfTileSize);
-    }
 }

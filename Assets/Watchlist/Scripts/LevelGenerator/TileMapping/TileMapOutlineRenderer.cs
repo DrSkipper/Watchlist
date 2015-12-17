@@ -54,6 +54,12 @@ public class TileMapOutlineRenderer : VoBehavior
             this.transform.position = new Vector3(0, 0, this.transform.position.z);
     }
 
+    public IntegerVector PositionForTile(int x, int y)
+    {
+        int halfTileSize = this.TileRenderSize / 2;
+        return new IntegerVector(x * this.TileRenderSize + halfTileSize, y * this.TileRenderSize + halfTileSize);
+    }
+
 
     /**
      * Private

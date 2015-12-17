@@ -7,7 +7,6 @@ public class LevelGenStarter : LevelGenBehavior
     void Start()
     {
         this.Manager.InitiateGeneration(null);
-        _tileMapOutlineRender = this.Tiles.GetComponent<TileMapOutlineRenderer>();
         _beganGeneration = true;
     }
 
@@ -23,7 +22,9 @@ public class LevelGenStarter : LevelGenBehavior
             Debug.Log("json of level gen output:\n" + json);*/
             Debug.Log("level generation complete, json output not enabled");
 
-            _tileMapOutlineRender.CreateMapWithGrid(this.tileTypeMapToSpriteIndexMap());
+            int[,] grid = this.tileTypeMapToSpriteIndexMap();
+            this.Tiles.GetComponent<TileMapOutlineRenderer>().CreateMapWithGrid(grid);
+            this.Tiles.GetComponent<TileGeometryCreator>().CreateMapWithGrid(grid);
             this.Manager.Cleanup();
         }
     }
@@ -31,7 +32,6 @@ public class LevelGenStarter : LevelGenBehavior
     /**
 	 * Private
 	 */
-    private TileMapOutlineRenderer _tileMapOutlineRender;
     private bool _beganGeneration;
 
     private int[,] tileTypeMapToSpriteIndexMap()
