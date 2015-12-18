@@ -62,7 +62,7 @@ public class BSPGenerator : BaseLevelGenerator
 		_nodeQueue.Add(_root);
         _originalMap = this.Map.CopyOfGridRect(this.Bounds);
 		_rooms = new List<Rect>();
-		_corridorTiles = new List<LevelGenMap.Coordinate>();
+		_corridorTiles = new List<List<LevelGenMap.Coordinate>>();
         _numExtraCorridors = 0;
 
         this.AddPhase(this.DivisionPhase);
@@ -230,7 +230,7 @@ public class BSPGenerator : BaseLevelGenerator
 	private List<BSPNode> _leaves;
     private LevelGenMap.TileType[,] _originalMap;
 	private List<Rect> _rooms;
-	private List<LevelGenMap.Coordinate> _corridorTiles;
+	private List<List<LevelGenMap.Coordinate>> _corridorTiles;
 	private int _numRoomsToMake;
     private int _numExtraCorridorsToMake;
     private int _numExtraCorridors;
@@ -463,6 +463,8 @@ public class BSPGenerator : BaseLevelGenerator
 	{
         int modifier = 1;
 
+        List<LevelGenMap.Coordinate> corridor = new List<LevelGenMap.Coordinate>();
+
         if (coord1.x != coord2.x)
         {
             int startX = coord1.x < coord2.x ? coord1.x + modifier : coord2.x + modifier;
@@ -470,7 +472,7 @@ public class BSPGenerator : BaseLevelGenerator
 
             for (int x = startX; x < endX; ++x)
             {
-                fillCorridorTile(x, coord2.y);
+                fillCorridorTile(x, coord2.y, corridor);
             }
 
             modifier = 0;
@@ -483,12 +485,14 @@ public class BSPGenerator : BaseLevelGenerator
 
             for (int y = startY; y < endY; ++y)
             {
-                fillCorridorTile(coord1.x, y);
+                fillCorridorTile(coord1.x, y, corridor);
             }
         }
+
+        _corridorTiles.Add(corridor);
 	}
 
-	private void fillCorridorTile(int x, int y)
+	private void fillCorridorTile(int x, int y, List<LevelGenMap.Coordinate> cooridor)
 	{
 		LevelGenMap.Coordinate? coord = this.Map.ConstructValidCoordinate(x, y, false);
 		if (!coord.HasValue)
@@ -510,7 +514,7 @@ public class BSPGenerator : BaseLevelGenerator
         if (!alreadyContains)
         {
             this.Map.Grid[x, y] = this.FillTileType;
-            _corridorTiles.Add(coord.Value);
+            cooridor.Add(coord.Value);
         }
         else
         {

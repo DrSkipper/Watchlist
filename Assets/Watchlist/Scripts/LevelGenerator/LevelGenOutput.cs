@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 public class LevelGenOutput
 {
 	public LevelGenMap.TileType[,] Grid;
+    public LevelGenMap.Coordinate[] OpenTiles;
     public Dictionary<string, LevelGenMapInfo> MapInfo;
 
     public void AddMapInfo(LevelGenMapInfo info)
@@ -49,9 +48,18 @@ public class LevelGenRoomInfo : LevelGenMapInfo
 
 public class LevelGenCorridorInfo : LevelGenMapInfo
 {
-    public LevelGenCorridorInfo(List<LevelGenMap.Coordinate> corridors)
+    public LevelGenCorridorInfo(List<List<LevelGenMap.Coordinate>> corridors)
     {
         this.Name = "corridors";
         this.Data = corridors;
+    }
+}
+
+public class LevelGenCaveInfo : LevelGenMapInfo
+{
+    public LevelGenCaveInfo(List<List<LevelGenMap.Coordinate>> caves)
+    {
+        this.Name = "caves";
+        this.Data = caves;
     }
 }

@@ -122,8 +122,11 @@ public class CAGenerator : BaseLevelGenerator
                     this.Map.Grid[caveCoord.x, caveCoord.y] = BASE_TYPE;
                 }
             }
+
+            caves.RemoveRange(this.MaxCaves, caves.Count - this.MaxCaves);
         }
 
+        _caves = caves;
 		this.NextPhase();
 	}
 
@@ -146,12 +149,20 @@ public class CAGenerator : BaseLevelGenerator
 		this.NextPhase();
 	}
 
-	/**
+    public override LevelGenOutput GetOutput()
+    {
+        LevelGenOutput output = base.GetOutput();
+        output.AddMapInfo(new LevelGenCaveInfo(_caves));
+        return output;
+    }
+
+    /**
 	 * Private
 	 */
-	private LevelGenMap.TileType[,] _originalMap;
+    private LevelGenMap.TileType[,] _originalMap;
+    List<List<LevelGenMap.Coordinate>> _caves;
 
-	private void runAutomata(int finalFrame)
+    private void runAutomata(int finalFrame)
 	{
 		for (int i = this.CurrentPhase.FramesElapsed; i < finalFrame; ++i)
 		{

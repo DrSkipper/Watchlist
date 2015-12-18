@@ -8,8 +8,9 @@ public class BaseLevelGenerator : LevelGenBehavior
 {
 	public string GeneratorName = "Basic Generator";
     public Rect Bounds;
+    public LevelGenMap.TileType OpenTileType = LevelGenMap.TileType.B;
 
-	public LevelGenPhase CurrentPhase { get { return _phases[_currentPhase]; } }
+    public LevelGenPhase CurrentPhase { get { return _phases[_currentPhase]; } }
 	public bool IsFinished { get { return _currentPhase >= _phases.Count; } }
 
     public void Start()
@@ -67,6 +68,7 @@ public class BaseLevelGenerator : LevelGenBehavior
         LevelGenOutput output = new LevelGenOutput();
         output.Grid = this.Map.Grid;
         output.MapInfo = new Dictionary<string, LevelGenMapInfo>();
+        output.OpenTiles = this.Map.ListOfCoordinatesOfType(this.Bounds, this.OpenTileType).ToArray();
         return output;
     }
 

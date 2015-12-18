@@ -19,8 +19,7 @@ public class SpawnPositioner : VoBehavior
         if (_levelGenManager.Finished)
         {
             LevelGenOutput output = _levelGenManager.GetOutput();
-
-
+            
         }
     }
 

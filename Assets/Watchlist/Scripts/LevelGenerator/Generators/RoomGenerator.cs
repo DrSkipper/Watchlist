@@ -44,13 +44,15 @@ public class RoomGenerator : BaseLevelGenerator
 		base.SetupGeneration();
 		this.Rooms.Clear();
 		_retries = 0;
-		this.AddPhase(this.AddRoomsPhase);
+        _corridorTiles = new List<List<LevelGenMap.Coordinate>>();
+        this.AddPhase(this.AddRoomsPhase);
 	}
 
     public override LevelGenOutput GetOutput()
     {
         LevelGenOutput output = base.GetOutput();
         output.AddMapInfo(new LevelGenRoomInfo(SimpleRect.RectListToSimpleRectList(this.Rooms)));
+        output.AddMapInfo(new LevelGenCorridorInfo(_corridorTiles));
         return output;
     }
 
@@ -91,16 +93,18 @@ public class RoomGenerator : BaseLevelGenerator
 				if (this.Rooms.Count > 0) // First room has no previous room to connect to
 				{
 					Vector2 prevRoomCenter = this.Rooms[this.Rooms.Count - 1].center;
+                    List<LevelGenMap.Coordinate> corridor = new List<LevelGenMap.Coordinate>();
 					if (Random.Range(0, 2) == 1)
 					{
-						createHTunnel((int)prevRoomCenter.x, (int)newRoom.center.x, (int)prevRoomCenter.y);
-						createVTunnel((int)prevRoomCenter.y, (int)newRoom.center.y, (int)newRoom.center.x);
+						createHTunnel((int)prevRoomCenter.x, (int)newRoom.center.x, (int)prevRoomCenter.y, corridor);
+						createVTunnel((int)prevRoomCenter.y, (int)newRoom.center.y, (int)newRoom.center.x, corridor);
 					}
 					else
 					{
-						createVTunnel((int)prevRoomCenter.y, (int)newRoom.center.y, (int)newRoom.center.x);
-						createHTunnel((int)prevRoomCenter.x, (int)newRoom.center.x, (int)prevRoomCenter.y);
+						createVTunnel((int)prevRoomCenter.y, (int)newRoom.center.y, (int)newRoom.center.x, corridor);
+						createHTunnel((int)prevRoomCenter.x, (int)newRoom.center.x, (int)prevRoomCenter.y, corridor);
 					}
+                    _corridorTiles.Add(corridor);
 				}
 
 				this.Rooms.Add(newRoom);
@@ -138,20 +142,25 @@ public class RoomGenerator : BaseLevelGenerator
 	 * Private
 	 */
 	private int _retries;
+    private List<List<LevelGenMap.Coordinate>> _corridorTiles;
 
-	private void createHTunnel(int x1, int x2, int y)
+    private void createHTunnel(int x1, int x2, int y, List<LevelGenMap.Coordinate> corridor)
 	{
 		for (int x = Mathf.Min(x1, x2); x <= Mathf.Max(x1, x2); ++x)
 		{
+            if (this.Map.Grid[x, y] != this.FillTileType)
+                corridor.Add(this.Map.ConstructValidCoordinate(x, y, false).Value);
 			this.Map.Grid[x, y] = this.FillTileType;
 		}
 	}
 
-	private void createVTunnel(int y1, int y2, int x)
+	private void createVTunnel(int y1, int y2, int x, List<LevelGenMap.Coordinate> corridor)
 	{
 		for (int y = Mathf.Min(y1, y2); y <= Mathf.Max(y1, y2); ++y)
-		{
-			this.Map.Grid[x, y] = this.FillTileType;
+        {
+            if (this.Map.Grid[x, y] != this.FillTileType)
+                corridor.Add(this.Map.ConstructValidCoordinate(x, y, false).Value);
+            this.Map.Grid[x, y] = this.FillTileType;
 		}
 	}
 
