@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class LevelGenOutput
 {
 	public LevelGenMap.TileType[,] Grid;
-    public LevelGenMap.Coordinate[] OpenTiles;
+    public List<LevelGenMap.Coordinate> OpenTiles;
     public Dictionary<string, LevelGenMapInfo> MapInfo;
 
     public void AddMapInfo(LevelGenMapInfo info)

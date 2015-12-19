@@ -68,7 +68,7 @@ public class BaseLevelGenerator : LevelGenBehavior
         LevelGenOutput output = new LevelGenOutput();
         output.Grid = this.Map.Grid;
         output.MapInfo = new Dictionary<string, LevelGenMapInfo>();
-        output.OpenTiles = this.Map.ListOfCoordinatesOfType(this.Bounds, this.OpenTileType).ToArray();
+        output.OpenTiles = this.Map.ListOfCoordinatesOfType(this.Bounds, this.OpenTileType);
         return output;
     }
 
