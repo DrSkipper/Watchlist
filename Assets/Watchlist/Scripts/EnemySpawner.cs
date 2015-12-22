@@ -4,7 +4,7 @@ public class EnemySpawner : VoBehavior
 {
     public int[] SpawnPool; // If empty, we assume entire enemy pool
     public float SpawnCooldown = 0.0f; // If 0, wait until Spawn is called externally
-    public float SpawnDelay = 0.0f;
+    public float MinDistanceToSpawn = float.MaxValue;
     public Transform[] Targets;
 
     public GameObject GenericPrefab;
@@ -16,9 +16,19 @@ public class EnemySpawner : VoBehavior
         if (this.SpawnCooldown > 0.0f)
         {
             if (_cooldownTimer <= 0.0f)
-                Spawn();
+            {
+                if (distanceCheck())
+                    Spawn();
+            }
             else
+            {
                 _cooldownTimer -= Time.deltaTime;
+            }
+        }
+        else if (distanceCheck())
+        {
+            Spawn();
+            Destroy(this.gameObject);
         }
     }
 
@@ -52,4 +62,18 @@ public class EnemySpawner : VoBehavior
      * Private
      */
     private float _cooldownTimer;
+
+    private bool distanceCheck()
+    {
+        if (this.Targets.Length == 0)
+            return true;
+
+        foreach (Transform target in this.Targets)
+        {
+            if (Vector2.Distance(this.transform.position, target.position) <= this.MinDistanceToSpawn)
+                return true;
+        }
+
+        return false;
+    }
 }

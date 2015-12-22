@@ -6,7 +6,9 @@ public class SpawnPositioner : VoBehavior
     public GameObject LevelGenerator;
     public GameObject Tiles;
     public GameObject EnemySpawnPrefab;
+    public GameObject PlayerPrefab;
     public int NumEnemies = 10;
+    public int NumPlayers = 1;
 
     void Start()
     {
@@ -27,12 +29,24 @@ public class SpawnPositioner : VoBehavior
             List<LevelGenMap.Coordinate> openTiles = output.OpenTiles;
             openTiles.Shuffle();
             _finished = true;
+            _targets = new List<Transform>();
 
-            for (int i = 0; i < (this.NumEnemies < openTiles.Count ? this.NumEnemies : openTiles.Count); ++i)
+            for (int i = 0; i < (this.NumEnemies + this.NumPlayers < openTiles.Count ? this.NumEnemies + this.NumPlayers : openTiles.Count); ++i)
             {
                 IntegerVector position = _tileRenderer.PositionForTile(openTiles[i].x, openTiles[i].y);
-                GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
-                spawner.transform.parent = this.transform;
+                if (i < this.NumPlayers)
+                {
+                    GameObject player = Instantiate(this.PlayerPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
+                    player.transform.parent = this.transform;
+                    _targets.Add(player.transform);
+                    Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
+                }
+                else
+                {
+                    GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
+                    spawner.transform.parent = this.transform;
+                    spawner.GetComponent<EnemySpawner>().Targets = _targets.ToArray();
+                }
             }
         }
     }
@@ -52,4 +66,5 @@ public class SpawnPositioner : VoBehavior
     private LevelGenManager _levelGenManager;
     private TileMapOutlineRenderer _tileRenderer;
     private bool _finished;
+    private List<Transform> _targets;
 }
