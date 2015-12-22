@@ -49,11 +49,7 @@ public class EnemySpawner : VoBehavior
         enemyComponent.Targets = this.Targets;
 
         if (this.SpawnVisualPrefab != null)
-        {
-            GameObject visual = Instantiate(this.SpawnVisualPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-            visual.transform.parent = this.transform;
-            visual.transform.localPosition = Vector3.zero;
-        }
+            Instantiate(this.SpawnVisualPrefab, this.transform.position, Quaternion.identity);
 
         return enemyObject;
     }
