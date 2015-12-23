@@ -17,6 +17,7 @@ public class LevelGraphController : VoBehavior
     public Color BaseColor;
     public float BlinkIntervalOn = 0.5f;
     public float BlinkIntervalOff = 0.2f;
+    public string GameplaySceneName = "";
 
     /**
      * Data types
@@ -183,7 +184,14 @@ public class LevelGraphController : VoBehavior
             }
 
             if ((newPosition.IntX() != this.CurrentPosition.IntX() || newPosition.IntY() != this.CurrentPosition.IntY()) && _grid[newPosition.IntX() + _halfSize, newPosition.IntY() + _halfSize] != null)
+            {
                 moveCurrentTile(newPosition);
+            }
+            else if (MenuInput.SelectCurrentElement())
+            {
+                //TODO - Send input to level generation
+                Application.LoadLevel(this.GameplaySceneName);
+            }
         }
         
         else
