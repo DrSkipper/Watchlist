@@ -124,6 +124,17 @@ public class LevelGenMap : MonoBehaviour
         }
     }
 
+    public void ApplyGridSubset(int StartX, int StartY, TileType[,] subset)
+    {
+        for (int x = StartX; x < StartX + subset.GetLength(0); ++x)
+        {
+            for (int y = StartY; y < StartY + subset.GetLength(1); ++y)
+            {
+                this.Grid[x, y] = subset[x - StartX, y - StartY];
+            }
+        }
+    }
+
 	public List<Coordinate> CoordinatesInRect(Rect rect, bool allowsWrapping = false)
 	{
 		List<Coordinate> coords = new List<Coordinate>();

@@ -168,26 +168,24 @@ public class CAGenerator : BaseLevelGenerator
 		{
             LevelGenMap.TileType[,] newMap = new LevelGenMap.TileType[this.Bounds.IntWidth(), this.Bounds.IntHeight()];
 			doSimulationStep(this.Map.Grid, newMap);
-			this.Map.Grid = newMap;
+            this.Map.ApplyGridSubset(this.Bounds.IntXMin(), this.Bounds.IntYMin(), newMap);
 		}
 	}
 
-    private void doSimulationStep(LevelGenMap.TileType[,] prevMap, LevelGenMap.TileType[,] newMap = null)
+    private void doSimulationStep(LevelGenMap.TileType[,] prevMap, LevelGenMap.TileType[,] newMap)
 	{
-		if (newMap == null)
-			newMap = prevMap;
-
 		for (int x = this.Bounds.IntXMin(); x < this.Bounds.IntXMax(); ++x)
 		{
 			for (int y = this.Bounds.IntYMin(); y < this.Bounds.IntYMax(); ++y)
-			{
+            {
+                int inBoundsX = x - this.Bounds.IntXMin();
+                int inBoundsY = y - this.Bounds.IntYMin();
+
                 // Make sure this tile matches our valid tile types to run CA on
-                if ((_originalMap[x, y] | this.ValidBaseTilesForGeneration) != this.ValidBaseTilesForGeneration)
+                if ((_originalMap[inBoundsX, inBoundsY] | this.ValidBaseTilesForGeneration) != this.ValidBaseTilesForGeneration)
                     continue;
 
 				int nbs = countAliveNeighbours(prevMap, x, y);
-				int inBoundsX = x - this.Bounds.IntXMin();
-				int inBoundsY = y - this.Bounds.IntYMin();
 
 				if (prevMap[x, y] == BASE_TYPE)
 				{

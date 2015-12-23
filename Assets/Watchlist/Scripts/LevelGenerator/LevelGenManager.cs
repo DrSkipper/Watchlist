@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 public class LevelGenManager : LevelGenBehavior
 {
@@ -13,6 +9,7 @@ public class LevelGenManager : LevelGenBehavior
 	public bool Finished { get { return !_generating; } }
     public LevelGenerationUpdateDelegate UpdateDelegate = null;
     public bool RemoveTips = true;
+    public int Border = 0;
 
 	public void InitiateGeneration(Object storyOutput)
 	{
@@ -21,6 +18,7 @@ public class LevelGenManager : LevelGenBehavior
 
 		//TODO - Create generator based on LevelGenParams
         _generator = this.gameObject.AddComponent<CAGenerator>();
+        _generator.Bounds = new Rect(this.Border, this.Border, this.Map.Width - this.Border * 2, this.Map.Height - this.Border * 2);
         this.Map.FillCompletely(LevelGenMap.TileType.A);
 		_generator.SetupGeneration();
 
