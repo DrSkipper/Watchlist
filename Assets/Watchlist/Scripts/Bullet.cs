@@ -27,10 +27,7 @@ public class Bullet : Actor2D
         this.gameObject.layer = ourLayer;
         LayerMask alliedVulnerable = (1 << LayerMask.NameToLayer(allegianceString + " Vulnerable"));
         LayerMask levelGeometryMask = (1 << LayerMask.NameToLayer("Level Geometry"));
-        LayerMask pickupMask = (1 << LayerMask.NameToLayer("Pickup"));
-        LayerMask everything = int.MaxValue;
         LayerMask nothing = 0;
-        LayerMask alliedLayers = alliedVulnerable | GetMissileLayers();
 
         _damager = this.GetComponent<Damager>();
         _damager.DamagableLayers = (~alliedVulnerable) & GetVulnerableLayers();
@@ -39,7 +36,7 @@ public class Bullet : Actor2D
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
-        this.CollisionMask = everything & (~alliedLayers) & (~pickupMask);
+        this.CollisionMask = _damager.DamagableLayers | levelGeometryMask;
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
         
         _explosionRemaining = this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION;

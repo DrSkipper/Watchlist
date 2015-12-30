@@ -9,6 +9,7 @@ public class GibsBehavior : VoBehavior
     public float RandomInfluence = 20.0f;
     public float OrientationInfluence = 50.0f;
     public float Lifetime = 1.0f;
+    public bool DestroyWhenDone = true;
 
     void Start()
     {
@@ -27,9 +28,25 @@ public class GibsBehavior : VoBehavior
     void Update()
     {
         if (_lifetimeTimer <= 0.0f)
-            Destroy(this.gameObject);
+        {
+            if (this.DestroyWhenDone)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Destroy(this);
+                foreach (GameObject gib in this.Gibs)
+                {
+                    Destroy(gib.GetComponent<Actor2D>());
+                    Destroy(gib.GetComponent<ActorFriction>());
+                }
+            }
+        }
         else
+        {
             _lifetimeTimer -= Time.deltaTime;
+        }
     }
 
     /**
