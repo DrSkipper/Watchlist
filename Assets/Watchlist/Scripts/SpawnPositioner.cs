@@ -64,6 +64,8 @@ public class SpawnPositioner : VoBehavior
 
     public void SpawnEnemies()
     {
+        WinCondition winCondition = this.GetComponent<WinCondition>();
+
         for (int i = 0; i < this.NumEnemies; ++i)
         {
             if (_spawnPositions.Count == 0)
@@ -76,6 +78,8 @@ public class SpawnPositioner : VoBehavior
                 spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
 
             EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
+            if (winCondition != null)
+                spawnBehavior.SpawnCallback = winCondition.EnemySpawned;
             spawnBehavior.Targets = _targets.ToArray();
             spawnBehavior.DestroyAfterSpawn = true;
             _spawnPositions.RemoveAt(_spawnPositions.Count - 1);

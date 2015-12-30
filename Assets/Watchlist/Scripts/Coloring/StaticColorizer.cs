@@ -41,7 +41,15 @@ public class StaticColorizer : MonoBehaviour
                     {
                         Image image = this.GetComponent<Image>();
                         if (image != null)
+                        {
                             image.color = color;
+                        }
+                        else
+                        {
+                            Text text = this.GetComponent<Text>();
+                            if (text != null)
+                                text.color = color;
+                        }
                     }
                 }
             }
