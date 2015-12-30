@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class WinCondition : VoBehavior
 {
@@ -37,6 +36,5 @@ public class WinCondition : VoBehavior
     /**
      * Private
      */
-    private int totalEnemies;
     private int enemiesDied;
 }
