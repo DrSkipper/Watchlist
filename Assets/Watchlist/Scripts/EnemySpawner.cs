@@ -2,9 +2,14 @@
 
 public class EnemySpawner : VoBehavior
 {
+    public delegate void SpawnedObjectCallback(GameObject spawnedObject);
+
     public int[] SpawnPool; // If empty, we assume entire enemy pool
     public float SpawnCooldown = 0.0f; // If 0, wait until Spawn is called externally
     public float MinDistanceToSpawn = float.MaxValue;
+    public float SpawnDelay = 0.5f;
+    public bool DestroyAfterSpawn = false;
+    public SpawnedObjectCallback SpawnCallback;
     public Transform[] Targets;
 
     public GameObject GenericPrefab;
@@ -17,22 +22,35 @@ public class EnemySpawner : VoBehavior
         {
             if (_cooldownTimer <= 0.0f)
             {
-                if (distanceCheck())
-                    Spawn();
+                if (distanceCheck() && !_spawning)
+                    BeginSpawn();
             }
             else
             {
                 _cooldownTimer -= Time.deltaTime;
             }
         }
-        else if (distanceCheck())
+        else if (distanceCheck() && !_spawning)
         {
-            Spawn();
-            Destroy(this.gameObject);
+            BeginSpawn();
         }
     }
 
-    public GameObject Spawn()
+    public void BeginSpawn()
+    {
+        _spawning = true;
+
+        if (this.SpawnVisualPrefab != null)
+            Instantiate(this.SpawnVisualPrefab, this.transform.position, Quaternion.identity);
+
+        TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+        if (callbacks != null)
+            callbacks.AddCallback(this, this.Spawn, this.SpawnDelay);
+        else
+            Spawn();
+    }
+
+    public void Spawn()
     {
         _cooldownTimer = this.SpawnCooldown;
 
@@ -48,16 +66,19 @@ public class EnemySpawner : VoBehavior
         enemyComponent.EnemyType = enemy;
         enemyComponent.Targets = this.Targets;
 
-        if (this.SpawnVisualPrefab != null)
-            Instantiate(this.SpawnVisualPrefab, this.transform.position, Quaternion.identity);
+        if (this.SpawnCallback != null)
+            this.SpawnCallback(enemyObject);
 
-        return enemyObject;
+        _spawning = false;
+        if (this.DestroyAfterSpawn)
+            Destroy(this.gameObject);
     }
 
     /**
      * Private
      */
     private float _cooldownTimer;
+    private bool _spawning;
 
     private bool distanceCheck()
     {

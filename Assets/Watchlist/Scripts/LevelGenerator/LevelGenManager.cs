@@ -19,6 +19,7 @@ public class LevelGenManager : LevelGenBehavior
 		//TODO - Create generator based on LevelGenParams
         _generator = this.gameObject.AddComponent<CAGenerator>();
         _generator.Bounds = new Rect(this.Border, this.Border, this.Map.Width - this.Border * 2, this.Map.Height - this.Border * 2);
+        ((CAGenerator)_generator).MaxCaves = 1;
         this.Map.FillCompletely(LevelGenMap.TileType.A);
 		_generator.SetupGeneration();
 

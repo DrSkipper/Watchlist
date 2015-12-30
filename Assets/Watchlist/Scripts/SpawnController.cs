@@ -22,9 +22,8 @@ public class SpawnController : VoBehavior
             {
                 foreach (EnemySpawner spawner in _spawners)
                 {
-                    GameObject enemy = spawner.Spawn();
-                    enemy.GetComponent<Damagable>().OnDeath = this.EnemyDied;
-                    ++enemyCount;
+                    spawner.SpawnCallback = this.EnemySpawned;
+                    spawner.BeginSpawn();
                 }
 
                 _waveCooldown = this.TimeBetweenWaves;
@@ -35,6 +34,12 @@ public class SpawnController : VoBehavior
             }
         }
 	}
+
+    public void EnemySpawned(GameObject enemy)
+    {
+        enemy.GetComponent<Damagable>().OnDeath = this.EnemyDied;
+        ++enemyCount;
+    }
 
     public void EnemyDied(Damagable died)
     {

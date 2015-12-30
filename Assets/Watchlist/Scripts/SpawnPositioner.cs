@@ -9,13 +9,14 @@ public class SpawnPositioner : VoBehavior
     public GameObject PlayerPrefab;
     public int NumEnemies = 10;
     public int NumPlayers = 1;
+    public float SpawnPlayersDelay = 1.0f;
+    public float SpawnEnemiesDelay = 3.0f;
 
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
         _tileRenderer = this.Tiles.GetComponent<TileMapOutlineRenderer>();
         _levelGenManager.UpdateDelegate = this.LevelGenUpdate;
-        _finished = false;
 
         if (_tileRenderer.OffsetTilesToCenter)
             this.transform.position = new Vector3(0, 0, this.transform.position.z);
@@ -28,35 +29,56 @@ public class SpawnPositioner : VoBehavior
             LevelGenOutput output = _levelGenManager.GetOutput();
             List<LevelGenMap.Coordinate> openTiles = output.OpenTiles;
             openTiles.Shuffle();
-            _finished = true;
             _targets = new List<Transform>();
+            _spawnPositions = new List<IntegerVector>();
+            TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
 
             for (int i = 0; i < (this.NumEnemies + this.NumPlayers < openTiles.Count ? this.NumEnemies + this.NumPlayers : openTiles.Count); ++i)
             {
-                IntegerVector position = _tileRenderer.PositionForTile(openTiles[i].x, openTiles[i].y);
-                if (i < this.NumPlayers)
-                {
-                    GameObject player = Instantiate(this.PlayerPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
-                    player.transform.parent = this.transform;
-                    _targets.Add(player.transform);
-                    Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
-                }
-                else
-                {
-                    GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
-                    spawner.transform.parent = this.transform;
-                    spawner.GetComponent<EnemySpawner>().Targets = _targets.ToArray();
-                }
+                _spawnPositions.Add(_tileRenderer.PositionForTile(openTiles[i].x, openTiles[i].y));
             }
+
+            callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
+            callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
         }
     }
 
-    void Update()
+    public void SpawnPlayers()
     {
-        if (_finished && _tileRenderer.OffsetTilesToCenter)
+        for (int i = 0; i < this.NumPlayers; ++i)
         {
-            _finished = false;
-            this.transform.position = new Vector3(this.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, this.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, this.transform.position.z);
+            if (_spawnPositions.Count == 0)
+                break;
+
+            IntegerVector position = _spawnPositions[_spawnPositions.Count - 1];
+            GameObject player = Instantiate(this.PlayerPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
+
+            if (_tileRenderer.OffsetTilesToCenter)
+                player.transform.position = new Vector3(player.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, player.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, player.transform.position.z);
+
+            _targets.Add(player.transform);
+            Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
+            _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
+        }
+    }
+
+    public void SpawnEnemies()
+    {
+        for (int i = 0; i < this.NumEnemies; ++i)
+        {
+            if (_spawnPositions.Count == 0)
+                break;
+
+            IntegerVector position = _spawnPositions[_spawnPositions.Count - 1];
+            GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
+
+            if (_tileRenderer.OffsetTilesToCenter)
+                spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
+
+            EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
+            spawnBehavior.Targets = _targets.ToArray();
+            spawnBehavior.DestroyAfterSpawn = true;
+            _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
         }
     }
 
@@ -65,6 +87,6 @@ public class SpawnPositioner : VoBehavior
      */
     private LevelGenManager _levelGenManager;
     private TileMapOutlineRenderer _tileRenderer;
-    private bool _finished;
     private List<Transform> _targets;
+    private List<IntegerVector> _spawnPositions;
 }
