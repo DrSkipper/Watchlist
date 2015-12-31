@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class LevelGraphController : VoBehavior
 {
     public int Size = 7; // Should be odd number
-    public Vector2[] BossTiles;
-    public Vector2[] CompletedTiles;
-    public Vector2 CurrentPosition;
+    public IntegerVector[] BossTiles;
+    public IntegerVector[] CompletedTiles;
+    public IntegerVector CurrentPosition;
     public GameObject BoxPrefab;
     public GameObject LinePrebab;
     public float GridSpaceDistance = 17.0f;
@@ -18,6 +18,7 @@ public class LevelGraphController : VoBehavior
     public float BlinkIntervalOn = 0.5f;
     public float BlinkIntervalOff = 0.2f;
     public string GameplaySceneName = "";
+    public bool UseDynamicData = true;
 
     /**
      * Data types
@@ -68,6 +69,11 @@ public class LevelGraphController : VoBehavior
      */
     void Start()
     {
+        if (this.UseDynamicData)
+        {
+            this.CompletedTiles = DynamicData.CompletedTiles;
+            this.CurrentPosition = DynamicData.MostRecentTile;
+        }
         _grid = new LevelGraphTile[this.Size, this.Size];
         _paths = new LevelGraphPath[this.Size * 2 - 1, this.Size * 2 - 1];
         _halfSize = this.Size / 2;
@@ -164,32 +170,33 @@ public class LevelGraphController : VoBehavior
     {
         if (Input.anyKeyDown || Mathf.Abs(Input.GetAxis("Vertical")) > MenuInput.MENU_AXIS_DEADZONE || Mathf.Abs(Input.GetAxis("Horizontal")) > MenuInput.MENU_AXIS_DEADZONE)
         {
-            Vector2 newPosition = this.CurrentPosition;
+            IntegerVector newPosition = this.CurrentPosition;
 
-            if (this.CurrentPosition.IntX() > -_halfSize && MenuInput.NavLeft())
+            if (this.CurrentPosition.X > -_halfSize && MenuInput.NavLeft())
             {
-                newPosition.x -= 1;
+                newPosition.X -= 1;
             }
-            else if (this.CurrentPosition.IntY() > -_halfSize && MenuInput.NavDown())
+            else if (this.CurrentPosition.Y > -_halfSize && MenuInput.NavDown())
             {
-                newPosition.y -= 1;
+                newPosition.Y -= 1;
             }
-            else if (this.CurrentPosition.IntX() < _halfSize && MenuInput.NavRight())
+            else if (this.CurrentPosition.X < _halfSize && MenuInput.NavRight())
             {
-                newPosition.x += 1;
+                newPosition.X += 1;
             }
-            else if (this.CurrentPosition.IntY() < _halfSize && MenuInput.NavUp())
+            else if (this.CurrentPosition.Y < _halfSize && MenuInput.NavUp())
             {
-                newPosition.y += 1;
+                newPosition.Y += 1;
             }
 
-            if ((newPosition.IntX() != this.CurrentPosition.IntX() || newPosition.IntY() != this.CurrentPosition.IntY()) && _grid[newPosition.IntX() + _halfSize, newPosition.IntY() + _halfSize] != null)
+            if ((newPosition.X != this.CurrentPosition.X || newPosition.Y != this.CurrentPosition.Y) && _grid[newPosition.X + _halfSize, newPosition.Y + _halfSize] != null)
             {
                 moveCurrentTile(newPosition);
             }
             else if (MenuInput.SelectCurrentElement())
             {
                 //TODO - Send input to level generation
+                DynamicData.SelectTile(this.CurrentPosition);
                 Application.LoadLevel(this.GameplaySceneName);
             }
         }
@@ -293,9 +300,9 @@ public class LevelGraphController : VoBehavior
         return path;
     }
 
-    private void moveCurrentTile(Vector2 newPosition)
+    private void moveCurrentTile(IntegerVector newPosition)
     {
-        if (newPosition.IntX() != this.CurrentPosition.IntX() || newPosition.IntY() != this.CurrentPosition.IntY())
+        if (newPosition.X != this.CurrentPosition.X || newPosition.Y != this.CurrentPosition.Y)
             removeCurrentEffect(this.CurrentPosition);
 
         this.CurrentPosition = newPosition;
@@ -357,7 +364,7 @@ public class LevelGraphController : VoBehavior
     
     private void blinkCurrentTileOn()
     {
-        LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
+        LevelGraphTile currentTile = _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize];
         currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(this.PlayerColor);
 
         if (currentTile.State == TileState.Available)
@@ -372,7 +379,7 @@ public class LevelGraphController : VoBehavior
 
     private void blinkCurrentTileOff()
     {
-        LevelGraphTile currentTile = _grid[this.CurrentPosition.IntX() + _halfSize, this.CurrentPosition.IntY() + _halfSize];
+        LevelGraphTile currentTile = _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize];
         currentTile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(Color.clear);
 
         if (currentTile.State == TileState.Available)

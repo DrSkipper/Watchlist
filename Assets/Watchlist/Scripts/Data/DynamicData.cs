@@ -26,6 +26,11 @@ public static class DynamicData
         _mostRecentTile = tile;
     }
 
+    public static void SelectTile(IntegerVector tile)
+    {
+        _mostRecentTile = tile;
+    }
+
     public static void UpdatePlayer(int playerIndex, WeaponData.Slot[] slots)
     {
         _weaponSlotsByPlayer[playerIndex] = slots;
