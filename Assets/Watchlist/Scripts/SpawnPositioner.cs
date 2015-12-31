@@ -7,8 +7,10 @@ public class SpawnPositioner : VoBehavior
     public GameObject Tiles;
     public GameObject EnemySpawnPrefab;
     public GameObject PlayerPrefab;
+    public GameObject[] PickupPrefabs;
     public int NumEnemies = 10;
     public int NumPlayers = 1;
+    public int NumPickups = 1;
     public float SpawnPlayersDelay = 1.0f;
     public float SpawnEnemiesDelay = 3.0f;
 
@@ -32,8 +34,9 @@ public class SpawnPositioner : VoBehavior
             _targets = new List<Transform>();
             _spawnPositions = new List<IntegerVector>();
             TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+            int totalSpawns = this.NumEnemies + this.NumPlayers + this.NumPickups;
 
-            for (int i = 0; i < (this.NumEnemies + this.NumPlayers < openTiles.Count ? this.NumEnemies + this.NumPlayers : openTiles.Count); ++i)
+            for (int i = 0; i < (totalSpawns < openTiles.Count ? totalSpawns : openTiles.Count); ++i)
             {
                 _spawnPositions.Add(_tileRenderer.PositionForTile(openTiles[i].x, openTiles[i].y));
             }
@@ -59,6 +62,21 @@ public class SpawnPositioner : VoBehavior
             _targets.Add(player.transform);
             Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
             _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
+        }
+
+        if (this.PickupPrefabs.Length > 0)
+        {
+            for (int i = 0; i < this.NumPickups; ++i)
+            {
+                IntegerVector position = _spawnPositions[_spawnPositions.Count - 1];
+                GameObject prefab = this.PickupPrefabs[Random.Range(0, this.PickupPrefabs.Length)];
+                GameObject pickup = Instantiate(prefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
+
+                if (_tileRenderer.OffsetTilesToCenter)
+                    pickup.transform.position = new Vector3(pickup.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, pickup.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, pickup.transform.position.z);
+                
+                _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
+            }
         }
     }
 
