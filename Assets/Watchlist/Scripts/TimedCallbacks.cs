@@ -27,22 +27,25 @@ public class TimedCallbacks : VoBehavior
 
     void Update()
     {
-        foreach (Object owner in _callbackEntries.Keys)
+        if (_callbackEntries != null)
         {
-            List<CallbackEntry> entries = _callbackEntries[owner];
-            for (int i = 0; i < entries.Count; )
+            foreach (Object owner in _callbackEntries.Keys)
             {
-                CallbackEntry entry = entries[i];
-                entry.timeRemaining -= Time.deltaTime;
+                List<CallbackEntry> entries = _callbackEntries[owner];
+                for (int i = 0; i < entries.Count;)
+                {
+                    CallbackEntry entry = entries[i];
+                    entry.timeRemaining -= Time.deltaTime;
 
-                if (entry.timeRemaining <= 0.0f)
-                {
-                    entries.RemoveAt(i);
-                    entry.callback();
-                }
-                else
-                {
-                    ++i;
+                    if (entry.timeRemaining <= 0.0f)
+                    {
+                        entries.RemoveAt(i);
+                        entry.callback();
+                    }
+                    else
+                    {
+                        ++i;
+                    }
                 }
             }
         }
