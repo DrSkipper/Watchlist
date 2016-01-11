@@ -15,11 +15,14 @@ public class WinCondition : VoBehavior
     {
         ++enemiesDied;
 
-        if (enemiesDied == this.GetComponent<SpawnPositioner>().NumEnemies)
-        {
-            this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteIn");
-            this.GetComponent<TimedCallbacks>().AddCallback(this, this.LevelCompleteOut, this.LevelCompleteScreenLength);
-        }
+        if (enemiesDied >= this.GetComponent<SpawnPositioner>().NumEnemies)
+            this.EndLevel();
+    }
+
+    public void EndLevel()
+    {
+        this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteIn");
+        this.GetComponent<TimedCallbacks>().AddCallback(this, this.LevelCompleteOut, this.LevelCompleteScreenLength);
     }
 
     public void LevelCompleteOut()

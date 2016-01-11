@@ -18,6 +18,7 @@ public class LevelGraphController : VoBehavior
     public float BlinkIntervalOn = 0.5f;
     public float BlinkIntervalOff = 0.2f;
     public string GameplaySceneName = "";
+    public string BossSceneName = "";
     public bool UseDynamicData = true;
 
     /**
@@ -108,6 +109,10 @@ public class LevelGraphController : VoBehavior
                     }
                 }
 
+                // If no completed tiles, the center should be available
+                if (this.CompletedTiles.Length == 0 && x == 0 && y == 0)
+                    state = TileState.Available;
+
                 if (state != TileState.Complete)
                 {
                     foreach (Vector2 tile in this.BossTiles)
@@ -193,11 +198,21 @@ public class LevelGraphController : VoBehavior
             {
                 moveCurrentTile(newPosition);
             }
-            else if (MenuInput.SelectCurrentElement())
+            else if (MenuInput.SelectCurrentElement() && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
             {
+                bool boss = false;
+                foreach (IntegerVector tile in this.BossTiles)
+                {
+                    if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
+                    {
+                        boss = true;
+                        break;
+                    }
+                }
+
                 //TODO - Send input to level generation
                 DynamicData.SelectTile(this.CurrentPosition);
-                Application.LoadLevel(this.GameplaySceneName);
+                Application.LoadLevel(boss ? this.BossSceneName : this.GameplaySceneName);
             }
         }
         

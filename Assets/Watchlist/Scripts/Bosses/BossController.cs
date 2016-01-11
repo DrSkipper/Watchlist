@@ -15,10 +15,13 @@ public class BossController : VoBehavior
     public float FireCooldown = 5.0f;
     public float CooldownSpeedupPerWave = 1.0f;
     public float FireDuration = 1.0f;
+    public float InitialSpawnDelay = 1.0f;
+    public string ReturnSceneDestination = "";
+    public float ReturnSceneDelay = 2.0f;
 
     void Start()
     {
-        this.spawnSubBossWave();
+        this.GetComponent<TimedCallbacks>().AddCallback(this, this.spawnSubBossWave, this.InitialSpawnDelay);
     }
 
     void Update()
@@ -106,6 +109,14 @@ public class BossController : VoBehavior
 
     private void handleLastSubBossKilled()
     {
+        DynamicData.CompleteTile(DynamicData.MostRecentTile);
+        this.GetComponent<WinCondition>().EndLevel();
+        //this.GetComponent<TimedCallbacks>().AddCallback(this, this.returnToScene, this.ReturnSceneDelay);
+    }
+
+    private void returnToScene()
+    {
+        Application.LoadLevel(this.ReturnSceneDestination);
     }
 
     private bool spawnAvailable(Transform spawn)
