@@ -122,10 +122,16 @@ public class PlayerController : Actor2D
 
     private void updateSlots()
     {
-        this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
-        if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
-            _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
+        // Old style
+        //this.WeaponTypeId = WeaponData.WeaponTypeIdFromSlots(this.Slots);
+        //if (!UseDebugWeapon && StaticData.WeaponData.WeaponTypes.ContainsKey(this.WeaponTypeId))
+        //    _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
 
+        // New Style
+        if (!UseDebugWeapon)
+            _weapon.WeaponType = WeaponData.NewWeaponTypeFromSlots(this.Slots);
+
+        // Notification
         foreach (SlotChangeDelegate callback in _slotChangeDelegates)
             callback(this.Slots);
     }

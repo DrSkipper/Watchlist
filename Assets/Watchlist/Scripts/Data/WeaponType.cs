@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class WeaponType
+public class WeaponType : ICloneable
 {
     public const string TRAVEL_TYPE_NORMAL = "normal";
     public const string TRAVEL_TYPE_LASER = "laser";
@@ -36,6 +36,11 @@ public class WeaponType
     public float SpecialEffectParameter2 = 0.0f;
     public int AudioIndex = 0;
     public float AudioCooldown = 0.0f;
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 }
 
 [XmlRoot("WeaponData")]
@@ -68,6 +73,80 @@ public class WeaponData
             multiplier *= 10;
         }
         return id;
+    }
+
+    private const int NORMAL_ID = 1000000;
+
+    public static WeaponType NewWeaponTypeFromSlots(Slot[] slots)
+    {
+        List<Slot> slotsList = new List<Slot>(slots);
+        slotsList.RemoveAll(slot => slot == Slot.Empty);
+        slotsList.Sort();
+
+        WeaponType normalType = StaticData.WeaponData.WeaponTypes[NORMAL_ID];
+        int spreadId = NORMAL_ID;
+        int spreadMultiplier = 1;
+        int bombId = NORMAL_ID;
+        int bombMultiplier = 1;
+        int bounceId = NORMAL_ID;
+        int bounceMultiplier = 1;
+        int laserId = NORMAL_ID;
+        int laserMultiplier = 1;
+
+        foreach (Slot slot in slotsList)
+        {
+            switch (slot)
+            {
+                case Slot.Spreadshot:
+                    spreadId += spreadMultiplier * (int)slot;
+                    spreadMultiplier *= 10;
+                    break;
+                case Slot.Bomb:
+                    bombId += bombMultiplier * (int)slot;
+                    bombMultiplier *= 10;
+                    break;
+                case Slot.Bounce:
+                    bounceId += bounceMultiplier * (int)slot;
+                    bounceMultiplier *= 10;
+                    break;
+                case Slot.Laser:
+                    laserId += laserMultiplier * (int)slot;
+                    laserMultiplier *= 10;
+                    break;
+            }
+        }
+
+        WeaponType newType = (WeaponType)normalType.Clone();
+        WeaponType spreadType = StaticData.WeaponData.WeaponTypes[spreadId];
+        WeaponType bombType = StaticData.WeaponData.WeaponTypes[bombId];
+        WeaponType bounceType = StaticData.WeaponData.WeaponTypes[bounceId];
+        WeaponType laserType = StaticData.WeaponData.WeaponTypes[laserId];
+
+        newType.ShotCount = spreadType.ShotCount;
+        newType.SpecialEffect = bombType.SpecialEffect;
+        newType.SpecialEffectParameter1 = bombType.SpecialEffectParameter1;
+        newType.SpecialEffectParameter2 = bombType.SpecialEffectParameter2;
+        newType.ShotSpeed = bombType.ShotSpeed;
+        newType.VelocityFallOff = bombType.VelocityFallOff;
+        newType.ShotCooldown = bombType.ShotCooldown;
+        newType.DurationTime = bombType.DurationTime;
+        newType.Knockback = bombType.Knockback;
+        newType.MaximumBounces = bounceType.MaximumBounces;
+        newType.MinimumBounceAngle = bounceType.MinimumBounceAngle;
+        newType.TravelType = laserType.TravelType;
+        newType.TravelTypeParameter = laserType.TravelTypeParameter;
+
+        if (newType.TravelType == WeaponType.TRAVEL_TYPE_LASER)
+        {
+            newType.ShotSpeed = laserType.ShotSpeed;
+            newType.VelocityFallOff = laserType.VelocityFallOff;
+            newType.ShotCooldown = laserType.ShotCooldown;
+            newType.DurationTime = laserType.DurationTime;
+            newType.HitInvincibilityDuration = laserType.HitInvincibilityDuration;
+            newType.Knockback = laserType.Knockback;
+        }
+
+        return newType;
     }
 
     /**

@@ -1,0 +1,20 @@
+
+New watchlist weapon paradigm:
+
+Note: Once at max level with weapon, continued pickups just replenish timer.
+Idea: Kills pause timer.
+
+Spreadshot: 3 levels (2 shot, 3 shot, 5 shot), very common, short effect duration
+Bomb:       3 levels (increasing size of explosion), common, short effect duration
+Bounce:     2 levels (2 bounces, 4 bounces), common, medium effect duration
+Laser:      1 level  (applies laser effect to weapon), uncommon, long effect duration
+
+Drop weights:
+very common: 5
+common: 3
+uncommon: 1
+
+Effect durations:
+short: 5s
+medium: 9s
+long: 13s
