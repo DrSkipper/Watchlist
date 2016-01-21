@@ -97,6 +97,8 @@ public class WeaponData
         {
             switch (slot)
             {
+                default:
+                    break;
                 case Slot.Spreadshot:
                     spreadId += spreadMultiplier * (int)slot;
                     spreadMultiplier *= 10;
@@ -147,6 +149,36 @@ public class WeaponData
         }
 
         return newType;
+    }
+
+    private static Dictionary<Slot, int> _maxSlotsByType;
+    
+    public static Dictionary<Slot, int> GetMaxSlotsByType()
+    {
+        if (_maxSlotsByType == null)
+        {
+            _maxSlotsByType = new Dictionary<Slot, int>();
+            _maxSlotsByType[Slot.Spreadshot] = 3;
+            _maxSlotsByType[Slot.Bomb] = 3;
+            _maxSlotsByType[Slot.Bounce] = 2;
+            _maxSlotsByType[Slot.Laser] = 1;
+        }
+        return _maxSlotsByType;
+    }
+
+    private static Dictionary<Slot, float> _slotDurationsByType;
+
+    public static Dictionary<Slot, float> GetSlotDurationsByType()
+    {
+        if (_slotDurationsByType == null)
+        {
+            _slotDurationsByType = new Dictionary<Slot, float>();
+            _slotDurationsByType[Slot.Spreadshot] = 5.0f;
+            _slotDurationsByType[Slot.Bomb] = 5.0f;
+            _slotDurationsByType[Slot.Bounce] = 9.0f;
+            _slotDurationsByType[Slot.Laser] = 12.0f;
+        }
+        return _slotDurationsByType;
     }
 
     /**

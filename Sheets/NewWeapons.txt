@@ -17,4 +17,4 @@ uncommon: 1
 Effect durations:
 short: 5s
 medium: 9s
-long: 13s
+long: 12s

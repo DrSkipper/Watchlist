@@ -8,12 +8,25 @@ public class PlayerController : Actor2D
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotStartDistance = 1.0f;
-    public WeaponData.Slot[] Slots = { WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty, WeaponData.Slot.Empty };
+    public List<SlotWrapper> Slots = new List<SlotWrapper>();
     public int WeaponTypeId = 1; // Exposed for debugging
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
 
     public delegate void SlotChangeDelegate(WeaponData.Slot[] newSlots);
+
+    [System.Serializable]
+    public class SlotWrapper
+    {
+        public WeaponData.Slot SlotType;
+        public float TimeRemaining;
+
+        public SlotWrapper(WeaponData.Slot slotType)
+        {
+            this.SlotType = slotType;
+            this.TimeRemaining = WeaponData.GetSlotDurationsByType()[slotType];
+        }
+    }
 
     void Start()
     {
@@ -66,6 +79,28 @@ public class PlayerController : Actor2D
                     _weapon.Fire(aimAxis, this.ShotStartDistance);
             }
         }
+
+        // Update slots
+        List<SlotWrapper> toRemove = null;
+        foreach (SlotWrapper slot in this.Slots)
+        {
+            slot.TimeRemaining -= Time.deltaTime;
+            if (slot.TimeRemaining <= 0.0f)
+            {
+                if (toRemove == null)
+                    toRemove = new List<SlotWrapper>();
+                toRemove.Add(slot);
+                slot.SlotType = WeaponData.Slot.Empty;
+            }
+        }
+        if (toRemove != null)
+        {
+            foreach (SlotWrapper slot in toRemove)
+            {
+                this.Slots.Remove(slot);
+            }
+            this.updateSlots();
+        }
     }
 
     public void OnCollide(LocalEventNotifier.Event localEvent)
@@ -88,6 +123,14 @@ public class PlayerController : Actor2D
         _slotChangeDelegates.Add(callback);
     }
 
+    public WeaponData.Slot[] GetSlots()
+    {
+        List<WeaponData.Slot> slots = new List<WeaponData.Slot>();
+        foreach (SlotWrapper slot in this.Slots)
+            slots.Add(slot.SlotType);
+        return slots.ToArray();
+    }
+
     /**
      * Private
      */
@@ -98,8 +141,38 @@ public class PlayerController : Actor2D
 
     private void pickupWeaponSlot(WeaponData.Slot slotType)
     {
-        bool found = false;
+        int count = 0;
 
+        foreach (SlotWrapper slot in this.Slots)
+        {
+            if (slot.SlotType == slotType)
+                ++count;
+        }
+
+        if (count < WeaponData.GetMaxSlotsByType()[slotType])
+        {
+            this.Slots.Add(new SlotWrapper(slotType));
+        }
+        else
+        {
+            float time = WeaponData.GetSlotDurationsByType()[slotType];
+            float timeToAdd = time;
+
+            foreach (SlotWrapper slot in this.Slots)
+            {
+                if (slot.SlotType == slotType)
+                {
+                    slot.TimeRemaining += timeToAdd;
+                    if (slot.TimeRemaining > time)
+                    {
+                        timeToAdd = slot.TimeRemaining - time;
+                        slot.TimeRemaining = time;
+                    }
+                }
+            }
+        }
+
+        /*bool found = false;
         for (int i = 0; i < this.Slots.Length; ++i)
         {
             if (this.Slots[i] == WeaponData.Slot.Empty)
@@ -110,12 +183,11 @@ public class PlayerController : Actor2D
                 break;
             }
         }
-
         if (!found)
         {
             this.Slots[_selectedSlot] = slotType;
             _selectedSlot = _selectedSlot + 1 >= this.Slots.Length ? 0 : _selectedSlot + 1;
-        }
+        }*/
 
         updateSlots();
     }
@@ -128,11 +200,13 @@ public class PlayerController : Actor2D
         //    _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
 
         // New Style
+        WeaponData.Slot[] slotArray = this.GetSlots();
+
         if (!UseDebugWeapon)
-            _weapon.WeaponType = WeaponData.NewWeaponTypeFromSlots(this.Slots);
+            _weapon.WeaponType = WeaponData.NewWeaponTypeFromSlots(slotArray);
 
         // Notification
         foreach (SlotChangeDelegate callback in _slotChangeDelegates)
-            callback(this.Slots);
+            callback(slotArray);
     }
 }
