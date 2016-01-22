@@ -8,7 +8,7 @@ public class WinCondition : VoBehavior
 
     public void EnemySpawned(GameObject enemy)
     {
-        enemy.GetComponent<Damagable>().OnDeath = this.EnemyDied;
+        enemy.GetComponent<Damagable>().OnDeathCallbacks.Add(this.EnemyDied);
     }
 
     public void EnemyDied(Damagable died)

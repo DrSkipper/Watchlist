@@ -9,7 +9,7 @@ public class Damagable : VoBehavior
     public bool Stationary = false;
     public float Friction = 1.0f;
     public bool Invincible;
-    public DeathCallback OnDeath;
+    public List<DeathCallback> OnDeathCallbacks;
     public GameObject GibsPrefab;
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
@@ -17,6 +17,11 @@ public class Damagable : VoBehavior
     public AudioClip AudioOnHit = null;
 
     public delegate void DeathCallback(Damagable died);
+
+    void Awake()
+    {
+        this.OnDeathCallbacks = new List<DeathCallback>();
+    }
 
     void Start()
     {
@@ -162,8 +167,8 @@ public class Damagable : VoBehavior
 
     private void die()
     {
-        if (this.OnDeath != null)
-            this.OnDeath(this);
+        foreach (DeathCallback callback in this.OnDeathCallbacks)
+            callback(this);
 
         if (this.GibsPrefab != null)
         {

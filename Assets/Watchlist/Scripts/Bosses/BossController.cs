@@ -49,7 +49,7 @@ public class BossController : VoBehavior
         }
 
         _subBosses.Add(subBoss);
-        subBoss.GetComponent<Damagable>().OnDeath = this.SubBossKilled;
+        subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
     }
 
     void SubBossKilled(Damagable subBoss)
