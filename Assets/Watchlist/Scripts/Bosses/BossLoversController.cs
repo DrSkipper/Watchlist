@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class BossController : VoBehavior
+public class BossLoversController : VoBehavior
 {
     public GameObject SubBossPrefab;
     public GameObject SpawnVisualPrefab;
@@ -30,7 +30,7 @@ public class BossController : VoBehavior
         {
             _cooldown = this.FireCooldown;
             foreach (GameObject boss in _subBosses)
-                boss.GetComponent<BossBehavior>().InitiateFire(this.FireDuration);
+                boss.GetComponent<BossLoversBehavior>().InitiateFire(this.FireDuration);
         }
         else if (_subBosses.Count > 0)
         {
@@ -41,11 +41,11 @@ public class BossController : VoBehavior
     void SubBossSpawned(GameObject subBoss)
     {
         List<GameObject> otherBosses = new List<GameObject>(_subBosses);
-        subBoss.GetComponent<BossBehavior>().OtherBosses = otherBosses;
+        subBoss.GetComponent<BossLoversBehavior>().OtherBosses = otherBosses;
 
         foreach (GameObject boss in _subBosses)
         {
-            boss.GetComponent<BossBehavior>().OtherBosses.Add(subBoss);
+            boss.GetComponent<BossLoversBehavior>().OtherBosses.Add(subBoss);
         }
 
         _subBosses.Add(subBoss);
@@ -60,7 +60,7 @@ public class BossController : VoBehavior
 
         foreach (GameObject boss in _subBosses)
         {
-            boss.GetComponent<BossBehavior>().OtherBosses.Remove(subBossObject);
+            boss.GetComponent<BossLoversBehavior>().OtherBosses.Remove(subBossObject);
         }
 
         if (_killedSubBosses < TotalSubBosses)

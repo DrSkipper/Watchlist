@@ -6,6 +6,7 @@ public static class DynamicData
 
     public static IntegerVector[] CompletedTiles { get { return _completedTiles.ToArray(); } }
     public static IntegerVector MostRecentTile { get { return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
+
     public static WeaponData.Slot[][] WeaponSlotsByPlayer
     {
         get
@@ -19,6 +20,15 @@ public static class DynamicData
         }
     }
     
+    public static string[] BossesInPlay
+    {
+        get
+        {
+            string[] retVal = { "Lovers", "Leak", "Lovers", "Leak" };
+            return retVal;
+        }
+    }
+
     public static void CompleteTile(IntegerVector tile)
     {
         if (!_completedTiles.Contains(tile))

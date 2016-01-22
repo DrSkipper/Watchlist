@@ -200,19 +200,21 @@ public class LevelGraphController : VoBehavior
             }
             else if (MenuInput.SelectCurrentElement() && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
             {
-                bool boss = false;
-                foreach (IntegerVector tile in this.BossTiles)
+                int bossIndex = -1;
+                for (int i = 0; i < this.BossTiles.Length; ++i)
                 {
+                    IntegerVector tile = this.BossTiles[i];
+                
                     if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
                     {
-                        boss = true;
+                        bossIndex = i;
                         break;
                     }
                 }
 
                 //TODO - Send input to level generation
                 DynamicData.SelectTile(this.CurrentPosition);
-                Application.LoadLevel(boss ? this.BossSceneName : this.GameplaySceneName);
+                Application.LoadLevel(bossIndex != -1 ? (this.BossSceneName + DynamicData.BossesInPlay[bossIndex]) : this.GameplaySceneName);
             }
         }
         

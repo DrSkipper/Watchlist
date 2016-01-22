@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class BossBehavior : VoBehavior
+public class BossLoversBehavior : VoBehavior
 {
     public List<GameObject> OtherBosses;
     public float WeaponCooldown = 0.0332f;
