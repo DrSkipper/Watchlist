@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BossData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BossTypes>
+    <BossType>
+      <Id>1000001</Id>
+      <Name>Lovers</Name>
+      <SceneKey>Lovers</SceneKey>
+      <PageText1>The Lovers</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
+    <BossType>
+      <Id>1000002</Id>
+      <Name>Leak</Name>
+      <SceneKey>Leak</SceneKey>
+      <PageText1>The Leak</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
+  </BossTypes>
+</BossData>
