@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BossLockData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BossLocks>
+    <BossLock>
+      <BossId>1000001</BossId>
+	  <Locked>false</Locked>
+    </BossLock>
+    <BossLock>
+      <BossId>1000002</BossId>
+	  <Locked>false</Locked>
+    </BossLock>
+    <BossLock>
+      <BossId>1000003</BossId>
+	  <Locked>false</Locked>
+    </BossLock>
+  </BossLocks>
+</BossLockData>

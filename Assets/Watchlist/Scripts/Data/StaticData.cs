@@ -27,6 +27,7 @@ public static class StaticData
     {
         _weaponData = null;
         _enemyData = null;
+        _bossData = null;
     }
 
     /**

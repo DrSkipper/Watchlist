@@ -15,5 +15,12 @@
       <PageText1>The Leak</PageText1>
       <PageText2>...</PageText2>
     </BossType>
+    <BossType>
+      <Id>1000003</Id>
+      <Name>Communal</Name>
+      <SceneKey>Communal</SceneKey>
+      <PageText1>The Communal</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
   </BossTypes>
 </BossData>

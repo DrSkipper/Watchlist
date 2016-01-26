@@ -19,15 +19,6 @@ public static class DynamicData
             return playerSlots;
         }
     }
-    
-    public static string[] BossesInPlay
-    {
-        get
-        {
-            string[] retVal = { "Lovers", "Leak", "Lovers", "Leak" };
-            return retVal;
-        }
-    }
 
     public static void CompleteTile(IntegerVector tile)
     {

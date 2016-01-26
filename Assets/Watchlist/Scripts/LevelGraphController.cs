@@ -214,7 +214,15 @@ public class LevelGraphController : VoBehavior
 
                 //TODO - Send input to level generation
                 DynamicData.SelectTile(this.CurrentPosition);
-                Application.LoadLevel(bossIndex != -1 ? (this.BossSceneName + DynamicData.BossesInPlay[bossIndex]) : this.GameplaySceneName);
+                if (bossIndex == -1)
+                {
+                    Application.LoadLevel(this.GameplaySceneName);
+                }
+                else
+                {
+                    BossType boss = StaticData.BossData.BossTypes[PersistentData.GetCurrentBosses()[bossIndex]];
+                    Application.LoadLevel(this.BossSceneName + boss.SceneKey);
+                }
             }
         }
         
