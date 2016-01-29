@@ -13,5 +13,9 @@
       <BossId>1000003</BossId>
 	  <Locked>false</Locked>
     </BossLock>
+    <BossLock>
+      <BossId>1000004</BossId>
+	  <Locked>false</Locked>
+    </BossLock>
   </BossLocks>
 </BossLockData>

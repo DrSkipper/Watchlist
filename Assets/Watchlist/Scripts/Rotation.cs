@@ -21,10 +21,16 @@ public class Rotation : VoBehavior
         }
 	}
 
-    public void ResetRotation()
+    public void ResetRotation(bool applyReset = true)
     {
         _angle = this.InitalRotation;
-        this.transform.localRotation = Quaternion.AngleAxis(_angle, this.Axis);
+        if (applyReset)
+            this.transform.localRotation = Quaternion.AngleAxis(_angle, this.Axis);
+    }
+
+    public float GetAngle()
+    {
+        return _angle;
     }
 
     /**

@@ -22,5 +22,12 @@
       <PageText1>The Communal</PageText1>
       <PageText2>...</PageText2>
     </BossType>
+    <BossType>
+      <Id>1000004</Id>
+      <Name>Other</Name>
+      <SceneKey>Other</SceneKey>
+      <PageText1>The Other</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
   </BossTypes>
 </BossData>
