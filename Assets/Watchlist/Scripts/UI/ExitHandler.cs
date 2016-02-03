@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExitHandler : VoBehavior
 {
@@ -9,7 +10,7 @@ public class ExitHandler : VoBehavior
         if (MenuInput.Exit())
         {
             if (this.Destination != "")
-                Application.LoadLevel(this.Destination);
+                SceneManager.LoadScene(this.Destination);
             else
                 Application.Quit();
         }

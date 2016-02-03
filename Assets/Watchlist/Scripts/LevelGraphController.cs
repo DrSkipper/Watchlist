@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 
@@ -216,12 +217,12 @@ public class LevelGraphController : VoBehavior
                 DynamicData.SelectTile(this.CurrentPosition);
                 if (bossIndex == -1)
                 {
-                    Application.LoadLevel(this.GameplaySceneName);
+                    SceneManager.LoadScene(this.GameplaySceneName);
                 }
                 else
                 {
                     BossType boss = StaticData.BossData.BossTypes[PersistentData.GetCurrentBosses()[bossIndex]];
-                    Application.LoadLevel(this.BossSceneName + boss.SceneKey);
+                    SceneManager.LoadScene(this.BossSceneName + boss.SceneKey);
                 }
             }
         }

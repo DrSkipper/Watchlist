@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinCondition : VoBehavior
 {
@@ -34,7 +35,7 @@ public class WinCondition : VoBehavior
     public void ReturnToLevelSelect()
     {
         DynamicData.CompleteTile(DynamicData.MostRecentTile);
-        Application.LoadLevel("LevelSelectScene");
+        SceneManager.LoadScene("LevelSelectScene");
     }
 
     /**

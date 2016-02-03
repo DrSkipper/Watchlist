@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuController : VoBehavior
 {
@@ -58,7 +59,7 @@ public class MenuController : VoBehavior
         {
             //TODO - fcole - Wait for some animation to be finished or something
             if (_elements[this.CurrentElement].Destination != "")
-                Application.LoadLevel(_elements[this.CurrentElement].Destination);
+                SceneManager.LoadScene(_elements[this.CurrentElement].Destination);
             else
                 Application.Quit();
         }

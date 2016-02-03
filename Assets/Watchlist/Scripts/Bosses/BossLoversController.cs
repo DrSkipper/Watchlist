@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class BossLoversController : VoBehavior
@@ -116,7 +117,7 @@ public class BossLoversController : VoBehavior
 
     private void returnToScene()
     {
-        Application.LoadLevel(this.ReturnSceneDestination);
+        SceneManager.LoadScene(this.ReturnSceneDestination);
     }
 
     private bool spawnAvailable(Transform spawn)
