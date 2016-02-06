@@ -162,7 +162,7 @@ public class BossEarthMainBehavior : VoBehavior
             ++subBossIndex;
         }
 
-        _timedCallbacks.AddCallback(this, switchState, this.TimeForSinglePath);
+        _timedCallbacks.AddCallback(this, switchState, this.TimeForSinglePath + 0.1f);
     }
 
     private void exitTransition()
