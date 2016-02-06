@@ -7,6 +7,7 @@ public class BossEarthSubBehavior : VoBehavior
     public Transform[] PathPoints;
     [HideInInspector]
     public int CurrentPathPoint = 0;
+    public float TimeToReachPoint = 1.0f;
 
     void Awake()
     {
@@ -18,9 +19,8 @@ public class BossEarthSubBehavior : VoBehavior
         this.CurrentPathPoint += 1;
         if (this.CurrentPathPoint >= this.PathPoints.Length)
             this.CurrentPathPoint = 0;
-
-        _lerpMovement.TargetPosition = this.PathPoints[this.CurrentPathPoint].position;
-        _lerpMovement.IsMoving = true;
+        
+        _lerpMovement.BeginMovement(this.PathPoints[this.CurrentPathPoint].position, this.TimeToReachPoint);
     }
 
     /**

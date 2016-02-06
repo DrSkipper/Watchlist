@@ -105,6 +105,7 @@ public class BossEarthMainBehavior : VoBehavior
             BossEarthSubBehavior subBoss = this.SubBosses[subBossIndex].GetComponent<BossEarthSubBehavior>();
             subBoss.PathPoints = this.InnerLoopPathPoints;
             subBoss.CurrentPathPoint = i;
+            subBoss.TimeToReachPoint = this.TimeForSinglePath;
             subBoss.PathToNextPoint();
             ++subBossIndex;
         }
@@ -114,6 +115,7 @@ public class BossEarthMainBehavior : VoBehavior
             BossEarthSubBehavior subBoss = this.SubBosses[subBossIndex].GetComponent<BossEarthSubBehavior>();
             subBoss.PathPoints = this.OuterLoopPathPoints;
             subBoss.CurrentPathPoint = i;
+            subBoss.TimeToReachPoint = this.TimeForSinglePath;
             subBoss.PathToNextPoint();
             ++subBossIndex;
         }
@@ -156,8 +158,7 @@ public class BossEarthMainBehavior : VoBehavior
         for (int i = 0; i < this.RotationPoints.Length && subBossIndex < this.SubBosses.Count; ++i)
         {
             LerpMovement subBoss = this.SubBosses[subBossIndex].GetComponent<LerpMovement>();
-            subBoss.TargetPosition = this.RotationPoints[i].position;
-            subBoss.IsMoving = true;
+            subBoss.BeginMovement(this.RotationPoints[i].position, this.TimeForSinglePath);
             ++subBossIndex;
         }
 
