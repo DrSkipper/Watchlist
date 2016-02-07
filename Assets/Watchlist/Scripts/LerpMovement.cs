@@ -52,9 +52,9 @@ public class LerpMovement : VoBehavior
 
             if (!this.IsMoving)
             {
-                foreach (LerpFinishedCallback callback in _callbacks)
+                for (int i = 0; i < _callbacks.Count; ++i)
                 {
-                    callback(this.gameObject);
+                    _callbacks[i](this.gameObject);
                 }
             }
         }
