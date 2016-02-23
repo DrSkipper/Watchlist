@@ -29,5 +29,26 @@
       <PageText1>The Other</PageText1>
       <PageText2>...</PageText2>
     </BossType>
+    <BossType>
+      <Id>1000005</Id>
+      <Name>Weak</Name>
+      <SceneKey>Weak</SceneKey>
+      <PageText1>The Weak</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
+    <BossType>
+      <Id>1000006</Id>
+      <Name>Earth</Name>
+      <SceneKey>Earth</SceneKey>
+      <PageText1>The Earth</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
+    <BossType>
+      <Id>1000007</Id>
+      <Name>Young</Name>
+      <SceneKey>Young</SceneKey>
+      <PageText1>The Young</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
   </BossTypes>
 </BossData>
