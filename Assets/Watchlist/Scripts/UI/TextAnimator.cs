@@ -16,6 +16,7 @@ public class TextAnimator : VoBehavior
     public string CursorText = "_";
     public float CursorBlinkOnDuration = 0.5f;
     public float CursorBlinkOffDuration = 0.2f;
+    public bool Running { get { return _running; } }
 
     void Start()
     {
