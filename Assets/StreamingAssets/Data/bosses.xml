@@ -50,5 +50,12 @@
       <PageText1>The Young</PageText1>
       <PageText2>...</PageText2>
     </BossType>
+    <BossType>
+      <Id>1000008</Id>
+      <Name>Elder</Name>
+      <SceneKey>Elder</SceneKey>
+      <PageText1>The Elder</PageText1>
+      <PageText2>...</PageText2>
+    </BossType>
   </BossTypes>
 </BossData>
