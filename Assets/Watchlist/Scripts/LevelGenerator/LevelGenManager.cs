@@ -11,16 +11,32 @@ public class LevelGenManager : LevelGenBehavior
     public bool RemoveTips = true;
     public int Border = 0;
 
-	public void InitiateGeneration(Object storyOutput)
+	public void InitiateGeneration(LevelGenInput input)
 	{
 		_generating = true;
 		_timeSinceLastStep = 0.0f;
 
-		//TODO - Create generator based on LevelGenParams
-        _generator = this.gameObject.AddComponent<CAGenerator>();
-        _generator.Bounds = new Rect(this.Border, this.Border, this.Map.Width - this.Border * 2, this.Map.Height - this.Border * 2);
-        ((CAGenerator)_generator).MaxCaves = 1;
+		switch (input.Type)
+        {
+            default:
+            case LevelGenInput.GenerationType.CA:
+                _generator = this.gameObject.AddComponent<CAGenerator>();
+                ((CAGenerator)_generator).MaxCaves = 1;
+                break;
+            case LevelGenInput.GenerationType.BSP:
+                _generator = this.gameObject.AddComponent<BSPGenerator>();
+                //((BSPGenerator)_generator).
+                break;
+            case LevelGenInput.GenerationType.Room:
+                _generator = this.gameObject.AddComponent<RoomGenerator>();
+                ((RoomGenerator)_generator).NumberOfRooms = Random.Range(input.NumRoomsRange.X, input.NumRoomsRange.Y + 1);
+                break;
+
+        }
+
+        IntegerVector size = input.MapSizes[Random.Range(0, input.MapSizes.Length)];
         this.Map.FillCompletely(LevelGenMap.TileType.A);
+        _generator.Bounds = new Rect(this.Border, this.Border, this.Map.Width - this.Border * 2, this.Map.Height - this.Border * 2);
 		_generator.SetupGeneration();
 
         if (this.UpdateDelegate != null)
