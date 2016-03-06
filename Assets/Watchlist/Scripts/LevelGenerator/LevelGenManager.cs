@@ -8,6 +8,7 @@ public class LevelGenManager : LevelGenBehavior
 	public int StepsRunEachUpdate = int.MaxValue;
 	public bool Finished { get { return !_generating; } }
     public LevelGenerationUpdateDelegate UpdateDelegate = null;
+    public BSPGenerator.BSPGenerationParams DefaultBSPParams;
     public bool RemoveTips = true;
     public int Border = 0;
 
@@ -25,6 +26,7 @@ public class LevelGenManager : LevelGenBehavior
                 break;
             case LevelGenInput.GenerationType.BSP:
                 _generator = this.gameObject.AddComponent<BSPGenerator>();
+                ((BSPGenerator)_generator).ApplyParams(this.DefaultBSPParams);
                 //((BSPGenerator)_generator).
                 break;
             case LevelGenInput.GenerationType.Room:
