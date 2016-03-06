@@ -6,6 +6,9 @@
       <Id>1000001</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_04</SpriteName>
+      <Difficulty>0</Difficulty>
+      <ChoiceWeight>100</ChoiceWeight>
+      <ChoiceWeightIncrease>50</ChoiceWeightIncrease>
       <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -27,6 +30,9 @@
       <Id>1000002</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_02</SpriteName>
+      <Difficulty>2</Difficulty>
+      <ChoiceWeight>50</ChoiceWeight>
+      <ChoiceWeightIncrease>30</ChoiceWeightIncrease>
       <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -48,6 +54,9 @@
       <Id>1000003</Id>
       <PrefabName>generic</PrefabName>
       <SpriteName>enemy_02</SpriteName>
+      <Difficulty>1</Difficulty>
+      <ChoiceWeight>75</ChoiceWeight>
+      <ChoiceWeightIncrease>40</ChoiceWeightIncrease>
       <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
@@ -69,6 +78,9 @@
       <Id>1000004</Id>
       <PrefabName>generic_motion</PrefabName>
       <SpriteName>enemy_03</SpriteName>
+      <Difficulty>0</Difficulty>
+      <ChoiceWeight>100</ChoiceWeight>
+      <ChoiceWeightIncrease>50</ChoiceWeightIncrease>
       <Health>3</Health>
       <Friction>150</Friction>
       <MaxSpeed>140</MaxSpeed>

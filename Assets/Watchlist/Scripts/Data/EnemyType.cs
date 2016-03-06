@@ -10,6 +10,9 @@ public class EnemyType
     public int Id;
     public string PrefabName = "generic";
     public string SpriteName = "enemy_02";
+    public int Difficulty = 0;
+    public int ChoiceWeight = 10;
+    public int ChoiceWeightIncrease = 5;
     public int Health = 5;
     public float Friction = 150.0f;
     public float MaxSpeed = 140.0f;
