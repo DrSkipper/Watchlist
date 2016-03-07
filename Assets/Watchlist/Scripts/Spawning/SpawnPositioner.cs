@@ -17,6 +17,7 @@ public class SpawnPositioner : VoBehavior
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
+        _map = this.LevelGenerator.GetComponent<LevelGenMap>();
         _tileRenderer = this.Tiles.GetComponent<TileMapOutlineRenderer>();
         _levelGenManager.UpdateDelegate = this.LevelGenUpdate;
 
@@ -29,16 +30,21 @@ public class SpawnPositioner : VoBehavior
         if (_levelGenManager.Finished)
         {
             LevelGenOutput output = _levelGenManager.GetOutput();
-            List<LevelGenMap.Coordinate> openTiles = output.OpenTiles;
-            openTiles.Shuffle();
             _targets = new List<Transform>();
-            _spawnPositions = new List<IntegerVector>();
+            _enemySpawns = new List<EnemySpawn>();
+            _playerSpawns = new List<IntegerVector>();
             TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
             int totalSpawns = this.NumEnemies + this.NumPlayers + this.NumPickups;
 
-            for (int i = 0; i < (totalSpawns < openTiles.Count ? totalSpawns : openTiles.Count); ++i)
+            switch (output.Input.Type)
             {
-                _spawnPositions.Add(_tileRenderer.PositionForTile(openTiles[i].x, openTiles[i].y));
+                default:
+                case LevelGenInput.GenerationType.CA:
+                    findCASpawns(output);
+                    break;
+                case LevelGenInput.GenerationType.BSP:
+                    findBSPSpawns(output);
+                    break;
             }
 
             callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
@@ -107,8 +113,100 @@ public class SpawnPositioner : VoBehavior
     /**
      * Private
      */
+    private struct EnemySpawn
+    {
+        public IntegerVector SpawnPosition;
+        public int EnemyId;
+
+        public EnemySpawn(IntegerVector spawnPosition, int enemyId)
+        {
+            this.SpawnPosition = spawnPosition;
+            this.EnemyId = enemyId;
+        }
+    }
+
     private LevelGenManager _levelGenManager;
+    private LevelGenMap _map;
     private TileMapOutlineRenderer _tileRenderer;
     private List<Transform> _targets;
-    private List<IntegerVector> _spawnPositions;
+    private List<EnemySpawn> _enemySpawns;
+    private List<IntegerVector> _playerSpawns;
+
+    private void findCASpawns(LevelGenOutput output)
+    {
+        List<LevelGenMap.Coordinate> openTiles = new List<LevelGenMap.Coordinate>(output.OpenTiles);
+        openTiles.Shuffle();
+        EnemySelector enemySelector = new EnemySelector();
+
+        int difficulty = DynamicData.GetCurrentDifficulty();
+        int numEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
+        int numPlayers = 1;
+        int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
+
+        if (openTiles.Count <= (numEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns + 1)
+        {
+            //TODO - Regenerate level
+        }
+        else
+        {
+            int enemiesSpawned = 0;
+
+            // Guaranteed enemies
+            for (int i = 0; i < output.Input.GuaranteedEnemiesByDifficulty.Length; ++i)
+            {
+                while (guaranteedEnemiesPlaced[i] < output.Input.GuaranteedEnemiesByDifficulty[i])
+                {
+                    int enemyId = enemySelector.ChooseEnemyOfDifficulty(i);
+                    guaranteedEnemiesPlaced[i] = guaranteedEnemiesPlaced[i] + 1;
+                    ++enemiesSpawned;
+                    _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
+                }
+            }
+
+            // Remaining enemies
+            for (; enemiesSpawned < numEnemies; ++enemiesSpawned)
+            {
+                int enemyId = enemySelector.ChooseEnemy(difficulty);
+                _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
+            }
+
+            //TODO - Player spawns
+        }
+    }
+
+    private void findBSPSpawns(LevelGenOutput output)
+    {
+        //TODO
+    }
+
+    private LevelGenMap.Coordinate findGoodOpenPosition(List<LevelGenMap.Coordinate> availableTiles, int areaToClear)
+    {
+        LevelGenMap.Coordinate position;
+        int minDistance = 18;
+        int positionIndex;
+
+        do
+        {
+            positionIndex = Random.Range(0, availableTiles.Count);
+            position = availableTiles[positionIndex];
+            minDistance -= 2;
+        }
+        while (isPositionFreeInArea(position, minDistance));
+
+        foreach (LevelGenMap.Coordinate tile in _map.CoordinatesInManhattanRange(position, areaToClear))
+        {
+            availableTiles.Remove(tile);
+        }
+        return position;
+    }
+
+    private bool isPositionFreeInArea(LevelGenMap.Coordinate position, int minDistance)
+    {
+        foreach (EnemySpawn enemySpawn in _enemySpawns)
+        {
+            if (Vector2.Distance(position.integerVector, enemySpawn.SpawnPosition) < minDistance)
+                return false;
+        }
+        return true;
+    }
 }

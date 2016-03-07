@@ -16,6 +16,7 @@ public class LevelGenManager : LevelGenBehavior
 	{
 		_generating = true;
 		_timeSinceLastStep = 0.0f;
+        _input = input;
 
 		switch (input.Type)
         {
@@ -104,7 +105,9 @@ public class LevelGenManager : LevelGenBehavior
 
 	public LevelGenOutput GetOutput()
 	{
-        return _generator.GetOutput();
+        LevelGenOutput output = _generator.GetOutput();
+        output.Input = _input;
+        return output;
 	}
 
 	/**
@@ -114,9 +117,10 @@ public class LevelGenManager : LevelGenBehavior
 	private bool _generatorRemainsWhenDone;
 	private float _timeSinceLastStep;
 	private BaseLevelGenerator _generator;
+    private LevelGenInput _input;
 
     private void removeTips()
     {
-
+        //TODO
     }
 }

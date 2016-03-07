@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 public static class DynamicData
 {
@@ -42,6 +43,16 @@ public static class DynamicData
         _completedTiles = new List<IntegerVector>();
         _mostRecentTile = null;
         _weaponSlotsByPlayer = new Dictionary<int, WeaponData.Slot[]>();
+    }
+
+    public static int GetCurrentDifficulty()
+    {
+        int radius = Mathf.Max(Mathf.Abs(DynamicData.MostRecentTile.X), Mathf.Abs(DynamicData.MostRecentTile.Y));
+        if (radius <= 1)
+            return 0; // Easy
+        if (radius >= 3)
+            return 2; // Hard
+        return 1; // Medium
     }
 
     /**

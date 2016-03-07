@@ -28,6 +28,8 @@ public class LevelGenMap : MonoBehaviour
             x = px;
             y = py;
         }
+
+        public IntegerVector integerVector { get { return new IntegerVector(x, y); } }
     }
 
     public TileType[,] Grid
@@ -162,6 +164,29 @@ public class LevelGenMap : MonoBehaviour
 		}
 		return copy;
 	}
+
+    public List<Coordinate> CoordinatesInManhattanRange(Coordinate centerTile, int range, bool allowsWrapping = false)
+    {
+        List<Coordinate> coords = new List<Coordinate>();
+        for (int x = centerTile.x - range; x <= centerTile.x + range; ++x)
+        {
+            Coordinate? mid = this.ConstructValidCoordinate(x, centerTile.y, allowsWrapping);
+            if (mid.HasValue)
+                coords.Add(mid.Value);
+            int rangeAtRow = range - (Mathf.Abs(centerTile.x - x));
+            for (int i = 1; i <= rangeAtRow; ++i)
+            {
+                Coordinate? up = this.ConstructValidCoordinate(x, centerTile.y + i, allowsWrapping);
+                if (up.HasValue)
+                    coords.Add(up.Value);
+
+                Coordinate? down = this.ConstructValidCoordinate(x, centerTile.y - i, allowsWrapping);
+                if (down.HasValue)
+                    coords.Add(down.Value);
+            }
+        }
+        return coords;
+    }
 
     public List<Coordinate> ListOfCoordinatesOfType(Rect rect, TileType type, bool allowWrapping = false)
     {

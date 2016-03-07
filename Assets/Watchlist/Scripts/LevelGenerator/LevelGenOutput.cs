@@ -6,6 +6,7 @@ public class LevelGenOutput
 	public LevelGenMap.TileType[,] Grid;
     public List<LevelGenMap.Coordinate> OpenTiles;
     public Dictionary<string, LevelGenMapInfo> MapInfo;
+    public LevelGenInput Input;
 
     public void AddMapInfo(LevelGenMapInfo info)
     {

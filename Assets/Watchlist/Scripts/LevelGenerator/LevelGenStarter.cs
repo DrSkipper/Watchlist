@@ -14,7 +14,7 @@ public class LevelGenStarter : LevelGenBehavior
     
     void Start()
     {
-        int difficulty = findLevelDifficulty(DynamicData.MostRecentTile);
+        int difficulty = DynamicData.GetCurrentDifficulty();
         List<LevelGenInput> possibleInputs = this.InputsByDifficulty[difficulty].PossibleInputs;
         this.Manager.InitiateGeneration(possibleInputs[Random.Range(0, possibleInputs.Count)]);
         _beganGeneration = true;
@@ -43,16 +43,6 @@ public class LevelGenStarter : LevelGenBehavior
 	 * Private
 	 */
     private bool _beganGeneration;
-
-    private int findLevelDifficulty(IntegerVector level)
-    {
-        int radius = Mathf.Max(Mathf.Abs(level.X), Mathf.Abs(level.Y));
-        if (radius <= 1)
-            return 0; // Easy
-        if (radius >= 3)
-            return 2; // Hard
-        return 1; // Medium
-    }
 
     private int[,] tileTypeMapToSpriteIndexMap()
     {
