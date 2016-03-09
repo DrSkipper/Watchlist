@@ -64,22 +64,6 @@ public class SpawnPositioner : VoBehavior
             Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
         }
 
-        /*for (int i = 0; i < this.NumPlayers; ++i)
-        {
-            if (_spawnPositions.Count == 0)
-                break;
-
-            IntegerVector position = _spawnPositions[_spawnPositions.Count - 1];
-            GameObject player = Instantiate(this.PlayerPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
-
-            if (_tileRenderer.OffsetTilesToCenter)
-                player.transform.position = new Vector3(player.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, player.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, player.transform.position.z);
-
-            _targets.Add(player.transform);
-            Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
-            _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
-        }*/
-
         /*if (this.PickupPrefabs.Length > 0)
         {
             for (int i = 0; i < this.NumPickups; ++i)
@@ -114,25 +98,6 @@ public class SpawnPositioner : VoBehavior
             spawnBehavior.DestroyAfterSpawn = true;
             spawnBehavior.SpawnPool = new int[] { enemySpawn.EnemyId };
         }
-
-        /*for (int i = 0; i < this.NumEnemies; ++i)
-        {
-            if (_spawnPositions.Count == 0)
-                break;
-
-            IntegerVector position = _spawnPositions[_spawnPositions.Count - 1];
-            GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X, position.Y, this.transform.position.z), Quaternion.identity) as GameObject;
-
-            if (_tileRenderer.OffsetTilesToCenter)
-                spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
-
-            EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
-            if (winCondition != null)
-                spawnBehavior.SpawnCallback = winCondition.EnemySpawned;
-            spawnBehavior.Targets = _targets.ToArray();
-            spawnBehavior.DestroyAfterSpawn = true;
-            _spawnPositions.RemoveAt(_spawnPositions.Count - 1);
-        }*/
     }
 
     /**
