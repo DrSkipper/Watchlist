@@ -40,27 +40,30 @@ public class LevelGenMapInfo
 
 public class LevelGenRoomInfo : LevelGenMapInfo
 {
+    public const string KEY = "rooms";
     public LevelGenRoomInfo(List<SimpleRect> rooms)
     {
-        this.Name = "rooms";
+        this.Name = KEY;
         this.Data = rooms;
     }
 }
 
 public class LevelGenCorridorInfo : LevelGenMapInfo
 {
+    public const string KEY = "corridors";
     public LevelGenCorridorInfo(List<List<LevelGenMap.Coordinate>> corridors)
     {
-        this.Name = "corridors";
+        this.Name = KEY;
         this.Data = corridors;
     }
 }
 
 public class LevelGenCaveInfo : LevelGenMapInfo
 {
+    public const string KEY = "caves";
     public LevelGenCaveInfo(List<List<LevelGenMap.Coordinate>> caves)
     {
-        this.Name = "caves";
+        this.Name = KEY;
         this.Data = caves;
     }
 }
