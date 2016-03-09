@@ -18,15 +18,18 @@ public class CameraController : VoBehavior
 
     void Update()
     {
-        Vector2 aimAxis = GameplayInput.GetAimingAxis(false);
-        this.TargetPosition = ((Vector2)CenterTarget.position);
+        if (CenterTarget != null)
+        {
+            Vector2 aimAxis = GameplayInput.GetAimingAxis(false);
+            this.TargetPosition = ((Vector2)CenterTarget.position);
 
-        float distance = Vector2.Distance(_lockPosition, this.TargetPosition);
-        float d = distance <= this.MaxDistanceForSnap ? distance : this.NormalApproachSpeed * Time.deltaTime * distance;
-        _lockPosition = Vector2.MoveTowards(_lockPosition, this.TargetPosition, d);
+            float distance = Vector2.Distance(_lockPosition, this.TargetPosition);
+            float d = distance <= this.MaxDistanceForSnap ? distance : this.NormalApproachSpeed * Time.deltaTime * distance;
+            _lockPosition = Vector2.MoveTowards(_lockPosition, this.TargetPosition, d);
 
-        Vector2 finalPosition = _lockPosition + (aimAxis * this.AimingImpact);
-        this.transform.position = new Vector3(finalPosition.x + this.OffsetPosition.x, finalPosition.y + this.OffsetPosition.y, this.transform.position.z);
+            Vector2 finalPosition = _lockPosition + (aimAxis * this.AimingImpact);
+            this.transform.position = new Vector3(finalPosition.x + this.OffsetPosition.x, finalPosition.y + this.OffsetPosition.y, this.transform.position.z);
+        }
     }
 
     /**

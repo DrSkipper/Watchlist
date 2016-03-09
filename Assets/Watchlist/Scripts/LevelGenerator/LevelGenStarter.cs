@@ -11,12 +11,21 @@ public class LevelGenStarter : LevelGenBehavior
 
     public GameObject Tiles;
     public List<InputTable> InputsByDifficulty;
+    public LevelGenInput InputToOverride;
+    public bool OverrideInput = false;
     
     void Start()
     {
-        int difficulty = DynamicData.GetCurrentDifficulty();
-        List<LevelGenInput> possibleInputs = this.InputsByDifficulty[difficulty].PossibleInputs;
-        this.Manager.InitiateGeneration(possibleInputs[Random.Range(0, possibleInputs.Count)]);
+        if (!this.OverrideInput)
+        {
+            int difficulty = DynamicData.GetCurrentDifficulty();
+            List<LevelGenInput> possibleInputs = this.InputsByDifficulty[difficulty].PossibleInputs;
+            this.Manager.InitiateGeneration(possibleInputs[Random.Range(0, possibleInputs.Count)]);
+        }
+        else
+        {
+            this.Manager.InitiateGeneration(this.InputToOverride);
+        }
         _beganGeneration = true;
     }
 

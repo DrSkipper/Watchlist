@@ -105,7 +105,8 @@ public class EnemySelector
 
         if (applyWeightIncrease)
         {
-            _standardWeightOffsets.WeightsByEnemyId[enemyChoice] += StaticData.EnemyData.EnemyTypes[enemyChoice].ChoiceWeightIncrease;
+            int prevWeight = _standardWeightOffsets.WeightsByEnemyId.ContainsKey(enemyChoice) ? _standardWeightOffsets.WeightsByEnemyId[enemyChoice] : 0;
+            _standardWeightOffsets.WeightsByEnemyId[enemyChoice] = prevWeight + StaticData.EnemyData.EnemyTypes[enemyChoice].ChoiceWeightIncrease;
         }
 
         _aggregateWeights.Clear();
