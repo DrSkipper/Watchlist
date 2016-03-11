@@ -140,33 +140,7 @@ public class SpawnPositioner : VoBehavior
         }
         else
         {
-            int enemiesSpawned = 0;
-
-            // Guaranteed enemies
-            for (int i = 0; i < output.Input.GuaranteedEnemiesByDifficulty.Length; ++i)
-            {
-                while (guaranteedEnemiesPlaced[i] < output.Input.GuaranteedEnemiesByDifficulty[i])
-                {
-                    int enemyId = enemySelector.ChooseEnemyOfDifficulty(i);
-                    guaranteedEnemiesPlaced[i] = guaranteedEnemiesPlaced[i] + 1;
-                    ++enemiesSpawned;
-                    _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
-                }
-            }
-
-            // Remaining enemies
-            for (; enemiesSpawned < this.NumEnemies; ++enemiesSpawned)
-            {
-                int enemyId = enemySelector.ChooseEnemy(difficulty);
-                _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
-            }
-
-            // Players
-            //TODO - Replace '1' with number of players
-            for (int i = 0; i < 1; ++i)
-            {
-                _playerSpawns.Add(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector);
-            }
+            spawnSimple(0, output, guaranteedEnemiesPlaced, enemySelector, difficulty, openTiles, true);
         }
     }
 
@@ -201,8 +175,15 @@ public class SpawnPositioner : VoBehavior
             // Player room
             SimpleRect playerRoom = availableRooms[availableRooms.Count - 1];
             availableRooms.RemoveAt(availableRooms.Count - 1);
-            removeRoomFromCoordinates(playerRoom, openTiles);
-            //TODO - add player positions from room
+            List<LevelGenMap.Coordinate> playerRoomCoords = coordinatesInRoom(playerRoom);
+            openTiles.RemoveList(playerRoomCoords);
+            playerRoomCoords.Shuffle();
+            
+            for (int p = 0; p < this.NumPlayers; ++p)
+            {
+                _playerSpawns.Add(playerRoomCoords[playerRoomCoords.Count - 1].integerVector);
+                playerRoomCoords.RemoveAt(playerRoomCoords.Count - 1);
+            }
 
             if (openTiles.Count <= this.NumEnemies * output.Input.MinDistanceBetweenSpawns * 2 + 1)
             {
@@ -306,25 +287,51 @@ public class SpawnPositioner : VoBehavior
                         }
                     }
 
+                    if (!enemySelector.RemoveWeightSet(roomWeightSet))
+                    {
+                        Debug.Log("hrrmmmm");
+                    }
+
                     if (Random.value > 0.5f)
-                        removeRoomFromCoordinates(room, openTiles);
+                        openTiles.RemoveList(coordinatesInRoom(room));
                 }
 
                 // Non united-room spawns
-                //TODO
+                spawnSimple(enemiesSpawned, output, guaranteedEnemiesPlaced, enemySelector, difficulty, openTiles, false);
+            }
+        }
+    }
+
+    private void spawnSimple(int enemiesSpawned, LevelGenOutput output, int[] guaranteedEnemiesPlaced, EnemySelector enemySelector, int difficulty, List<LevelGenMap.Coordinate> openTiles, bool spawnPlayers)
+    {
+        // Guaranteed enemies
+        for (int i = 0; i < output.Input.GuaranteedEnemiesByDifficulty.Length; ++i)
+        {
+            while (guaranteedEnemiesPlaced[i] < output.Input.GuaranteedEnemiesByDifficulty[i])
+            {
+                int enemyId = enemySelector.ChooseEnemyOfDifficulty(i);
+                guaranteedEnemiesPlaced[i] = guaranteedEnemiesPlaced[i] + 1;
+                ++enemiesSpawned;
+                _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
             }
         }
 
-        /**
-        If number of rooms is less than 2 + difficulty level, regenerate level. Place player in a room and remove the other open positions in that room from placement pool. If number of remaining open positions is less than number of enemies * 10, regenerate level. For each remaining room, 75% chance to set as united-spawn room (enemies placed "intelligently", spawn simulatneously as player enters room). After designating a room as united-spawn, there is a 50% chance to remove the rest of the positions in that room from valid placement pool (so it will only ever spawn the united-spawn enemies). Otherwise enemy positions and positions within 1 range of those are removed. If get to last room AND all rooms so far have been united-spawn rooms AND there are still "guaranteed picks" remaining, OR have run through all rooms and still have enemies to place OR still going through rooms but don't have 4 or more enemies still to place, halt room  iteration and place remaining enemies via CA's "good placement" approach (but only remove positions within 1 range).
-	Method for "intelligently" placing united-spawn enemies in room:
-	1. 1 enemy in each of the 4 corners, 1 space in from each wall. The first enemy placed gets temporary boosted weight for rest of united-spawn placement in this room.
-	2. If enemies to place still > 2, and length of room >= 180, place enemies at midpoints along east and west walls, 1 space in from wall.
-	3. Do same as step 2 for width/north, south walls.
-    **/
+        // Remaining enemies
+        for (; enemiesSpawned < this.NumEnemies; ++enemiesSpawned)
+        {
+            int enemyId = enemySelector.ChooseEnemy(difficulty);
+            _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
+        }
 
-        //TODO - remove
-        //findCASpawns(output);
+        // Players
+        //TODO - Replace '1' with number of players
+        if (spawnPlayers)
+        {
+            for (int i = 0; i < 1; ++i)
+            {
+                _playerSpawns.Add(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector);
+            }
+        }
     }
 
     private int pickMaybeGuaranteedEnemy(int guaranteesSpawned, int totalGuarantees, int enemiesSpawned, int difficulty, int[] guaranteedEnemiesPlaced, LevelGenOutput output, EnemySelector enemySelector)
@@ -348,17 +355,19 @@ public class SpawnPositioner : VoBehavior
         return enemySelector.ChooseEnemy(difficulty);
     }
 
-    private void removeRoomFromCoordinates(SimpleRect room, List<LevelGenMap.Coordinate> coordinates)
+    private List<LevelGenMap.Coordinate> coordinatesInRoom(SimpleRect room)
     {
+        List<LevelGenMap.Coordinate> roomCoords = new List<LevelGenMap.Coordinate>();
         for (int x = room.X; x < room.X + room.Width; ++x)
         {
             for (int y = room.Y; y < room.Y + room.Height; ++y)
             {
                 LevelGenMap.Coordinate? coord = _map.ConstructValidCoordinate(x, y, false);
                 if (coord.HasValue)
-                    coordinates.Remove(coord.Value);
+                    roomCoords.Add(coord.Value);
             }
         }
+        return roomCoords;
     }
 
     private LevelGenMap.Coordinate findGoodOpenPosition(List<LevelGenMap.Coordinate> availableTiles, int areaToClear)

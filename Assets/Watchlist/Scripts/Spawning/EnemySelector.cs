@@ -73,9 +73,9 @@ public class EnemySelector
         _weightSets.Add(weightSet);
     }
 
-    public void RemoveWeightSet(WeightSet weightSet)
+    public bool RemoveWeightSet(WeightSet weightSet)
     {
-        _weightSets.Remove(weightSet);
+        return _weightSets.Remove(weightSet);
     }
 
     /**

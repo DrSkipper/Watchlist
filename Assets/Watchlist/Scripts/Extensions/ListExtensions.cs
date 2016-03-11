@@ -16,6 +16,14 @@ public static class ListExtensions
         }
     }
 
+    public static void RemoveList<T>(this List<T> self, List<T> toRemove)
+    {
+        foreach (T element in toRemove)
+        {
+            self.Remove(element);
+        }
+    }
+
     public static void AddUnique<T>(this List<T> self, T toAdd)
     {
         if (!self.Contains(toAdd))
