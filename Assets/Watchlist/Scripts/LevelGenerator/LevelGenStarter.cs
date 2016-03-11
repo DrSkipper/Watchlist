@@ -16,6 +16,11 @@ public class LevelGenStarter : LevelGenBehavior
     
     void Start()
     {
+        this.BeginGeneration();
+    }
+
+    public void BeginGeneration()
+    {
         if (!this.OverrideInput)
         {
             int difficulty = DynamicData.GetCurrentDifficulty();

@@ -17,9 +17,9 @@ Guaranteed picks:
 3: 1 lv 2 enemy, 2 lv 3 enemies
 
 Level sizes:
-1: 48x48, 50x46, 46x50, 52x44, 54x42
+1: 42x42, 44x40, 40x44, 46x38, 48x36
 2: 54x54, 56x52, 52x56, 58x50, 60x48, 63x46
-3: 60x60, 62x58, 58x62, 64x56, 56x64, 67x54, 69x52, 72x50
+3: 64x64, 66x62, 62x66, 68x60, 60x68, 70x58, 73x56, 76x54
 
 BSP room counts:
 1: 3-4

@@ -38,6 +38,7 @@ public class LevelGenManager : LevelGenBehavior
         }
 
         IntegerVector size = input.MapSizes[Random.Range(0, input.MapSizes.Length)];
+        this.Map.Reset();
         this.Map.Width = size.X;
         this.Map.Height = size.Y;
         this.Map.FillCompletely(LevelGenMap.TileType.A);

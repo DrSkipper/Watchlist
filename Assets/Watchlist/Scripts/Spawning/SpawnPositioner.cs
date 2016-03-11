@@ -17,6 +17,7 @@ public class SpawnPositioner : VoBehavior
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
+        _starter = this.LevelGenerator.GetComponent<LevelGenStarter>();
         _map = this.LevelGenerator.GetComponent<LevelGenMap>();
         _tileRenderer = this.Tiles.GetComponent<TileMapOutlineRenderer>();
         _levelGenManager.UpdateDelegate = this.LevelGenUpdate;
@@ -34,20 +35,23 @@ public class SpawnPositioner : VoBehavior
             _enemySpawns = new List<EnemySpawn>();
             _playerSpawns = new List<IntegerVector>();
             TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+            bool resetNecessary = false;
 
             switch (output.Input.Type)
             {
                 default:
                 case LevelGenInput.GenerationType.CA:
-                    findCASpawns(output);
+                    resetNecessary = findCASpawns(output);
                     break;
                 case LevelGenInput.GenerationType.BSP:
-                    findBSPSpawns(output);
+                    resetNecessary = findBSPSpawns(output);
                     break;
             }
-
-            callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
-            callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
+            if (!resetNecessary)
+            {
+                callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
+                callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
+            }
         }
     }
 
@@ -116,13 +120,14 @@ public class SpawnPositioner : VoBehavior
     }
 
     private LevelGenManager _levelGenManager;
+    private LevelGenStarter _starter;
     private LevelGenMap _map;
     private TileMapOutlineRenderer _tileRenderer;
     private List<Transform> _targets;
     private List<EnemySpawn> _enemySpawns;
     private List<IntegerVector> _playerSpawns;
 
-    private void findCASpawns(LevelGenOutput output)
+    private bool findCASpawns(LevelGenOutput output)
     {
         List<LevelGenMap.Coordinate> openTiles = new List<LevelGenMap.Coordinate>(output.OpenTiles);
         openTiles.Shuffle();
@@ -135,16 +140,18 @@ public class SpawnPositioner : VoBehavior
 
         if (openTiles.Count <= (this.NumEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
         {
-            //TODO - Regenerate level
             Debug.Log("Regeneration necessary - CA");
+            _starter.BeginGeneration();
+            return false;
         }
         else
         {
             spawnSimple(0, output, guaranteedEnemiesPlaced, enemySelector, difficulty, openTiles, true);
         }
+        return true;
     }
 
-    private void findBSPSpawns(LevelGenOutput output)
+    private bool findBSPSpawns(LevelGenOutput output)
     {
         List<LevelGenMap.Coordinate> openTiles = new List<LevelGenMap.Coordinate>(output.OpenTiles);
         openTiles.Shuffle();
@@ -162,10 +169,11 @@ public class SpawnPositioner : VoBehavior
         }
         
         if (openTiles.Count <= (this.NumEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns * 2 + 1 ||
-        roomInfo == null || roomInfo.Data.Count < 3 + difficulty)
+        roomInfo == null || roomInfo.Data.Count < 4 + difficulty)
         {
-            //TODO - Regenerate level
             Debug.Log("Regeneration necessary - BSP 1");
+            _starter.BeginGeneration();
+            return false;
         }
         else
         {
@@ -187,8 +195,9 @@ public class SpawnPositioner : VoBehavior
 
             if (openTiles.Count <= this.NumEnemies * output.Input.MinDistanceBetweenSpawns * 2 + 1)
             {
-                //TODO - Regenerate level
                 Debug.Log("Regeneration necessary - BSP 2");
+                _starter.BeginGeneration();
+                return false;
             }
             else
             {
@@ -300,6 +309,8 @@ public class SpawnPositioner : VoBehavior
                 spawnSimple(enemiesSpawned, output, guaranteedEnemiesPlaced, enemySelector, difficulty, openTiles, false);
             }
         }
+
+        return true;
     }
 
     private void spawnSimple(int enemiesSpawned, LevelGenOutput output, int[] guaranteedEnemiesPlaced, EnemySelector enemySelector, int difficulty, List<LevelGenMap.Coordinate> openTiles, bool spawnPlayers)
