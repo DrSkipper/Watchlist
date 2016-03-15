@@ -72,7 +72,7 @@ public class SpawnPositioner : VoBehavior
                 player.transform.position = new Vector3(player.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, player.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, player.transform.position.z);
 
             _targets.Add(player.transform);
-            Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
+            Camera.main.GetComponent<CameraController>().CenterTarget = player.GetComponent<PlayerController>().ActualPosition;
 
             foreach (UISlot slot in this.UISlots)
             {
