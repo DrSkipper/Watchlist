@@ -35,22 +35,26 @@ public class SpawnPositioner : VoBehavior
             _enemySpawns = new List<EnemySpawn>();
             _playerSpawns = new List<IntegerVector>();
             TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
-            bool resetNecessary = false;
+            bool generationOk = false;
 
             switch (output.Input.Type)
             {
                 default:
                 case LevelGenInput.GenerationType.CA:
-                    resetNecessary = findCASpawns(output);
+                    generationOk = findCASpawns(output);
                     break;
                 case LevelGenInput.GenerationType.BSP:
-                    resetNecessary = findBSPSpawns(output);
+                    generationOk = findBSPSpawns(output);
                     break;
             }
-            if (!resetNecessary)
+            if (generationOk)
             {
                 callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
                 callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
+            }
+            else
+            {
+                _starter.BeginGeneration();
             }
         }
     }
@@ -141,7 +145,6 @@ public class SpawnPositioner : VoBehavior
         if (openTiles.Count <= (this.NumEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
         {
             Debug.Log("Regeneration necessary - CA");
-            _starter.BeginGeneration();
             return false;
         }
         else
@@ -172,7 +175,6 @@ public class SpawnPositioner : VoBehavior
         roomInfo == null || roomInfo.Data.Count < 4 + difficulty)
         {
             Debug.Log("Regeneration necessary - BSP 1");
-            _starter.BeginGeneration();
             return false;
         }
         else
@@ -196,7 +198,6 @@ public class SpawnPositioner : VoBehavior
             if (openTiles.Count <= this.NumEnemies * output.Input.MinDistanceBetweenSpawns * 2 + 1)
             {
                 Debug.Log("Regeneration necessary - BSP 2");
-                _starter.BeginGeneration();
                 return false;
             }
             else
