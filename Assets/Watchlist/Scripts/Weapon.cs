@@ -28,10 +28,19 @@ public class Weapon : VoBehavior
                 int shotCount = this.WeaponType.ShotCount;
                 float shotAngle = this.WeaponType.AngleBetweenShots;
                 bool oddCount = shotCount % 2 == 1;
+                
+                bool ignoreExplosions = false;
+                if (this.WeaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER && this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION)
+                {
+                    if (_explosionCooldown > 0.0f)
+                        ignoreExplosions = true;
+                    else
+                        _explosionCooldown = this.WeaponType.SpecialEffectParameter2;
+                }
 
                 if (oddCount)
                 {
-                    createBullet(direction, shotStartDistance, prefab);
+                    createBullet(direction, shotStartDistance, prefab, ignoreExplosions);
                     shotCount -= 1;
                 }
                 else
@@ -41,8 +50,8 @@ public class Weapon : VoBehavior
 
                 while (shotCount > 0)
                 {
-                    createBullet(direction.VectorAtAngle(shotAngle), shotStartDistance, prefab);
-                    createBullet(direction.VectorAtAngle(-shotAngle), shotStartDistance, prefab);
+                    createBullet(direction.VectorAtAngle(shotAngle), shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(-shotAngle), shotStartDistance, prefab, ignoreExplosions);
 
                     shotCount -= 2;
                     shotAngle += this.WeaponType.AngleBetweenShots;
@@ -66,6 +75,9 @@ public class Weapon : VoBehavior
 
         if (_audioCooldown > 0.0f)
             _audioCooldown -= Time.deltaTime;
+
+        if (_explosionCooldown > 0.0f)
+            _explosionCooldown -= Time.deltaTime;
     }
 
     /**
@@ -73,13 +85,14 @@ public class Weapon : VoBehavior
      */
     private float _shotCooldown;
     private float _audioCooldown;
+    private float _explosionCooldown;
     private AudioSource _audio;
 
-    private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab)
+    private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab, bool ignoreExplosions)
     {
         // Create instance of bullet prefab and set it on its way
         Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
         GameObject bullet = Instantiate(prefab, position, Quaternion.identity) as GameObject;
-        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo);
+        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo, ignoreExplosions);
     }
 }

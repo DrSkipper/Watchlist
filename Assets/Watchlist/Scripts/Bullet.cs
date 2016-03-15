@@ -8,9 +8,10 @@ public class Bullet : Actor2D
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
     public GameObject ExplosionPrefab;
 
-    public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, AllegianceInfo allegianceInfo)
+    public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, AllegianceInfo allegianceInfo, bool ignoreExplosion = false)
     {
         this.WeaponType = weaponType;
+        _ignoreExplosion = ignoreExplosion;
         this.Velocity = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? Vector2.zero : 
             new Vector2(direction.x * weaponType.ShotSpeed, direction.y * weaponType.ShotSpeed);
 
@@ -105,6 +106,7 @@ public class Bullet : Actor2D
     private AllegianceInfo _allegianceInfo;
     private bool _explosionRemaining;
     private bool _isLaser;
+    private bool _ignoreExplosion;
 
     private void scheduleDestruction(Vector3 location)
     {
@@ -199,9 +201,12 @@ public class Bullet : Actor2D
     private void triggerExplosion(Vector3 position)
     {
         _explosionRemaining = false;
-        GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
-        explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
-        explosion.GetComponent<AllegianceColorizer>().UpdateVisual(_allegianceInfo);
+        if (!_ignoreExplosion)
+        {
+            GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
+            explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
+            explosion.GetComponent<AllegianceColorizer>().UpdateVisual(_allegianceInfo);
+        }
     }
     
     private static LayerMask MISSILE_LAYERS = 0;
