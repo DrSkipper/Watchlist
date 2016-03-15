@@ -20,6 +20,13 @@ public class UISlot : VoBehavior
 
     void Start()
     {
+        if (this.PlayerObject != null)
+            this.SetPlayer(this.PlayerObject);
+    }
+
+    public void SetPlayer(GameObject playerObject)
+    {
+        this.PlayerObject = playerObject;
         PlayerController player = PlayerObject.GetComponent<PlayerController>();
         this.UpdateSlots(player.GetSlots());
         player.AddSlotChangeCallback(this.UpdateSlots);

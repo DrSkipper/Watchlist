@@ -14,6 +14,9 @@ public class SpawnPositioner : VoBehavior
     public float SpawnPlayersDelay = 1.0f;
     public float SpawnEnemiesDelay = 3.0f;
 
+    //TODO - remove this hack
+    public UISlot[] UISlots;
+
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
@@ -70,6 +73,11 @@ public class SpawnPositioner : VoBehavior
 
             _targets.Add(player.transform);
             Camera.main.GetComponent<CameraController>().CenterTarget = player.transform;
+
+            foreach (UISlot slot in this.UISlots)
+            {
+                slot.SetPlayer(player);
+            }
         }
 
         /*if (this.PickupPrefabs.Length > 0)
