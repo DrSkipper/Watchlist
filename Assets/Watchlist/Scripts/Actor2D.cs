@@ -8,6 +8,7 @@ public class Actor2D : VoBehavior
     public LayerMask HaltMovementMask;
     public LayerMask CollisionMask;
     public bool CheckCollisionsWhenStill = false;
+    public Transform ActualPosition;
 
     public const float MAX_POSITION_INCREMENT = 1.0f;
     public const int BOUNCE_DETECTION_RANGE = 1;
@@ -36,6 +37,9 @@ public class Actor2D : VoBehavior
                     this.localNotifier.SendEvent(new HitEvent(collision));
             }
         }
+
+        if (this.ActualPosition != null)
+            this.ActualPosition.localPosition = new Vector3(_positionModifier.x, _positionModifier.y);
     }
 
     public void Move(Vector2 d)
