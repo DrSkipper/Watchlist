@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemySpawner : VoBehavior
 {
@@ -10,11 +11,16 @@ public class EnemySpawner : VoBehavior
     public float SpawnDelay = 0.5f;
     public bool DestroyAfterSpawn = false;
     public SpawnedObjectCallback SpawnCallback;
-    public Transform[] Targets;
+    public List<Transform> Targets;
 
     public GameObject GenericPrefab;
     public GameObject GenericMotionPrefab;
     public GameObject SpawnVisualPrefab;
+
+    void Start()
+    {
+        GlobalEvents.Notifier.Listen(PlayerDiedEvent.NAME, this, playerDied);
+    }
 
     void Update()
     {
@@ -64,7 +70,7 @@ public class EnemySpawner : VoBehavior
         GameObject enemyObject = Instantiate(prefab, this.transform.position, Quaternion.identity) as GameObject;
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();
         enemyComponent.EnemyType = enemy;
-        enemyComponent.Targets = this.Targets;
+        enemyComponent.Targets = new List<Transform>(this.Targets);
 
         if (this.SpawnCallback != null)
             this.SpawnCallback(enemyObject);
@@ -72,6 +78,13 @@ public class EnemySpawner : VoBehavior
         _spawning = false;
         if (this.DestroyAfterSpawn)
             Destroy(this.gameObject);
+    }
+
+    public override void OnDestroy()
+    {
+        if (GlobalEvents.Notifier != null)
+            GlobalEvents.Notifier.RemoveAllListenersForOwner(this);
+        base.OnDestroy();
     }
 
     /**
@@ -82,8 +95,8 @@ public class EnemySpawner : VoBehavior
 
     private bool distanceCheck()
     {
-        if (this.Targets.Length == 0)
-            return true;
+        if (this.Targets.Count == 0)
+            return false;
 
         foreach (Transform target in this.Targets)
         {
@@ -92,5 +105,10 @@ public class EnemySpawner : VoBehavior
         }
 
         return false;
+    }
+
+    private void playerDied(LocalEventNotifier.Event playerDiedEvent)
+    {
+        this.Targets.Remove((playerDiedEvent as PlayerDiedEvent).PlayerObject.transform);
     }
 }

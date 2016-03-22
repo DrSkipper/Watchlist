@@ -13,6 +13,7 @@ public class CameraController : VoBehavior
 
     void Start()
     {
+        GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
         _lockPosition = (Vector2)this.transform.position;
     }
 
@@ -30,10 +31,30 @@ public class CameraController : VoBehavior
             Vector2 finalPosition = _lockPosition + (aimAxis * this.AimingImpact);
             this.transform.position = new Vector3(finalPosition.x + this.OffsetPosition.x, finalPosition.y + this.OffsetPosition.y, this.transform.position.z);
         }
+        else
+        {
+            this.transform.position = new Vector3(_lockPosition.x + this.OffsetPosition.x, _lockPosition.y + this.OffsetPosition.y, this.transform.position.z);
+        }
+    }
+
+    public override void OnDestroy()
+    {
+        if (GlobalEvents.Notifier != null)
+            GlobalEvents.Notifier.RemoveAllListenersForOwner(this);
+        base.OnDestroy();
     }
 
     /**
      * Private
      */
     private Vector2 _lockPosition;
+
+    private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
+    {
+        //TODO - Account for multiple camera targets
+        if (this.CenterTarget == null)
+        {
+            this.CenterTarget = (playerSpawnedEvent as PlayerSpawnedEvent).PlayerObject.transform;
+        }
+    }
 }

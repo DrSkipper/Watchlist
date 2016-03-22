@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GenericEnemy : VoBehavior
 {
     public EnemyType EnemyType;
     public int[] PossibleRotationDirections = { 1, -1 };
     public Vector2[] PossibleStartingVelocities;
-    public Transform[] Targets;
+    public List<Transform> Targets;
     public LayerMask BounceLayerMask;
     public Texture2D SpriteSheet;
     public bool UseDebugWeapon = false;
@@ -58,6 +59,7 @@ public class GenericEnemy : VoBehavior
         }
 
         this.spriteRenderer.sprite = this.SpriteSheet.GetSprites()[this.EnemyType.SpriteName];
+        GlobalEvents.Notifier.Listen(PlayerDiedEvent.NAME, this, playerDied);
     }
 
     void Update()
@@ -67,7 +69,7 @@ public class GenericEnemy : VoBehavior
         Vector2 forward = Vector2.zero;
 
         // Find the closest target
-        if (this.Targets.Length > 0)
+        if (this.Targets.Count > 0)
         {
             Transform closest = this.Targets[0];
             Vector2 ourPosition = new Vector2(this.transform.position.x, this.transform.position.y);
@@ -75,7 +77,7 @@ public class GenericEnemy : VoBehavior
             aimAxis = theirPosition - ourPosition;
             distance = aimAxis.magnitude;
 
-            for (int i = 1; i < this.Targets.Length; ++i)
+            for (int i = 1; i < this.Targets.Count; ++i)
             {
                 Transform current = this.Targets[i];
                 Vector2 position = new Vector2(current.position.x, current.position.y);
@@ -170,6 +172,13 @@ public class GenericEnemy : VoBehavior
         }
     }
 
+    public override void OnDestroy()
+    {
+        if (GlobalEvents.Notifier != null)
+            GlobalEvents.Notifier.RemoveAllListenersForOwner(this);
+        base.OnDestroy();
+    }
+
     /**
      * Private
      */
@@ -183,4 +192,9 @@ public class GenericEnemy : VoBehavior
 
     private bool _usesPauses { get { return this.EnemyType.PauseDuration > 0.0f; } }
     private bool _paused { get { return _pauseTimer > 0.0f; } }
+
+    private void playerDied(LocalEventNotifier.Event playerDiedEvent)
+    {
+        this.Targets.Remove((playerDiedEvent as PlayerDiedEvent).PlayerObject.transform);
+    }
 }

@@ -6,7 +6,7 @@ public class UISlot : VoBehavior
     public GameObject PlayerObject;
     public GameObject SlotObject;
     public GameObject SlotContentsObject;
-
+    
     public int SlotId;
 
     public Sprite UnlockedSlotSprite;

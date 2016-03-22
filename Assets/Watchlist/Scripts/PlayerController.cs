@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerController : Actor2D
 {
+    public int PlayerIndex;
     public float AccelerationDuration = 0.5f;
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
@@ -33,6 +34,7 @@ public class PlayerController : Actor2D
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
 
+        this.GetComponent<Damagable>().OnDeathCallbacks.Add(died);
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
         updateSlots();
     }
@@ -208,5 +210,10 @@ public class PlayerController : Actor2D
         // Notification
         foreach (SlotChangeDelegate callback in _slotChangeDelegates)
             callback(slotArray);
+    }
+
+    private void died(Damagable d)
+    {
+        GlobalEvents.Notifier.SendEvent(new PlayerDiedEvent(this.gameObject, this.PlayerIndex));
     }
 }

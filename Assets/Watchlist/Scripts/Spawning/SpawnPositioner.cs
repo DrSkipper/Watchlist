@@ -14,9 +14,6 @@ public class SpawnPositioner : VoBehavior
     public float SpawnPlayersDelay = 1.0f;
     public float SpawnEnemiesDelay = 3.0f;
 
-    //TODO - remove this hack
-    public UISlot[] UISlots;
-
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
@@ -64,6 +61,7 @@ public class SpawnPositioner : VoBehavior
 
     public void SpawnPlayers()
     {
+        int playerIndex = 0;
         foreach (IntegerVector position in _playerSpawns)
         {
             //TODO - Hand control of spawned player object to appropriate player
@@ -72,12 +70,9 @@ public class SpawnPositioner : VoBehavior
                 player.transform.position = new Vector3(player.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, player.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, player.transform.position.z);
 
             _targets.Add(player.transform);
-            Camera.main.GetComponent<CameraController>().CenterTarget = player.GetComponent<PlayerController>().ActualPosition;
 
-            foreach (UISlot slot in this.UISlots)
-            {
-                slot.SetPlayer(player);
-            }
+            GlobalEvents.Notifier.SendEvent(new PlayerSpawnedEvent(player, playerIndex));
+            ++playerIndex;
         }
 
         /*if (this.PickupPrefabs.Length > 0)
@@ -110,7 +105,7 @@ public class SpawnPositioner : VoBehavior
             EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
             if (winCondition != null)
                 spawnBehavior.SpawnCallback = winCondition.EnemySpawned;
-            spawnBehavior.Targets = _targets.ToArray();
+            spawnBehavior.Targets = new List<Transform>(_targets);
             spawnBehavior.DestroyAfterSpawn = true;
             spawnBehavior.SpawnPool = new int[] { enemySpawn.EnemyId };
         }

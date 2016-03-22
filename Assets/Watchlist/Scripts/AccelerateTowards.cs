@@ -35,7 +35,6 @@ public class AccelerateTowards : VoBehavior
     void Update()
     {
         Vector2 targetVelocity = Vector2.zero;
-        float speed = _actor.Velocity.magnitude;
 
         if (_target.HasValue)
         {

@@ -17,7 +17,11 @@ public class GibsBehavior : VoBehavior
         {
             float randomAngle = Random.Range(0.0f, 2.0f * Mathf.PI);
             Vector2 random = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
-            Vector2 orientation = ((Vector2)(gib.transform.position - this.transform.position)).normalized;
+            Vector2 orientation = (Vector2)(gib.transform.position - this.transform.position);
+            if (orientation.magnitude < 0.5f)
+                orientation = random;
+            else
+                orientation.Normalize();
             Vector2 final = (random * this.RandomInfluence) + (orientation * this.OrientationInfluence) + (this.ImpactVector.normalized * this.Knockback * this.KnockbackModifier);
             gib.GetComponent<Actor2D>().SetVelocityModifier("gib", new VelocityModifier(final, VelocityModifier.CollisionBehavior.bounce));
         }

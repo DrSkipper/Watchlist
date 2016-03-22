@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class CollisionEvent : LocalEventNotifier.Event
 {
-    public static string NAME = "COLLISION";
+    public const string NAME = "COLLISION";
     public GameObject[] Hits;
     public Vector2 VelocityAtHit; // Velocity of actor at time collision was detected, before being multiplied by Time.deltaTime
     public Vector2 VelocityApplied; // How much of the velocity, AFTER Time.deltaTime multiplier, was applied before detecting the collision
@@ -19,7 +19,7 @@ public class CollisionEvent : LocalEventNotifier.Event
 
 public class LaserCastEvent : LocalEventNotifier.Event
 {
-    public static string NAME = "LASER_CAST";
+    public const string NAME = "LASER_CAST";
     public CollisionManager.RaycastResult RaycastResult;
     public IntegerVector Origin;
     public AllegianceInfo AllegianceInfo;
@@ -35,7 +35,7 @@ public class LaserCastEvent : LocalEventNotifier.Event
 
 public class HitEvent : LocalEventNotifier.Event
 {
-    public static string NAME = "DAMAGE";
+    public const string NAME = "DAMAGE";
     public GameObject Hit;
 
     public HitEvent(GameObject hit)
@@ -47,12 +47,38 @@ public class HitEvent : LocalEventNotifier.Event
 
 public class InvincibilityToggleEvent : LocalEventNotifier.Event
 {
-    public static string NAME = "INVINCIBILITY";
+    public const string NAME = "INVINCIBILITY";
     public bool ToggledOn;
 
     public InvincibilityToggleEvent(bool toggledOn)
     {
         this.Name = NAME;
         this.ToggledOn = toggledOn;
+    }
+}
+
+public class PlayerSpawnedEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "PLAYER_SPAWN";
+    public GameObject PlayerObject;
+    public int PlayerIndex;
+
+    public PlayerSpawnedEvent(GameObject playerObject, int playerIndex)
+    {
+        this.Name = NAME;
+        this.PlayerObject = playerObject;
+    }
+}
+
+public class PlayerDiedEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "PLAYER_DIED";
+    public GameObject PlayerObject;
+    public int PlayerIndex;
+
+    public PlayerDiedEvent(GameObject playerObject, int playerIndex)
+    {
+        this.Name = NAME;
+        this.PlayerObject = playerObject;
     }
 }
