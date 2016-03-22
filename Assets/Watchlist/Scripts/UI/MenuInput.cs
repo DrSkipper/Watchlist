@@ -1,33 +1,49 @@
 ﻿using UnityEngine;
+using Rewired;
 
 public static class MenuInput
 {
-    public const float MENU_AXIS_DEADZONE = 0.4f;
+    private const string VERTICAL = "MoveVertical";
+    private const string HORIZONTAL = "MoveHorizontal";
+    private const string SELECT = "Confirm";
+    private const string PAUSE = "Pause";
+    private const string EXIT = "Exit";
+    private const float DEADZONE = 0.4f;
     private const float AXIS_CONSUMPTION_TIME = 0.2f;
+
+    public static bool AnyInput()
+    {
+        foreach (Player player in ReInput.players.GetPlayers())
+        {
+            if (player.GetAnyButtonDown() || Mathf.Abs(player.GetAxis(VERTICAL)) > DEADZONE || Mathf.Abs(player.GetAxis(HORIZONTAL)) > DEADZONE)
+                return true;
+        }
+        return false;
+    }
 
     public static bool HighlightNextElement()
     {
-        return Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || ((Input.GetAxis("Vertical") < -MENU_AXIS_DEADZONE) && ConsumeAxisEvent());
+        return checkAxis(VERTICAL, -1);
     }
 
     public static bool HighlightPreviousElement()
     {
-        return Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || ((Input.GetAxis("Vertical") > MENU_AXIS_DEADZONE) && ConsumeAxisEvent());
+        return checkAxis(VERTICAL, 1);
     }
 
     public static bool SelectCurrentElement()
     {
-        return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Select");
+        return checkButton(SELECT);
     }
 
     public static bool NavLeft()
     {
-        return Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A) || (Input.GetAxis("Horizontal") < -MENU_AXIS_DEADZONE && ConsumeAxisEvent());
+        return checkAxis(HORIZONTAL, -1);
     }
 
     public static bool NavRight()
     {
-        return Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || (Input.GetAxis("Horizontal") > MENU_AXIS_DEADZONE && ConsumeAxisEvent());
+        return checkAxis(HORIZONTAL, 1);
     }
 
     public static bool NavUp()
@@ -42,12 +58,12 @@ public static class MenuInput
 
     public static bool Pause()
     {
-        return Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Pause");
+        return checkButton(PAUSE);
     }
 
     public static bool Exit()
     {
-        return Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("Exit");
+        return checkButton(EXIT);
     }
 
     public static bool ConsumeAxisEvent()
@@ -66,5 +82,28 @@ public static class MenuInput
     private static bool axesAvailable()
     {
         return _consumedAxisTime == 0.0f || Time.unscaledTime - _consumedAxisTime > AXIS_CONSUMPTION_TIME;
+    }
+
+    private static bool checkAxis(string axisName, int sign)
+    {
+        if (axesAvailable())
+        {
+            foreach (Player player in ReInput.players.GetPlayers())
+            {
+                if (sign * player.GetAxis(axisName) > 0.4f && ConsumeAxisEvent())
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static bool checkButton(string buttonName)
+    {
+        foreach (Player player in ReInput.players.GetPlayers())
+        {
+            if (player.GetButton(buttonName))
+                return true;
+        }
+        return false;
     }
 }

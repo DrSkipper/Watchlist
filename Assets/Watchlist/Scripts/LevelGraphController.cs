@@ -174,7 +174,7 @@ public class LevelGraphController : VoBehavior
 
     void Update()
     {
-        if (Input.anyKeyDown || Mathf.Abs(Input.GetAxis("Vertical")) > MenuInput.MENU_AXIS_DEADZONE || Mathf.Abs(Input.GetAxis("Horizontal")) > MenuInput.MENU_AXIS_DEADZONE)
+        if (MenuInput.AnyInput())
         {
             IntegerVector newPosition = this.CurrentPosition;
 
