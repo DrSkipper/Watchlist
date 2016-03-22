@@ -6,6 +6,7 @@ public class ReticlePositioner : VoBehavior
     public bool YIsUp = false;
     public float InitialAngle = 0.0f;
     public bool VisibleAtRest = false;
+    public int PlayerIndex = 0;
 
     void Start()
     {
@@ -17,7 +18,7 @@ public class ReticlePositioner : VoBehavior
         if (PauseController.IsPaused())
             return;
 
-        Vector2 aimAxis = GameplayInput.GetAimingAxis();
+        Vector2 aimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex);
 
         if (Mathf.Abs(aimAxis.x) >= 0.001f || Mathf.Abs(aimAxis.y) >= 0.001f)
         {

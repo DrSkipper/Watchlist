@@ -13,6 +13,7 @@ public class PlayerController : Actor2D
     public int WeaponTypeId = 1; // Exposed for debugging
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
+    public ReticlePositioner Reticle;
 
     public delegate void SlotChangeDelegate(WeaponData.Slot[] newSlots);
 
@@ -34,6 +35,7 @@ public class PlayerController : Actor2D
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
 
+        this.Reticle.PlayerIndex = this.PlayerIndex;
         this.GetComponent<Damagable>().OnDeathCallbacks.Add(died);
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
         updateSlots();
@@ -44,7 +46,7 @@ public class PlayerController : Actor2D
         if (PauseController.IsPaused())
             return;
 
-        Vector2 movementAxis = GameplayInput.GetMovementAxis();
+        Vector2 movementAxis = GameplayInput.GetMovementAxis(this.PlayerIndex);
 
         float targetX = movementAxis.x * this.MaxSpeed;
         float targetY = movementAxis.y * this.MaxSpeed;
@@ -74,10 +76,10 @@ public class PlayerController : Actor2D
         // Shooting
         if (_weapon != null)
         {
-            Vector2 aimAxis = GameplayInput.GetAimingAxis();
+            Vector2 aimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex);
             if (aimAxis.x != 0 || aimAxis.y != 0)
             {
-                if (GameplayInput.GetFireButton())
+                if (GameplayInput.GetFireButton(this.PlayerIndex))
                     _weapon.Fire(aimAxis, this.ShotStartDistance);
             }
         }

@@ -21,7 +21,8 @@ public class CameraController : VoBehavior
     {
         if (CenterTarget != null)
         {
-            Vector2 aimAxis = GameplayInput.GetAimingAxis(false);
+            //TODO - Need to aggregate aiming axes for all players
+            Vector2 aimAxis = GameplayInput.GetAimingAxis(0, false);
             this.TargetPosition = ((Vector2)CenterTarget.position);
 
             float distance = Vector2.Distance(_lockPosition, this.TargetPosition);
