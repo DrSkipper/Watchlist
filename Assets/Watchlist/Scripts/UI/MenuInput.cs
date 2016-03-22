@@ -3,57 +3,39 @@ using Rewired;
 
 public static class MenuInput
 {
-    private const string VERTICAL = "MoveVertical";
-    private const string HORIZONTAL = "MoveHorizontal";
-    private const string SELECT = "Confirm";
-    private const string PAUSE = "Pause";
-    private const string EXIT = "Exit";
-    private const float DEADZONE = 0.4f;
-    private const float AXIS_CONSUMPTION_TIME = 0.2f;
-
-    public static bool AnyInput()
-    {
-        foreach (Player player in ReInput.players.GetPlayers())
-        {
-            if (player.GetAnyButtonDown() || Mathf.Abs(player.GetAxis(VERTICAL)) > DEADZONE || Mathf.Abs(player.GetAxis(HORIZONTAL)) > DEADZONE)
-                return true;
-        }
-        return false;
-    }
-
-    public static bool HighlightNextElement()
-    {
-        return checkAxis(VERTICAL, -1);
-    }
-
-    public static bool HighlightPreviousElement()
-    {
-        return checkAxis(VERTICAL, 1);
-    }
-
     public static bool SelectCurrentElement()
     {
         return checkButton(SELECT);
     }
 
+    public static bool HighlightNextElement()
+    {
+        return NavDown();
+    }
+
+    public static bool HighlightPreviousElement()
+    {
+        return NavUp();
+    }
+
     public static bool NavLeft()
     {
-        return checkAxis(HORIZONTAL, -1);
+        return checkButton(LEFT);
     }
 
     public static bool NavRight()
     {
-        return checkAxis(HORIZONTAL, 1);
+        return checkButton(RIGHT);
     }
 
     public static bool NavUp()
     {
-        return HighlightPreviousElement();
+        return checkButton(UP);
     }
 
     public static bool NavDown()
     {
-        return HighlightNextElement();
+        return checkButton(DOWN);
     }
 
     public static bool Pause()
@@ -66,36 +48,26 @@ public static class MenuInput
         return checkButton(EXIT);
     }
 
-    public static bool ConsumeAxisEvent()
+    public static bool AnyInput()
     {
-        bool available = axesAvailable();
-        if (available)
-            _consumedAxisTime = Time.unscaledTime;
-        return available;
+        foreach (Player player in ReInput.players.GetPlayers())
+        {
+            if (player.GetAnyButtonDown())
+                return true;
+        }
+        return false;
     }
 
     /**
      * Private
      */
-    private static float _consumedAxisTime;
-
-    private static bool axesAvailable()
-    {
-        return _consumedAxisTime == 0.0f || Time.unscaledTime - _consumedAxisTime > AXIS_CONSUMPTION_TIME;
-    }
-
-    private static bool checkAxis(string axisName, int sign)
-    {
-        if (axesAvailable())
-        {
-            foreach (Player player in ReInput.players.GetPlayers())
-            {
-                if (sign * player.GetAxis(axisName) > 0.4f && ConsumeAxisEvent())
-                    return true;
-            }
-        }
-        return false;
-    }
+    private const string UP = "MenuUp";
+    private const string DOWN = "MenuDown";
+    private const string LEFT = "MenuLeft";
+    private const string RIGHT = "MenuRight";
+    private const string SELECT = "Confirm";
+    private const string PAUSE = "Pause";
+    private const string EXIT = "Exit";
 
     private static bool checkButton(string buttonName)
     {
