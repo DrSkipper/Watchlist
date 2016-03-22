@@ -73,7 +73,7 @@ public static class MenuInput
     {
         foreach (Player player in ReInput.players.GetPlayers())
         {
-            if (player.GetButton(buttonName))
+            if (player.GetButtonDown(buttonName))
                 return true;
         }
         return false;
