@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Rewired;
+using System.Collections.Generic;
 
 public static class MenuInput
 {
@@ -63,8 +64,16 @@ public static class MenuInput
         {
             if (!onlyCheckPlayingPlayers || player.isPlaying)
             {
-                if (player.GetAnyButtonDown())
-                    return true;
+                if (player.controllers.hasMouse)
+                {
+                    if (player.controllers.Keyboard.PollForFirstKey().success)
+                        return true;
+                }
+                else
+                {
+                    if (player.GetAnyButtonDown())
+                        return true;
+                }
             }
         }
         return false;
@@ -73,6 +82,7 @@ public static class MenuInput
     /**
      * Private
      */
+
     private static bool checkButton(string buttonName, bool onlyCheckPlayingPlayers)
     {
         if (!onlyCheckPlayingPlayers)
@@ -80,8 +90,24 @@ public static class MenuInput
 
         foreach (Player player in ReInput.players.GetPlayers())
         {
-            if (player.name != MENU_PLAYER && player.isPlaying && player.GetButtonDown(buttonName))
-                return true;
+            if (player.name != MENU_PLAYER && player.isPlaying)
+            {
+                if (player.controllers.hasMouse)
+                {
+                    List<ControllerMap> maps = new List<ControllerMap>(player.controllers.maps.GetMaps(ControllerType.Keyboard, player.controllers.Keyboard.id));
+                    ControllerMap map = player.controllers.maps.GetMap(ControllerType.Keyboard, player.controllers.Keyboard.id, 0);
+                    foreach (ActionElementMap actionMap in map.ElementMapsWithAction(buttonName))
+                    {
+                        if (player.controllers.Keyboard.GetKeyDown(actionMap.keyCode))
+                            return true;
+                    }
+                }
+                else
+                {
+                    if (player.GetButtonDown(buttonName))
+                        return true;
+                }
+            }
         }
         return false;
     }

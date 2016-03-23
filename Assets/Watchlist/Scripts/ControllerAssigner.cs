@@ -28,7 +28,7 @@ public class ControllerAssigner : MonoBehaviour
                 if (mostRecentController == null)
                 {
                     Controller[] controllers = ReInput.controllers.GetControllers(ControllerType.Joystick);
-                    if (controllers.Length > 0)
+                    if (controllers != null && controllers.Length > 0)
                         mostRecentController = controllers[0];
                     else
                         mostRecentController = ReInput.controllers.Keyboard;
@@ -111,7 +111,11 @@ public class ControllerAssigner : MonoBehaviour
         player.isPlaying = true;
 
         if (controller == ReInput.controllers.Keyboard)
+        {
             player.controllers.AddController(ReInput.controllers.Mouse, false);
+            KeyboardMap keyboardMap = ReInput.mapping.GetKeyboardMapInstance(0, 0);
+            player.controllers.maps.AddMap(controller, keyboardMap);
+        }
 
         if (_assignmentCallbacks.ContainsKey(player.id))
         {
@@ -125,21 +129,24 @@ public class ControllerAssigner : MonoBehaviour
     private Controller findAvailableControllerWithStartHeld(Controller[] joysticks, Keyboard keyboard)
     {
         bool available;
-        foreach (Controller controller in joysticks)
+        if (joysticks != null)
         {
-            if (controller.GetAnyButtonDown())
+            foreach (Controller controller in joysticks)
             {
-                available = true;
-                foreach (Player player in _gameplayPlayers)
+                if (controller.GetAnyButtonDown())
                 {
-                    if (player.controllers.ContainsController(controller))
+                    available = true;
+                    foreach (Player player in _gameplayPlayers)
                     {
-                        available = false;
-                        break;
+                        if (player.controllers.ContainsController(controller))
+                        {
+                            available = false;
+                            break;
+                        }
                     }
+                    if (available)
+                        return controller;
                 }
-                if (available)
-                    return controller;
             }
         }
 
