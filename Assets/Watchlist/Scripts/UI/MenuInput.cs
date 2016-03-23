@@ -11,7 +11,7 @@ public static class MenuInput
     public const string SELECT = "Confirm";
     public const string PAUSE = "Pause";
     public const string EXIT = "Exit";
-    public const string MENU_PLAYER = "MenuPlayer";
+    public const string MENU_CATEGORY = "Default";
 
     public static bool SelectCurrentElement(bool onlyCheckPlayingPlayers = false)
     {

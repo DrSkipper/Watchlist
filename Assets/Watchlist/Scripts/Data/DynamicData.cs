@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Rewired;
 
 public static class DynamicData
 {
     public const int WEAPON_SLOTS = 4;
+    public const int MAX_PLAYERS = 4;
 
     public static IntegerVector[] CompletedTiles { get { return _completedTiles.ToArray(); } }
     public static IntegerVector MostRecentTile { get { return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
@@ -55,10 +57,22 @@ public static class DynamicData
         return 1; // Medium
     }
 
+    public static SessionPlayer GetSessionPlayer(int playerIndex)
+    {
+        SessionPlayer player = _sessionPlayers[playerIndex];
+        if (player == null)
+        {
+            player = new SessionPlayer(playerIndex);
+            _sessionPlayers[playerIndex] = player;
+        }
+        return player;
+    }
+    
     /**
      * Private
      */
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
     private static Dictionary<int, WeaponData.Slot[]> _weaponSlotsByPlayer = new Dictionary<int, WeaponData.Slot[]>();
+    private static SessionPlayer[] _sessionPlayers = new SessionPlayer[MAX_PLAYERS];
 }

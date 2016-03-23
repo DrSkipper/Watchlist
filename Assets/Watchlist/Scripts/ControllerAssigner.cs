@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class ControllerAssigner : MonoBehaviour
 {
-    public delegate void ControllerAssigned(Player player, Controller controller);
-    public delegate void ControllerUnassigned();
+    public const string ASSIGNMENT_CATEGORY = "Assignment";
+    public const string JOIN_ACTION = "Join";
+    public delegate void ControllerAssigned(SessionPlayer player);
+    public delegate void ControllerUnassigned(SessionPlayer player);
 
     public bool AssignFirstPlayerOnStart = true;
     public bool AllowReassignment = false;
@@ -13,28 +15,25 @@ public class ControllerAssigner : MonoBehaviour
 
     void Start()
     {
-        Player menuPlayer = ReInput.players.GetPlayer(MenuInput.MENU_PLAYER);
-        _gameplayPlayers = new List<Player>(ReInput.players.GetPlayers());
-        _gameplayPlayers.Remove(menuPlayer);
-
-        foreach (Player player in _gameplayPlayers)
-            player.controllers.ClearAllControllers();
-
         if (this.AssignFirstPlayerOnStart)
         {
-            if (playerUnassigned(_gameplayPlayers[0]))
+            SessionPlayer p1 = DynamicData.GetSessionPlayer(0);
+            if (!p1.HasJoined)
             {
-                Controller mostRecentController = menuPlayer.controllers.GetLastActiveController();
-                if (mostRecentController == null)
+                // Find most recent active input and join p1 with it
+                Player lastActive = null;
+                float lastActiveTime = 0.0f;
+                foreach (Player p in ReInput.players.Players)
                 {
-                    Controller[] controllers = ReInput.controllers.GetControllers(ControllerType.Joystick);
-                    if (controllers != null && controllers.Length > 0)
-                        mostRecentController = controllers[0];
-                    else
-                        mostRecentController = ReInput.controllers.Keyboard;
+                    Controller c = p.controllers.GetLastActiveController();
+                    float cActiveTime = c.GetLastTimeActive();
+                    if (lastActive == null || cActiveTime > lastActiveTime)
+                    {
+                        lastActiveTime = cActiveTime;
+                        lastActive = p;
+                    }
                 }
-                
-                assignController(_gameplayPlayers[0], mostRecentController);
+                p1.JoinSession(lastActive.id);
             }
         }
     }
@@ -43,53 +42,50 @@ public class ControllerAssigner : MonoBehaviour
     {
         if (this.AllowReassignment)
         {
-            Controller[] joysticks = null;
-            Keyboard keyboard = null;
-
-            foreach (Player player in _gameplayPlayers)
+            for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
             {
-                // Check for assignment
-                if (playerUnassigned(player))
+                SessionPlayer p = DynamicData.GetSessionPlayer(i);
+                if (!p.HasJoined)
                 {
-                    if (joysticks == null)
+                    // Assignment
+                    foreach (Player rewiredPlayer in ReInput.players.Players)
                     {
-                        joysticks = ReInput.controllers.GetControllers(ControllerType.Joystick);
-                        keyboard = ReInput.controllers.Keyboard;
+                        if (!rewiredPlayer.isPlaying && rewiredPlayer.GetButtonDown(JOIN_ACTION))
+                        {
+                            joinPlayer(p, rewiredPlayer.id);
+                            break;
+                        }
                     }
-                    
-                    Controller availableController = findAvailableControllerWithStartHeld(joysticks, keyboard);
-
-                    if (availableController != null)
-                        assignController(player, availableController);
-                    else
-                        break;
                 }
-
-                // Check for unassignment
                 else
                 {
-
+                    // Unassignment
+                    if (ReInput.players.GetPlayer(p.RewiredId).GetButtonDown(MenuInput.EXIT))
+                    {
+                        //TODO - Should be checking if button held rather than just pressed
+                        dropPlayer(p);
+                    }
                 }
             }
         }
     }
 
-    public void AddAssignmentCallback(int playerId, ControllerAssigned callback)
+    public void AddAssignmentCallback(int playerIndex, ControllerAssigned callback)
     {
         if (_assignmentCallbacks == null)
             _assignmentCallbacks = new Dictionary<int, List<ControllerAssigned>>();
-        if (!_assignmentCallbacks.ContainsKey(playerId))
-            _assignmentCallbacks.Add(playerId, new List<ControllerAssigned>());
-        _assignmentCallbacks[playerId].Add(callback);
+        if (!_assignmentCallbacks.ContainsKey(playerIndex))
+            _assignmentCallbacks.Add(playerIndex, new List<ControllerAssigned>());
+        _assignmentCallbacks[playerIndex].Add(callback);
     }
 
-    public void AddUnassignmentCallback(int playerId, ControllerUnassigned callback)
+    public void AddUnassignmentCallback(int playerIndex, ControllerUnassigned callback)
     {
         if (_unassignmentCallbacks == null)
             _unassignmentCallbacks = new Dictionary<int, List<ControllerUnassigned>>();
-        if (!_unassignmentCallbacks.ContainsKey(playerId))
-            _unassignmentCallbacks.Add(playerId, new List<ControllerUnassigned>());
-        _unassignmentCallbacks[playerId].Add(callback);
+        if (!_unassignmentCallbacks.ContainsKey(playerIndex))
+            _unassignmentCallbacks.Add(playerIndex, new List<ControllerUnassigned>());
+        _unassignmentCallbacks[playerIndex].Add(callback);
     }
 
     /**
@@ -99,71 +95,27 @@ public class ControllerAssigner : MonoBehaviour
     private Dictionary<int, List<ControllerAssigned>> _assignmentCallbacks;
     private Dictionary<int, List<ControllerUnassigned>> _unassignmentCallbacks;
 
-    private bool playerUnassigned(Player player)
+    private void joinPlayer(SessionPlayer p, int rewiredId)
     {
-        return player.controllers.joystickCount == 0 && !player.controllers.hasMouse;
-    }
-
-    private void assignController(Player player, Controller controller)
-    {
-        player.controllers.ClearAllControllers();
-        player.controllers.AddController(controller, false);
-        player.isPlaying = true;
-
-        if (controller == ReInput.controllers.Keyboard)
+        p.JoinSession(rewiredId);
+        if (_assignmentCallbacks != null && _assignmentCallbacks.ContainsKey(p.PlayerIndex))
         {
-            player.controllers.AddController(ReInput.controllers.Mouse, false);
-            KeyboardMap keyboardMap = ReInput.mapping.GetKeyboardMapInstance(0, 0);
-            player.controllers.maps.AddMap(controller, keyboardMap);
-        }
-
-        if (_assignmentCallbacks.ContainsKey(player.id))
-        {
-            foreach (ControllerAssigned callback in _assignmentCallbacks[player.id])
+            foreach (ControllerAssigned callback in _assignmentCallbacks[p.PlayerIndex])
             {
-                callback(player, controller);
+                callback(p);
             }
         }
     }
 
-    private Controller findAvailableControllerWithStartHeld(Controller[] joysticks, Keyboard keyboard)
+    private void dropPlayer(SessionPlayer p)
     {
-        bool available;
-        if (joysticks != null)
+        p.LeaveSession();
+        if (_unassignmentCallbacks != null && _unassignmentCallbacks.ContainsKey(p.PlayerIndex))
         {
-            foreach (Controller controller in joysticks)
+            foreach (ControllerUnassigned callback in _unassignmentCallbacks[p.PlayerIndex])
             {
-                if (controller.GetAnyButtonDown())
-                {
-                    available = true;
-                    foreach (Player player in _gameplayPlayers)
-                    {
-                        if (player.controllers.ContainsController(controller))
-                        {
-                            available = false;
-                            break;
-                        }
-                    }
-                    if (available)
-                        return controller;
-                }
+                callback(p);
             }
         }
-
-        if (keyboard.PollForFirstKeyDown().success)
-        {
-            available = true;
-            foreach (Player player in _gameplayPlayers)
-            {
-                if (player.controllers.hasMouse)
-                {
-                    available = false;
-                    break;
-                }
-            }
-            if (available)
-                return keyboard;
-        }
-        return null;
     }
 }

@@ -5,40 +5,48 @@ using System.Collections.Generic;
 
 public class PlayerJoinPanel : MonoBehaviour
 {
-    public int PlayerId = 0;
+    public int PlayerIndex = 0;
     public Text JoinText;
     public Text JoinedText;
     public ControllerAssigner Assigner;
 
     void Awake()
     {
-        Assigner.AddAssignmentCallback(this.PlayerId, controllerAssigned);
-        Assigner.AddUnassignmentCallback(this.PlayerId, controllerUnassigned);
+        Assigner.AddAssignmentCallback(this.PlayerIndex, controllerAssigned);
+        Assigner.AddUnassignmentCallback(this.PlayerIndex, controllerUnassigned);
     }
 
     /**
      * Private
      */
-    private void controllerAssigned(Player player, Controller controller)
+    private void controllerAssigned(SessionPlayer player)
     {
         this.JoinedText.gameObject.SetActive(true);
         this.JoinText.gameObject.SetActive(false);
 
         string buttonText = "";
-        foreach (ControllerMap map in player.controllers.maps.GetMaps(controller.type, controller.id))
-        {
-            foreach (ActionElementMap actionMap in map.ButtonMapsWithAction("Exit"))
-            {
-                buttonText = actionMap.elementIdentifierName;
-                break;
-            }
-            break;
-        }
+        Player rewiredPlayer = ReInput.players.GetPlayer(player.RewiredId);
+        int categoryId = ReInput.mapping.GetMapCategoryId(ControllerAssigner.ASSIGNMENT_CATEGORY);
 
-        this.JoinedText.text = player.descriptiveName + " JOINED (HOLD '" + buttonText.ToUpper() + "' TO LEAVE)";
+        foreach (ControllerMap map in rewiredPlayer.controllers.maps.GetAllMaps())
+        {
+            if (map.categoryId == categoryId)
+            {
+                foreach (ActionElementMap actionMap in map.ButtonMapsWithAction(MenuInput.EXIT))
+                {
+                    buttonText = actionMap.elementIdentifierName;
+                    break;
+                }
+
+                if (buttonText != "")
+                    break;
+            }
+        }
+        
+        this.JoinedText.text = rewiredPlayer.descriptiveName + " JOINED (HOLD '" + buttonText.ToUpper() + "' TO LEAVE)";
     }
 
-    private void controllerUnassigned()
+    private void controllerUnassigned(SessionPlayer player)
     {
         this.JoinedText.gameObject.SetActive(false);
         this.JoinText.gameObject.SetActive(true);
