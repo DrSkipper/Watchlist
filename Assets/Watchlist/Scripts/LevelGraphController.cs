@@ -142,10 +142,10 @@ public class LevelGraphController : VoBehavior
 
                 if (state == TileState.Complete || state == TileState.Available)
                 {
-                    bool northCompleted = _paths[x * 2, y * 2 + 1] == null && _grid[x, y + 1].State == TileState.Complete;
-                    bool northAvailable = state != TileState.Available && !northCompleted && _paths[x * 2, y * 2 + 1] == null && _grid[x, y + 1].State == TileState.Available;
-                    bool eastCompleted = _paths[x * 2 + 1, y * 2] == null && _grid[x + 1, y].State == TileState.Complete;
-                    bool eastAvailable = state != TileState.Available && !eastCompleted && _paths[x * 2 + 1, y * 2] == null && _grid[x + 1, y].State == TileState.Available;
+                    bool northCompleted = _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Complete);
+                    bool northAvailable = state != TileState.Available && !northCompleted && _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Available);
+                    bool eastCompleted = _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Complete);
+                    bool eastAvailable = state != TileState.Available && !eastCompleted && _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Available);
 
                     if (northCompleted || northAvailable)
                     {
