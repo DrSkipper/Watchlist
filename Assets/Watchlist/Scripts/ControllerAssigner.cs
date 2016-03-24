@@ -12,6 +12,7 @@ public class ControllerAssigner : MonoBehaviour
     public bool AssignFirstPlayerOnStart = true;
     public bool AllowReassignment = false;
     public bool DisableMenuInputForUnjoinedPlayers = false;
+    public bool EnableMenuInputForUnjoinedPlayers = false;
     public float UnassignButtonHoldDuration = 2.0f;
 
     void Start()
@@ -38,12 +39,12 @@ public class ControllerAssigner : MonoBehaviour
             }
         }
 
-        if (this.DisableMenuInputForUnjoinedPlayers)
+        if (this.DisableMenuInputForUnjoinedPlayers || this.EnableMenuInputForUnjoinedPlayers)
         {
             foreach (Player rewiredP in ReInput.players.Players)
             {
                 if (DynamicData.GetSessionPlayerByRewiredId(rewiredP.id) == null)
-                    rewiredP.controllers.maps.SetMapsEnabled(false, MenuInput.MENU_CATEGORY);
+                    rewiredP.controllers.maps.SetMapsEnabled(this.EnableMenuInputForUnjoinedPlayers, MenuInput.MENU_CATEGORY);
             }
         }
     }
