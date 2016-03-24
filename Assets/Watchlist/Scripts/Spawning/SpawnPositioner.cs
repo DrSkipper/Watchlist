@@ -140,7 +140,7 @@ public class SpawnPositioner : VoBehavior
         openTiles.Shuffle();
         EnemySelector enemySelector = new EnemySelector();
 
-        int difficulty = DynamicData.GetCurrentDifficulty();
+        int difficulty = ProgressData.GetCurrentDifficulty();
         this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
         int numPlayers = 1;
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
@@ -164,7 +164,7 @@ public class SpawnPositioner : VoBehavior
         LevelGenRoomInfo roomInfo = output.MapInfo[LevelGenRoomInfo.KEY] as LevelGenRoomInfo;
         EnemySelector enemySelector = new EnemySelector();
 
-        int difficulty = DynamicData.GetCurrentDifficulty();
+        int difficulty = ProgressData.GetCurrentDifficulty();
         this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
         int numPlayers = 1;
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];

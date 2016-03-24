@@ -23,7 +23,7 @@ public class LevelGenStarter : LevelGenBehavior
     {
         if (!this.OverrideInput)
         {
-            int difficulty = DynamicData.GetCurrentDifficulty();
+            int difficulty = ProgressData.GetCurrentDifficulty();
             List<LevelGenInput> possibleInputs = this.InputsByDifficulty[difficulty].PossibleInputs;
             this.Manager.InitiateGeneration(possibleInputs[Random.Range(0, possibleInputs.Count)]);
         }

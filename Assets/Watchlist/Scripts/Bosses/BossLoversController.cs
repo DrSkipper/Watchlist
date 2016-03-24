@@ -110,7 +110,7 @@ public class BossLoversController : VoBehavior
 
     private void handleLastSubBossKilled()
     {
-        DynamicData.CompleteTile(DynamicData.MostRecentTile);
+        ProgressData.CompleteTile(ProgressData.MostRecentTile);
         this.GetComponent<WinCondition>().EndLevel();
         //this.GetComponent<TimedCallbacks>().AddCallback(this, this.returnToScene, this.ReturnSceneDelay);
     }

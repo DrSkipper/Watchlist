@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public static class PersistentData
 {
@@ -18,7 +19,7 @@ public static class PersistentData
         return _currentBosses;
     }
 
-    public static void ResetData()
+    public static void WipeData()
     {
         _bosslockData = null;
         _currentBosses = null;

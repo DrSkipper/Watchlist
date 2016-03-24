@@ -73,8 +73,8 @@ public class LevelGraphController : VoBehavior
     {
         if (this.UseDynamicData)
         {
-            this.CompletedTiles = DynamicData.CompletedTiles;
-            this.CurrentPosition = DynamicData.MostRecentTile;
+            this.CompletedTiles = ProgressData.CompletedTiles;
+            this.CurrentPosition = ProgressData.MostRecentTile;
         }
         _grid = new LevelGraphTile[this.Size, this.Size];
         _paths = new LevelGraphPath[this.Size * 2 - 1, this.Size * 2 - 1];
@@ -214,7 +214,7 @@ public class LevelGraphController : VoBehavior
                 }
 
                 //TODO - Send input to level generation
-                DynamicData.SelectTile(this.CurrentPosition);
+                ProgressData.SelectTile(this.CurrentPosition);
                 if (bossIndex == -1)
                 {
                     SceneManager.LoadScene(this.GameplaySceneName);

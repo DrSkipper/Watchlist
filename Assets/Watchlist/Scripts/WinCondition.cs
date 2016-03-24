@@ -34,7 +34,7 @@ public class WinCondition : VoBehavior
 
     public void ReturnToLevelSelect()
     {
-        DynamicData.CompleteTile(DynamicData.MostRecentTile);
+        ProgressData.CompleteTile(ProgressData.MostRecentTile);
         SceneManager.LoadScene("LevelSelectScene");
     }
 
