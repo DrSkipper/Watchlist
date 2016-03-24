@@ -16,6 +16,15 @@ public class PlayerJoinPanel : MonoBehaviour
         Assigner.AddUnassignmentCallback(this.PlayerIndex, controllerUnassigned);
     }
 
+    void Start()
+    {
+        SessionPlayer p = DynamicData.GetSessionPlayer(this.PlayerIndex);
+        if (p.HasJoined)
+        {
+            controllerAssigned(p);
+        }
+    }
+
     /**
      * Private
      */
@@ -26,7 +35,7 @@ public class PlayerJoinPanel : MonoBehaviour
 
         string buttonText = "";
         Player rewiredPlayer = ReInput.players.GetPlayer(player.RewiredId);
-        int categoryId = ReInput.mapping.GetMapCategoryId(ControllerAssigner.ASSIGNMENT_CATEGORY);
+        int categoryId = ReInput.mapping.GetMapCategoryId(MenuInput.MENU_CATEGORY);
 
         foreach (ControllerMap map in rewiredPlayer.controllers.maps.GetAllMaps())
         {
@@ -50,5 +59,7 @@ public class PlayerJoinPanel : MonoBehaviour
     {
         this.JoinedText.gameObject.SetActive(false);
         this.JoinText.gameObject.SetActive(true);
+
+        //TODO - Try to display correct button text with data from Rewired maps?
     }
 }

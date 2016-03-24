@@ -67,6 +67,16 @@ public static class DynamicData
         }
         return player;
     }
+
+    public static SessionPlayer GetSessionPlayerByRewiredId(int rewiredId)
+    {
+        foreach (SessionPlayer p in _sessionPlayers)
+        {
+            if (p != null && p.HasJoined && p.RewiredId == rewiredId)
+                return p;
+        }
+        return null;
+    }
     
     /**
      * Private

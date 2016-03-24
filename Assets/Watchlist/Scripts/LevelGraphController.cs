@@ -174,23 +174,23 @@ public class LevelGraphController : VoBehavior
 
     void Update()
     {
-        if (MenuInput.AnyInput(true))
+        if (MenuInput.AnyInput())
         {
             IntegerVector newPosition = this.CurrentPosition;
 
-            if (this.CurrentPosition.X > -_halfSize && MenuInput.NavLeft(true))
+            if (this.CurrentPosition.X > -_halfSize && MenuInput.NavLeft())
             {
                 newPosition.X -= 1;
             }
-            else if (this.CurrentPosition.Y > -_halfSize && MenuInput.NavDown(true))
+            else if (this.CurrentPosition.Y > -_halfSize && MenuInput.NavDown())
             {
                 newPosition.Y -= 1;
             }
-            else if (this.CurrentPosition.X < _halfSize && MenuInput.NavRight(true))
+            else if (this.CurrentPosition.X < _halfSize && MenuInput.NavRight())
             {
                 newPosition.X += 1;
             }
-            else if (this.CurrentPosition.Y < _halfSize && MenuInput.NavUp(true))
+            else if (this.CurrentPosition.Y < _halfSize && MenuInput.NavUp())
             {
                 newPosition.Y += 1;
             }
@@ -199,7 +199,7 @@ public class LevelGraphController : VoBehavior
             {
                 moveCurrentTile(newPosition);
             }
-            else if (MenuInput.SelectCurrentElement(true) && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
+            else if (MenuInput.SelectCurrentElement() && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
             {
                 int bossIndex = -1;
                 for (int i = 0; i < this.BossTiles.Length; ++i)

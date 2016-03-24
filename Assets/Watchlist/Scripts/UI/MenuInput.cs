@@ -13,68 +13,57 @@ public static class MenuInput
     public const string EXIT = "Exit";
     public const string MENU_CATEGORY = "Default";
 
-    public static bool SelectCurrentElement(bool onlyCheckPlayingPlayers = false)
+    public static bool SelectCurrentElement()
     {
-        return checkButton(SELECT, onlyCheckPlayingPlayers);
+        return checkButton(SELECT);
     }
 
-    public static bool HighlightNextElement(bool onlyCheckPlayingPlayers = false)
+    public static bool HighlightNextElement()
     {
-        return NavDown(onlyCheckPlayingPlayers);
+        return NavDown();
     }
 
-    public static bool HighlightPreviousElement(bool onlyCheckPlayingPlayers = false)
+    public static bool HighlightPreviousElement()
     {
-        return NavUp(onlyCheckPlayingPlayers);
+        return NavUp();
     }
 
-    public static bool NavLeft(bool onlyCheckPlayingPlayers = false)
+    public static bool NavLeft()
     {
-        return checkButton(LEFT, onlyCheckPlayingPlayers);
+        return checkButton(LEFT);
     }
 
-    public static bool NavRight(bool onlyCheckPlayingPlayers = false)
+    public static bool NavRight()
     {
-        return checkButton(RIGHT, onlyCheckPlayingPlayers);
+        return checkButton(RIGHT);
     }
 
-    public static bool NavUp(bool onlyCheckPlayingPlayers = false)
+    public static bool NavUp()
     {
-        return checkButton(UP, onlyCheckPlayingPlayers);
+        return checkButton(UP);
     }
 
-    public static bool NavDown(bool onlyCheckPlayingPlayers = false)
+    public static bool NavDown()
     {
-        return checkButton(DOWN, onlyCheckPlayingPlayers);
+        return checkButton(DOWN);
     }
 
-    public static bool Pause(bool onlyCheckPlayingPlayers = false)
+    public static bool Pause()
     {
-        return checkButton(PAUSE, onlyCheckPlayingPlayers);
+        return checkButton(PAUSE);
     }
 
-    public static bool Exit(bool onlyCheckPlayingPlayers = false)
+    public static bool Exit()
     {
-        return checkButton(EXIT, onlyCheckPlayingPlayers);
+        return checkButton(EXIT);
     }
 
-    public static bool AnyInput(bool onlyCheckPlayingPlayers = false)
+    public static bool AnyInput()
     {
         foreach (Player player in ReInput.players.GetPlayers())
         {
-            if (!onlyCheckPlayingPlayers || player.isPlaying)
-            {
-                if (player.controllers.hasMouse)
-                {
-                    if (player.controllers.Keyboard.PollForFirstKey().success)
-                        return true;
-                }
-                else
-                {
-                    if (player.GetAnyButtonDown())
-                        return true;
-                }
-            }
+            if (player.GetAnyButtonDown())
+                return true;
         }
         return false;
     }
@@ -83,31 +72,12 @@ public static class MenuInput
      * Private
      */
 
-    private static bool checkButton(string buttonName, bool onlyCheckPlayingPlayers)
+    private static bool checkButton(string buttonName)
     {
-        if (!onlyCheckPlayingPlayers)
-            return ReInput.players.GetPlayer(MENU_PLAYER).GetButtonDown(buttonName);
-
         foreach (Player player in ReInput.players.GetPlayers())
         {
-            if (player.name != MENU_PLAYER && player.isPlaying)
-            {
-                if (player.controllers.hasMouse)
-                {
-                    List<ControllerMap> maps = new List<ControllerMap>(player.controllers.maps.GetMaps(ControllerType.Keyboard, player.controllers.Keyboard.id));
-                    ControllerMap map = player.controllers.maps.GetMap(ControllerType.Keyboard, player.controllers.Keyboard.id, 0);
-                    foreach (ActionElementMap actionMap in map.ElementMapsWithAction(buttonName))
-                    {
-                        if (player.controllers.Keyboard.GetKeyDown(actionMap.keyCode))
-                            return true;
-                    }
-                }
-                else
-                {
-                    if (player.GetButtonDown(buttonName))
-                        return true;
-                }
-            }
+            if (player.GetButtonDown(buttonName))
+                return true;
         }
         return false;
     }

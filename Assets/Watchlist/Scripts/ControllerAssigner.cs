@@ -11,6 +11,7 @@ public class ControllerAssigner : MonoBehaviour
 
     public bool AssignFirstPlayerOnStart = true;
     public bool AllowReassignment = false;
+    public bool DisableMenuInputForUnjoinedPlayers = false;
     public float UnassignButtonHoldDuration = 2.0f;
 
     void Start()
@@ -26,14 +27,23 @@ public class ControllerAssigner : MonoBehaviour
                 foreach (Player p in ReInput.players.Players)
                 {
                     Controller c = p.controllers.GetLastActiveController();
-                    float cActiveTime = c.GetLastTimeActive();
+                    float cActiveTime = c != null ? c.GetLastTimeActive() : lastActiveTime;
                     if (lastActive == null || cActiveTime > lastActiveTime)
                     {
                         lastActiveTime = cActiveTime;
                         lastActive = p;
                     }
                 }
-                p1.JoinSession(lastActive.id);
+                joinPlayer(p1, lastActive);
+            }
+        }
+
+        if (this.DisableMenuInputForUnjoinedPlayers)
+        {
+            foreach (Player rewiredP in ReInput.players.Players)
+            {
+                if (DynamicData.GetSessionPlayerByRewiredId(rewiredP.id) == null)
+                    rewiredP.controllers.maps.SetMapsEnabled(false, MenuInput.MENU_CATEGORY);
             }
         }
     }
@@ -52,7 +62,7 @@ public class ControllerAssigner : MonoBehaviour
                     {
                         if (!rewiredPlayer.isPlaying && rewiredPlayer.GetButtonDown(JOIN_ACTION))
                         {
-                            joinPlayer(p, rewiredPlayer.id);
+                            joinPlayer(p, rewiredPlayer);
                             break;
                         }
                     }
@@ -91,13 +101,15 @@ public class ControllerAssigner : MonoBehaviour
     /**
      * Private
      */
-    private List<Player> _gameplayPlayers;
     private Dictionary<int, List<ControllerAssigned>> _assignmentCallbacks;
     private Dictionary<int, List<ControllerUnassigned>> _unassignmentCallbacks;
 
-    private void joinPlayer(SessionPlayer p, int rewiredId)
+    private void joinPlayer(SessionPlayer p, Player rewiredP)
     {
-        p.JoinSession(rewiredId);
+        rewiredP.controllers.maps.SetMapsEnabled(true, MenuInput.MENU_CATEGORY);
+        rewiredP.controllers.maps.SetMapsEnabled(false, ASSIGNMENT_CATEGORY);
+        p.JoinSession(rewiredP.id);
+
         if (_assignmentCallbacks != null && _assignmentCallbacks.ContainsKey(p.PlayerIndex))
         {
             foreach (ControllerAssigned callback in _assignmentCallbacks[p.PlayerIndex])
@@ -109,7 +121,11 @@ public class ControllerAssigner : MonoBehaviour
 
     private void dropPlayer(SessionPlayer p)
     {
+        Player rewiredP = ReInput.players.GetPlayer(p.RewiredId);
+        rewiredP.controllers.maps.SetMapsEnabled(false, MenuInput.MENU_CATEGORY);
+        rewiredP.controllers.maps.SetMapsEnabled(true, ASSIGNMENT_CATEGORY);
         p.LeaveSession();
+
         if (_unassignmentCallbacks != null && _unassignmentCallbacks.ContainsKey(p.PlayerIndex))
         {
             foreach (ControllerUnassigned callback in _unassignmentCallbacks[p.PlayerIndex])

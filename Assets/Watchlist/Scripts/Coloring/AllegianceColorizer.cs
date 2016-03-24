@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class AllegianceColorizer : VoBehavior
@@ -23,9 +24,17 @@ public class AllegianceColorizer : VoBehavior
             {
                 _camera = this.GetComponent<Camera>();
                 if (_camera != null)
+                {
                     _colorSetter = setSkyboxColor;
+                }
                 else
-                    _colorSetter = emptyColorSetter;
+                {
+                    _image = this.GetComponent<Image>();
+                    if (_image != null)
+                        _colorSetter = setImageColor;
+                    else
+                        _colorSetter = emptyColorSetter;
+                }
             }
         }
 
@@ -57,6 +66,7 @@ public class AllegianceColorizer : VoBehavior
     private ColorSetter _colorSetter;
     private LineRenderer _lineRenderer;
     private Camera _camera;
+    private Image _image;
 
     private void setSpriteColor(Color color)
     {
@@ -71,6 +81,11 @@ public class AllegianceColorizer : VoBehavior
     private void setSkyboxColor(Color color)
     {
         _camera.backgroundColor = color;
+    }
+
+    private void setImageColor(Color color)
+    {
+        _image.color = color;
     }
 
     private void emptyColorSetter(Color color)
