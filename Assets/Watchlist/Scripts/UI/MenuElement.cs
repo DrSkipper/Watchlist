@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MenuElement : MonoBehaviour
 {
@@ -21,13 +22,21 @@ public class MenuElement : MonoBehaviour
 
     public bool Locked = false;
     public List<Action> Actions;
+    public Text Text;
+    public Color LockedColor;
+    public Color UnlockedColor;
 
     void Awake()
     {
         foreach (Action action in this.Actions)
         {
-            handleStartForAction(action);
+            handleAwakeForAction(action);
         }
+    }
+
+    void Start()
+    {
+        this.Text.color = this.Locked ? this.LockedColor : this.UnlockedColor;
     }
 
     public void Select()
@@ -41,7 +50,7 @@ public class MenuElement : MonoBehaviour
     /**
      * Private
      */
-    private void handleStartForAction(Action action)
+    private void handleAwakeForAction(Action action)
     {
         switch (action.Type)
         {

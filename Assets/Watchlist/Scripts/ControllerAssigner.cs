@@ -35,7 +35,10 @@ public class ControllerAssigner : MonoBehaviour
                         lastActive = p;
                     }
                 }
-                joinPlayer(p1, lastActive);
+
+                // Only join if this input isn't already joined with another player
+                if (DynamicData.GetSessionPlayerByRewiredId(lastActive.id) == null)
+                    joinPlayer(p1, lastActive);
             }
         }
 
@@ -51,7 +54,7 @@ public class ControllerAssigner : MonoBehaviour
 
     void Update()
     {
-        if (this.AllowReassignment)
+        if (this.AllowReassignment && !PauseController.IsPaused())
         {
             for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
             {
