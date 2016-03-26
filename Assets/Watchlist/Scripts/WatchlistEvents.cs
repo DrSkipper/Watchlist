@@ -67,6 +67,7 @@ public class PlayerSpawnedEvent : LocalEventNotifier.Event
     {
         this.Name = NAME;
         this.PlayerObject = playerObject;
+        this.PlayerIndex = playerIndex;
     }
 }
 
@@ -80,5 +81,6 @@ public class PlayerDiedEvent : LocalEventNotifier.Event
     {
         this.Name = NAME;
         this.PlayerObject = playerObject;
+        this.PlayerIndex = playerIndex;
     }
 }

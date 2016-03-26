@@ -9,10 +9,10 @@ public class SpawnPositioner : VoBehavior
     public GameObject PlayerPrefab;
     public GameObject[] PickupPrefabs;
     public int NumEnemies = 10;
-    public int NumPlayers = 1;
     public int NumPickups = 1;
     public float SpawnPlayersDelay = 1.0f;
     public float SpawnEnemiesDelay = 3.0f;
+    public int MaxPlayerSpawnDistance = 10;
 
     void Start()
     {
@@ -64,12 +64,18 @@ public class SpawnPositioner : VoBehavior
         int playerIndex = 0;
         foreach (IntegerVector position in _playerSpawns)
         {
-            //TODO - Hand control of spawned player object to appropriate player
             GameObject player = Instantiate(this.PlayerPrefab, new Vector3(position.X * _tileRenderer.TileRenderSize, position.Y * _tileRenderer.TileRenderSize, this.transform.position.z), Quaternion.identity) as GameObject;
             if (_tileRenderer.OffsetTilesToCenter)
                 player.transform.position = new Vector3(player.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, player.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, player.transform.position.z);
 
             _targets.Add(player.transform);
+
+            for (;  playerIndex < DynamicData.MAX_PLAYERS; ++playerIndex)
+            {
+                if (DynamicData.GetSessionPlayer(playerIndex).HasJoined)
+                    break;
+            }
+            player.GetComponent<PlayerController>().PlayerIndex = playerIndex;
 
             GlobalEvents.Notifier.SendEvent(new PlayerSpawnedEvent(player, playerIndex));
             ++playerIndex;
@@ -142,10 +148,9 @@ public class SpawnPositioner : VoBehavior
 
         int difficulty = ProgressData.GetCurrentDifficulty();
         this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
-        int numPlayers = 1;
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
 
-        if (openTiles.Count <= (this.NumEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
+        if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
         {
             Debug.Log("Regeneration necessary - CA");
             return false;
@@ -166,7 +171,6 @@ public class SpawnPositioner : VoBehavior
 
         int difficulty = ProgressData.GetCurrentDifficulty();
         this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
-        int numPlayers = 1;
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
         int totalGuarantees = 0;
         for (int i = 0; i < guaranteedEnemiesPlaced.Length; ++i)
@@ -174,7 +178,7 @@ public class SpawnPositioner : VoBehavior
             totalGuarantees += output.Input.GuaranteedEnemiesByDifficulty[i];
         }
         
-        if (openTiles.Count <= (this.NumEnemies + numPlayers) * output.Input.MinDistanceBetweenSpawns * 2 + 1 ||
+        if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2 + 1 ||
         roomInfo == null || roomInfo.Data.Count < 4 + difficulty)
         {
             Debug.Log("Regeneration necessary - BSP 1");
@@ -192,10 +196,13 @@ public class SpawnPositioner : VoBehavior
             openTiles.RemoveList(playerRoomCoords);
             playerRoomCoords.Shuffle();
             
-            for (int p = 0; p < this.NumPlayers; ++p)
+            for (int p = 0; p < DynamicData.MAX_PLAYERS; ++p)
             {
-                _playerSpawns.Add(playerRoomCoords[playerRoomCoords.Count - 1].integerVector);
-                playerRoomCoords.RemoveAt(playerRoomCoords.Count - 1);
+                if (DynamicData.GetSessionPlayer(p).HasJoined)
+                {
+                    _playerSpawns.Add(playerRoomCoords[playerRoomCoords.Count - 1].integerVector);
+                    playerRoomCoords.RemoveAt(playerRoomCoords.Count - 1);
+                }
             }
 
             if (openTiles.Count <= this.NumEnemies * output.Input.MinDistanceBetweenSpawns * 2 + 1)
@@ -339,12 +346,35 @@ public class SpawnPositioner : VoBehavior
         }
 
         // Players
-        //TODO - Replace '1' with number of players
         if (spawnPlayers)
         {
-            for (int i = 0; i < 1; ++i)
+            bool first = true;
+            List<LevelGenMap.Coordinate> tiles = openTiles;
+            for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
             {
-                _playerSpawns.Add(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector);
+                if (DynamicData.GetSessionPlayer(i).HasJoined)
+                {
+                    LevelGenMap.Coordinate playerSpawn = findGoodOpenPosition(tiles, 0);
+                    _playerSpawns.Add(playerSpawn.integerVector);
+
+                    if (first)
+                    {
+                        first = false;
+                        List<LevelGenMap.Coordinate> nearbySpawns = new List<LevelGenMap.Coordinate>();
+                        foreach (LevelGenMap.Coordinate coord in openTiles)
+                        {
+                            if (Mathf.Abs(coord.x - playerSpawn.x) + Mathf.Abs(coord.y - playerSpawn.y) <= this.MaxPlayerSpawnDistance)
+                                nearbySpawns.Add(coord);
+                        }
+
+                        if (nearbySpawns.Count >= DynamicData.MAX_PLAYERS)
+                            tiles = nearbySpawns;
+                    }
+                    else
+                    {
+                        openTiles.Remove(playerSpawn);
+                    }
+                }
             }
         }
     }
