@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class CameraController : VoBehavior
 {
     public Transform[] PlayerTransforms;
+    public ZoomLevel[] ZoomLevels;
     public float AimingImpact = 50.0f;
     public float NormalApproachSpeed = 8.0f;
     //public float BoostedApproachSpeed = 60.0f;
@@ -11,9 +12,18 @@ public class CameraController : VoBehavior
     public float MaxDistanceForSnap = 0.01f;
     public Vector2 TargetPosition; // Exposed for debugging
     public Vector2 OffsetPosition;
+    public float ZoomSpeed = 20.0f;
+    
+    [System.Serializable]
+    public struct ZoomLevel
+    {
+        public float OrthographicSize;
+        public float MaxTargetDistance;
+    }
 
     void Awake()
     {
+        _camera = this.GetComponent<Camera>();
         if (this.PlayerTransforms.Length == 0)
             this.PlayerTransforms = new Transform[DynamicData.MAX_PLAYERS];
     }
@@ -30,6 +40,9 @@ public class CameraController : VoBehavior
         {
             Vector2 centerTarget = calculateCenterTarget();
             this.transform.position = new Vector3(centerTarget.x + this.OffsetPosition.x, centerTarget.y + this.OffsetPosition.y, this.transform.position.z);
+
+            ZoomLevel zoomLevel = findZoomLevel();
+            _camera.orthographicSize = Mathf.MoveTowards(_camera.orthographicSize, zoomLevel.OrthographicSize, this.ZoomSpeed);
         }
     }
 
@@ -44,6 +57,7 @@ public class CameraController : VoBehavior
      * Private
      */
     private Vector2 _lockPosition;
+    private Camera _camera;
 
     private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
     {
@@ -88,5 +102,25 @@ public class CameraController : VoBehavior
         }
 
         return _lockPosition;
+    }
+
+    private ZoomLevel findZoomLevel()
+    {
+        float farthestDistance = 0.0f;
+        foreach (Transform target in this.PlayerTransforms)
+        {
+            if (target != null)
+            {
+                float d = Vector2.Distance(_lockPosition, target.position);
+                if (d > farthestDistance)
+                    farthestDistance = d;
+            }
+        }
+        foreach (ZoomLevel zoomLevel in this.ZoomLevels)
+        {
+            if (zoomLevel.MaxTargetDistance >= farthestDistance)
+                return zoomLevel;
+        }
+        return this.ZoomLevels[this.ZoomLevels.Length - 1];
     }
 }
