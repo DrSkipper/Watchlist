@@ -3,6 +3,7 @@
 public class GibsBehavior : VoBehavior
 {
     public GameObject[] Gibs;
+    public AllegianceInfo AllegianceInfo;
     public Vector2 ImpactVector = Vector2.zero;
     public float Knockback = 250.0f;
     public float KnockbackModifier = 0.4f;
@@ -24,6 +25,7 @@ public class GibsBehavior : VoBehavior
                 orientation.Normalize();
             Vector2 final = (random * this.RandomInfluence) + (orientation * this.OrientationInfluence) + (this.ImpactVector.normalized * this.Knockback * this.KnockbackModifier);
             gib.GetComponent<Actor2D>().SetVelocityModifier("gib", new VelocityModifier(final, VelocityModifier.CollisionBehavior.bounce));
+            gib.GetComponent<AllegianceColorizer>().AllegianceInfo = this.AllegianceInfo;
         }
 
         _lifetimeTimer = this.Lifetime;

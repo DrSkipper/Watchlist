@@ -176,6 +176,11 @@ public class Damagable : VoBehavior
             GibsBehavior gibsBehavior = gibs.GetComponent<GibsBehavior>();
             gibsBehavior.Knockback = _deathKnockback;
             gibsBehavior.ImpactVector = _deathImpactVector;
+            AllegianceColorizer colorizer = this.GetComponent<AllegianceColorizer>();
+            if (colorizer != null)
+            {
+                gibsBehavior.AllegianceInfo = colorizer.AllegianceInfo;
+            }
         }
 
         if (this.ShakeMagnitudeOnDeath > 0.0f)
