@@ -7,7 +7,10 @@ public class UISlotGroup : MonoBehaviour
 
     void Start()
     {
-        GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
+        if (DynamicData.GetSessionPlayer(this.PlayerIndex).HasJoined)
+            GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
+        else
+            this.gameObject.SetActive(false);
     }
 
     void OnDestroy()
