@@ -5,6 +5,7 @@ public class SessionPlayer
     public int PlayerIndex { get { return _playerIndex; } }
     public int RewiredId { get { return _rewiredId; } }
     public bool HasJoined { get { return _rewiredId != -1; } }
+    public string Name { get { return "P" + (_playerIndex + 1); } }
 
     public SessionPlayer(int playerIndex)
     {

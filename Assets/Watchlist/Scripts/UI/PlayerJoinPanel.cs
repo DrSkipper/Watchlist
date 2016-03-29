@@ -52,7 +52,7 @@ public class PlayerJoinPanel : MonoBehaviour
             }
         }
         
-        this.JoinedText.text = rewiredPlayer.descriptiveName + " JOINED (HOLD '" + buttonText.ToUpper() + "' TO LEAVE)";
+        this.JoinedText.text = player.Name + " JOINED (HOLD '" + buttonText.ToUpper() + "' TO LEAVE)";
     }
 
     private void controllerUnassigned(SessionPlayer player)
