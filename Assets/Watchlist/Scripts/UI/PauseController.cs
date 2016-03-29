@@ -4,7 +4,7 @@ public class PauseController : VoBehavior
 {
     public static bool IsPaused()
     {
-        return _paused;
+        return _paused || Time.deltaTime == 0.0f;
     }
 
     public GameObject PauseMenu;

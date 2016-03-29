@@ -50,9 +50,15 @@ public class BossWeakSubBehavior : VoBehavior
 
     private void attack()
     {
+        if (_target == null)
+        {
+            attackReturn(null);
+            return;
+        }
+
         _lerpMovement.MovementSpeed = _attackSpeed;
         _lerpMovement.AddCallback(attackReturn);
-
+        
         Vector2 targetPosition = _target.position;
         float distance = Vector2.Distance(targetPosition, _homePosition);
         if (distance < this.MinAttackDistance)

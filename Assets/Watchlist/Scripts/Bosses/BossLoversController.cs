@@ -8,6 +8,7 @@ public class BossLoversController : VoBehavior
     public GameObject SpawnVisualPrefab;
     public Transform[] SpawnLocations;
     public LayerMask SpawnCollisionLayers;
+    public WinCondition WinCondition;
     
     public int TotalSubBosses = 6;
     public int InitialSubBosses = 2;
@@ -111,7 +112,7 @@ public class BossLoversController : VoBehavior
     private void handleLastSubBossKilled()
     {
         ProgressData.CompleteTile(ProgressData.MostRecentTile);
-        this.GetComponent<WinCondition>().EndLevel();
+        this.WinCondition.EndLevel();
         //this.GetComponent<TimedCallbacks>().AddCallback(this, this.returnToScene, this.ReturnSceneDelay);
     }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class BossWeakMainBehavior : VoBehavior
 {
     public List<GameObject> SubBosses;
-    public GameObject AttackTarget;
+    public List<Transform> AttackTargets;
     public float AngleIncrement = 90.0f;
     public float AttackSpeed = 200.0f;
     public float DelayAfterRotation = 0.2f;
@@ -26,6 +26,7 @@ public class BossWeakMainBehavior : VoBehavior
 
     void Start()
     {
+        GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
         foreach (GameObject subBoss in this.SubBosses)
         {
             subBoss.GetComponent<BossWeakSubBehavior>().OnAttackFinished = subBossAttackFinished;
@@ -88,7 +89,15 @@ public class BossWeakMainBehavior : VoBehavior
 
     private string updateRotation()
     {
-        return !_switchState ? ROTATION_STATE : ATTACKING_STATE;
+        bool allTargetsNull = true;
+        for (int i = 0; i < this.AttackTargets.Count; ++i)
+        {
+            if (this.AttackTargets[i] != null)
+            {
+                allTargetsNull = false;
+            }
+        }
+        return !_switchState || allTargetsNull ? ROTATION_STATE : ATTACKING_STATE;
     }
 
     private void enterRotation()
@@ -123,15 +132,41 @@ public class BossWeakMainBehavior : VoBehavior
     {
         _switchState = false;
         this.SubBosses.Shuffle();
+        clearNullTargets();
 
-        for (int i = 0; i < this.SubBosses.Count; ++i)
+        if (this.AttackTargets.Count == 0)
         {
-            BossWeakSubBehavior subBoss = this.SubBosses[i].GetComponent<BossWeakSubBehavior>();
-            subBoss.ScheduleAttack(this.AttackTarget.transform, this.AttackSpeed, i * this.DelayBetweenAttacks, this.DelayBeforeAttack, this.DelayBeforeReturn);
+            _switchState = true;
+        }
+        else
+        {
+            for (int i = 0; i < this.SubBosses.Count; ++i)
+            {
+                BossWeakSubBehavior subBoss = this.SubBosses[i].GetComponent<BossWeakSubBehavior>();
+                Transform randomTarget = this.AttackTargets[Random.Range(0, this.AttackTargets.Count)];
+                subBoss.ScheduleAttack(randomTarget, this.AttackSpeed, i * this.DelayBetweenAttacks, this.DelayBeforeAttack, this.DelayBeforeReturn);
+            }
         }
     }
 
     private void exitAttacking()
     {
+    }
+
+    private void playerSpawned(LocalEventNotifier.Event spawnEvent)
+    {
+        PlayerSpawnedEvent spawn = spawnEvent as PlayerSpawnedEvent;
+        this.AttackTargets.Add(spawn.PlayerObject.transform);
+    }
+
+    private void clearNullTargets()
+    {
+        for (int i = 0; i < this.AttackTargets.Count;)
+        {
+            if (this.AttackTargets[i] == null)
+                this.AttackTargets.RemoveAt(i);
+            else
+                ++i;
+        }
     }
 }

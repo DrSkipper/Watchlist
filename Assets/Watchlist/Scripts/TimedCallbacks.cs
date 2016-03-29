@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class TimedCallbacks : VoBehavior
 {
     public delegate void Callback();
+    public bool ListenToPause = false;
 
     public void AddCallback(Object owner, Callback callback, float afterTime)
     {
@@ -27,7 +28,7 @@ public class TimedCallbacks : VoBehavior
 
     void Update()
     {
-        if (_callbackEntries != null)
+        if (_callbackEntries != null && (!this.ListenToPause || !PauseController.IsPaused()))
         {
             foreach (Object owner in _callbackEntries.Keys)
             {

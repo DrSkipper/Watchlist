@@ -38,7 +38,7 @@ public class LerpMovement : VoBehavior
 
     void Update()
     {
-        if (this.IsMoving)
+        if (!PauseController.IsPaused() && this.IsMoving)
         {
             Vector2 lerpPos = Vector2.Lerp(this.transform.position, this.TargetPosition, this.MovementSpeed * Time.deltaTime / (Vector2.Distance(this.transform.position, this.TargetPosition)));
 

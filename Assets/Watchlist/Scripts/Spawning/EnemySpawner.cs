@@ -100,8 +100,11 @@ public class EnemySpawner : VoBehavior
 
         foreach (Transform target in this.Targets)
         {
-            if (Vector2.Distance(this.transform.position, target.position) <= this.MinDistanceToSpawn)
-                return true;
+            if (this.transform != null)
+            {
+                if (Vector2.Distance(this.transform.position, target.position) <= this.MinDistanceToSpawn)
+                    return true;
+            }
         }
 
         return false;

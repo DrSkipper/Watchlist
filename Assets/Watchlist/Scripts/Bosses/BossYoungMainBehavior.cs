@@ -14,6 +14,7 @@ public class BossYoungMainBehavior : VoBehavior
     void Awake()
     {
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
+        _timedCallbacks.ListenToPause = true;
     }
 
     void Start()
@@ -40,7 +41,8 @@ public class BossYoungMainBehavior : VoBehavior
 
     void Update()
     {
-        _stateMachine.Update();
+        if (!PauseController.IsPaused())
+            _stateMachine.Update();
     }
 
     /**
