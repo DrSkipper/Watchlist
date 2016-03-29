@@ -17,7 +17,7 @@ public class CameraController : VoBehavior
     [System.Serializable]
     public struct ZoomLevel
     {
-        public float OrthographicSize;
+        public int OrthographicSize;
         public float MaxTargetDistance;
     }
 
@@ -42,7 +42,10 @@ public class CameraController : VoBehavior
             this.transform.position = new Vector3(centerTarget.x + this.OffsetPosition.x, centerTarget.y + this.OffsetPosition.y, this.transform.position.z);
 
             ZoomLevel zoomLevel = findZoomLevel();
-            _camera.orthographicSize = Mathf.MoveTowards(_camera.orthographicSize, zoomLevel.OrthographicSize, this.ZoomSpeed);
+            int size = Mathf.RoundToInt(Mathf.MoveTowards(_camera.orthographicSize, zoomLevel.OrthographicSize, this.ZoomSpeed));
+            if (Mathf.Abs(size - zoomLevel.OrthographicSize) < 2)
+                size = zoomLevel.OrthographicSize;
+            _camera.orthographicSize = size;
         }
     }
 

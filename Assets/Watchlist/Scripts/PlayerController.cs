@@ -39,6 +39,15 @@ public class PlayerController : Actor2D
         this.GetComponent<Damagable>().OnDeathCallbacks.Add(died);
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
         updateSlots();
+
+        if (this.PlayerIndex != 0)
+        {
+            AllegianceColorizer colorizer = this.GetComponent<AllegianceColorizer>();
+            AllegianceInfo info = colorizer.AllegianceInfo;
+            info.MemberId = this.PlayerIndex;
+            colorizer.UpdateVisual(info);
+            _weapon.AllegianceInfo = info;
+        }
     }
 
     public override void Update()

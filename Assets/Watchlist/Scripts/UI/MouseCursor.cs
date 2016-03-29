@@ -21,6 +21,10 @@ public class MouseCursor : MonoBehaviour
                     if (ReInput.players.GetPlayer(p.RewiredId).controllers.hasMouse)
                     {
                         _player = p;
+                        AllegianceColorizer colorizer = this.GetComponent<AllegianceColorizer>();
+                        AllegianceInfo info = colorizer.AllegianceInfo;
+                        info.MemberId = i;
+                        colorizer.UpdateVisual(info);
                         break;
                     }
                 }

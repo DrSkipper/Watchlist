@@ -43,6 +43,13 @@ public class BossWeakMainBehavior : VoBehavior
     {
         _stateMachine.Update();
     }
+    
+    public override void OnDestroy()
+    {
+        if (GlobalEvents.Notifier != null)
+            GlobalEvents.Notifier.RemoveAllListenersForOwner(this);
+        base.OnDestroy();
+    }
 
     /**
      * Private

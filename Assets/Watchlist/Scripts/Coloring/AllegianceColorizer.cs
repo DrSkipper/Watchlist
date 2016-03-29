@@ -6,6 +6,7 @@ public class AllegianceColorizer : VoBehavior
 {
     public AllegianceInfo AllegianceInfo;
     public ColorPaletteState DefaultColorState;
+    public AllegianceColorizer[] DependentColorizers;
 
     void Start()
     {
@@ -49,6 +50,14 @@ public class AllegianceColorizer : VoBehavior
     public void UpdateVisual(AllegianceInfo allegianceInfo, ColorPaletteState colorState)
     {
         this.AllegianceInfo = allegianceInfo;
+
+        foreach (AllegianceColorizer dependent in this.DependentColorizers)
+        {
+            AllegianceInfo info = dependent.AllegianceInfo;
+            info.MemberId = allegianceInfo.MemberId;
+            dependent.UpdateVisual(info);
+        }
+
         if (_colorSetter != null)
             _colorSetter(GameplayPalette.GetColorForAllegiance(allegianceInfo, colorState));
     }

@@ -52,22 +52,30 @@ public class GameplayPalette : MonoBehaviour
 
     public static Color GetPlayerColor(int playerNum)
     {
-        return _playerColor[playerNum];
+        if (playerNum < _playerColor.Length)
+            return _playerColor[playerNum];
+        return _playerColor[0];
     }
 
     public static Color GetPlayerProjectileColor(int playerNum)
     {
-        return _playerProjectileColor[playerNum];
+        if (playerNum < _playerProjectileColor.Length)
+            return _playerProjectileColor[playerNum];
+        return _playerProjectileColor[0];
     }
 
     public static Color GetPlayerExplosionColor(int playerNum)
     {
-        return _playerExplosionColor[playerNum];
+        if (playerNum < _playerExplosionColor.Length)
+            return _playerExplosionColor[playerNum];
+        return _playerExplosionColor[0];
     }
 
     public static Color GetPlayerDamagedColor(int playerNum)
     {
-        return _playerDamagedColor[playerNum];
+        if (playerNum < _playerDamagedColor.Length)
+            return _playerDamagedColor[playerNum];
+        return _playerDamagedColor[0];
     }
 
     public static Color GetEnemyColor()
