@@ -71,22 +71,17 @@ public class GenericEnemy : VoBehavior
         // Find the closest target
         if (this.Targets.Count > 0)
         {
-            Transform closest = this.Targets[0];
-            Vector2 ourPosition = new Vector2(this.transform.position.x, this.transform.position.y);
-            Vector2 theirPosition = new Vector2(closest.position.x, closest.position.y);
-            aimAxis = theirPosition - ourPosition;
-            distance = aimAxis.magnitude;
+            Vector2 ourPosition = (Vector2)this.transform.position;
 
-            for (int i = 1; i < this.Targets.Count; ++i)
+            for (int i = 0; i < this.Targets.Count; ++i)
             {
                 Transform current = this.Targets[i];
-                Vector2 position = new Vector2(current.position.x, current.position.y);
-                float currentDistance = Vector2.Distance(ourPosition, position);
-                if (currentDistance < distance)
+                Vector2 theirPosition = current.position;
+                float d = Vector2.Distance(ourPosition, theirPosition);
+                if (d < distance)
                 {
-                    closest = current;
-                    theirPosition = position;
-                    distance = currentDistance;
+                    distance = d;
+                    aimAxis = theirPosition - ourPosition;
                 }
             }
         }
