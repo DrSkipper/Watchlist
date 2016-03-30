@@ -29,7 +29,7 @@ public class ControllerAssigner : MonoBehaviour
                 {
                     Controller c = p.controllers.GetLastActiveController();
                     float cActiveTime = c != null ? c.GetLastTimeActive() : lastActiveTime;
-                    if (lastActive == null || cActiveTime > lastActiveTime)
+                    if (cActiveTime > lastActiveTime || (lastActive == null && (p.controllers.hasMouse || p.controllers.joystickCount != 0)))
                     {
                         lastActiveTime = cActiveTime;
                         lastActive = p;

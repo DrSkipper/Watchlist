@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ac217e1c4aad6b54b84ccb1a68684001
-timeCreated: 1449532166
+timeCreated: 1459297625
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -31,7 +31,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -56,9 +56,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: .5
+  spritePixelsToUnits: 0.25
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -72,8 +72,9 @@ TextureImporter:
         width: 6
         height: 6
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: enemy_02
       rect:
         serializedVersion: 2
@@ -82,8 +83,9 @@ TextureImporter:
         width: 5
         height: 5
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: enemy_03
       rect:
         serializedVersion: 2
@@ -92,48 +94,9 @@ TextureImporter:
         width: 3
         height: 3
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_body
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 2
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_eye
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 9
-        width: 1
-        height: 1
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_bullet
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 6
-        width: 2
-        height: 2
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_reticle
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 2
-        width: 2
-        height: 2
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: enemy_04
       rect:
         serializedVersion: 2
@@ -142,58 +105,9 @@ TextureImporter:
         width: 3
         height: 4
       alignment: 9
-      pivot: {x: .5, y: .375}
+      pivot: {x: 0.5, y: 0.375}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: pickup_bounce
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 41
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: pickup_bomb
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: pickup_spread
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 41
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: pickup_laser
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 32
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: pickup_empty
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 41
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: gib
       rect:
         serializedVersion: 2
@@ -202,8 +116,10 @@ TextureImporter:
         width: 1
         height: 1
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
