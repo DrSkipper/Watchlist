@@ -1703,5 +1703,28 @@
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
+    <WeaponType>
+      <Name>Enemy Melee 2</Name>
+      <Id>2000005</Id>
+      <Damage>1</Damage>
+      <Knockback>150</Knockback>
+      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <ShotSpeed>300</ShotSpeed>
+      <ShotCooldown>0</ShotCooldown>
+      <ShotCount>0</ShotCount>
+      <AngleBetweenShots>10</AngleBetweenShots>
+      <MaximumBounces>0</MaximumBounces>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
+      <VelocityFallOff>0</VelocityFallOff>
+      <DurationTime>0</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
+    </WeaponType>
   </WeaponTypes>
 </WeaponData>

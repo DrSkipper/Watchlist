@@ -94,6 +94,13 @@ public class Bullet : Actor2D
             }
         }
     }
+    
+    public static void CreateExplosionEntity(Vector3 position, GameObject explosionPrefab, AllegianceInfo allegianceInfo, int layer, LayerMask damagableLayers, WeaponType weaponType)
+    {
+        GameObject explosion = Instantiate(explosionPrefab, position, Quaternion.identity) as GameObject;
+        explosion.GetComponent<Explosion>().DetonateWithWeaponType(weaponType, layer, damagableLayers);
+        explosion.GetComponent<AllegianceColorizer>().UpdateVisual(allegianceInfo);
+    }
 
     /**
      * Private
@@ -203,9 +210,7 @@ public class Bullet : Actor2D
         _explosionRemaining = false;
         if (!_ignoreExplosion)
         {
-            GameObject explosion = Instantiate(this.ExplosionPrefab, position, Quaternion.identity) as GameObject;
-            explosion.GetComponent<Explosion>().DetonateWithWeaponType(this.WeaponType, this.gameObject.layer, _damager.DamagableLayers);
-            explosion.GetComponent<AllegianceColorizer>().UpdateVisual(_allegianceInfo);
+            CreateExplosionEntity(position, this.ExplosionPrefab, _allegianceInfo, this.gameObject.layer, _damager.DamagableLayers, this.WeaponType);
         }
     }
     

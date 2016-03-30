@@ -9,6 +9,7 @@ public class GenericEnemy : VoBehavior
     public List<Transform> Targets;
     public LayerMask BounceLayerMask;
     public Texture2D SpriteSheet;
+    public GameObject ExplosionPrefab;
     public bool UseDebugWeapon = false;
 
     public WeaponType WeaponType { get {
@@ -60,6 +61,11 @@ public class GenericEnemy : VoBehavior
         {
             damagable.Health = this.EnemyType.Health;
             damagable.Friction = this.EnemyType.Friction;
+            
+            if (this.CollisionWeaponType != null && this.CollisionWeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION)
+            {
+                damagable.OnDeathCallbacks.Add(onDeath);
+            }
         }
 
         this.spriteRenderer.sprite = this.SpriteSheet.GetSprites()[this.EnemyType.SpriteName];
@@ -156,7 +162,16 @@ public class GenericEnemy : VoBehavior
         CollisionEvent collision = localEvent as CollisionEvent;
         foreach (GameObject hit in collision.Hits)
         {
-            if (((1 << hit.layer) & this.BounceLayerMask) != 0)
+            if (this.CollisionWeaponType != null && this.CollisionWeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION && ((1 << hit.layer) & this.GetComponent<Damager>().DamagableLayers) != 0)
+            {
+                // Explode on impact
+                Damagable damagable = this.GetComponent<Damagable>();
+                while (damagable.Health > 0)
+                {
+                    damagable.ReceiveDamage(this.GetComponent<Damager>());
+                }
+            }
+            else if (((1 << hit.layer) & this.BounceLayerMask) != 0)
             {
                 _actor.Bounce(hit, collision.VelocityAtHit, collision.VelocityApplied, this.BounceLayerMask, 0.0f);
                 break;
@@ -186,6 +201,16 @@ public class GenericEnemy : VoBehavior
     private bool _usesPauses { get { return this.EnemyType.PauseDuration > 0.0f; } }
     private bool _paused { get { return _pauseTimer > 0.0f; } }
     private delegate void MovementDelegate(Vector2 aimAxis);
+
+    private void onDeath(Damagable damagable)
+    {
+        if (this.CollisionWeaponType != null && this.CollisionWeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION)
+        {
+            AllegianceInfo info = this.GetComponent<AllegianceColorizer>().AllegianceInfo;
+            LayerMask damagableLayers = this.GetComponent<Damager>().DamagableLayers;
+            Bullet.CreateExplosionEntity(this.transform.position, this.ExplosionPrefab, info, this.gameObject.layer, damagableLayers, this.CollisionWeaponType);
+        }
+    }
 
     private void playerDied(LocalEventNotifier.Event playerDiedEvent)
     {
