@@ -166,17 +166,17 @@ public class WeaponData
         return _maxSlotsByType;
     }
 
-    private static Dictionary<Slot, float> _slotDurationsByType;
+    private static Dictionary<Slot, int> _slotDurationsByType;
 
-    public static Dictionary<Slot, float> GetSlotDurationsByType()
+    public static Dictionary<Slot, int> GetSlotDurationsByType()
     {
         if (_slotDurationsByType == null)
         {
-            _slotDurationsByType = new Dictionary<Slot, float>();
-            _slotDurationsByType[Slot.Spreadshot] = 18.0f;
-            _slotDurationsByType[Slot.Bomb] = 20.0f;
-            _slotDurationsByType[Slot.Bounce] = 20.0f;
-            _slotDurationsByType[Slot.Laser] = 27.0f;
+            _slotDurationsByType = new Dictionary<Slot, int>();
+            _slotDurationsByType[Slot.Bomb] = 25;
+            _slotDurationsByType[Slot.Spreadshot] = 30;
+            _slotDurationsByType[Slot.Bounce] = 35;
+            _slotDurationsByType[Slot.Laser] = 100;
         }
         return _slotDurationsByType;
     }

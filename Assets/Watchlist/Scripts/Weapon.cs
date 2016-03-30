@@ -8,6 +8,9 @@ public class Weapon : VoBehavior
     public GameObject LaserPrefab;
     public GameObject WeaponAudioObject;
     public AudioClip[] FireAudio;
+    public ShotFiredDelegate ShotFiredCallback;
+
+    public delegate void ShotFiredDelegate(bool ignoreExplosions);
 
     void Start()
     {
@@ -64,6 +67,9 @@ public class Weapon : VoBehavior
                     _audio.clip = clip;
                     _audio.Play();
                 }
+
+                if (this.ShotFiredCallback != null)
+                    this.ShotFiredCallback(ignoreExplosions);
             }
         }
     }

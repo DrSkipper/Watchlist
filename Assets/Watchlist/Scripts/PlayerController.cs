@@ -21,12 +21,12 @@ public class PlayerController : Actor2D
     public class SlotWrapper
     {
         public WeaponData.Slot SlotType;
-        public float TimeRemaining;
+        public int AmmoRemaining;
 
         public SlotWrapper(WeaponData.Slot slotType)
         {
             this.SlotType = slotType;
-            this.TimeRemaining = WeaponData.GetSlotDurationsByType()[slotType];
+            this.AmmoRemaining = WeaponData.GetSlotDurationsByType()[slotType];
         }
     }
 
@@ -34,6 +34,7 @@ public class PlayerController : Actor2D
     {
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
+        _weapon.ShotFiredCallback = shotFired;
 
         this.Reticle.PlayerIndex = this.PlayerIndex;
         this.GetComponent<Damagable>().OnDeathCallbacks.Add(died);
@@ -92,28 +93,6 @@ public class PlayerController : Actor2D
                     _weapon.Fire(aimAxis, this.ShotStartDistance);
             }
         }
-
-        // Update slots
-        List<SlotWrapper> toRemove = null;
-        foreach (SlotWrapper slot in this.Slots)
-        {
-            slot.TimeRemaining -= Time.deltaTime;
-            if (slot.TimeRemaining <= 0.0f)
-            {
-                if (toRemove == null)
-                    toRemove = new List<SlotWrapper>();
-                toRemove.Add(slot);
-                slot.SlotType = WeaponData.Slot.Empty;
-            }
-        }
-        if (toRemove != null)
-        {
-            foreach (SlotWrapper slot in toRemove)
-            {
-                this.Slots.Remove(slot);
-            }
-            this.updateSlots();
-        }
     }
 
     public void OnCollide(LocalEventNotifier.Event localEvent)
@@ -168,18 +147,18 @@ public class PlayerController : Actor2D
         }
         else
         {
-            float time = WeaponData.GetSlotDurationsByType()[slotType];
-            float timeToAdd = time;
+            int shots = WeaponData.GetSlotDurationsByType()[slotType];
+            int shotsToAdd = shots;
 
             foreach (SlotWrapper slot in this.Slots)
             {
                 if (slot.SlotType == slotType)
                 {
-                    slot.TimeRemaining += timeToAdd;
-                    if (slot.TimeRemaining > time)
+                    slot.AmmoRemaining += shotsToAdd;
+                    if (slot.AmmoRemaining > shots)
                     {
-                        timeToAdd = slot.TimeRemaining - time;
-                        slot.TimeRemaining = time;
+                        shotsToAdd = slot.AmmoRemaining - shots;
+                        slot.AmmoRemaining = shots;
                     }
                 }
             }
@@ -226,5 +205,32 @@ public class PlayerController : Actor2D
     private void died(Damagable d)
     {
         GlobalEvents.Notifier.SendEvent(new PlayerDiedEvent(this.gameObject, this.PlayerIndex));
+    }
+
+    private void shotFired(bool ignoreExplosions)
+    {
+        // Update slots
+        bool needsUpdate = false;
+        for (int i = 0; i < this.Slots.Count;)
+        {
+            SlotWrapper slot = this.Slots[i];
+            if (slot.SlotType == WeaponData.Slot.Bomb && ignoreExplosions)
+                continue;
+
+            slot.AmmoRemaining -= 1;
+            if (slot.AmmoRemaining <= 0)
+            {
+                needsUpdate = true;
+                slot.SlotType = WeaponData.Slot.Empty;
+                this.Slots.RemoveAt(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+
+        if (needsUpdate)
+            this.updateSlots();
     }
 }
