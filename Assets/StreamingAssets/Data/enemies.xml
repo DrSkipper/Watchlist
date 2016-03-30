@@ -82,7 +82,7 @@
       <PrefabName>generic_motion</PrefabName>
       <SpriteName>enemy_03</SpriteName>
       <Difficulty>0</Difficulty>
-      <ChoiceWeight>100</ChoiceWeight>
+      <ChoiceWeight>90</ChoiceWeight>
       <ChoiceWeightIncrease>50</ChoiceWeightIncrease>
       <Health>2</Health>
       <Friction>150</Friction>
@@ -100,6 +100,31 @@
       <PauseDuration>0</PauseDuration>
       <WeaponTypeId>0</WeaponTypeId>
       <CollisionWeaponTypeId>2000004</CollisionWeaponTypeId>
+    </EnemyType>
+    <EnemyType>
+      <Name>Mine 1</Name>
+      <Id>1000005</Id>
+      <PrefabName>generic_motion</PrefabName>
+      <SpriteName>enemy_05</SpriteName>
+      <Difficulty>0</Difficulty>
+      <ChoiceWeight>85</ChoiceWeight>
+      <ChoiceWeightIncrease>45</ChoiceWeightIncrease>
+      <Health>2</Health>
+      <Friction>150</Friction>
+      <MaxSpeed>140</MaxSpeed>
+      <Acceleration>280</Acceleration>
+      <SpinRange>999999</SpinRange>
+      <LookAtRange>0</LookAtRange>
+      <ShootRange>0</ShootRange>
+      <ShotStartDistance>0</ShotStartDistance>
+      <SeekTarget>true</SeekTarget>
+      <RotationSpeed>90</RotationSpeed>
+      <RotationOffset>45</RotationOffset>
+      <OnlyShootOnPause>false</OnlyShootOnPause>
+      <PauseAngle>45</PauseAngle>
+      <PauseDuration>0</PauseDuration>
+      <WeaponTypeId>0</WeaponTypeId>
+      <CollisionWeaponTypeId>2000005</CollisionWeaponTypeId>
     </EnemyType>
   </EnemyTypes>
 </EnemyData>
