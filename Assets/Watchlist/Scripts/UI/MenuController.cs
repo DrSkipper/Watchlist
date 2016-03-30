@@ -5,6 +5,8 @@ public class MenuController : VoBehavior
     public GameObject[] MenuElements;
     public int CurrentElement = 0;
 
+    public int[] PrioritizedDefaults;
+
     void Start()
     {
         _animators = new Animator[this.MenuElements.Length];
@@ -17,6 +19,16 @@ public class MenuController : VoBehavior
             _animators[i] = animator;
             _elements[i] = element;
             animator.SetBool("Locked", element.Locked);
+        }
+
+        for (int i = 0; i < this.PrioritizedDefaults.Length; ++i)
+        {
+            int elementIndex = this.PrioritizedDefaults[i];
+            if (!this.MenuElements[elementIndex].GetComponent<MenuElement>().Locked)
+            {
+                this.CurrentElement = elementIndex;
+                break;
+            }
         }
 
         highlightElement(this.CurrentElement);
