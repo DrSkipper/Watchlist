@@ -31,6 +31,10 @@ public class GenericEnemy : VoBehavior
         _rotationAxis = new Vector3(0, 0, 1);
         _weapon = this.GetComponent<Weapon>();
         _rotationDirection = this.PossibleRotationDirections[Random.Range(0, this.PossibleRotationDirections.Length)];
+        if (!this.EnemyType.SeekTarget)
+            _movementFunction = freeMovement;
+        else
+            _movementFunction = seekMovement;
 
         _actor = this.GetComponent<Actor2D>();
         if (_actor != null && this.EnemyType.MaxSpeed > 0.0f)
@@ -86,24 +90,17 @@ public class GenericEnemy : VoBehavior
             }
         }
 
+        aimAxis.Normalize();
+
         // Accelerate
         if (_actor != null && this.EnemyType.MaxSpeed > 0.0f)
         {
-            float vMag = _actor.Velocity.magnitude;
-            if (vMag < this.EnemyType.MaxSpeed)
-            {
-                vMag += this.EnemyType.Acceleration * Time.deltaTime;
-                if (vMag > this.EnemyType.MaxSpeed)
-                    vMag = this.EnemyType.MaxSpeed;
-
-                _actor.Velocity = vMag * _actor.Velocity.normalized;
-            }
+            _movementFunction(aimAxis);
         }
 
         // If close enough, turn to face the target
         if (distance < this.EnemyType.LookAtRange)
         {
-            aimAxis.Normalize();
             forward = aimAxis;
 
             _currentAngle = Vector2.Angle(Vector2.up, aimAxis);
@@ -184,12 +181,53 @@ public class GenericEnemy : VoBehavior
     private float _distanceSincePause;
     private float _pauseTimer;
     private int _rotationDirection;
+    private MovementDelegate _movementFunction;
 
     private bool _usesPauses { get { return this.EnemyType.PauseDuration > 0.0f; } }
     private bool _paused { get { return _pauseTimer > 0.0f; } }
+    private delegate void MovementDelegate(Vector2 aimAxis);
 
     private void playerDied(LocalEventNotifier.Event playerDiedEvent)
     {
         this.Targets.Remove((playerDiedEvent as PlayerDiedEvent).PlayerObject.transform);
+    }
+
+    private void freeMovement(Vector2 aimAxis)
+    {
+        float vMag = _actor.Velocity.magnitude;
+        if (vMag < this.EnemyType.MaxSpeed)
+        {
+            vMag += this.EnemyType.Acceleration * Time.deltaTime;
+            if (vMag > this.EnemyType.MaxSpeed)
+                vMag = this.EnemyType.MaxSpeed;
+
+            _actor.Velocity = vMag * _actor.Velocity.normalized;
+        }
+    }
+
+    private void seekMovement(Vector2 aimAxis)
+    {
+        float targetX = aimAxis.x * this.EnemyType.MaxSpeed;
+        float targetY = aimAxis.y * this.EnemyType.MaxSpeed;
+
+        float changeX = targetX - _actor.Velocity.x;
+        float changeY = targetY - _actor.Velocity.y;
+
+        if (changeX != 0 || changeY != 0)
+        {
+            float changeTotal = Mathf.Sqrt(Mathf.Pow(changeX, 2) + Mathf.Pow(changeY, 2));
+
+            if (changeX != 0)
+            {
+                float ax = Mathf.Abs(this.EnemyType.Acceleration * changeX / changeTotal);
+                _actor.Velocity.x = Mathf.MoveTowards(_actor.Velocity.x, targetX, ax * Time.deltaTime);
+            }
+
+            if (changeY != 0)
+            {
+                float ay = Mathf.Abs(this.EnemyType.Acceleration * changeY / changeTotal);
+                _actor.Velocity.y = Mathf.MoveTowards(_actor.Velocity.y, targetY, ay * Time.deltaTime);
+            }
+        }
     }
 }

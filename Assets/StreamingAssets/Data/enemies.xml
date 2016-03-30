@@ -17,6 +17,7 @@
       <LookAtRange>300</LookAtRange>
       <ShootRange>280</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
+      <SeekTarget>false</SeekTarget>
       <RotationSpeed>0</RotationSpeed>
       <RotationOffset>0</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>
@@ -41,6 +42,7 @@
       <LookAtRange>0</LookAtRange>
       <ShootRange>280</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
+      <SeekTarget>false</SeekTarget>
       <RotationSpeed>45</RotationSpeed>
       <RotationOffset>45</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>
@@ -65,6 +67,7 @@
       <LookAtRange>0</LookAtRange>
       <ShootRange>280</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
+      <SeekTarget>false</SeekTarget>
       <RotationSpeed>180</RotationSpeed>
       <RotationOffset>45</RotationOffset>
       <OnlyShootOnPause>true</OnlyShootOnPause>
@@ -89,6 +92,7 @@
       <LookAtRange>0</LookAtRange>
       <ShootRange>0</ShootRange>
       <ShotStartDistance>0</ShotStartDistance>
+      <SeekTarget>false</SeekTarget>
       <RotationSpeed>180</RotationSpeed>
       <RotationOffset>45</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>

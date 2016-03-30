@@ -21,6 +21,7 @@ public class EnemyType
     public float LookAtRange = 30.0f;
     public float ShootRange = 20.0f;
     public float ShotStartDistance = 0.0f;
+    public bool SeekTarget = false;
     public float RotationSpeed = 180.0f;
     public float RotationOffset = 45.0f;
     public bool OnlyShootOnPause = false;
