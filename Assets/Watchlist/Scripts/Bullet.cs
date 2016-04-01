@@ -138,15 +138,8 @@ public class Bullet : Actor2D
         GameObject raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
 
         Vector2 castDifference = raycast.FarthestPointReached - origin;
-        CollisionManager.RaycastResult passThroughCast = this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
-
-        foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
-        {
-            this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
-
-            if (_explosionRemaining && collision.CollidedObject != raycastCollidedObject)
-                triggerExplosion(new Vector3(collision.CollisionPoint.X, collision.CollisionPoint.Y, this.transform.position.z));
-        }
+        List<CollisionManager.RaycastCollision> passThroughCollisions = new List<CollisionManager.RaycastCollision>();
+        passThroughCollisions.AddRange(this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask).Collisions);
 
         if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycastCollidedObject.layer) & this.BounceLayerMask) != 0)
         {
@@ -187,22 +180,28 @@ public class Bullet : Actor2D
                 raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
 
                 castDifference = raycast.FarthestPointReached - raycastOrigin;
-                passThroughCast = this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask);
-                foreach (CollisionManager.RaycastCollision collision in passThroughCast.Collisions)
-                {
-                    this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
-
-                    if (_explosionRemaining && collision.CollidedObject != raycastCollidedObject)
-                        triggerExplosion(new Vector3(collision.CollisionPoint.X, collision.CollisionPoint.Y, this.transform.position.z));
-                }
+                passThroughCollisions.AddRange(this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask).Collisions);
 
                 distanceTravelled = raycast.FarthestPointReached - origin;
                 distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
             }
         }
+        
+        for (int i = 0; i < passThroughCollisions.Count; ++i)
+        {
+            CollisionManager.RaycastCollision collision = passThroughCollisions[i];
 
+            if (_explosionRemaining && collision.CollidedObject != raycastCollidedObject)
+            {
+                this.localNotifier.SendEvent(new HitEvent(collision.CollidedObject));
+                triggerExplosion(new Vector3(collision.CollisionPoint.X, collision.CollisionPoint.Y, this.transform.position.z));
+            }
+        }
+        
         if (_explosionRemaining)
+        {
             triggerExplosion(new Vector3(raycast.FarthestPointReached.X, raycast.FarthestPointReached.Y, this.transform.position.z));
+        }
     }
 
     private void triggerExplosion(Vector3 position)

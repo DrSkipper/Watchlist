@@ -214,20 +214,18 @@ public class PlayerController : Actor2D
         for (int i = 0; i < this.Slots.Count;)
         {
             SlotWrapper slot = this.Slots[i];
-            if (slot.SlotType == WeaponData.Slot.Bomb && ignoreExplosions)
-                continue;
-
-            slot.AmmoRemaining -= 1;
-            if (slot.AmmoRemaining <= 0)
+            if (slot.SlotType != WeaponData.Slot.Bomb || ignoreExplosions)
             {
-                needsUpdate = true;
-                slot.SlotType = WeaponData.Slot.Empty;
-                this.Slots.RemoveAt(i);
+                slot.AmmoRemaining -= 1;
+                if (slot.AmmoRemaining <= 0)
+                {
+                    needsUpdate = true;
+                    slot.SlotType = WeaponData.Slot.Empty;
+                    this.Slots.RemoveAt(i);
+                    continue;
+                }
             }
-            else
-            {
-                ++i;
-            }
+            ++i;
         }
 
         if (needsUpdate)
