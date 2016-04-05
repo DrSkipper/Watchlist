@@ -101,7 +101,7 @@ public class GenericEnemy : VoBehavior
         // Accelerate
         if (_actor != null && this.EnemyType.MaxSpeed > 0.0f)
         {
-            _movementFunction(aimAxis);
+            _movementFunction(aimAxis, distance);
         }
 
         // If close enough, turn to face the target
@@ -200,7 +200,8 @@ public class GenericEnemy : VoBehavior
 
     private bool _usesPauses { get { return this.EnemyType.PauseDuration > 0.0f; } }
     private bool _paused { get { return _pauseTimer > 0.0f; } }
-    private delegate void MovementDelegate(Vector2 aimAxis);
+    private delegate void MovementDelegate(Vector2 aimAxis, float distance);
+    private const float WIGGLE_ROOM = 2.0f;
 
     private void onDeath(Damagable damagable)
     {
@@ -217,7 +218,7 @@ public class GenericEnemy : VoBehavior
         this.Targets.Remove((playerDiedEvent as PlayerDiedEvent).PlayerObject.transform);
     }
 
-    private void freeMovement(Vector2 aimAxis)
+    private void freeMovement(Vector2 aimAxis, float distance)
     {
         float vMag = _actor.Velocity.magnitude;
         if (vMag < this.EnemyType.MaxSpeed)
@@ -230,7 +231,7 @@ public class GenericEnemy : VoBehavior
         }
     }
 
-    private void seekMovement(Vector2 aimAxis)
+    private void seekMovement(Vector2 aimAxis, float distance)
     {
         float targetX = aimAxis.x * this.EnemyType.MaxSpeed;
         float targetY = aimAxis.y * this.EnemyType.MaxSpeed;
@@ -253,6 +254,29 @@ public class GenericEnemy : VoBehavior
                 float ay = Mathf.Abs(this.EnemyType.Acceleration * changeY / changeTotal);
                 _actor.Velocity.y = Mathf.MoveTowards(_actor.Velocity.y, targetY, ay * Time.deltaTime);
             }
+        }
+    }
+
+    private void accelerateTowardMovement(Vector2 aimAxis, float distance)
+    {
+        float vMag = _actor.Velocity.magnitude;
+
+        if (vMag < this.EnemyType.MaxSpeed)
+        {
+            vMag += this.EnemyType.Acceleration * Time.deltaTime;
+            if (vMag > this.EnemyType.MaxSpeed)
+                vMag = this.EnemyType.MaxSpeed;
+        }
+
+        if (Mathf.Abs(distance - this.EnemyType.TargetDistance) > WIGGLE_ROOM)
+        {
+            if (distance < this.EnemyType.TargetDistance)
+                aimAxis *= -1;
+            _actor.Velocity = aimAxis * vMag;
+        }
+        else
+        {
+            _actor.Velocity = Vector2.zero;
         }
     }
 }
