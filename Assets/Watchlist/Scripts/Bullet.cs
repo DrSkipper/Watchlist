@@ -134,15 +134,9 @@ public class Bullet : Actor2D
     {
         IntegerVector origin = this.integerPosition;
         List<CollisionManager.RaycastCollision> passThroughCollisions = new List<CollisionManager.RaycastCollision>();
-        //CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastFirst(origin, direction, this.WeaponType.DurationDistance, this.HaltMovementMask | this.BounceLayerMask);
         CollisionManager.RaycastResult raycast = this.CollisionManager.RaycastUntil(passThroughCollisions, origin, direction, this.CollisionMask, this.HaltMovementMask | this.BounceLayerMask, this.WeaponType.DurationDistance);
         this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
         GameObject raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
-
-        Vector2 castDifference = raycast.FarthestPointReached - origin;
-
-        //this.CollisionManager.RaycastUntil(passThroughCollisions, origin, castDifference.normalized, this.CollisionMask, this.HaltMovementMask | this.BounceLayerMask, castDifference.magnitude);
-        //passThroughCollisions.AddRange(this.CollisionManager.Raycast(origin, castDifference.normalized, castDifference.magnitude, this.CollisionMask).Collisions);
 
         if (raycast.Collided && _bouncesRemaining > 0 && ((1 << raycastCollidedObject.layer) & this.BounceLayerMask) != 0)
         {
@@ -178,15 +172,9 @@ public class Bullet : Actor2D
                 }
 
                 // Raycast the bounce shot
-                //raycast = this.CollisionManager.RaycastFirst(raycastOrigin, direction, distanceRemaining, this.HaltMovementMask | this.BounceLayerMask);
                 raycast = this.CollisionManager.RaycastUntil(passThroughCollisions, raycastOrigin, direction, this.CollisionMask, this.HaltMovementMask | this.BounceLayerMask, distanceRemaining);
                 this.localNotifier.SendEvent(new LaserCastEvent(raycast, origin, _allegianceInfo));
                 raycastCollidedObject = raycast.Collided ? raycast.Collisions[0].CollidedObject : null;
-
-                castDifference = raycast.FarthestPointReached - raycastOrigin;
-
-                //this.CollisionManager.RaycastUntil(passThroughCollisions, raycastOrigin, castDifference.normalized, this.CollisionMask, this.HaltMovementMask | this.BounceLayerMask, castDifference.magnitude);
-                //passThroughCollisions.AddRange(this.CollisionManager.Raycast(raycastOrigin, castDifference.normalized, castDifference.magnitude, this.CollisionMask).Collisions);
 
                 distanceTravelled = raycast.FarthestPointReached - origin;
                 distanceSoFar += new Vector2(distanceTravelled.X, distanceTravelled.Y).magnitude;
