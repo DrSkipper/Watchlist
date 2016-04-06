@@ -15,6 +15,7 @@ public class EnemySpawner : VoBehavior
 
     public GameObject GenericPrefab;
     public GameObject GenericMotionPrefab;
+    public GameObject MoveAndFirePrefab;
     public GameObject SpawnVisualPrefab;
 
     void Start()
@@ -66,6 +67,8 @@ public class EnemySpawner : VoBehavior
         GameObject prefab = this.GenericPrefab;
         if (enemy.PrefabName == "generic_motion")
             prefab = this.GenericMotionPrefab;
+        else if (enemy.PrefabName == "move_and_fire")
+            prefab = this.MoveAndFirePrefab;
         
         GameObject enemyObject = Instantiate(prefab, this.transform.position, Quaternion.identity) as GameObject;
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();

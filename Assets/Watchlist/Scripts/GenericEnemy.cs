@@ -12,6 +12,13 @@ public class GenericEnemy : VoBehavior
     public GameObject ExplosionPrefab;
     public bool UseDebugWeapon = false;
 
+    public enum MovementType
+    {
+        Free = 0,
+        Seek = 1,
+        MoveToward = 2
+    }
+
     public WeaponType WeaponType { get {
         if (StaticData.WeaponData.WeaponTypes.ContainsKey(this.EnemyType.WeaponTypeId))
             return StaticData.WeaponData.WeaponTypes[this.EnemyType.WeaponTypeId];
@@ -32,10 +39,20 @@ public class GenericEnemy : VoBehavior
         _rotationAxis = new Vector3(0, 0, 1);
         _weapon = this.GetComponent<Weapon>();
         _rotationDirection = this.PossibleRotationDirections[Random.Range(0, this.PossibleRotationDirections.Length)];
-        if (!this.EnemyType.SeekTarget)
-            _movementFunction = freeMovement;
-        else
-            _movementFunction = seekMovement;
+
+        switch (this.EnemyType.MovementType)
+        {
+            default:
+            case (int)MovementType.Free:
+                _movementFunction = freeMovement;
+                break;
+            case (int)MovementType.Seek:
+                _movementFunction = seekMovement;
+                break;
+            case (int)MovementType.MoveToward:
+                _movementFunction = moveTowardMovement;
+                break;
+        }
 
         _actor = this.GetComponent<Actor2D>();
         if (_actor != null && this.EnemyType.MaxSpeed > 0.0f)
@@ -255,9 +272,11 @@ public class GenericEnemy : VoBehavior
                 _actor.Velocity.y = Mathf.MoveTowards(_actor.Velocity.y, targetY, ay * Time.deltaTime);
             }
         }
+
+        //TODO - Apply TargetDistance
     }
 
-    private void accelerateTowardMovement(Vector2 aimAxis, float distance)
+    private void moveTowardMovement(Vector2 aimAxis, float distance)
     {
         float vMag = _actor.Velocity.magnitude;
 
