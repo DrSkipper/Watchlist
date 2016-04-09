@@ -5,11 +5,34 @@ using UnityEngine.UI;
 public class StaticColorizer : MonoBehaviour
 {
     public string ColorTag = "background";
+    public int ColorParameter = 0;
+    public StaticColorizer[] DependentColorizers;
+    public bool UpdateOnStart = true;
 
     void Start()
     {
-        Color color = GameplayPalette.GetColorFromTag(this.ColorTag);
+        if (this.UpdateOnStart)
+            this.UpdateVisual(this.ColorTag, this.ColorParameter);
+    }
 
+    public void UpdateVisual(string colorTag, int colorParameter)
+    {
+        this.ColorTag = colorTag;
+        this.ColorParameter = colorParameter;
+
+        foreach (StaticColorizer colorizer in this.DependentColorizers)
+        {
+            colorizer.UpdateVisual(colorTag, colorParameter);
+        }
+
+        updateVisual(GameplayPalette.GetColorFromTag(colorTag, colorParameter));
+    }
+
+    /**
+     * Private
+     */
+    private void updateVisual(Color color)
+    {
         SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
