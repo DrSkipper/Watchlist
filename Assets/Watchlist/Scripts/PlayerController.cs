@@ -15,7 +15,7 @@ public class PlayerController : Actor2D
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
     public ReticlePositioner Reticle;
 
-    public delegate void SlotChangeDelegate(WeaponData.Slot[] newSlots);
+    public delegate void SlotChangeDelegate(SlotWrapper[] newSlots);
 
     [System.Serializable]
     public class SlotWrapper
@@ -115,12 +115,12 @@ public class PlayerController : Actor2D
         _slotChangeDelegates.Add(callback);
     }
 
-    public WeaponData.Slot[] GetSlots()
+    public WeaponData.Slot[] GetRawSlots()
     {
-        List<WeaponData.Slot> slots = new List<WeaponData.Slot>();
-        foreach (SlotWrapper slot in this.Slots)
-            slots.Add(slot.SlotType);
-        return slots.ToArray();
+        WeaponData.Slot[] slots = new WeaponData.Slot[this.Slots.Count];
+        for (int i = 0; i < this.Slots.Count; ++i)
+            slots[i] = this.Slots[i].SlotType;
+        return slots;
     }
 
     /**
@@ -150,8 +150,9 @@ public class PlayerController : Actor2D
             int shots = WeaponData.GetSlotDurationsByType()[slotType];
             int shotsToAdd = shots;
 
-            foreach (SlotWrapper slot in this.Slots)
+            for (int i = this.Slots.Count - 1; i >= 0; --i)
             {
+                SlotWrapper slot = this.Slots[i];
                 if (slot.SlotType == slotType)
                 {
                     slot.AmmoRemaining += shotsToAdd;
@@ -159,6 +160,10 @@ public class PlayerController : Actor2D
                     {
                         shotsToAdd = slot.AmmoRemaining - shots;
                         slot.AmmoRemaining = shots;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
@@ -192,14 +197,14 @@ public class PlayerController : Actor2D
         //    _weapon.WeaponType = StaticData.WeaponData.WeaponTypes[this.WeaponTypeId];
 
         // New Style
-        WeaponData.Slot[] slotArray = this.GetSlots();
+        WeaponData.Slot[] slotArray = this.GetRawSlots();
 
-        if (!UseDebugWeapon)
+        if (!this.UseDebugWeapon)
             _weapon.WeaponType = WeaponData.NewWeaponTypeFromSlots(slotArray);
 
         // Notification
         foreach (SlotChangeDelegate callback in _slotChangeDelegates)
-            callback(slotArray);
+            callback(this.Slots.ToArray());
     }
 
     private void died(Damagable d)
@@ -210,16 +215,15 @@ public class PlayerController : Actor2D
     private void shotFired(bool ignoreExplosions)
     {
         // Update slots
-        bool needsUpdate = false;
+        bool[] typesFound = { false, false, false, false };
         for (int i = 0; i < this.Slots.Count;)
         {
             SlotWrapper slot = this.Slots[i];
-            if (slot.SlotType != WeaponData.Slot.Bomb || ignoreExplosions)
+            if ((slot.SlotType != WeaponData.Slot.Bomb || !ignoreExplosions) && !typesFound[(int)slot.SlotType - 1])
             {
                 slot.AmmoRemaining -= 1;
                 if (slot.AmmoRemaining <= 0)
                 {
-                    needsUpdate = true;
                     slot.SlotType = WeaponData.Slot.Empty;
                     this.Slots.RemoveAt(i);
                     continue;
@@ -227,8 +231,7 @@ public class PlayerController : Actor2D
             }
             ++i;
         }
-
-        if (needsUpdate)
-            this.updateSlots();
+        
+        this.updateSlots();
     }
 }
