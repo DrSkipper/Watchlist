@@ -146,6 +146,8 @@ public class WeaponData
             newType.DurationTime = laserType.DurationTime;
             newType.HitInvincibilityDuration = laserType.HitInvincibilityDuration;
             newType.Knockback = laserType.Knockback;
+            newType.AudioIndex = laserType.AudioIndex;
+            newType.AudioCooldown = laserType.AudioCooldown;
         }
 
         return newType;
