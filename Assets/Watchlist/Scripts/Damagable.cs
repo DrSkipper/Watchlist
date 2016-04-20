@@ -9,18 +9,23 @@ public class Damagable : VoBehavior
     public bool Stationary = false;
     public float Friction = 1.0f;
     public bool Invincible;
-    public List<DeathCallback> OnDeathCallbacks;
+    public List<HealthCallback> OnHealthChangeCallbacks;
+    public List<HealthCallback> OnDeathCallbacks;
     public GameObject GibsPrefab;
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
     public float ShakeHitToDamageRatio = 0;
     public AudioClip AudioOnHit = null;
 
-    public delegate void DeathCallback(Damagable died);
+    public int MaxHealth { get { return _maxHealth; } }
+
+    public delegate void HealthCallback(Damagable affected);
 
     void Awake()
     {
-        this.OnDeathCallbacks = new List<DeathCallback>();
+        _maxHealth = this.Health;
+        this.OnDeathCallbacks = new List<HealthCallback>();
+        this.OnHealthChangeCallbacks = new List<HealthCallback>();
     }
 
     void Start()
@@ -98,6 +103,8 @@ public class Damagable : VoBehavior
         _alreadyHitThisUpdate.Add(other.gameObject);
 
         this.Health -= other.Damage;
+        foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
+            callback(this);
 
         Vector2 impactVector = Vector2.zero;
 
@@ -157,6 +164,7 @@ public class Damagable : VoBehavior
     private float _deathKnockback;
     private Vector2 _deathImpactVector;
     private AudioSource _audio;
+    private int _maxHealth;
 
     private const string VELOCITY_MODIFIER_KEY = "damagable";
 
@@ -167,7 +175,7 @@ public class Damagable : VoBehavior
 
     private void die()
     {
-        foreach (DeathCallback callback in this.OnDeathCallbacks)
+        foreach (HealthCallback callback in this.OnDeathCallbacks)
             callback(this);
 
         if (this.GibsPrefab != null)
