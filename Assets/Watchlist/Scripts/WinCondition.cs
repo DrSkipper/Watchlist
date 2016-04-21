@@ -28,13 +28,13 @@ public class WinCondition : VoBehavior
 
     public void LevelCompleteOut()
     {
-        GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteOut");
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.ReturnToLevelSelect, this.ReturnToLevelSelectDelay);
     }
 
     public void ReturnToLevelSelect()
     {
+        GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         ProgressData.CompleteTile(ProgressData.MostRecentTile);
         SceneManager.LoadScene("LevelSelectScene");
     }
