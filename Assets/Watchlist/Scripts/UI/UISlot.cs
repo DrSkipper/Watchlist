@@ -42,7 +42,7 @@ public class UISlot : VoBehavior
         player.AddSlotChangeCallback(this.UpdateSlots);
     }
 
-    public void UpdateSlots(PlayerController.SlotWrapper[] slots)
+    public void UpdateSlots(ProgressData.SlotWrapper[] slots)
     {
         updateSlotParadigm(slots);
     }
@@ -50,10 +50,10 @@ public class UISlot : VoBehavior
     /**
      * Private
      */
-    private delegate void UpdateSlotParadigm(PlayerController.SlotWrapper[] slots);
+    private delegate void UpdateSlotParadigm(ProgressData.SlotWrapper[] slots);
     private UpdateSlotParadigm updateSlotParadigm;
 
-    private void updateSlotIndividualParadigm(PlayerController.SlotWrapper[] slots)
+    private void updateSlotIndividualParadigm(ProgressData.SlotWrapper[] slots)
     {
         if (this.SlotId >= slots.Length)
         {
@@ -66,7 +66,7 @@ public class UISlot : VoBehavior
         configureSprite(slots[this.SlotId].SlotType);
     }
 
-    private void updateSlotLevelParadigm(PlayerController.SlotWrapper[] slots)
+    private void updateSlotLevelParadigm(ProgressData.SlotWrapper[] slots)
     {
         bool[] weaponTypesFound = { false, false, false, false };
         int[] ammoRemaining = { 0, 0, 0, 0 };

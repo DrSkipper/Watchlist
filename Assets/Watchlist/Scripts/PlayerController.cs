@@ -9,26 +9,13 @@ public class PlayerController : Actor2D
     public float MaxSpeed = 1.0f;
     public bool DirectionalAcceleration = true; //TODO - Implement "false" approach for this
     public float ShotStartDistance = 1.0f;
-    public List<SlotWrapper> Slots = new List<SlotWrapper>();
+    public List<ProgressData.SlotWrapper> Slots = new List<ProgressData.SlotWrapper>();
     public int WeaponTypeId = 1; // Exposed for debugging
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
     public ReticlePositioner Reticle;
 
-    public delegate void SlotChangeDelegate(SlotWrapper[] newSlots);
-
-    [System.Serializable]
-    public class SlotWrapper
-    {
-        public WeaponData.Slot SlotType;
-        public int AmmoRemaining;
-
-        public SlotWrapper(WeaponData.Slot slotType)
-        {
-            this.SlotType = slotType;
-            this.AmmoRemaining = WeaponData.GetSlotDurationsByType()[slotType];
-        }
-    }
+    public delegate void SlotChangeDelegate(ProgressData.SlotWrapper[] newSlots);
 
     void Start()
     {
@@ -135,7 +122,7 @@ public class PlayerController : Actor2D
     {
         int count = 0;
 
-        foreach (SlotWrapper slot in this.Slots)
+        foreach (ProgressData.SlotWrapper slot in this.Slots)
         {
             if (slot.SlotType == slotType)
                 ++count;
@@ -143,7 +130,7 @@ public class PlayerController : Actor2D
 
         if (count < WeaponData.GetMaxSlotsByType()[slotType])
         {
-            this.Slots.Add(new SlotWrapper(slotType));
+            this.Slots.Add(new ProgressData.SlotWrapper(slotType));
         }
         else
         {
@@ -152,7 +139,7 @@ public class PlayerController : Actor2D
 
             for (int i = this.Slots.Count - 1; i >= 0; --i)
             {
-                SlotWrapper slot = this.Slots[i];
+                ProgressData.SlotWrapper slot = this.Slots[i];
                 if (slot.SlotType == slotType)
                 {
                     slot.AmmoRemaining += shotsToAdd;
@@ -218,7 +205,7 @@ public class PlayerController : Actor2D
         bool[] typesFound = { false, false, false, false };
         for (int i = 0; i < this.Slots.Count;)
         {
-            SlotWrapper slot = this.Slots[i];
+            ProgressData.SlotWrapper slot = this.Slots[i];
             if ((slot.SlotType != WeaponData.Slot.Bomb || !ignoreExplosions) && !typesFound[(int)slot.SlotType - 1])
             {
                 slot.AmmoRemaining -= 1;

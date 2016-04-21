@@ -3,8 +3,29 @@ using System.Collections.Generic;
 
 public static class ProgressData
 {
+    public const int WEAPON_SLOTS = 4;
+
     public static IntegerVector[] CompletedTiles { get { return _completedTiles.ToArray(); } }
     public static IntegerVector MostRecentTile { get { return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
+    
+    [System.Serializable]
+    public class SlotWrapper
+    {
+        public WeaponData.Slot SlotType;
+        public int AmmoRemaining;
+
+        public SlotWrapper(WeaponData.Slot slotType)
+        {
+            this.SlotType = slotType;
+            this.AmmoRemaining = WeaponData.GetSlotDurationsByType()[slotType];
+        }
+
+        public SlotWrapper(SlotWrapper other)
+        {
+            this.SlotType = other.SlotType;
+            this.AmmoRemaining = other.AmmoRemaining;
+        }
+    }
 
     public static void CompleteTile(IntegerVector tile)
     {
@@ -28,9 +49,46 @@ public static class ProgressData
         return 1; // Medium
     }
 
+    public static SlotWrapper[][] WeaponSlotsByPlayer
+    {
+        get
+        {
+            SlotWrapper[][] playerSlots = new SlotWrapper[DynamicData.MAX_PLAYERS][];
+            for (int player = 0; player < DynamicData.MAX_PLAYERS; ++player)
+            {
+                if (_weaponSlotsByPlayer.ContainsKey(player))
+                {
+                    playerSlots[player] = new SlotWrapper[_weaponSlotsByPlayer[player].Length];
+                    for (int i = 0; i < _weaponSlotsByPlayer[player].Length; ++i)
+                    {
+                        playerSlots[player][i] = new SlotWrapper(_weaponSlotsByPlayer[player][i]);
+                    }
+                }
+                else
+                {
+                    playerSlots[player] = new SlotWrapper[0];
+                }
+            }
+            return playerSlots;
+        }
+    }
+
+    public static void UpdatePlayerSlots(int playerIndex, SlotWrapper[] slots)
+    {
+        if (!_weaponSlotsByPlayer.ContainsKey(playerIndex))
+            _weaponSlotsByPlayer.Add(playerIndex, new SlotWrapper[slots.Length]);
+        else
+            _weaponSlotsByPlayer[playerIndex] = new SlotWrapper[slots.Length];
+        for (int i = 0; i < slots.Length; ++i)
+        {
+            _weaponSlotsByPlayer[playerIndex][i] = new SlotWrapper(slots[i]);
+        }
+    }
+
     public static void WipeData()
     {
         _completedTiles = new List<IntegerVector>();
+        _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
         _mostRecentTile = null;
     }
 
@@ -39,4 +97,5 @@ public static class ProgressData
      */
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
+    private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
 }

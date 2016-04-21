@@ -84,3 +84,13 @@ public class PlayerDiedEvent : LocalEventNotifier.Event
         this.PlayerIndex = playerIndex;
     }
 }
+
+public class LevelCompleteEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "LEVEL_END";
+
+    public LevelCompleteEvent()
+    {
+        this.Name = NAME;
+    }
+}
