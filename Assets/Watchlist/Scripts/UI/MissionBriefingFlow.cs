@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TimedCallbacks))]
 public class MissionBriefingFlow : VoBehavior
 {
+    public bool LimitOnePagePerBoss = false;
     public PageHandler PageHandler;
     public float IntroDelay = 2.0f;
     public List<string> IntroPages;
@@ -27,7 +28,8 @@ public class MissionBriefingFlow : VoBehavior
         {
             BossType bossType = StaticData.BossData.BossTypes[bossId];
             allPages.Add(bossType.PageText1);
-            allPages.Add(bossType.PageText2);
+            if (!this.LimitOnePagePerBoss)
+                allPages.Add(bossType.PageText2);
         }
 
         allPages.AddRange(this.OutroPages);
