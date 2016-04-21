@@ -208,6 +208,7 @@ public class PlayerController : Actor2D
             ProgressData.SlotWrapper slot = this.Slots[i];
             if ((slot.SlotType != WeaponData.Slot.Bomb || !ignoreExplosions) && !typesFound[(int)slot.SlotType - 1])
             {
+                typesFound[(int)slot.SlotType - 1] = true;
                 slot.AmmoRemaining -= 1;
                 if (slot.AmmoRemaining <= 0)
                 {
