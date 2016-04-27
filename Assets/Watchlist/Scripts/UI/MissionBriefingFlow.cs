@@ -11,6 +11,10 @@ public class MissionBriefingFlow : VoBehavior
     public List<string> IntroPages;
     public List<string> OutroPages;
     public string LevelSelectSceneName;
+    public PageFlipDelegate PageFlipCallback;
+
+    public delegate void PageFlipDelegate(string avatarName);
+    public const string DEFAULT_AVATAR = "master";
 
     void Awake()
     {
@@ -39,6 +43,17 @@ public class MissionBriefingFlow : VoBehavior
             this.PageHandler.AddPage(page);
         }
 
+        _avatarKeys = new string[allPages.Count];
+
+        for (int i = this.IntroPages.Count; i < allPages.Count - this.OutroPages.Count; ++i)
+        {
+            int bossId = bosses[i - this.IntroPages.Count];
+            BossType bossType = StaticData.BossData.BossTypes[bossId];
+            _avatarKeys[i] = bossType.SceneKey;
+            if (!this.LimitOnePagePerBoss)
+                ++i;
+        }
+
         this.PageHandler.OnFlippedLastPage = flippedLastPage;
         _timedCallbacks.AddCallback(this, beginPageFlipping, this.IntroDelay);
     }
@@ -46,7 +61,11 @@ public class MissionBriefingFlow : VoBehavior
     void Update()
     {
         if (_introComplete && MenuInput.SelectCurrentElement())
+        {
             this.PageHandler.IncrementPage();
+            if (this.PageFlipCallback != null && this.PageHandler.CurrentPage < _avatarKeys.Length)
+                this.PageFlipCallback(_avatarKeys[this.PageHandler.CurrentPage] != null ? _avatarKeys[this.PageHandler.CurrentPage] : DEFAULT_AVATAR);
+        }
     }
 
     /**
@@ -54,6 +73,7 @@ public class MissionBriefingFlow : VoBehavior
      */
     private TimedCallbacks _timedCallbacks;
     private bool _introComplete;
+    private string[] _avatarKeys;
 
     private void beginPageFlipping()
     {
