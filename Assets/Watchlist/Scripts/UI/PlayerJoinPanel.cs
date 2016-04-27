@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
-using System.Collections.Generic;
 
 public class PlayerJoinPanel : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class PlayerJoinPanel : MonoBehaviour
 
     void Awake()
     {
+        _animator = this.GetComponent<Animator>();
         Assigner.AddAssignmentCallback(this.PlayerIndex, controllerAssigned);
         Assigner.AddUnassignmentCallback(this.PlayerIndex, controllerUnassigned);
     }
@@ -23,13 +23,22 @@ public class PlayerJoinPanel : MonoBehaviour
         {
             controllerAssigned(p);
         }
+        else
+        {
+            controllerUnassigned(p);
+        }
     }
 
     /**
      * Private
      */
+    private Animator _animator;
+
     private void controllerAssigned(SessionPlayer player)
     {
+        if (_animator != null)
+            _animator.SetTrigger("Joined");
+
         this.JoinedText.gameObject.SetActive(true);
         this.JoinText.gameObject.SetActive(false);
 
@@ -52,11 +61,14 @@ public class PlayerJoinPanel : MonoBehaviour
             }
         }
         
-        this.JoinedText.text = player.Name + " JOINED (HOLD '" + buttonText.ToUpper() + "' TO LEAVE)";
+        this.JoinedText.text = player.Name + " JOINED (PRESS '" + buttonText.ToUpper() + "' TO LEAVE)";
     }
 
     private void controllerUnassigned(SessionPlayer player)
     {
+        if (_animator != null)
+            _animator.SetTrigger("Unjoined");
+
         this.JoinedText.gameObject.SetActive(false);
         this.JoinText.gameObject.SetActive(true);
 
