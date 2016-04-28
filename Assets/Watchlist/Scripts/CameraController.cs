@@ -19,6 +19,7 @@ public class CameraController : VoBehavior
     {
         public int OrthographicSize;
         public float MaxTargetDistance;
+        public float MinTargetDistance;
     }
 
     void Awake()
@@ -40,8 +41,9 @@ public class CameraController : VoBehavior
         {
             Vector2 centerTarget = calculateCenterTarget();
             this.transform.position = new Vector3(centerTarget.x + this.OffsetPosition.x, centerTarget.y + this.OffsetPosition.y, this.transform.position.z);
-
-            ZoomLevel zoomLevel = findZoomLevel();
+            
+            _currentZoomLevelIndex = findZoomLevelIndex();
+            ZoomLevel zoomLevel = this.ZoomLevels[_currentZoomLevelIndex];
             int size = Mathf.RoundToInt(Mathf.MoveTowards(_camera.orthographicSize, zoomLevel.OrthographicSize, this.ZoomSpeed));
             if (Mathf.Abs(size - zoomLevel.OrthographicSize) < 2)
                 size = zoomLevel.OrthographicSize;
@@ -61,6 +63,7 @@ public class CameraController : VoBehavior
      */
     private Vector2 _lockPosition;
     private Camera _camera;
+    private int _currentZoomLevelIndex;
 
     private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
     {
@@ -107,7 +110,7 @@ public class CameraController : VoBehavior
         return _lockPosition;
     }
 
-    private ZoomLevel findZoomLevel()
+    private int findZoomLevelIndex()
     {
         float farthestDistance = 0.0f;
         foreach (Transform target in this.PlayerTransforms)
@@ -119,11 +122,18 @@ public class CameraController : VoBehavior
                     farthestDistance = d;
             }
         }
-        foreach (ZoomLevel zoomLevel in this.ZoomLevels)
+
+        ZoomLevel currentZoomLevel = this.ZoomLevels[_currentZoomLevelIndex];
+
+        if (_currentZoomLevelIndex < this.ZoomLevels.Length - 1 && farthestDistance > currentZoomLevel.MaxTargetDistance)
         {
-            if (zoomLevel.MaxTargetDistance >= farthestDistance)
-                return zoomLevel;
+            return _currentZoomLevelIndex + 1;
         }
-        return this.ZoomLevels[this.ZoomLevels.Length - 1];
+        else if (_currentZoomLevelIndex > 0 && farthestDistance < currentZoomLevel.MinTargetDistance)
+        {
+            return _currentZoomLevelIndex - 1;
+        }
+
+        return _currentZoomLevelIndex;
     }
 }

@@ -8,7 +8,7 @@ public static class GameplayInput
     private const string AIM_HORIZONTAL = "AimHorizontal";
     private const string AIM_VERTICAL = "AimVertical";
     private const string FIRE = "Fire";
-    private const float MAX_MOUSE_EXTENSION_RATIO = 0.3f;
+    private const float MAX_MOUSE_EXTENSION_RATIO = 0.32f;
 
     public static Vector2 GetMovementAxis(int playerIndex, bool normalized = false)
     {
