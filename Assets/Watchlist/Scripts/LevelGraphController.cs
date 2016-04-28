@@ -21,6 +21,7 @@ public class LevelGraphController : VoBehavior
     public string GameplaySceneName = "";
     public string BossSceneName = "";
     public bool UseDynamicData = true;
+    public string FinalDialogSceneName = "";
 
     /**
      * Data types
@@ -80,6 +81,27 @@ public class LevelGraphController : VoBehavior
         _paths = new LevelGraphPath[this.Size * 2 - 1, this.Size * 2 - 1];
         _halfSize = this.Size / 2;
 
+        // Check if all bosses defeated
+        _allBossesDefeated = true;
+        for (int i = 0; i < this.BossTiles.Length; ++i)
+        {
+            bool contains = false;
+            for (int j = 0; j < this.CompletedTiles.Length; ++i)
+            {
+                if (this.CompletedTiles[j].X == this.BossTiles[i].X && this.CompletedTiles[j].Y == this.BossTiles[i].Y)
+                {
+                    contains = true;
+                    break;
+                }
+            }
+
+            if (!contains)
+            {
+                _allBossesDefeated = false;
+                break;
+            }
+        }
+
         // Setup boxes
         for (int x = -_halfSize; x < _grid.GetLength(0) - _halfSize; ++x)
         {
@@ -97,16 +119,23 @@ public class LevelGraphController : VoBehavior
                 TileState state = TileState.Locked;
                 List<TileTrait> traits = new List<TileTrait>();
 
-                foreach (Vector2 tile in this.CompletedTiles)
+                if (_allBossesDefeated && x == 0 && y == 0)
                 {
-                    if (tile.IntX() == x && tile.IntY() == y)
+                    state = TileState.Available;
+                }
+                else
+                {
+                    foreach (IntegerVector tile in this.CompletedTiles)
                     {
-                        state = TileState.Complete;
-                        break;
-                    }
-                    else if (neighborsTile(position, tile))
-                    {
-                        state = TileState.Available;
+                        if (tile.X == x && tile.Y == y)
+                        {
+                            state = TileState.Complete;
+                            break;
+                        }
+                        else if (neighborsTile(position, tile))
+                        {
+                            state = TileState.Available;
+                        }
                     }
                 }
 
@@ -215,7 +244,11 @@ public class LevelGraphController : VoBehavior
 
                 //TODO - Send input to level generation
                 ProgressData.SelectTile(this.CurrentPosition);
-                if (bossIndex == -1)
+                if (_allBossesDefeated && this.CurrentPosition.X == 0 && this.CurrentPosition.Y == 0)
+                {
+                    SceneManager.LoadScene(this.FinalDialogSceneName);
+                }
+                else if (bossIndex == -1)
                 {
                     SceneManager.LoadScene(this.GameplaySceneName);
                 }
@@ -252,6 +285,7 @@ public class LevelGraphController : VoBehavior
     private LevelGraphPath[,] _paths;
     private bool _currentBlinkingOff;
     private float _timeSinceBlink;
+    private bool _allBossesDefeated;
 
     private bool neighborsTile(Vector2 tile, Vector2 neighbor)
     {
