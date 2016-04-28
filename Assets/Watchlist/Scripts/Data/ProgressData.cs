@@ -4,9 +4,10 @@ using System.Collections.Generic;
 public static class ProgressData
 {
     public const int WEAPON_SLOTS = 4;
+    public const string DATA_PATH = "progress.dat";
 
-    public static IntegerVector[] CompletedTiles { get { return _completedTiles.ToArray(); } }
-    public static IntegerVector MostRecentTile { get { return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
+    public static IntegerVector[] CompletedTiles { get { LoadFromDisk(); return _completedTiles.ToArray(); } }
+    public static IntegerVector MostRecentTile { get { LoadFromDisk(); return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
     
     [System.Serializable]
     public class SlotWrapper
@@ -92,10 +93,48 @@ public static class ProgressData
         _mostRecentTile = null;
     }
 
+    public static void SaveToDisk()
+    {
+        ProgressDiskData diskData = new ProgressDiskData();
+        diskData.DataSaved = true;
+        diskData.CompletedTiles = _completedTiles;
+        diskData.HaveUsedMostRecentTile = _mostRecentTile != null;
+        diskData.MostRecentTile = _mostRecentTile.HasValue ? _mostRecentTile.Value : new IntegerVector();
+        diskData.WeaponSlotsByPlayer = _weaponSlotsByPlayer;
+        DiskDataHandler.Save(DATA_PATH, diskData);
+    }
+
+    public static void LoadFromDisk()
+    {
+        if (!_hasLoaded)
+        {
+            _hasLoaded = true;
+            ProgressDiskData diskData = DiskDataHandler.Load<ProgressDiskData>(DATA_PATH);
+            if (diskData.DataSaved)
+            {
+                _completedTiles = diskData.CompletedTiles;
+                if (diskData.HaveUsedMostRecentTile)
+                    _mostRecentTile = diskData.MostRecentTile;
+                _weaponSlotsByPlayer = diskData.WeaponSlotsByPlayer;
+            }
+        }
+    }
+
+    [System.Serializable]
+    public struct ProgressDiskData
+    {
+        public bool DataSaved;
+        public List<IntegerVector> CompletedTiles;
+        public bool HaveUsedMostRecentTile;
+        public IntegerVector MostRecentTile;
+        public Dictionary<int, SlotWrapper[]> WeaponSlotsByPlayer;
+    }
+
     /**
      * Private
      */
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
+    private static bool _hasLoaded = false;
 }

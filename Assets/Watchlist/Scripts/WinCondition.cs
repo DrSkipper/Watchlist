@@ -36,6 +36,7 @@ public class WinCondition : VoBehavior
     {
         GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         ProgressData.CompleteTile(ProgressData.MostRecentTile);
+        ProgressData.SaveToDisk();
         SceneManager.LoadScene("LevelSelectScene");
     }
 
