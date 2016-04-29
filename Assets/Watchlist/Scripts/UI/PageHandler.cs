@@ -37,6 +37,8 @@ public class PageHandler : VoBehavior
         }
     }
 
+    public bool PageDone { get { return !_textAnimator.Running; } }
+
     /**
      * Private
      */

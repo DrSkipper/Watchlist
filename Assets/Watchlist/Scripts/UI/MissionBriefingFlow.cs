@@ -15,6 +15,7 @@ public class MissionBriefingFlow : VoBehavior
     public PageFlipDelegate PageFlipCallback;
     public bool UseBossText = true;
     public bool UseChoices = false;
+    public GameObject ChoiceMenu;
 
     public delegate void PageFlipDelegate(string avatarName);
     public const string DEFAULT_AVATAR = "master";
@@ -33,6 +34,7 @@ public class MissionBriefingFlow : VoBehavior
     void Awake()
     {
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
+        _destination = this.LevelSelectSceneName;
     }
 
     void Start()
@@ -74,6 +76,11 @@ public class MissionBriefingFlow : VoBehavior
             }
         }
 
+        if (this.UseChoices)
+        {
+            GlobalEvents.Notifier.Listen(MenuElementSelectedEvent.NAME, this, choiceMade);
+        }
+
         this.PageHandler.OnFlippedLastPage = flippedLastPage;
         _timedCallbacks.AddCallback(this, beginPageFlipping, this.IntroDelay);
     }
@@ -82,9 +89,17 @@ public class MissionBriefingFlow : VoBehavior
     {
         if (_introComplete && MenuInput.SelectCurrentElement())
         {
-            this.PageHandler.IncrementPage();
-            if (this.PageFlipCallback != null && this.PageHandler.CurrentPage < _avatarKeys.Length)
-                this.PageFlipCallback(_avatarKeys[this.PageHandler.CurrentPage] != null ? _avatarKeys[this.PageHandler.CurrentPage] : DEFAULT_AVATAR);
+            if (this.UseChoices && _choiceIndex < this.Choices.Count && this.PageHandler.CurrentPage == this.IntroPages.Count - 1)
+            {
+                if (this.PageHandler.PageDone)
+                    this.ChoiceMenu.SetActive(true);
+            }
+            else
+            {
+                this.PageHandler.IncrementPage();
+                if (this.PageFlipCallback != null && this.PageHandler.CurrentPage < _avatarKeys.Length)
+                    this.PageFlipCallback(_avatarKeys[this.PageHandler.CurrentPage] != null ? _avatarKeys[this.PageHandler.CurrentPage] : DEFAULT_AVATAR);
+            }
         }
     }
 
@@ -94,6 +109,8 @@ public class MissionBriefingFlow : VoBehavior
     private TimedCallbacks _timedCallbacks;
     private bool _introComplete;
     private string[] _avatarKeys;
+    private int _choiceIndex;
+    private string _destination;
 
     private void beginPageFlipping()
     {
@@ -103,6 +120,28 @@ public class MissionBriefingFlow : VoBehavior
 
     private void flippedLastPage()
     {
-        SceneManager.LoadScene(this.LevelSelectSceneName);
+        SceneManager.LoadScene(_destination);
+    }
+
+    private void choiceMade(LocalEventNotifier.Event eventObject)
+    {
+        MenuElementSelectedEvent selectionEvent = eventObject as MenuElementSelectedEvent;
+
+        if (selectionEvent.Action.ToLower() == "choice_a")
+        {
+            this.PageHandler.AddPage(this.Choices[_choiceIndex].ResultTextA);
+            _destination = this.Choices[_choiceIndex].DestinationA;
+            ++_choiceIndex;
+            this.ChoiceMenu.SetActive(false);
+            this.PageHandler.IncrementPage();
+        }
+        else if (selectionEvent.Action.ToLower() == "choice_b")
+        {
+            this.PageHandler.AddPage(this.Choices[_choiceIndex].ResultTextB);
+            _destination = this.Choices[_choiceIndex].DestinationB;
+            ++_choiceIndex;
+            this.ChoiceMenu.SetActive(false);
+            this.PageHandler.IncrementPage();
+        }
     }
 }

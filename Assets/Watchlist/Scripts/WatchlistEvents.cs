@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class CollisionEvent : LocalEventNotifier.Event
 {
@@ -92,5 +91,19 @@ public class LevelCompleteEvent : LocalEventNotifier.Event
     public LevelCompleteEvent()
     {
         this.Name = NAME;
+    }
+}
+
+public class MenuElementSelectedEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "MENU_SELECT";
+    public MenuElement Element;
+    public string Action;
+
+    public MenuElementSelectedEvent(MenuElement element, string action)
+    {
+        this.Name = NAME;
+        this.Element = element;
+        this.Action = action;
     }
 }

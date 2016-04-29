@@ -10,7 +10,8 @@ public class MenuElement : MonoBehaviour
         SceneChange,
         ApplicationQuit,
         WipeProgress,
-        ContinueProgress
+        ContinueProgress,
+        SendEvent
     }
 
     [System.Serializable]
@@ -65,6 +66,8 @@ public class MenuElement : MonoBehaviour
                 if (ProgressData.CompletedTiles.Length == 0)
                     this.Locked = true;
                 break;
+            case ActionType.SendEvent:
+                break;
         }
     }
 
@@ -83,6 +86,9 @@ public class MenuElement : MonoBehaviour
                 ProgressData.WipeData();
                 break;
             case ActionType.ContinueProgress:
+                break;
+            case ActionType.SendEvent:
+                GlobalEvents.Notifier.SendEvent(new MenuElementSelectedEvent(this, action.StringParameter));
                 break;
         }
     }
