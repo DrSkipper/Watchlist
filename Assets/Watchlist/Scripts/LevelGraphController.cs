@@ -86,7 +86,7 @@ public class LevelGraphController : VoBehavior
         for (int i = 0; i < this.BossTiles.Length; ++i)
         {
             bool contains = false;
-            for (int j = 0; j < this.CompletedTiles.Length; ++i)
+            for (int j = 0; j < this.CompletedTiles.Length; ++j)
             {
                 if (this.CompletedTiles[j].X == this.BossTiles[i].X && this.CompletedTiles[j].Y == this.BossTiles[i].Y)
                 {
