@@ -22,11 +22,21 @@ public class BossMasterMainBehavior : VoBehavior
     {
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
         GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
+    }
+
+    void Start()
+    {
         _stateMachine = new FSMStateMachine();
         _stateMachine.AddState(HOME_STATE, updateHome, enterHome, exitHome);
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
         _stateMachine.AddState(ATTACK_STATE, updateAttack, enterAttack, exitAttack);
         _stateMachine.BeginWithInitialState(HOME_STATE);
+        _timedCallbacks.AddCallback(this, switchState, this.HomeStateDuration);
+    }
+
+    void Update()
+    {
+        _stateMachine.Update();
     }
 
     /**
