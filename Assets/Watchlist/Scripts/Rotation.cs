@@ -33,6 +33,12 @@ public class Rotation : VoBehavior
         return _angle;
     }
 
+    public void SetAngle(float angle)
+    {
+        _angle = angle;
+        this.transform.localRotation = Quaternion.AngleAxis(_angle, this.Axis);
+    }
+
     /**
      * Private
      */

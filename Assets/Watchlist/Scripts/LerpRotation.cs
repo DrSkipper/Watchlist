@@ -33,6 +33,11 @@ public class LerpRotation : VoBehavior
         _callbacks.Clear();
     }
 
+    public void HaltRotation()
+    {
+        _isLerping = false;
+    }
+
     void Update()
     {
         if (_isLerping)
