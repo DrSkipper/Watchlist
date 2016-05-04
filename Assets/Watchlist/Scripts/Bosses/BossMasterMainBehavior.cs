@@ -85,7 +85,8 @@ public class BossMasterMainBehavior : VoBehavior
 
         for (int i = 0; i < this.BossSubs.Count; ++i)
         {
-            this.BossSubs[i].GoHome(this.ReturnHomeTime);
+            if (this.BossSubs[i] != null)
+                this.BossSubs[i].GoHome(this.ReturnHomeTime);
         }
 
         _timedCallbacks.AddCallback(this, switchState, this.HomeStateDuration);
@@ -173,7 +174,8 @@ public class BossMasterMainBehavior : VoBehavior
     {
         for (int i = 0; i < this.BossSubs.Count; ++i)
         {
-            this.BossSubs[i].GoToAttackPosition(this.TransitionSecondPartTime);
+            if (this.BossSubs[i] != null)
+                this.BossSubs[i].GoToAttackPosition(this.TransitionSecondPartTime);
         }
 
         _timedCallbacks.AddCallback(this, switchState, this.TransitionSecondPartTime + this.BufferTime);
