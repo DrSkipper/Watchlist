@@ -24,7 +24,10 @@ public class TestLevelLayout : VoBehavior
         _levelLayout = level.Grid;
 
         outlineRenderer.CreateMapWithGrid(_levelLayout);
-        this.GetComponent<TileGeometryCreator>().CreateMapWithGrid(_levelLayout);
+
+        TileGeometryCreator geometryCreator = this.GetComponent<TileGeometryCreator>();
+        if (geometryCreator != null)
+            geometryCreator.CreateMapWithGrid(_levelLayout);
     }
 
     /**
