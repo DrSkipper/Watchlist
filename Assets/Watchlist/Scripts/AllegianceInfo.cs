@@ -36,5 +36,6 @@ public enum ColorPaletteState
     Main,
     Projectile,
     Explosion,
-    Damaged
+    Damaged,
+    Gibs
 }

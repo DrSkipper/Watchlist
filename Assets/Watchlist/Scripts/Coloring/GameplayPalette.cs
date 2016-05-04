@@ -12,6 +12,7 @@ public class GameplayPalette : MonoBehaviour
     public Color EnemyProjectileColor;
     public Color EnemyExplosionColor;
     public Color EnemyDamagedColor;
+    public Color EnemyGibsColor;
 
     public Color WallColor;
     public Color PickupColor;
@@ -40,6 +41,7 @@ public class GameplayPalette : MonoBehaviour
         _enemyProjectileColor = this.EnemyProjectileColor;
         _enemyExplosionColor = this.EnemyExplosionColor;
         _enemyDamagedColor = this.EnemyDamagedColor;
+        _enemyGibsColor = this.EnemyGibsColor;
 
         _wallColor = this.WallColor;
         _pickupColor = this.PickupColor;
@@ -98,6 +100,11 @@ public class GameplayPalette : MonoBehaviour
         return _enemyDamagedColor;
     }
 
+    public static Color GetEnemyGibsColor()
+    {
+        return _enemyGibsColor;
+    }
+
     public static Color GetWallColor()
     {
         return _wallColor;
@@ -140,6 +147,8 @@ public class GameplayPalette : MonoBehaviour
                 return GetPlayerExplosionColor(parameter);
             case "player_damaged":
                 return GetPlayerDamagedColor(parameter);
+            case "player_gibs":
+                return GetPlayerColor(parameter); //TODO ?
             case "enemy":
                 return GetEnemyColor();
             case "enemy_projectile":
@@ -148,6 +157,8 @@ public class GameplayPalette : MonoBehaviour
                 return GetEnemyExplosionColor();
             case "enemy_damaged":
                 return GetEnemyDamagedColor();
+            case "enemy_gibs":
+                return GetEnemyGibsColor();
             case "wall":
                 return GetWallColor();
             case "pickup":
@@ -184,6 +195,9 @@ public class GameplayPalette : MonoBehaviour
             case ColorPaletteState.Damaged:
                 colorClassAddition = "_damaged";
                 break;
+            case ColorPaletteState.Gibs:
+                colorClassAddition = "_gibs";
+                break;
         }
 
         switch (allegianceInfo.Allegiance)
@@ -209,6 +223,7 @@ public class GameplayPalette : MonoBehaviour
     private static Color _enemyProjectileColor;
     private static Color _enemyExplosionColor;
     private static Color _enemyDamagedColor;
+    private static Color _enemyGibsColor;
 
     private static Color _wallColor;
     private static Color _pickupColor;
