@@ -8,6 +8,7 @@ public class BossMasterSubBehavior : VoBehavior
 
     void Awake()
     {
+        this.HomeTransform.position = this.transform.position;
         _lerpMovement = this.GetComponent<LerpMovement>();
     }
 
