@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: a1dee4d7637c0404f8cbada6bd974111
-timeCreated: 1459296890
+timeCreated: 1462477643
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: player_body
     21300002: player_bullet
     21300004: player_reticle
+    21300006: player_body_1
+    21300008: player_body_2
+    21300010: player_body_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -82,6 +85,39 @@ TextureImporter:
         y: 1
         width: 4
         height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_body_1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_body_2
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: player_body_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 8
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

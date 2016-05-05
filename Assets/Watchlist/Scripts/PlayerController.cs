@@ -14,6 +14,7 @@ public class PlayerController : Actor2D
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
     public ReticlePositioner Reticle;
+    public Texture2D SpriteAtlas;
 
     public delegate void SlotChangeDelegate(ProgressData.SlotWrapper[] newSlots);
 
@@ -35,6 +36,8 @@ public class PlayerController : Actor2D
             info.MemberId = this.PlayerIndex;
             colorizer.UpdateVisual(info);
             _weapon.AllegianceInfo = info;
+
+            this.spriteRenderer.sprite = this.SpriteAtlas.GetSprites()["player_body_" + this.PlayerIndex];
         }
     }
 
