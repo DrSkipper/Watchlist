@@ -9,6 +9,7 @@ public class BossMasterMainBehavior : VoBehavior
     public List<Transform> Targets;
     public List<BossMasterGroupBehavior> BossGroups;
     public List<BossMasterSubBehavior> BossSubs;
+    public WinCondition WinCondition;
     public float ReturnHomeTime = 0.2f;
     public float HomeStateDuration = 4.0f;
     public float TransitionFirstPartTime = 0.2f;
@@ -31,6 +32,16 @@ public class BossMasterMainBehavior : VoBehavior
 
     void Start()
     {
+        for (int i = 0; i < this.BossGroups.Count; ++i)
+        {
+            this.BossGroups[i].Shooter.GetComponent<Damagable>().OnDeathCallbacks.Add(shooterDeath);
+        }
+
+        for (int i = 0; i < this.BossSubs.Count; ++i)
+        {
+            this.BossSubs[i].GetComponent<Damagable>().OnDeathCallbacks.Add(subDeath);
+        }
+
         _stateMachine = new FSMStateMachine();
         _stateMachine.AddState(HOME_STATE, updateHome, enterHome, exitHome);
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
@@ -63,6 +74,24 @@ public class BossMasterMainBehavior : VoBehavior
     private void switchState()
     {
         _switchState = true;
+    }
+
+    private void shooterDeath(Damagable shooter)
+    {
+        this.BossGroups.Remove(shooter.transform.parent.GetComponent<BossMasterGroupBehavior>());
+        checkEnd();
+    }
+
+    private void subDeath(Damagable sub)
+    {
+        this.BossSubs.Remove(sub.GetComponent<BossMasterSubBehavior>());
+        checkEnd();
+    }
+
+    private void checkEnd()
+    {
+        if (this.BossGroups.Count == 0 && this.BossSubs.Count == 0)
+            this.WinCondition.EndLevel();
     }
 
     private void playerSpawned(LocalEventNotifier.Event e)

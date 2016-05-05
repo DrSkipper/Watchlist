@@ -6,6 +6,7 @@ public class WinCondition : VoBehavior
     public GameObject LevelCompletePanel;
     public float LevelCompleteScreenLength = 3.0f;
     public float ReturnToLevelSelectDelay = 1.0f;
+    public string Destination = "LevelSelectScene";
 
     public void EnemySpawned(GameObject enemy)
     {
@@ -37,7 +38,7 @@ public class WinCondition : VoBehavior
         GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         ProgressData.CompleteTile(ProgressData.MostRecentTile);
         ProgressData.SaveToDisk();
-        SceneManager.LoadScene("LevelSelectScene");
+        SceneManager.LoadScene(this.Destination);
     }
 
     /**
