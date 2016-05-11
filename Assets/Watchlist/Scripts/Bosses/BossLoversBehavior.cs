@@ -58,7 +58,6 @@ public class BossLoversBehavior : VoBehavior
         int count = 0;
         for (int i = 0; i < this.OtherBosses.Count; ++i)
         {
-            GameObject boss = this.OtherBosses[i];
             Vector2 diff = this.transform.position - this.OtherBosses[i].transform.position;
             float mag = diff.magnitude;
             float strength = 0.0f;

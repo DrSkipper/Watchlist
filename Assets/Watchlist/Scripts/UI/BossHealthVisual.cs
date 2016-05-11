@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(TimedCallbacks))]
 public class BossHealthVisual : MonoBehaviour
 {
     public BossHealth Health;
@@ -7,6 +8,7 @@ public class BossHealthVisual : MonoBehaviour
     public int LargeHealthChangeCutoff = 7;
     public float SmallHealthChangeLerpSpeed = 20.0f;
     public float LargeHealthChangeLerpSpeed = 120.0f;
+    public float InitialDelay = 0.0f;
 
     void Awake()
     {
@@ -17,14 +19,18 @@ public class BossHealthVisual : MonoBehaviour
     void Start()
     {
         this.Health.Callbacks.Add(updateHealth);
+        this.GetComponent<TimedCallbacks>().AddCallback(this, begin, this.InitialDelay);
     }
 
     void Update()
     {
-        float currentWidth = _rectTransform.sizeDelta.x;
-        float speed = Mathf.Abs(currentWidth - _targetWidth) > this.LargeHealthChangeCutoff ? this.LargeHealthChangeLerpSpeed : this.SmallHealthChangeLerpSpeed;
-        currentWidth = Mathf.MoveTowards(currentWidth, _targetWidth, speed * Time.deltaTime);
-        _rectTransform.sizeDelta = new Vector2(currentWidth, _rectTransform.sizeDelta.y);
+        if (_begun)
+        {
+            float currentWidth = _rectTransform.sizeDelta.x;
+            float speed = Mathf.Abs(currentWidth - _targetWidth) > this.LargeHealthChangeCutoff ? this.LargeHealthChangeLerpSpeed : this.SmallHealthChangeLerpSpeed;
+            currentWidth = Mathf.MoveTowards(currentWidth, _targetWidth, speed * Time.deltaTime);
+            _rectTransform.sizeDelta = new Vector2(currentWidth, _rectTransform.sizeDelta.y);
+        }
     }
 
     /**
@@ -32,6 +38,12 @@ public class BossHealthVisual : MonoBehaviour
      */
     private RectTransform _rectTransform;
     private int _targetWidth;
+    private bool _begun;
+
+    private void begin()
+    {
+        _begun = true;
+    }
 
     private void updateHealth(int health)
     {
