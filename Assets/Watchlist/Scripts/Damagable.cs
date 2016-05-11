@@ -9,6 +9,7 @@ public class Damagable : VoBehavior
     public bool Stationary = false;
     public float Friction = 1.0f;
     public bool Invincible;
+    public bool ApplyDamageLocally = true;
     public List<HealthCallback> OnHealthChangeCallbacks;
     public List<DeathCallback> OnDeathCallbacks;
     public GameObject GibsPrefab;
@@ -103,7 +104,9 @@ public class Damagable : VoBehavior
     {
         _alreadyHitThisUpdate.Add(other.gameObject);
 
-        this.Health -= other.Damage;
+        if (this.ApplyDamageLocally)
+            this.Health -= other.Damage;
+
         foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
             callback(this, this.Health >= 0 ? other.Damage : other.Damage + this.Health);
 

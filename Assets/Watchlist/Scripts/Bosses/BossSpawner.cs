@@ -6,24 +6,37 @@ public class BossSpawner : VoBehavior
 
     public float SpawnDelay = 0.5f;
     public SpawnedObjectCallback SpawnCallback;
+    public GameObject PrefabToSpawn;
+    public GameObject SpawnVisualPrefab;
+    public bool SpawnOnStart = false;
+    public float InitialDelay = 0.0f;
+    
+    void Start()
+    {
+        if (this.SpawnOnStart)
+            this.GetComponent<TimedCallbacks>().AddCallback(this, initialSpawn, this.InitialDelay);
+    }
 
     public void InitiateSpawn(GameObject prefabToSpawn, GameObject spawnVisualPrefab, SpawnedObjectCallback callback)
     {
-        _prefabToSpawn = prefabToSpawn;
-        _callback = callback;
+        this.PrefabToSpawn = prefabToSpawn;
+        this.SpawnCallback = callback;
         Instantiate(spawnVisualPrefab, this.transform.position, Quaternion.identity);
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.Spawn, this.SpawnDelay);
     }
 
     public void Spawn()
     {
-        GameObject spawn = Instantiate(_prefabToSpawn, this.transform.position, Quaternion.identity) as GameObject;
-        _callback(spawn);
+        GameObject spawn = Instantiate(this.PrefabToSpawn, this.transform.position, Quaternion.identity) as GameObject;
+        if (this.SpawnCallback != null)
+            this.SpawnCallback(spawn);
     }
 
     /**
      * Private
      */
-    private GameObject _prefabToSpawn;
-    private SpawnedObjectCallback _callback;
+    private void initialSpawn()
+    {
+        this.InitiateSpawn(this.PrefabToSpawn, this.SpawnVisualPrefab, this.SpawnCallback);
+    }
 }

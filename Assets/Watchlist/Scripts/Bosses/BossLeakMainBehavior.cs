@@ -14,7 +14,9 @@ public class BossLeakMainBehavior : VoBehavior
     public float SubBossMaxSpeed = 150.0f;
     public LayerMask LevelGeomLayerMask;
     public List<GameObject> SubBosses;
-    public GameObject EndFlowObject;
+    public GameObject MinionSpawnerPrefab;
+    public float MinionSpawnCooldown = 0.5f;
+    public List<Transform> Targets;
 
     void Start()
     {
@@ -54,6 +56,7 @@ public class BossLeakMainBehavior : VoBehavior
     private FSMStateMachine _stateMachine;
     private bool _stateSwitch;
     private Vector3[] _startingPositions;
+    private float _minionCooldown;
 
     private const string LOCKED_IN_STATE = "LockedIn";
     private const string SPREAD_OUT_STATE = "SpreadOut";
@@ -68,11 +71,6 @@ public class BossLeakMainBehavior : VoBehavior
     private void SubBossKilled(Damagable died)
     {
         this.SubBosses.Remove(died.gameObject);
-
-        if (this.SubBosses.Count == 0)
-        {
-            this.EndFlowObject.GetComponent<WinCondition>().EndLevel();
-        }
     }
 
     private string LockedInUpdate()
@@ -81,11 +79,20 @@ public class BossLeakMainBehavior : VoBehavior
         _currentAngle = (_currentAngle + additionalAngle * _rotationDirection) % 360.0f;
         this.transform.localRotation = Quaternion.AngleAxis(_currentAngle, _rotationAxis);
 
+        _minionCooldown += Time.deltaTime;
+        if (_minionCooldown >= this.MinionSpawnCooldown)
+        {
+            GameObject go = Instantiate(this.MinionSpawnerPrefab, this.transform.position, Quaternion.identity) as GameObject;
+            go.GetComponent<EnemySpawner>().Targets = this.Targets;
+            _minionCooldown = 0.0f;
+        }
+
         return !_stateSwitch ? LOCKED_IN_STATE : SPREAD_OUT_STATE;
     }
 
     private void EnterLockedIn()
     {
+        _minionCooldown = 0.0f;
         _rotationDirection = this.PossibleRotationDirections[Random.Range(0, this.PossibleRotationDirections.Length)];
         Vector2 velocity = this.StartingVelocities[Random.Range(0, this.StartingVelocities.Length)];
         _actor.SetVelocityModifier(VELOCITY_KEY, new VelocityModifier(this.StartingSpeed * velocity.normalized, VelocityModifier.CollisionBehavior.bounce));
@@ -94,6 +101,7 @@ public class BossLeakMainBehavior : VoBehavior
 
     private void ExitLockedIn()
     {
+        _minionCooldown = 0.0f;
         _stateSwitch = false;
         _actor.Velocity = Vector2.zero;
         _actor.RemoveVelocityModifier(VELOCITY_KEY);
@@ -127,7 +135,7 @@ public class BossLeakMainBehavior : VoBehavior
 
         foreach (GameObject subBoss in this.SubBosses)
         {
-            Vector2 velocity = this.StartingVelocities[Random.Range(0, this.StartingVelocities.Length)];
+            //Vector2 velocity = this.StartingVelocities[Random.Range(0, this.StartingVelocities.Length)];
             Actor2D actor = subBoss.GetComponent<Actor2D>();
             actor.Velocity = Vector2.zero;
             actor.HaltMovementMask &= ~this.LevelGeomLayerMask;
