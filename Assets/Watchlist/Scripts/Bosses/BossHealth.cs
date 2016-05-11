@@ -7,6 +7,7 @@ public class BossHealth : VoBehavior
     public int CurrentHealth = 10;
     public List<Damagable> Damagables;
     public List<HealthChangedCallback> Callbacks;
+    public List<HealthChangedCallback> DeathCallbacks;
     public float DeathShakeMagnitude = 300.0f;
 
     public delegate void HealthChangedCallback(int currentHealth);
@@ -14,6 +15,7 @@ public class BossHealth : VoBehavior
     void Awake()
     {
         this.Callbacks = new List<HealthChangedCallback>();
+        this.DeathCallbacks = new List<HealthChangedCallback>();
     }
 
     void Start()
@@ -58,5 +60,11 @@ public class BossHealth : VoBehavior
     {
         for (int i = 0; i < this.Callbacks.Count; ++i)
             this.Callbacks[i](this.CurrentHealth);
+
+        if (this.CurrentHealth <= 0)
+        {
+            for (int i = 0; i < this.DeathCallbacks.Count; ++i)
+                this.DeathCallbacks[i](this.CurrentHealth);
+        }
     }
 }

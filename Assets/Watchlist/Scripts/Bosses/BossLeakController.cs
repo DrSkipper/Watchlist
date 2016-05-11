@@ -40,6 +40,7 @@ public class BossLeakController : VoBehavior
     private void spawned(GameObject go)
     {
         BossLeakMainBehavior mainBehavior = go.GetComponent<BossLeakMainBehavior>();
+        _health.DeathCallbacks.Add(mainBehavior.OnDeath);
         mainBehavior.Targets = _targets;
         for (int i = 0; i < mainBehavior.SubBosses.Count; ++i)
         {

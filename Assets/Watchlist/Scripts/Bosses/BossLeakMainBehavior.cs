@@ -17,6 +17,8 @@ public class BossLeakMainBehavior : VoBehavior
     public GameObject MinionSpawnerPrefab;
     public float MinionSpawnCooldown = 0.5f;
     public List<Transform> Targets;
+    public float InitialDeathDelay = 0.5f;
+    public float SubBossDeathSpacing = 0.2f;
 
     void Start()
     {
@@ -25,6 +27,7 @@ public class BossLeakMainBehavior : VoBehavior
         _rotationAxis = new Vector3(0, 0, 1);
         _startingPositions = new Vector3[this.SubBosses.Count];
         _stateMachine = new FSMStateMachine();
+        _shooters = new List<Damagable>();
         _stateMachine.AddState(LOCKED_IN_STATE, this.LockedInUpdate, this.EnterLockedIn, this.ExitLockedIn);
         _stateMachine.AddState(SPREAD_OUT_STATE, this.SpreadOutUpdate, this.EnterSpreadOut, this.ExitSpreadOut);
         _stateMachine.AddState(RETURNING_STATE, this.ReturningUpdate, this.EnterReturning, this.ExitReturning);
@@ -42,7 +45,23 @@ public class BossLeakMainBehavior : VoBehavior
 
     void Update()
     {
-        _stateMachine.Update();
+        if (!_dead)
+            _stateMachine.Update();
+    }
+
+    public void OnDeath(int hp)
+    {
+        _dead = true;
+        _actor.RemoveVelocityModifier(VELOCITY_KEY);
+        while (_shooters.Count > 0)
+        {
+            _shooters[_shooters.Count - 1].Kill(0.0f);
+        }
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            this.SubBosses[i].GetComponent<Actor2D>().RemoveVelocityModifier(VELOCITY_KEY);
+        }
+        _timedCallbacks.AddCallback(this, triggerDeaths, this.InitialDeathDelay);
     }
 
     /**
@@ -57,11 +76,26 @@ public class BossLeakMainBehavior : VoBehavior
     private bool _stateSwitch;
     private Vector3[] _startingPositions;
     private float _minionCooldown;
+    private List<Damagable> _shooters;
+    private bool _dead;
 
     private const string LOCKED_IN_STATE = "LockedIn";
     private const string SPREAD_OUT_STATE = "SpreadOut";
     private const string RETURNING_STATE = "Returning";
     private const string VELOCITY_KEY = "normal";
+
+    private void triggerDeaths()
+    {
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            _timedCallbacks.AddCallback(this, killSubBoss, i * this.SubBossDeathSpacing);
+        }
+    }
+
+    private void killSubBoss()
+    {
+        this.SubBosses[Random.Range(0, this.SubBosses.Count)].GetComponent<Damagable>().Kill(0.0f);
+    }
 
     private void TimeForStateSwitch()
     {
@@ -83,11 +117,25 @@ public class BossLeakMainBehavior : VoBehavior
         if (_minionCooldown >= this.MinionSpawnCooldown)
         {
             GameObject go = Instantiate(this.MinionSpawnerPrefab, this.transform.position, Quaternion.identity) as GameObject;
-            go.GetComponent<EnemySpawner>().Targets = this.Targets;
+            EnemySpawner spawner = go.GetComponent<EnemySpawner>();
+            spawner.Targets = this.Targets;
+            spawner.SpawnCallback = shooterSpawned;
             _minionCooldown = 0.0f;
         }
 
         return !_stateSwitch ? LOCKED_IN_STATE : SPREAD_OUT_STATE;
+    }
+
+    private void shooterSpawned(GameObject go)
+    {
+        Damagable damagable = go.GetComponent<Damagable>();
+        _shooters.Add(damagable);
+        damagable.OnDeathCallbacks.Add(shooterDied);
+    }
+
+    private void shooterDied(Damagable died)
+    {
+        _shooters.Remove(died);
     }
 
     private void EnterLockedIn()

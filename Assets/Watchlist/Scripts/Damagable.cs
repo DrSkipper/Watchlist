@@ -100,6 +100,14 @@ public class Damagable : VoBehavior
         _alreadyHitThisUpdate.Clear();
     }
 
+    public void Kill(float knockback)
+    {
+        this.Health = 0;
+        _deathKnockback = knockback;
+        _deathImpactVector = Vector2.zero;
+        die();
+    }
+
     public void ReceiveDamage(Damager other)
     {
         _alreadyHitThisUpdate.Add(other.gameObject);
