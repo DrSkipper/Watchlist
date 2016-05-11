@@ -10,7 +10,7 @@ public class Damagable : VoBehavior
     public float Friction = 1.0f;
     public bool Invincible;
     public List<HealthCallback> OnHealthChangeCallbacks;
-    public List<HealthCallback> OnDeathCallbacks;
+    public List<DeathCallback> OnDeathCallbacks;
     public GameObject GibsPrefab;
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
@@ -19,12 +19,13 @@ public class Damagable : VoBehavior
 
     public int MaxHealth { get { return _maxHealth; } }
 
-    public delegate void HealthCallback(Damagable affected);
+    public delegate void HealthCallback(Damagable affected, int damageDone);
+    public delegate void DeathCallback(Damagable affected);
 
     void Awake()
     {
         _maxHealth = this.Health;
-        this.OnDeathCallbacks = new List<HealthCallback>();
+        this.OnDeathCallbacks = new List<DeathCallback>();
         this.OnHealthChangeCallbacks = new List<HealthCallback>();
     }
 
@@ -104,7 +105,7 @@ public class Damagable : VoBehavior
 
         this.Health -= other.Damage;
         foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
-            callback(this);
+            callback(this, this.Health >= 0 ? other.Damage : other.Damage + this.Health);
 
         Vector2 impactVector = Vector2.zero;
 
@@ -175,7 +176,7 @@ public class Damagable : VoBehavior
 
     private void die()
     {
-        foreach (HealthCallback callback in this.OnDeathCallbacks)
+        foreach (DeathCallback callback in this.OnDeathCallbacks)
             callback(this);
 
         if (this.GibsPrefab != null)

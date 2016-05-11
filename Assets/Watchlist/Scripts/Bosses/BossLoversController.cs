@@ -13,13 +13,17 @@ public class BossLoversController : VoBehavior
     public int TotalSubBosses = 6;
     public int InitialSubBosses = 2;
     public int SubBossSpawnsPerWave = 2;
-    public int OpenSpaceForSpawn = 50;
     public float FireCooldown = 5.0f;
     public float CooldownSpeedupPerWave = 1.0f;
     public float FireDuration = 1.0f;
     public float InitialSpawnDelay = 1.0f;
     public string ReturnSceneDestination = "";
     public float ReturnSceneDelay = 2.0f;
+
+    void Awake()
+    {
+        _health = this.GetComponent<BossHealth>();
+    }
 
     void Start()
     {
@@ -42,6 +46,8 @@ public class BossLoversController : VoBehavior
 
     void SubBossSpawned(GameObject subBoss)
     {
+        _health.AddDamagable(subBoss.GetComponent<Damagable>());
+
         List<GameObject> otherBosses = new List<GameObject>(_subBosses);
         subBoss.GetComponent<BossLoversBehavior>().OtherBosses = otherBosses;
 
@@ -74,6 +80,7 @@ public class BossLoversController : VoBehavior
     /**
      * Private
      */
+    private BossHealth _health;
     private List<GameObject> _subBosses = new List<GameObject>();
     private int _killedSubBosses;
     private int _spawnedSubBosses;
@@ -122,7 +129,7 @@ public class BossLoversController : VoBehavior
 
     private bool spawnAvailable(Transform spawn)
     {
-        List<IntegerCollider> colliders = this.CollisionManager.GetCollidersInRange(new IntegerRect(Mathf.RoundToInt(spawn.position.x), Mathf.RoundToInt(spawn.position.y), this.OpenSpaceForSpawn, this.OpenSpaceForSpawn), this.SpawnCollisionLayers);
-        return colliders.Count == 0;
+        IntegerCollider collider = spawn.GetComponent<IntegerCollider>();
+        return collider == null || collider.CollideFirst(0, 0, this.SpawnCollisionLayers) == null;
     }
 }

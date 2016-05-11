@@ -31,7 +31,7 @@ public class PlayerHealthBar : MonoBehaviour
         }
     }
 
-    private void healthUpdated(Damagable player)
+    private void healthUpdated(Damagable player, int damage)
     {
         float percentHealth = (float)player.Health / (float)player.MaxHealth;
         int height = Mathf.RoundToInt((float)this.TargetHeight * percentHealth);

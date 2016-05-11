@@ -19,8 +19,6 @@ public class BossSpawner : VoBehavior
     {
         GameObject spawn = Instantiate(_prefabToSpawn, this.transform.position, Quaternion.identity) as GameObject;
         _callback(spawn);
-        _prefabToSpawn = null;
-        _callback = null;
     }
 
     /**
