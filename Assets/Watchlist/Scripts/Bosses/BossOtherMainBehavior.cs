@@ -12,6 +12,8 @@ public class BossOtherMainBehavior : VoBehavior
     public float MovementTime = 5.0f;
     public int NumActions = 3;
     public GameObject EndFlowObject;
+    public List<EnemySpawner> MinionSpawners;
+    public float MinionSpawnCooldown = 1.0f;
 
     void Awake()
     {
@@ -20,13 +22,24 @@ public class BossOtherMainBehavior : VoBehavior
         _stateMachine.AddState(SPINNING_STATE, updateSpinning, enterSpinning, exitSpinning);
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
         _stateMachine.AddState(ACTION_STATE, updateAction, enterAction, exitAction);
+        _health = this.GetComponent<BossHealth>();
+        for (int i = 0; i < this.SubBossParts.Count; ++i)
+        {
+            _health.AddDamagable(this.SubBossParts[i].GetComponent<Damagable>());
+        }
     }
 
     void Start()
     {
-        foreach (GameObject subBossPart in this.SubBossParts)
+        for (int i = 0; i < this.SubBossParts.Count; ++i)
         {
-            subBossPart.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossPartDestroyed);
+            Damagable damagable = this.SubBossParts[i].GetComponent<Damagable>();
+            damagable.OnDeathCallbacks.Add(this.SubBossPartDestroyed);
+            _health.AddDamagable(damagable);
+        }
+        for (int i = 0; i < this.MinionSpawners.Count; ++i)
+        {
+            this.MinionSpawners[i].Targets = PlayerTargetController.Targets;
         }
         _stateMachine.BeginWithInitialState(SPINNING_STATE);
         enterSpinning();
@@ -41,9 +54,11 @@ public class BossOtherMainBehavior : VoBehavior
      * Private
      */
     private TimedCallbacks _timedCallbacks;
+    private BossHealth _health;
     private FSMStateMachine _stateMachine;
     private int _action;
     private bool _stateSwitch;
+    private float _minionSpawnCooldown;
 
     private const string SPINNING_STATE = "spinning";
     private const string TRANSITION_STATE = "transition";
@@ -64,11 +79,18 @@ public class BossOtherMainBehavior : VoBehavior
 
     private string updateSpinning()
     {
+        _minionSpawnCooldown += Time.deltaTime;
+        if (_minionSpawnCooldown > this.MinionSpawnCooldown)
+        {
+            _minionSpawnCooldown = 0.0f;
+            this.MinionSpawners[Random.Range(0, this.MinionSpawners.Count)].BeginSpawn();
+        }
         return !_stateSwitch ? SPINNING_STATE : TRANSITION_STATE;
     }
 
     private void enterSpinning()
     {
+        _minionSpawnCooldown = 0.0f;
         _stateSwitch = false;
         foreach (GameObject subBoss in this.SubBosses)
         {
@@ -80,6 +102,7 @@ public class BossOtherMainBehavior : VoBehavior
 
     private void exitSpinning()
     {
+        _minionSpawnCooldown = 0.0f;
         _action = Random.Range(0, this.NumActions);
     }
 
