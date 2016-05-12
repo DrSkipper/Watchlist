@@ -129,8 +129,14 @@ public class BossLeakMainBehavior : VoBehavior
     private void shooterSpawned(GameObject go)
     {
         Damagable damagable = go.GetComponent<Damagable>();
-        _shooters.Add(damagable);
-        damagable.OnDeathCallbacks.Add(shooterDied);
+
+        if (_dead)
+            damagable.Kill(0.0f);
+        else
+        {
+            _shooters.Add(damagable);
+            damagable.OnDeathCallbacks.Add(shooterDied);
+        }
     }
 
     private void shooterDied(Damagable died)

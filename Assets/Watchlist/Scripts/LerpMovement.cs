@@ -26,6 +26,13 @@ public class LerpMovement : VoBehavior
         this.MovementSpeed = Vector2.Distance(targetPosition, this.transform.position) / timeToReachPoint;
     }
 
+    public void HaltMovement()
+    {
+        this.MovementSpeed = 0.0f;
+        this.IsMoving = false;
+        this.ClearCallbacks();
+    }
+
     public void AddCallback(LerpFinishedCallback callback)
     {
         _callbacks.Add(callback);

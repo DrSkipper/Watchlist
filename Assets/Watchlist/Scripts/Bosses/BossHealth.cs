@@ -39,8 +39,13 @@ public class BossHealth : VoBehavior
     /**
      * Private
      */
+    private bool _dead;
+
     private void damagableHit(Damagable damgable, int damage)
     {
+        if (_dead)
+            return;
+
         this.CurrentHealth -= damage;
 
         if (this.CurrentHealth <= 0)
@@ -63,6 +68,7 @@ public class BossHealth : VoBehavior
 
         if (this.CurrentHealth <= 0)
         {
+            _dead = true;
             for (int i = 0; i < this.DeathCallbacks.Count; ++i)
                 this.DeathCallbacks[i](this.CurrentHealth);
         }
