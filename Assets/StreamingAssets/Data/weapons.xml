@@ -1727,7 +1727,7 @@
       <AudioCooldown>0.1</AudioCooldown>
     </WeaponType>
     <WeaponType>
-      <Name>Boss 8 Shot</Name>
+      <Name>Boss 8-Way Shot</Name>
       <Id>2000006</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
@@ -1748,6 +1748,29 @@
       <SpecialEffectParameter2>0</SpecialEffectParameter2>
       <AudioIndex>0</AudioIndex>
       <AudioCooldown>0.1</AudioCooldown>
+    </WeaponType>
+    <WeaponType>
+      <Name>Boss 180 Shot</Name>
+      <Id>2000007</Id>
+      <Damage>1</Damage>
+      <Knockback>150</Knockback>
+      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <ShotSpeed>0</ShotSpeed>
+      <ShotCooldown>0.0333</ShotCooldown>
+      <ShotCount>2</ShotCount>
+      <AngleBetweenShots>180</AngleBetweenShots>
+      <MaximumBounces>0</MaximumBounces>
+      <MinimumBounceAngle>21</MinimumBounceAngle>
+      <VelocityFallOff>0</VelocityFallOff>
+      <DurationTime>0.0333</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>laser</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
+      <SpecialEffect>none</SpecialEffect>
+      <SpecialEffectParameter1>0</SpecialEffectParameter1>
+      <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>1</AudioIndex>
+      <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
   </WeaponTypes>
 </WeaponData>

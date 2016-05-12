@@ -68,6 +68,12 @@ public class BossOtherMainBehavior : VoBehavior
             this.SubBosses[i].GetComponent<LerpRotation>().HaltRotation();
             this.SubBosses[i].GetComponent<LerpMovement>().HaltMovement();
         }
+        for (int i = 0; i < this.SubBosses.Length; ++i)
+        {
+            WeaponAutoFire fire = this.SubBosses[i].GetComponent<WeaponAutoFire>();
+            if (fire != null)
+                fire.Paused = true;
+        }
         _timedCallbacks.AddCallback(this, triggerDeaths, this.InitialDeathDelay);
     }
 
@@ -95,6 +101,13 @@ public class BossOtherMainBehavior : VoBehavior
             _begun = true;
             _stateMachine.BeginWithInitialState(SPINNING_STATE);
             enterSpinning();
+
+            for (int i = 0; i < this.SubBosses.Length; ++i)
+            {
+                WeaponAutoFire fire = this.SubBosses[i].GetComponent<WeaponAutoFire>();
+                if (fire != null)
+                    fire.Paused = false;
+            }
         }
     }
 

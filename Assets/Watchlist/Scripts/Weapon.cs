@@ -9,6 +9,7 @@ public class Weapon : VoBehavior
     public GameObject WeaponAudioObject;
     public AudioClip[] FireAudio;
     public ShotFiredDelegate ShotFiredCallback;
+    public float ShotAngleOffset = 0.0f;
 
     public delegate void ShotFiredDelegate(bool ignoreExplosions);
 
@@ -43,7 +44,7 @@ public class Weapon : VoBehavior
 
                 if (oddCount)
                 {
-                    createBullet(direction, shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
                     shotCount -= 1;
                 }
                 else
@@ -53,8 +54,8 @@ public class Weapon : VoBehavior
 
                 while (shotCount > 0)
                 {
-                    createBullet(direction.VectorAtAngle(shotAngle), shotStartDistance, prefab, ignoreExplosions);
-                    createBullet(direction.VectorAtAngle(-shotAngle), shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(shotAngle + this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(-shotAngle + this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
 
                     shotCount -= 2;
                     shotAngle += this.WeaponType.AngleBetweenShots;

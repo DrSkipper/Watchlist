@@ -4,6 +4,8 @@ public class WeaponAutoFire : VoBehavior
 {
     public float ShotStartDistance = 4.0f;
     public int WeaponId = 1;
+    public bool UseRotation = false;
+    public bool Paused = false;
 
     void Awake()
     {
@@ -13,7 +15,8 @@ public class WeaponAutoFire : VoBehavior
 
     void Update()
     {
-        _weapon.Fire(Vector2.up, this.ShotStartDistance);
+        if (!this.Paused)
+            _weapon.Fire(this.UseRotation ? (Vector2)this.transform.right : Vector2.up, this.ShotStartDistance);
     }
 
     /**
