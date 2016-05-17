@@ -7,6 +7,7 @@ public class BossWeakMainBehavior : VoBehavior
 {
     public List<GameObject> SubBosses;
     public List<Transform> AttackTargets;
+    public GameObject Eye;
     public float AngleIncrement = 90.0f;
     public float AttackSpeed = 200.0f;
     public float DelayAfterRotation = 0.2f;
@@ -21,6 +22,8 @@ public class BossWeakMainBehavior : VoBehavior
         _rotation = this.GetComponent<Rotation>();
         _lerpRotation = this.GetComponent<LerpRotation>();
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
+        _eyeRotation = this.Eye.GetComponent<Rotation>();
+        _eyeAutoFire = this.Eye.GetComponent<WeaponAutoFire>();
         _stateMachine = new FSMStateMachine();
     }
 
@@ -57,6 +60,8 @@ public class BossWeakMainBehavior : VoBehavior
     private Rotation _rotation;
     private LerpRotation _lerpRotation;
     private TimedCallbacks _timedCallbacks;
+    private Rotation _eyeRotation;
+    private WeaponAutoFire _eyeAutoFire;
     private FSMStateMachine _stateMachine;
     private bool _switchState;
 
@@ -140,6 +145,7 @@ public class BossWeakMainBehavior : VoBehavior
         _switchState = false;
         this.SubBosses.Shuffle();
         clearNullTargets();
+        _eyeAutoFire.Paused = false;
 
         if (this.AttackTargets.Count == 0)
         {
@@ -158,6 +164,8 @@ public class BossWeakMainBehavior : VoBehavior
 
     private void exitAttacking()
     {
+        _eyeAutoFire.Paused = true;
+        _eyeRotation.RotationSpeed = -_eyeRotation.RotationSpeed;
     }
 
     private void playerSpawned(LocalEventNotifier.Event spawnEvent)
