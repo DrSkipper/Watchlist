@@ -16,6 +16,7 @@ public class Damagable : VoBehavior
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
     public float ShakeHitToDamageRatio = 0;
+    public float HitInvincibilityMultiplier = 1.0f;
     public AudioClip AudioOnHit = null;
 
     public int MaxHealth { get { return _maxHealth; } }
@@ -147,7 +148,7 @@ public class Damagable : VoBehavior
             }
 
             this.Invincible = true;
-            _invincibilityTimer = other.HitInvincibilityDuration;
+            _invincibilityTimer = other.HitInvincibilityDuration * this.HitInvincibilityMultiplier;
             this.integerCollider.RemoveFromCollisionPool();
 
             this.localNotifier.SendEvent(new InvincibilityToggleEvent(true));

@@ -7,6 +7,7 @@ public class BossWeakMainBehavior : VoBehavior
 {
     public List<GameObject> SubBosses;
     public List<Transform> AttackTargets;
+    public EnemySpawner[] EnemySpawners;
     public GameObject Eye;
     public float AngleIncrement = 90.0f;
     public float AttackSpeed = 200.0f;
@@ -15,7 +16,12 @@ public class BossWeakMainBehavior : VoBehavior
     public float DelayBetweenAttacks = 0.1f;
     public float DelayBeforeAttack = 0.1f;
     public float DelayBeforeReturn = 0.1f;
-    public GameObject EndFlowObject;
+    public float DelayBeforeEyeSpeedup = 0.5f;
+    public float FasterEyeSpeed = 180.0f;
+    public float TimeBetweenEnemySpawns = 0.5f;
+    public float TimeBetweenSubSpawns = 0.25f;
+    public GameObject SubBossPrefab;
+    public WinCondition WinCondition;
     
     void Awake()
     {
@@ -25,17 +31,27 @@ public class BossWeakMainBehavior : VoBehavior
         _eyeRotation = this.Eye.GetComponent<Rotation>();
         _eyeAutoFire = this.Eye.GetComponent<WeaponAutoFire>();
         _stateMachine = new FSMStateMachine();
+        _minions = new List<Damagable>();
+        _ogPositionsToSpawn = new List<Vector2>();
+        _originalEyeSpeed = _eyeRotation.RotationSpeed;
     }
 
     void Start()
     {
-        GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
+        this.AttackTargets = PlayerTargetController.Targets;
         foreach (GameObject subBoss in this.SubBosses)
         {
             subBoss.GetComponent<BossWeakSubBehavior>().OnAttackFinished = subBossAttackFinished;
             subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
         }
 
+        for (int i = 0; i < this.EnemySpawners.Length; ++i)
+        {
+            this.EnemySpawners[i].SpawnCallback = enemySpawned;
+            this.EnemySpawners[i].Targets = this.AttackTargets;
+        }
+
+        this.GetComponent<BossHealth>().DeathCallbacks.Add(onDeath);
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ATTACKING_STATE, updateAttacking, enterAttacking, exitAttacking);
         enterRotation();
@@ -63,7 +79,13 @@ public class BossWeakMainBehavior : VoBehavior
     private Rotation _eyeRotation;
     private WeaponAutoFire _eyeAutoFire;
     private FSMStateMachine _stateMachine;
+    private List<Damagable> _minions;
+    private List<Vector2> _ogPositionsToSpawn; 
+    private float _originalEyeSpeed;
+    private float _enemySpawnCooldown;
+    private float _subSpawnCooldown;
     private bool _switchState;
+    private int _attacksToFinish;
 
     private const string ROTATION_STATE = "rotation";
     private const string ATTACKING_STATE = "path";
@@ -73,43 +95,71 @@ public class BossWeakMainBehavior : VoBehavior
         _switchState = true;
     }
 
+    private void onDeath(int hp)
+    {
+        this.WinCondition.EndLevel();
+    }
+
     private void SubBossKilled(Damagable died)
     {
         this.SubBosses.Remove(died.gameObject);
+        BossWeakSubBehavior sub = died.GetComponent<BossWeakSubBehavior>();
+        _ogPositionsToSpawn.Add(sub.OGPosition);
 
-        if (this.SubBosses.Count == 0)
+        if (!sub.AttackFinished)
         {
-            this.EndFlowObject.GetComponent<WinCondition>().EndLevel();
+            --_attacksToFinish;
+
+            if (_attacksToFinish == 0 && _stateMachine.CurrentState == ATTACKING_STATE)
+                _timedCallbacks.AddCallback(this, switchState, this.DelayAfterAttackPhase);
         }
-        else if (_stateMachine.CurrentState == ATTACKING_STATE)
-        {
-            subBossAttackFinished(null);
-        }
+    }
+
+    private void enemySpawned(GameObject enemy)
+    {
+        Damagable damagable = enemy.GetComponent<Damagable>();
+        damagable.OnDeathCallbacks.Add(enemyDied);
+        _minions.Add(damagable);
+    }
+
+    private void enemyDied(Damagable died)
+    {
+        _minions.Remove(died);
     }
 
     private void subBossAttackFinished(GameObject go)
     {
-        bool attacksDone = true;
-        foreach (GameObject subBoss in this.SubBosses)
-        {
-            attacksDone &= subBoss.GetComponent<BossWeakSubBehavior>().AttackFinished;
-        }
-
-        if (attacksDone)
+        --_attacksToFinish;
+        if (_attacksToFinish == 0)
             _timedCallbacks.AddCallback(this, switchState, this.DelayAfterAttackPhase);
     }
 
     private string updateRotation()
     {
-        bool allTargetsNull = true;
-        for (int i = 0; i < this.AttackTargets.Count; ++i)
+        _enemySpawnCooldown += Time.deltaTime;
+        _subSpawnCooldown += Time.deltaTime;
+        if (_enemySpawnCooldown >= this.TimeBetweenEnemySpawns)
         {
-            if (this.AttackTargets[i] != null)
+            _enemySpawnCooldown = 0.0f;
+            this.EnemySpawners[Random.Range(0, this.EnemySpawners.Length - 1)].BeginSpawn();
+        }
+        if (_subSpawnCooldown >= this.TimeBetweenSubSpawns)
+        {
+            _subSpawnCooldown = 0.0f;
+            if (_ogPositionsToSpawn.Count > 0)
             {
-                allTargetsNull = false;
+                int index = Random.Range(0, _ogPositionsToSpawn.Count);
+                Vector2 choice = _ogPositionsToSpawn[index];
+                _ogPositionsToSpawn.RemoveAt(index);
+                GameObject subBoss = Instantiate(this.SubBossPrefab, new Vector3(choice.x, choice.y, this.transform.position.z), Quaternion.identity) as GameObject;
+                subBoss.transform.parent = this.transform;
+                subBoss.transform.localRotation = Quaternion.identity;
+                this.SubBosses.Add(subBoss);
+                subBoss.GetComponent<BossWeakSubBehavior>().OnAttackFinished = subBossAttackFinished;
+                subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
             }
         }
-        return !_switchState || allTargetsNull ? ROTATION_STATE : ATTACKING_STATE;
+        return !_switchState ? ROTATION_STATE : ATTACKING_STATE;
     }
 
     private void enterRotation()
@@ -133,6 +183,7 @@ public class BossWeakMainBehavior : VoBehavior
 
     private void exitRotation()
     {
+        _enemySpawnCooldown = 0.0f;
     }
 
     private string updateAttacking()
@@ -144,8 +195,9 @@ public class BossWeakMainBehavior : VoBehavior
     {
         _switchState = false;
         this.SubBosses.Shuffle();
-        clearNullTargets();
         _eyeAutoFire.Paused = false;
+        _timedCallbacks.AddCallback(this, eyeSpeedUp, this.DelayBeforeEyeSpeedup);
+        _attacksToFinish = 0;
 
         if (this.AttackTargets.Count == 0)
         {
@@ -155,33 +207,25 @@ public class BossWeakMainBehavior : VoBehavior
         {
             for (int i = 0; i < this.SubBosses.Count; ++i)
             {
+                ++_attacksToFinish;
                 BossWeakSubBehavior subBoss = this.SubBosses[i].GetComponent<BossWeakSubBehavior>();
                 Transform randomTarget = this.AttackTargets[Random.Range(0, this.AttackTargets.Count)];
                 subBoss.ScheduleAttack(randomTarget, this.AttackSpeed, i * this.DelayBetweenAttacks, this.DelayBeforeAttack, this.DelayBeforeReturn);
             }
+
+            if (_attacksToFinish == 0)
+                _timedCallbacks.AddCallback(this, switchState, this.DelayAfterAttackPhase);
         }
+    }
+
+    private void eyeSpeedUp()
+    {
+        _eyeRotation.RotationSpeed = Mathf.Sign(_eyeRotation.RotationSpeed) * this.FasterEyeSpeed;
     }
 
     private void exitAttacking()
     {
         _eyeAutoFire.Paused = true;
-        _eyeRotation.RotationSpeed = -_eyeRotation.RotationSpeed;
-    }
-
-    private void playerSpawned(LocalEventNotifier.Event spawnEvent)
-    {
-        PlayerSpawnedEvent spawn = spawnEvent as PlayerSpawnedEvent;
-        this.AttackTargets.Add(spawn.PlayerObject.transform);
-    }
-
-    private void clearNullTargets()
-    {
-        for (int i = 0; i < this.AttackTargets.Count;)
-        {
-            if (this.AttackTargets[i] == null)
-                this.AttackTargets.RemoveAt(i);
-            else
-                ++i;
-        }
+        _eyeRotation.RotationSpeed = -Mathf.Sign(_eyeRotation.RotationSpeed) *_originalEyeSpeed;
     }
 }
