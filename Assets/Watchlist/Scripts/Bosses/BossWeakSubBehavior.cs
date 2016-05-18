@@ -10,12 +10,15 @@ public class BossWeakSubBehavior : VoBehavior
 
     public float MinAttackDistance = 150.0f;
     public bool AttackFinished { get { return _attackFinished; } }
+    public Vector2 OGPosition;
 
     void Awake()
     {
+        _attackFinished = true;
         _rotation = this.GetComponent<Rotation>();
         _lerpMovement = this.GetComponent<LerpMovement>();
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
+        this.OGPosition = this.transform.position;
     }
 
     public void ScheduleAttack(Transform target, float attackSpeed, float time, float attackDelay, float returnDelay)
@@ -53,10 +56,12 @@ public class BossWeakSubBehavior : VoBehavior
         if (_target == null)
         {
             attackReturn(null);
+            _lerpMovement.ClearCallbacks();
             return;
         }
 
         _lerpMovement.MovementSpeed = _attackSpeed;
+        _lerpMovement.ClearCallbacks();
         _lerpMovement.AddCallback(attackReturn);
         
         Vector2 targetPosition = _target.position;
