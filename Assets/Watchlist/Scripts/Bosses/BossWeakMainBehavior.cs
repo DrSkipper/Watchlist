@@ -20,11 +20,16 @@ public class BossWeakMainBehavior : VoBehavior
     public float FasterEyeSpeed = 180.0f;
     public float TimeBetweenEnemySpawns = 0.5f;
     public float TimeBetweenSubSpawns = 0.25f;
+    public float InitialDelay = 1.5f;
+    public float InitialDeathDelay = 0.4f;
+    public float SubBossDeathSpacing = 0.1f;
+    public float EndLevelDelay = 0.5f;
     public GameObject SubBossPrefab;
     public WinCondition WinCondition;
     
     void Awake()
     {
+        _dead = false;
         _rotation = this.GetComponent<Rotation>();
         _lerpRotation = this.GetComponent<LerpRotation>();
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
@@ -54,13 +59,20 @@ public class BossWeakMainBehavior : VoBehavior
         this.GetComponent<BossHealth>().DeathCallbacks.Add(onDeath);
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ATTACKING_STATE, updateAttacking, enterAttacking, exitAttacking);
+        _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
+    }
+
+    private void begin()
+    {
         enterRotation();
         _stateMachine.BeginWithInitialState(ROTATION_STATE);
+        _began = true;
     }
 
     void Update()
     {
-        _stateMachine.Update();
+        if (_began && !_dead)
+            _stateMachine.Update();
     }
     
     public override void OnDestroy()
@@ -86,6 +98,8 @@ public class BossWeakMainBehavior : VoBehavior
     private float _subSpawnCooldown;
     private bool _switchState;
     private int _attacksToFinish;
+    private bool _began;
+    private bool _dead;
 
     private const string ROTATION_STATE = "rotation";
     private const string ATTACKING_STATE = "path";
@@ -97,7 +111,35 @@ public class BossWeakMainBehavior : VoBehavior
 
     private void onDeath(int hp)
     {
-        this.WinCondition.EndLevel();
+        _dead = true;
+        while (_minions.Count > 0)
+        {
+            _minions[_minions.Count - 1].Kill(0.0f);
+        }
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            this.SubBosses[i].GetComponent<LerpMovement>().HaltMovement();
+        }
+        for (int i = 0; i < this.EnemySpawners.Length; ++i)
+        {
+            Destroy(this.EnemySpawners[i]);
+        }
+        _timedCallbacks.AddCallback(this, triggerDeaths, this.InitialDeathDelay);
+        _timedCallbacks.AddCallback(this, this.WinCondition.EndLevel, this.EndLevelDelay);
+    }
+
+    private void triggerDeaths()
+    {
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            _timedCallbacks.AddCallback(this, killSubBoss, i * this.SubBossDeathSpacing);
+        }
+    }
+
+    private void killSubBoss()
+    {
+        if (this.SubBosses.Count > 0)
+            this.SubBosses[Random.Range(0, this.SubBosses.Count)].GetComponent<Damagable>().Kill(0.0f);
     }
 
     private void SubBossKilled(Damagable died)

@@ -1773,15 +1773,15 @@
       <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
     <WeaponType>
-      <Name>Enemy Single Laser</Name>
+      <Name>Enemy Triple Laser</Name>
       <Id>2000008</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>2</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
-      <ShotCount>1</ShotCount>
-      <AngleBetweenShots>90</AngleBetweenShots>
+      <ShotCount>3</ShotCount>
+      <AngleBetweenShots>8</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
       <MinimumBounceAngle>21</MinimumBounceAngle>
       <VelocityFallOff>0</VelocityFallOff>

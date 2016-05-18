@@ -94,7 +94,8 @@ public class BossLeakMainBehavior : VoBehavior
 
     private void killSubBoss()
     {
-        this.SubBosses[Random.Range(0, this.SubBosses.Count)].GetComponent<Damagable>().Kill(0.0f);
+        if (this.SubBosses.Count > 0)
+            this.SubBosses[Random.Range(0, this.SubBosses.Count)].GetComponent<Damagable>().Kill(0.0f);
     }
 
     private void TimeForStateSwitch()
