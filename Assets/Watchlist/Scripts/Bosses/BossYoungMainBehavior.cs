@@ -9,13 +9,14 @@ public class BossYoungMainBehavior : VoBehavior
     public Transform AttackBoxUpperRight;
     public float GroupRotationAmount = 90.0f;
     public float AttackDuration = 4.0f;
+    public float MinionSpawnCooldown = 0.5f;
     public EnemySpawner[] MinionSpawners;
     public GameObject EndFlowObject;
 
     void Awake()
     {
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
-        _timedCallbacks.ListenToPause = true;
+        _minions = new List<Damagable>();
     }
 
     void Start()
@@ -30,6 +31,12 @@ public class BossYoungMainBehavior : VoBehavior
         foreach (GameObject group in this.SubBossGroups)
         {
             group.GetComponent<LerpRotation>().AddCallback(this.rotationOver);
+        }
+
+        for (int i = 0; i < this.MinionSpawners.Length; ++i)
+        {
+            this.MinionSpawners[i].SpawnCallback = minionSpawned;
+            this.MinionSpawners[i].Targets = PlayerTargetController.Targets;
         }
 
         _stateMachine = new FSMStateMachine();
@@ -54,6 +61,8 @@ public class BossYoungMainBehavior : VoBehavior
     private bool _switchState;
     private int _rotationsOver;
     private int _returnsComplete;
+    private float _minionSpawnCooldown;
+    private List<Damagable> _minions;
 
     private const string ROTATION_STATE = "rotation";
     private const string ATTACKING_STATE = "path";
@@ -62,6 +71,18 @@ public class BossYoungMainBehavior : VoBehavior
     private void switchState()
     {
         _switchState = true;
+    }
+
+    private void minionSpawned(GameObject go)
+    {
+        Damagable damagable = go.GetComponent<Damagable>();
+        _minions.Add(damagable);
+        damagable.OnDeathCallbacks.Add(minionDied);
+    }
+
+    private void minionDied(Damagable died)
+    {
+        _minions.Remove(died);
     }
 
     private void SubBossKilled(Damagable died)
@@ -79,6 +100,15 @@ public class BossYoungMainBehavior : VoBehavior
 
     private string updateRotation()
     {
+        _minionSpawnCooldown += Time.deltaTime;
+        if (_minionSpawnCooldown >= this.MinionSpawnCooldown)
+        {
+            _minionSpawnCooldown = 0.0f;
+            for (int i = 0; i < this.MinionSpawners.Length; ++i)
+            {
+                this.MinionSpawners[i].BeginSpawn();
+            }
+        }
         return !_switchState ? ROTATION_STATE : ATTACKING_STATE;
     }
 
@@ -104,6 +134,7 @@ public class BossYoungMainBehavior : VoBehavior
 
     private void exitRotation()
     {
+        _minionSpawnCooldown = 0.0f;
     }
 
     private string updateAttacking()
