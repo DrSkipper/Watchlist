@@ -100,10 +100,10 @@ public class BossYoungMainBehavior : VoBehavior
 
     private string updateRotation()
     {
-        _minionSpawnCooldown += Time.deltaTime;
-        if (_minionSpawnCooldown >= this.MinionSpawnCooldown)
+        _minionSpawnCooldown -= Time.deltaTime;
+        if (_minionSpawnCooldown <= 0.0f)
         {
-            _minionSpawnCooldown = 0.0f;
+            _minionSpawnCooldown = this.MinionSpawnCooldown;
             for (int i = 0; i < this.MinionSpawners.Length; ++i)
             {
                 this.MinionSpawners[i].BeginSpawn();
