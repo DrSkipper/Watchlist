@@ -9,6 +9,7 @@ public class BossYoungMainBehavior : VoBehavior
     public Transform AttackBoxUpperRight;
     public float GroupRotationAmount = 90.0f;
     public float AttackDuration = 4.0f;
+    public EnemySpawner[] MinionSpawners;
     public GameObject EndFlowObject;
 
     void Awake()
