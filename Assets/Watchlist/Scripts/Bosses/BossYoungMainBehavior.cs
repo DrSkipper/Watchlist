@@ -10,6 +10,10 @@ public class BossYoungMainBehavior : VoBehavior
     public float GroupRotationAmount = 90.0f;
     public float AttackDuration = 4.0f;
     public float MinionSpawnCooldown = 0.5f;
+    public float InitialDelay = 1.0f;
+    public float InitialDeathDelay = 0.4f;
+    public float SubBossDeathSpacing = 0.1f;
+    public float EndLevelDelay = 0.5f;
     public EnemySpawner[] MinionSpawners;
     public GameObject EndFlowObject;
 
@@ -43,13 +47,19 @@ public class BossYoungMainBehavior : VoBehavior
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ATTACKING_STATE, updateAttacking, enterAttacking, exitAttacking);
         _stateMachine.AddState(RETURNING_STATE, updateReturning, enterReturning, exitReturning);
+        _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
+    }
+
+    private void begin()
+    {
         enterRotation();
         _stateMachine.BeginWithInitialState(ROTATION_STATE);
+        _began = true;
     }
 
     void Update()
     {
-        if (!PauseController.IsPaused())
+        if (_began && !_dead && !PauseController.IsPaused())
             _stateMachine.Update();
     }
 
@@ -63,6 +73,9 @@ public class BossYoungMainBehavior : VoBehavior
     private int _returnsComplete;
     private float _minionSpawnCooldown;
     private List<Damagable> _minions;
+    private bool _began;
+    private bool _dead;
+    private bool _firstRotationDone;
 
     private const string ROTATION_STATE = "rotation";
     private const string ATTACKING_STATE = "path";
@@ -71,6 +84,39 @@ public class BossYoungMainBehavior : VoBehavior
     private void switchState()
     {
         _switchState = true;
+    }
+
+    private void onDeath(int hp)
+    {
+        _dead = true;
+        while (_minions.Count > 0)
+        {
+            _minions[_minions.Count - 1].Kill(0.0f);
+        }
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            this.SubBosses[i].GetComponent<LerpMovement>().HaltMovement();
+        }
+        for (int i = 0; i < this.MinionSpawners.Length; ++i)
+        {
+            Destroy(this.MinionSpawners[i]);
+        }
+        _timedCallbacks.AddCallback(this, triggerDeaths, this.InitialDeathDelay);
+        _timedCallbacks.AddCallback(this, this.EndFlowObject.GetComponent<WinCondition>().EndLevel, this.EndLevelDelay);
+    }
+
+    private void triggerDeaths()
+    {
+        for (int i = 0; i < this.SubBosses.Count; ++i)
+        {
+            _timedCallbacks.AddCallback(this, killSubBoss, i * this.SubBossDeathSpacing);
+        }
+    }
+
+    private void killSubBoss()
+    {
+        if (this.SubBosses.Count > 0)
+            this.SubBosses[Random.Range(0, this.SubBosses.Count)].GetComponent<Damagable>().Kill(0.0f);
     }
 
     private void minionSpawned(GameObject go)
@@ -91,7 +137,7 @@ public class BossYoungMainBehavior : VoBehavior
 
         if (this.SubBosses.Count == 0)
         {
-            this.EndFlowObject.GetComponent<WinCondition>().EndLevel();
+            onDeath(0);
         }
 
         else if (_stateMachine.CurrentState == RETURNING_STATE)
@@ -100,13 +146,16 @@ public class BossYoungMainBehavior : VoBehavior
 
     private string updateRotation()
     {
-        _minionSpawnCooldown -= Time.deltaTime;
-        if (_minionSpawnCooldown <= 0.0f)
+        if (_firstRotationDone)
         {
-            _minionSpawnCooldown = this.MinionSpawnCooldown;
-            for (int i = 0; i < this.MinionSpawners.Length; ++i)
+            _minionSpawnCooldown -= Time.deltaTime;
+            if (_minionSpawnCooldown <= 0.0f)
             {
-                this.MinionSpawners[i].BeginSpawn();
+                _minionSpawnCooldown = this.MinionSpawnCooldown;
+                for (int i = 0; i < this.MinionSpawners.Length; ++i)
+                {
+                    this.MinionSpawners[i].BeginSpawn();
+                }
             }
         }
         return !_switchState ? ROTATION_STATE : ATTACKING_STATE;
@@ -134,6 +183,7 @@ public class BossYoungMainBehavior : VoBehavior
 
     private void exitRotation()
     {
+        _firstRotationDone = true;
         _minionSpawnCooldown = 0.0f;
     }
 
