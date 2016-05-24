@@ -47,12 +47,15 @@ public class LerpMovement : VoBehavior
     {
         if (!PauseController.IsPaused() && this.IsMoving)
         {
-            Vector2 lerpPos = Vector2.Lerp(this.transform.position, this.TargetPosition, this.MovementSpeed * Time.deltaTime / (Vector2.Distance(this.transform.position, this.TargetPosition)));
-
-            if (Vector2.Distance(this.transform.position, lerpPos) < 0.1f)
+            Vector2 lerpPos;
+            if (Vector2.Distance(this.transform.position, this.TargetPosition) < 0.1f)
             {
                 this.IsMoving = false;
                 lerpPos = this.TargetPosition;
+            }
+            else
+            {
+                lerpPos = Vector2.Lerp(this.transform.position, this.TargetPosition, this.MovementSpeed * Time.deltaTime / (Vector2.Distance(this.transform.position, this.TargetPosition)));
             }
 
             this.transform.position = new Vector3(lerpPos.x, lerpPos.y, this.transform.position.z);

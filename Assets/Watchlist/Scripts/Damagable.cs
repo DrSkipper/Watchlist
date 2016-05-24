@@ -17,12 +17,15 @@ public class Damagable : VoBehavior
     public float BaseShakeHitMagnitude = 0;
     public float ShakeHitToDamageRatio = 0;
     public float HitInvincibilityMultiplier = 1.0f;
+    public float KnockbackMultiplier = 1.0f;
     public AudioClip AudioOnHit = null;
 
     public int MaxHealth { get { return _maxHealth; } }
 
     public delegate void HealthCallback(Damagable affected, int damageDone);
     public delegate void DeathCallback(Damagable affected);
+
+    public const string VELOCITY_MODIFIER_KEY = "damagable";
 
     void Awake()
     {
@@ -133,7 +136,7 @@ public class Damagable : VoBehavior
 
         if (this.Health <= 0)
         {
-            _deathKnockback = other.Knockback;
+            _deathKnockback = other.Knockback * this.KnockbackMultiplier;
             _deathImpactVector = impactVector;
             markForDeath();
         }
@@ -141,7 +144,7 @@ public class Damagable : VoBehavior
         {
             if (!this.Stationary)
             {
-                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier(impactVector * other.Knockback, VelocityModifier.CollisionBehavior.bounce));
+                _actor.SetVelocityModifier(VELOCITY_MODIFIER_KEY, new VelocityModifier(impactVector * other.Knockback * this.KnockbackMultiplier, VelocityModifier.CollisionBehavior.bounce));
 
                 _nonInvincibleCollisionMask = _actor.CollisionMask;
                 _actor.CollisionMask = this.InvincibilityCollisionMask;
@@ -178,8 +181,6 @@ public class Damagable : VoBehavior
     private Vector2 _deathImpactVector;
     private AudioSource _audio;
     private int _maxHealth;
-
-    private const string VELOCITY_MODIFIER_KEY = "damagable";
 
     private void markForDeath()
     {

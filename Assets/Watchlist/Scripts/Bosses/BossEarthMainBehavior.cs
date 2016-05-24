@@ -45,6 +45,7 @@ public class BossEarthMainBehavior : VoBehavior
 
         this.GetComponent<BossHealth>().DeathCallbacks.Add(onDeath);
         this.MinionSpawner.Targets = PlayerTargetController.Targets;
+        this.MinionSpawner.SpawnCallback = minionSpawned;
 
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(PATHING_STATE, updatePathing, enterPathing, exitPathing);
@@ -90,6 +91,18 @@ public class BossEarthMainBehavior : VoBehavior
     {
         _switchState = true;
     }
+    
+    private void minionSpawned(GameObject go)
+    {
+        Damagable damagable = go.GetComponent<Damagable>();
+        damagable.OnDeathCallbacks.Add(minionDied);
+        _minions.Add(damagable);
+    }
+
+    private void minionDied(Damagable died)
+    {
+        _minions.Remove(died);
+    }
 
     private void onDeath(int hp)
     {
@@ -102,7 +115,7 @@ public class BossEarthMainBehavior : VoBehavior
         {
             this.SubBosses[i].GetComponent<LerpMovement>().HaltMovement();
         }
-        Destroy(this.MinionSpawner);
+        Destroy(this.MinionSpawner.gameObject);
         _timedCallbacks.AddCallback(this, triggerDeaths, this.DeathDelay);
         _timedCallbacks.AddCallback(this, this.EndFlowObject.GetComponent<WinCondition>().EndLevel, this.EndLevelDelay);
     }
