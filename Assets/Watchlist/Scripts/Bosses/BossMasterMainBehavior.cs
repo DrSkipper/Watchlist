@@ -36,6 +36,13 @@ public class BossMasterMainBehavior : VoBehavior
     public float DeathDelay = 0.5f;
     public float SubBossDeathSpacing = 0.1f;
     public float EndLevelDelay = 1.0f;
+    public Rotation EyeAttackRotation;
+    public Transform LeftEyeHome;
+    public Transform RightEyeHome;
+    public Transform LeftEyeAttack;
+    public Transform RightEyeAttack;
+    public float LeftEyeAttackStartRotation = 180.0f;
+    public float RightEyeAttackStartRotation = 0.0f;
 
     void Awake()
     {
@@ -168,6 +175,9 @@ public class BossMasterMainBehavior : VoBehavior
                 this.BossSubs[i].GoHome(this.ReturnHomeTime);
         }
 
+        this.LeftEye.GetComponent<LerpMovement>().BeginMovement(this.LeftEyeHome.transform.position, this.ReturnHomeTime);
+        this.RightEye.GetComponent<LerpMovement>().BeginMovement(this.RightEyeHome.transform.position, this.ReturnHomeTime);
+
         _timedCallbacks.AddCallback(this, switchState, this.HomeStateDuration);
         _timedCallbacks.AddCallback(this, beginSeeking, this.ReturnHomeTime + this.BufferTime);
     }
@@ -294,6 +304,7 @@ public class BossMasterMainBehavior : VoBehavior
     private void enterTransition()
     {
         _switchState = false;
+        this.EyeAttackRotation.SetAngle(0.0f);
 
         for (int i = 0; i < this.BossGroups.Count; ++i)
         {
@@ -310,6 +321,19 @@ public class BossMasterMainBehavior : VoBehavior
             if (this.BossSubs[i] != null)
                 this.BossSubs[i].GoToAttackPosition(this.TransitionSecondPartTime);
         }
+
+        this.LeftEye.transform.parent = this.EyeAttackRotation.transform;
+        this.RightEye.transform.parent = this.EyeAttackRotation.transform;
+        this.LeftEye.GetComponent<LerpMovement>().BeginMovement(this.LeftEyeAttack.transform.position, this.TransitionSecondPartTime);
+        this.RightEye.GetComponent<LerpMovement>().BeginMovement(this.RightEyeAttack.transform.position, this.TransitionSecondPartTime);
+        LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
+        LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
+        leftRotation.TargetRotation = this.LeftEyeAttackStartRotation;
+        rightRotation.TargetRotation = this.RightEyeAttackStartRotation;
+        leftRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+        rightRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+        leftRotation.LerpToTargetRotation();
+        rightRotation.LerpToTargetRotation();
 
         _timedCallbacks.AddCallback(this, switchState, this.TransitionSecondPartTime + this.BufferTime);
     }
@@ -331,8 +355,22 @@ public class BossMasterMainBehavior : VoBehavior
         {
             this.BossGroups[i].EnterAttackPattern(this.EnterAttackTime, this.AttackDelay);
         }
-
+        
+        _timedCallbacks.AddCallback(this, beginEyeFiring, this.EnterAttackTime);
+        _timedCallbacks.AddCallback(this, beginEyeRotating, this.EnterAttackTime * 2.0f);
         _timedCallbacks.AddCallback(this, switchState, this.AttackStateDuration);
+    }
+
+    private void beginEyeFiring()
+    {
+        this.LeftEye.GetComponent<WeaponAutoFire>().Paused = false;
+        this.RightEye.GetComponent<WeaponAutoFire>().Paused = false;
+    }
+
+    private void beginEyeRotating()
+    {
+        this.EyeAttackRotation.RotationSpeed = -this.EyeAttackRotation.RotationSpeed;
+        this.EyeAttackRotation.IsRotating = true;
     }
 
     private string updateAttack()
@@ -342,5 +380,10 @@ public class BossMasterMainBehavior : VoBehavior
 
     private void exitAttack()
     {
+        this.EyeAttackRotation.IsRotating = false;
+        this.LeftEye.transform.parent = this.transform;
+        this.RightEye.transform.parent = this.transform;
+        this.LeftEye.GetComponent<WeaponAutoFire>().Paused = true;
+        this.RightEye.GetComponent<WeaponAutoFire>().Paused = true;
     }
 }
