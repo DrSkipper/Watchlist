@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 240aca88200a1f347ac05db906301199
-timeCreated: 1461710534
+timeCreated: 1464331185
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -13,6 +13,9 @@ TextureImporter:
     21300012: briefing_avatars_other
     21300014: briefing_avatars_weak
     21300016: briefing_avatars_young
+    21300018: watchlist_lock
+    21300020: watchlist_cell
+    21300022: watchlist_selected
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -154,6 +157,39 @@ TextureImporter:
         y: 47
         width: 15
         height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: watchlist_lock
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 53
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: watchlist_cell
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 39
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: watchlist_selected
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 17
+        width: 24
+        height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
