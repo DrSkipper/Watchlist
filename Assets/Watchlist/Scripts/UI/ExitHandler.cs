@@ -4,10 +4,29 @@ using UnityEngine.SceneManagement;
 public class ExitHandler : VoBehavior
 {
     public string Destination = "";
+    public ExitInput Input = ExitInput.Exit;
+
+    [System.Serializable]
+    public enum ExitInput
+    {
+        Exit,
+        Pause
+    }
 
     void Update()
     {
-        if (MenuInput.Exit())
+        bool pressed = false;
+        switch (this.Input)
+        {
+            default:
+            case ExitInput.Exit:
+                pressed = MenuInput.Exit();
+                break;
+            case ExitInput.Pause:
+                pressed = MenuInput.Pause();
+                break;
+        }
+        if (pressed)
         {
             if (this.Destination != "")
                 SceneManager.LoadScene(this.Destination);
