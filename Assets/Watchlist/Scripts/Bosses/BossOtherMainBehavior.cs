@@ -27,10 +27,6 @@ public class BossOtherMainBehavior : VoBehavior
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
         _stateMachine.AddState(ACTION_STATE, updateAction, enterAction, exitAction);
         _health = this.GetComponent<BossHealth>();
-        for (int i = 0; i < this.SubBossParts.Count; ++i)
-        {
-            _health.AddDamagable(this.SubBossParts[i].GetComponent<Damagable>());
-        }
     }
 
     void Start()
