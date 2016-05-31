@@ -1,0 +1,11 @@
+Simple graphics and gameplay, symbolic geometry and a minimal narrative form an interface through which to explore the scapegoating rhetoric of political fascism.
+
+Controller is preferable, as is playing cooperatively with up to 4 people, but keyboard + mouse and single player are options as well. Left stick (or WASD on keyboard) is move, right stick (or mouse) is aim, right trigger (or mouse click) is shoot. Powerups' effects combine so try to gather a wide variety to experiment with the different combinations!
+
+Currently PC only - Unzip and run the .exe! Controller is preferable, as is playing cooperatively with up to 4 people, but keyboard + mouse and single player are options as well.
+
+Growing tired of the excesses and insularity of the tech and games industries I was happy to be laid off from my job late last year; I've spent the last six months working on my own game and meeting people interested in fighting for change!
+
+I like games that bring intentionality to how they approach the personal and the political.
+
+There are some features planned but not yet implemented that should help reinforce the narrative more explicitly and regularly and give the player more choice in the powerups they get. I am currently pushing regular updates to a closed beta pool.
