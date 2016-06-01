@@ -85,12 +85,20 @@ public static class ProgressData
             _weaponSlotsByPlayer[playerIndex][i] = new SlotWrapper(slots[i]);
         }
     }
+    
+    public static int[] GetCurrentBosses()
+    {
+        if (_currentBosses == null)
+            _currentBosses = PersistentData.GenerateBossesForPlaythrough();
+        return _currentBosses;
+    }
 
     public static void WipeData()
     {
         _completedTiles = new List<IntegerVector>();
         _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
         _mostRecentTile = null;
+        _currentBosses = null;
     }
 
     public static void SaveToDisk()
@@ -136,5 +144,6 @@ public static class ProgressData
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
+    private static int[] _currentBosses;
     private static bool _hasLoaded = false;
 }

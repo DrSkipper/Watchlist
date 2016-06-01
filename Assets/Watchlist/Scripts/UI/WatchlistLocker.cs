@@ -13,7 +13,7 @@ public class WatchlistLocker : MonoBehaviour
 
     void Awake()
     {
-        if (this.ForceLock)
+        if (this.ForceLock || PersistentData.CheckForLockedBoss(this.BossId))
         {
             this.ImageToLock.sprite = this.LockSprite;
             this.TextToLock.text = this.LockText;

@@ -42,7 +42,7 @@ public class MissionBriefingFlow : VoBehavior
         List<string> allPages = new List<string>();
 
         allPages.AddRange(this.IntroPages);
-        int[] bosses = PersistentData.GetCurrentBosses();
+        int[] bosses = ProgressData.GetCurrentBosses();
 
         if (this.UseBossText)
         {

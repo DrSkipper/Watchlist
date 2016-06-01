@@ -254,7 +254,7 @@ public class LevelGraphController : VoBehavior
                 }
                 else
                 {
-                    BossType boss = StaticData.BossData.BossTypes[PersistentData.GetCurrentBosses()[bossIndex]];
+                    BossType boss = StaticData.BossData.BossTypes[ProgressData.GetCurrentBosses()[bossIndex]];
                     SceneManager.LoadScene(this.BossSceneName + boss.SceneKey);
                 }
             }

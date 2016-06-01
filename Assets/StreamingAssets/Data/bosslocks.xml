@@ -3,7 +3,7 @@
   <BossLocks>
     <BossLock>
       <BossId>1000001</BossId>
-	  <Locked>false</Locked>
+	  <Locked>true</Locked>
     </BossLock>
     <BossLock>
       <BossId>1000002</BossId>
@@ -11,7 +11,7 @@
     </BossLock>
     <BossLock>
       <BossId>1000003</BossId>
-	  <Locked>false</Locked>
+	  <Locked>true</Locked>
     </BossLock>
     <BossLock>
       <BossId>1000004</BossId>
@@ -23,7 +23,7 @@
     </BossLock>
     <BossLock>
       <BossId>1000006</BossId>
-	  <Locked>false</Locked>
+	  <Locked>true</Locked>
     </BossLock>
     <BossLock>
       <BossId>1000007</BossId>
@@ -31,7 +31,7 @@
     </BossLock>
     <BossLock>
       <BossId>1000008</BossId>
-	  <Locked>false</Locked>
+	  <Locked>true</Locked>
     </BossLock>
   </BossLocks>
 </BossLockData>

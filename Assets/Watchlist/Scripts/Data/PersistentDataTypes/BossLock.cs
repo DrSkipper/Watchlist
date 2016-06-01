@@ -19,27 +19,6 @@ public class BossLockData
     [XmlIgnoreAttribute]
     public Dictionary<int, bool> BossLocks;
 
-    public int[] GenerateBossesForPlaythrough()
-    {
-        List<int> possibilities = new List<int>();
-
-        foreach (int bossId in this.BossLocks.Keys)
-        {
-            if (!this.BossLocks[bossId])
-                possibilities.Add(bossId);
-        }
-
-        int[] chosen = new int[4];
-        for (int i = 0; i < chosen.Length; ++i)
-        {
-            chosen[i] = possibilities[Random.Range(0, possibilities.Count)];
-
-            if (possibilities.Count > chosen.Length)
-                possibilities.Remove(chosen[i]);
-        }
-        return chosen;
-    }
-
     /**
      * XML
      */
