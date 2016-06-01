@@ -4,6 +4,7 @@ public class MenuController : VoBehavior
 {
     public GameObject[] MenuElements;
     public int CurrentElement = 0;
+    public bool AllowSelection = true;
 
     public int[] PrioritizedDefaults;
 
@@ -36,13 +37,13 @@ public class MenuController : VoBehavior
 
     void Update()
     {
-        if (!_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked"))
+        if (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)"))
         {
             if (MenuInput.HighlightNextElement())
                 highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
             else if (MenuInput.HighlightPreviousElement())
                 highlightElement(this.CurrentElement == 0 ? this.MenuElements.Length - 1 : this.CurrentElement - 1);
-            else if (MenuInput.SelectCurrentElement())
+            else if (this.AllowSelection && MenuInput.SelectCurrentElement())
                 selectCurrentElement();
         }
     }
