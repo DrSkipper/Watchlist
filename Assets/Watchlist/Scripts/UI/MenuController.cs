@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public class MenuController : VoBehavior
+public class MenuController : VoBehavior, UIDialog
 {
     public GameObject[] MenuElements;
     public int CurrentElement = 0;
     public bool AllowSelection = true;
+    public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
 
     public int[] PrioritizedDefaults;
 
@@ -37,7 +38,7 @@ public class MenuController : VoBehavior
 
     void Update()
     {
-        if (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)"))
+        if (this.AcceptingInput && (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
         {
             if (MenuInput.HighlightNextElement())
                 highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
@@ -51,6 +52,7 @@ public class MenuController : VoBehavior
     /**
      * Private
      */
+    private bool _acceptingInput = true;
     private Animator[] _animators;
     private MenuElement[] _elements;
 
