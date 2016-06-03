@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MenuController : VoBehavior, UIDialog
+public class MenuController : VoBehavior, UIDialogHandler
 {
     public GameObject[] MenuElements;
     public int CurrentElement = 0;

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class ListExtensions
 {
@@ -28,5 +26,23 @@ public static class ListExtensions
     {
         if (!self.Contains(toAdd))
             self.Add(toAdd);
+    }
+
+    public static void Swap<T>(this List<T> self, int first, int second)
+    {
+        T temp = self[first];
+        self[first] = self[second];
+        self[second] = temp;
+    }
+
+    public static void Move<T>(this List<T> self, int current, int target = 0)
+    {
+        T item = self[current];
+        self.RemoveAt(current);
+
+        if (target < self.Count)
+            self.Insert(target, item);
+        else
+            self.Add(item);
     }
 }

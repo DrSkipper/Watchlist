@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 
-public class LevelGraphController : VoBehavior
+public class LevelGraphController : VoBehavior, UIDialogHandler
 {
     public int Size = 7; // Should be odd number
     public IntegerVector[] BossTiles;
@@ -22,6 +22,7 @@ public class LevelGraphController : VoBehavior
     public string BossSceneName = "";
     public bool UseDynamicData = true;
     public string FinalDialogSceneName = "";
+    public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
 
     /**
      * Data types
@@ -203,6 +204,9 @@ public class LevelGraphController : VoBehavior
 
     void Update()
     {
+        if (!this.AcceptingInput)
+            return;
+
         if (MenuInput.AnyInput())
         {
             IntegerVector newPosition = this.CurrentPosition;
@@ -286,6 +290,7 @@ public class LevelGraphController : VoBehavior
     private bool _currentBlinkingOff;
     private float _timeSinceBlink;
     private bool _allBossesDefeated;
+    private bool _acceptingInput = true;
 
     private bool neighborsTile(Vector2 tile, Vector2 neighbor)
     {
