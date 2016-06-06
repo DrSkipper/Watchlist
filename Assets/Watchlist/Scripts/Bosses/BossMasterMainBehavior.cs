@@ -119,6 +119,7 @@ public class BossMasterMainBehavior : VoBehavior
         }
         _timedCallbacks.AddCallback(this, triggerDeaths, this.DeathDelay);
         _timedCallbacks.AddCallback(this, this.WinCondition.EndLevel, this.EndLevelDelay);
+        PersistentData.RegisterDefeatedMaster();
     }
 
     private void triggerDeaths()

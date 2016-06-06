@@ -26,6 +26,18 @@ public static class DynamicData
         }
         return null;
     }
+
+    public static int NumJoinedPlayers()
+    {
+        int num = 0;
+        for (int i = 0; i < _sessionPlayers.Length; ++i)
+        {
+            SessionPlayer p = _sessionPlayers[i];
+            if (p != null & p.HasJoined)
+                ++num;
+        }
+        return num;
+    }
     
     /**
      * Private

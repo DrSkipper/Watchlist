@@ -31,8 +31,36 @@ public static class ProgressData
     public static void CompleteTile(IntegerVector tile)
     {
         if (!_completedTiles.Contains(tile))
+        {
             _completedTiles.Add(tile);
+            PersistentData.RegisterLevelBeaten(DynamicData.NumJoinedPlayers());
+            if (IsCornerBoss(tile))
+            {
+                PersistentData.RegisterBossBeaten();
+                if (NumBossesBeaten() == 4)
+                    PersistentData.Register4CornerBossesBeaten();
+            }
+
+            if (_completedTiles.Count == 44)
+                PersistentData.RegisterClearedMap();
+        }
         _mostRecentTile = tile;
+    }
+
+    public static bool IsCornerBoss(IntegerVector tile)
+    {
+        return Mathf.Abs(tile.X) == 3 && Mathf.Abs(tile.Y) == 3;
+    }
+
+    public static int NumBossesBeaten()
+    {
+        int num = 0;
+        for (int i = 0; i < _completedTiles.Count; ++i)
+        {
+            if (IsCornerBoss(_completedTiles[i]))
+                ++num;
+        }
+        return num;
     }
 
     public static void SelectTile(IntegerVector tile)

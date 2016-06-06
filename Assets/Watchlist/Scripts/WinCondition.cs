@@ -7,6 +7,14 @@ public class WinCondition : VoBehavior
     public float LevelCompleteScreenLength = 3.0f;
     public float ReturnToLevelSelectDelay = 1.0f;
     public string Destination = "LevelSelectScene";
+    public CompletionEffect OnComplete = CompletionEffect.CompleteTile;
+
+    [System.Serializable]
+    public enum CompletionEffect
+    {
+        CompleteTile,
+        WipeProgressData
+    }
 
     public void EnemySpawned(GameObject enemy)
     {
@@ -36,7 +44,10 @@ public class WinCondition : VoBehavior
     public void ReturnToLevelSelect()
     {
         GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
-        ProgressData.CompleteTile(ProgressData.MostRecentTile);
+        if (this.OnComplete == CompletionEffect.CompleteTile)
+            ProgressData.CompleteTile(ProgressData.MostRecentTile);
+        else if (this.OnComplete == CompletionEffect.WipeProgressData)
+            ProgressData.WipeData();
         ProgressData.SaveToDisk();
         SceneManager.LoadScene(this.Destination);
     }

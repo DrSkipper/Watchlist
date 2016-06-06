@@ -16,6 +16,18 @@ public class WatchlistUnlockDialog : MonoBehaviour
         GlobalEvents.Notifier.Listen(MenuElementSelectedEvent.NAME, this, menuItemSelected);
     }
 
+    void Start()
+    {
+        int[] bossUnlocksNeedingNotification = PersistentData.BossUnlocksNeedingNotification();
+
+        if (bossUnlocksNeedingNotification.Length > 0)
+        {
+            int bossId = bossUnlocksNeedingNotification[0];
+            this.ShowForBoss(StaticData.BossData.BossTypes[bossId]);
+            PersistentData.BossUnlockNotified(bossId);
+        }
+    }
+
     public void ShowForBoss(BossType boss)
     {
         this.RootDialogObject.SetActive(true);
