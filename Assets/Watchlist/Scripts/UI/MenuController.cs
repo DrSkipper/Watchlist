@@ -6,6 +6,7 @@ public class MenuController : VoBehavior, UIDialogHandler
     public int CurrentElement = 0;
     public bool AllowSelection = true;
     public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
+    public bool ListenToPause = true;
 
     public int[] PrioritizedDefaults;
 
@@ -38,7 +39,8 @@ public class MenuController : VoBehavior, UIDialogHandler
 
     void Update()
     {
-        if (this.AcceptingInput && (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
+        if ((!this.ListenToPause || !PauseController.IsPaused()) && 
+            this.AcceptingInput && (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
         {
             if (MenuInput.HighlightNextElement())
                 highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);

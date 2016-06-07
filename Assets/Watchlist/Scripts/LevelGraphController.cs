@@ -204,7 +204,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
 
     void Update()
     {
-        if (!this.AcceptingInput)
+        if (!this.AcceptingInput || PauseController.IsPaused())
             return;
 
         if (MenuInput.AnyInput())
