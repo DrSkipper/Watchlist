@@ -123,6 +123,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
                 if (_allBossesDefeated && x == 0 && y == 0)
                 {
                     state = TileState.Available;
+                    traits.Add(TileTrait.Boss);
                 }
                 else
                 {
@@ -161,9 +162,9 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
         }
 
         // Setup paths
-        for (int x = 0; x < _grid.GetLength(0) - 1; ++x)
+        for (int x = 0; x < _grid.GetLength(0); ++x)
         {
-            for (int y = 0; y < _grid.GetLength(1) - 1; ++y)
+            for (int y = 0; y < _grid.GetLength(1); ++y)
             {
                 if (_grid[x, y] == null)
                     continue;
@@ -172,10 +173,10 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
 
                 if (state == TileState.Complete || state == TileState.Available)
                 {
-                    bool northCompleted = _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Complete);
-                    bool northAvailable = state != TileState.Available && !northCompleted && _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Available);
-                    bool eastCompleted = _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Complete);
-                    bool eastAvailable = state != TileState.Available && !eastCompleted && _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Available);
+                    bool northCompleted = y < _grid.GetLength(1) - 1 && _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Complete);
+                    bool northAvailable = y < _grid.GetLength(1) - 1 && state != TileState.Available && !northCompleted && _paths[x * 2, y * 2 + 1] == null && (_grid[x, y + 1] != null && _grid[x, y + 1].State == TileState.Available);
+                    bool eastCompleted = x < _grid.GetLength(0) - 1 && _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Complete);
+                    bool eastAvailable = x < _grid.GetLength(0) - 1 && state != TileState.Available && !eastCompleted && _paths[x * 2 + 1, y * 2] == null && (_grid[x + 1, y] != null && _grid[x + 1, y].State == TileState.Available);
 
                     if (northCompleted || northAvailable)
                     {
