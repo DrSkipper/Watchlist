@@ -10,7 +10,9 @@ public class UIDialogManager : MonoBehaviour
     {
         get
         {
-            return _dialogStack[0];
+            if (_dialogStack.Count > 0)
+                return _dialogStack[0];
+            return null;
         }
         set
         {
