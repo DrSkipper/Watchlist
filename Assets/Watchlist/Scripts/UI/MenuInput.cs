@@ -18,16 +18,6 @@ public static class MenuInput
         return checkButton(SELECT);
     }
 
-    public static bool HighlightNextElement()
-    {
-        return NavDown();
-    }
-
-    public static bool HighlightPreviousElement()
-    {
-        return NavUp();
-    }
-
     public static bool NavLeft()
     {
         return checkButton(LEFT);

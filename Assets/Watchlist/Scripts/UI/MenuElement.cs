@@ -21,11 +21,44 @@ public class MenuElement : MonoBehaviour
         public string StringParameter;
     }
 
+    [System.Serializable]
+    public struct AdditionalNavOption
+    {
+        public NavType Nav;
+        public MenuElement Element;
+
+        public bool highlightNext()
+        {
+            switch (this.Nav)
+            {
+                default:
+                case NavType.Left:
+                    return MenuInput.NavLeft();
+                case NavType.Right:
+                    return MenuInput.NavRight();
+                case NavType.Up:
+                    return MenuInput.NavUp();
+                case NavType.Down:
+                    return MenuInput.NavDown();
+            }
+        }
+    }
+
+    [System.Serializable]
+    public enum NavType
+    {
+        Left,
+        Right,
+        Up,
+        Down
+    }
+
     public bool Locked = false;
     public List<Action> Actions;
     public Text Text;
     public Color LockedColor;
     public Color UnlockedColor;
+    public AdditionalNavOption[] AdditionalNavOptions;
 
     void Awake()
     {
