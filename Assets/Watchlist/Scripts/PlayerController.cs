@@ -13,6 +13,7 @@ public class PlayerController : Actor2D
     public int WeaponTypeId = 1; // Exposed for debugging
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
+    public bool NoFire = false;
     public ReticlePositioner Reticle;
     public Texture2D SpriteAtlas;
 
@@ -74,7 +75,7 @@ public class PlayerController : Actor2D
         base.Update();
 
         // Shooting
-        if (_weapon != null)
+        if (!this.NoFire && _weapon != null)
         {
             Vector2 aimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position);
             if (aimAxis.x != 0 || aimAxis.y != 0)

@@ -11,6 +11,7 @@ public class GenericEnemy : VoBehavior
     public Texture2D SpriteSheet;
     public GameObject ExplosionPrefab;
     public bool UseDebugWeapon = false;
+    public bool NoFire = false;
 
     public enum MovementType
     {
@@ -163,7 +164,7 @@ public class GenericEnemy : VoBehavior
         }
 
         // If close enough, shoot at the target
-        if (_weapon != null && distance < this.EnemyType.ShootRange && (!this.EnemyType.OnlyShootOnPause || (this.EnemyType.OnlyShootOnPause && _paused)))
+        if (!this.NoFire && _weapon != null && distance < this.EnemyType.ShootRange && (!this.EnemyType.OnlyShootOnPause || (this.EnemyType.OnlyShootOnPause && _paused)))
         {
             if (forward.x == 0.0f && forward.y == 0.0f)
             {
@@ -287,7 +288,7 @@ public class GenericEnemy : VoBehavior
                 vMag = this.EnemyType.MaxSpeed;
         }
 
-        if (Mathf.Abs(distance - this.EnemyType.TargetDistance) > WIGGLE_ROOM)
+        if (Mathf.Abs(distance - this.EnemyType.TargetDistance) > WIGGLE_ROOM && distance < this.EnemyType.LookAtRange) //TODO - magic num
         {
             if (distance < this.EnemyType.TargetDistance)
                 aimAxis *= -1;

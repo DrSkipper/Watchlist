@@ -10,6 +10,7 @@ public class EnemySpawner : VoBehavior
     public float MinDistanceToSpawn = float.MaxValue;
     public float SpawnDelay = 0.5f;
     public bool DestroyAfterSpawn = false;
+    public bool NoFire = false;
     public SpawnedObjectCallback SpawnCallback;
     public List<Transform> Targets;
 
@@ -74,6 +75,7 @@ public class EnemySpawner : VoBehavior
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();
         enemyComponent.EnemyType = enemy;
         enemyComponent.Targets = new List<Transform>(this.Targets);
+        enemyComponent.NoFire = this.NoFire;
 
         if (this.SpawnCallback != null)
             this.SpawnCallback(enemyObject);

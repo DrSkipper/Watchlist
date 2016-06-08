@@ -10,6 +10,7 @@ public class ScriptedSpawnController : VoBehavior
     public float InitialDelay = 1.0f; // Should be longer than SpawnPlayersDelay if spawning players
     public bool ShouldSpawnPlayers = true;
     public float SpawnPlayersDelay = 0.2f;
+    public bool NoFireForPlayers = false;
 
 	void Start()
     {
@@ -26,8 +27,11 @@ public class ScriptedSpawnController : VoBehavior
             {
                 foreach (EnemySpawner spawner in this.EnemySpawners)
                 {
-                    spawner.SpawnCallback = this.EnemySpawned;
-                    spawner.BeginSpawn();
+                    if (spawner != null)
+                    {
+                        spawner.SpawnCallback = this.EnemySpawned;
+                        spawner.BeginSpawn();
+                    }
                 }
 
                 _waveCooldown = this.TimeBetweenWaves;
@@ -87,10 +91,14 @@ public class ScriptedSpawnController : VoBehavior
 
         foreach (EnemySpawner spawner in this.EnemySpawners)
         {
-            spawner.Targets.Add(player.transform);
+            if (spawner != null)
+                spawner.Targets.Add(player.transform);
         }
-        
-        player.GetComponent<PlayerController>().PlayerIndex = sessionPlayer.PlayerIndex;
+
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        playerController.PlayerIndex = sessionPlayer.PlayerIndex;
+        playerController.NoFire = this.NoFireForPlayers;
+
         GlobalEvents.Notifier.SendEvent(new PlayerSpawnedEvent(player, sessionPlayer.PlayerIndex));
     }
 }

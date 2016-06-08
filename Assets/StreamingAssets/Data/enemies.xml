@@ -14,7 +14,7 @@
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>
       <SpinRange>0</SpinRange>
-      <LookAtRange>300</LookAtRange>
+      <LookAtRange>340</LookAtRange>
       <ShootRange>280</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
       <MovementType>0</MovementType>
@@ -144,11 +144,11 @@
       <MaxSpeed>120</MaxSpeed>
       <Acceleration>960</Acceleration>
       <SpinRange>0</SpinRange>
-      <LookAtRange>300</LookAtRange>
+      <LookAtRange>430</LookAtRange>
       <ShootRange>180</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
       <MovementType>2</MovementType>
-      <TargetDistance>140</TargetDistance>
+      <TargetDistance>210</TargetDistance>
       <RotationSpeed>0</RotationSpeed>
       <RotationOffset>135</RotationOffset>
       <OnlyShootOnPause>false</OnlyShootOnPause>
@@ -196,7 +196,7 @@
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>
       <SpinRange>0</SpinRange>
-      <LookAtRange>300</LookAtRange>
+      <LookAtRange>340</LookAtRange>
       <ShootRange>280</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
       <MovementType>0</MovementType>
