@@ -8,16 +8,22 @@ public class CouncilChairController : VoBehavior
     public CouncilChair[] Chairs;
     public float ShakeDelay = 1.0f;
     public float FadeDelay = 2.0f;
+    public float SoundsDelay = 1.5f;
     public float FadeLength = 5.0f;
     public float ShakeMagnitude = 70.0f;
     public float ShakeMagnitudeIncrease = 50.0f;
     public float ShakeCooldown = 0.3f;
     public float SceneChangeDelay = 11.0f;
+    public float SoundCooldownMax = 1.0f;
+    public float SoundCooldownMinStart = 0.5f;
+    public float SoundCooldownMinEnd = 0.1f;
+    public float SoundCooldownMinDecrease = 0.1f;
     public string Destination = "Credits";
     public Image FadePanel;
 
     void Awake()
     {
+        _audio = this.GetComponent<AudioSource>();
         _timedCallbacks = this.GetComponent<TimedCallbacks>();
         _fadeColor = this.FadePanel.color;
     }
@@ -40,6 +46,7 @@ public class CouncilChairController : VoBehavior
             _timedCallbacks.AddCallback(this, beginShake, this.ShakeDelay);
             _timedCallbacks.AddCallback(this, beginFade, this.FadeDelay);
             _timedCallbacks.AddCallback(this, nextScene, this.SceneChangeDelay);
+            _timedCallbacks.AddCallback(this, beginSound, this.SoundsDelay);
         }
 
         if (_shake)
@@ -63,12 +70,24 @@ public class CouncilChairController : VoBehavior
         }
 
         this.FadePanel.color = _fadeColor;
+
+        if (_sound)
+        {
+            _soundCooldown -= Time.deltaTime;
+            if (_soundCooldown <= 0.0f)
+            {
+                _audio.Play();
+                _soundCooldown = Random.Range(_soundMinCooldown, this.SoundCooldownMax);
+                _soundMinCooldown = Mathf.Max(this.SoundCooldownMinEnd, this.SoundCooldownMinStart - this.SoundCooldownMinDecrease);
+            }
+        }
     }
 
     /**
      * Private
      */
     private TimedCallbacks _timedCallbacks;
+    private AudioSource _audio;
     private bool _sequenceBegun;
     private bool _shake;
     private float _shakeCooldown;
@@ -76,6 +95,9 @@ public class CouncilChairController : VoBehavior
     private bool _fade;
     private Color _fadeColor;
     private float _fadeSpeed;
+    private float _soundCooldown;
+    private bool _sound;
+    private float _soundMinCooldown;
 
     private void beginShake()
     {
@@ -87,6 +109,11 @@ public class CouncilChairController : VoBehavior
     {
         _fade = true;
         _fadeSpeed = 1.0f / this.FadeLength; 
+    }
+
+    private void beginSound()
+    {
+        _sound = true;
     }
 
     private void nextScene()
