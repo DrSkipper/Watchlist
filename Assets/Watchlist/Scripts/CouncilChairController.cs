@@ -18,6 +18,9 @@ public class CouncilChairController : VoBehavior
     public float SoundCooldownMinStart = 0.5f;
     public float SoundCooldownMinEnd = 0.1f;
     public float SoundCooldownMinDecrease = 0.1f;
+    public float SoundCooldownMaxDecrease = 0.05f;
+    public float SoundCooldownMaxEnd = 6.0f;
+    public float SoundEndDelay = 9.5f;
     public string Destination = "Credits";
     public Image FadePanel;
 
@@ -47,6 +50,7 @@ public class CouncilChairController : VoBehavior
             _timedCallbacks.AddCallback(this, beginFade, this.FadeDelay);
             _timedCallbacks.AddCallback(this, nextScene, this.SceneChangeDelay);
             _timedCallbacks.AddCallback(this, beginSound, this.SoundsDelay);
+            _timedCallbacks.AddCallback(this, endSound, this.SoundEndDelay);
         }
 
         if (_shake)
@@ -78,7 +82,8 @@ public class CouncilChairController : VoBehavior
             {
                 _audio.Play();
                 _soundCooldown = Random.Range(_soundMinCooldown, this.SoundCooldownMax);
-                _soundMinCooldown = Mathf.Max(this.SoundCooldownMinEnd, this.SoundCooldownMinStart - this.SoundCooldownMinDecrease);
+                _soundMinCooldown = Mathf.Max(this.SoundCooldownMinEnd, _soundMinCooldown - this.SoundCooldownMinDecrease);
+                _soundMaxCooldown = Mathf.Max(this.SoundCooldownMaxEnd, _soundMaxCooldown - this.SoundCooldownMinDecrease);
             }
         }
     }
@@ -98,6 +103,7 @@ public class CouncilChairController : VoBehavior
     private float _soundCooldown;
     private bool _sound;
     private float _soundMinCooldown;
+    private float _soundMaxCooldown;
 
     private void beginShake()
     {
@@ -114,6 +120,13 @@ public class CouncilChairController : VoBehavior
     private void beginSound()
     {
         _sound = true;
+        _soundMinCooldown = this.SoundCooldownMinStart;
+        _soundMaxCooldown = this.SoundCooldownMax;
+    }
+
+    private void endSound()
+    {
+        _sound = false;
     }
 
     private void nextScene()
