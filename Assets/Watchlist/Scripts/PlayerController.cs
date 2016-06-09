@@ -14,6 +14,7 @@ public class PlayerController : Actor2D
     public LayerMask PickupLayer;
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
     public bool NoFire = false;
+    public bool NoMove = false;
     public ReticlePositioner Reticle;
     public Texture2D SpriteAtlas;
 
@@ -47,29 +48,36 @@ public class PlayerController : Actor2D
         if (PauseController.IsPaused())
             return;
 
-        Vector2 movementAxis = GameplayInput.GetMovementAxis(this.PlayerIndex);
-
-        float targetX = movementAxis.x * this.MaxSpeed;
-        float targetY = movementAxis.y * this.MaxSpeed;
-
-        float changeX = targetX - this.Velocity.x;
-        float changeY = targetY - this.Velocity.y;
-
-        if (changeX != 0 || changeY != 0)
+        if (!this.NoMove)
         {
-            float changeTotal = Mathf.Sqrt(Mathf.Pow(changeX, 2) + Mathf.Pow(changeY, 2));
+            Vector2 movementAxis = GameplayInput.GetMovementAxis(this.PlayerIndex);
 
-            if (changeX != 0)
-            {
-                float ax = Mathf.Abs(_acceleration * changeX / changeTotal);
-                this.Velocity.x = Mathf.Lerp(this.Velocity.x, targetX, ax * Time.deltaTime / Math.Abs(changeX));
-            }
+            float targetX = movementAxis.x * this.MaxSpeed;
+            float targetY = movementAxis.y * this.MaxSpeed;
 
-            if (changeY != 0)
+            float changeX = targetX - this.Velocity.x;
+            float changeY = targetY - this.Velocity.y;
+
+            if (changeX != 0 || changeY != 0)
             {
-                float ay = Mathf.Abs(_acceleration * changeY / changeTotal);
-                this.Velocity.y = Mathf.Lerp(this.Velocity.y, targetY, ay * Time.deltaTime / Math.Abs(changeY));
+                float changeTotal = Mathf.Sqrt(Mathf.Pow(changeX, 2) + Mathf.Pow(changeY, 2));
+
+                if (changeX != 0)
+                {
+                    float ax = Mathf.Abs(_acceleration * changeX / changeTotal);
+                    this.Velocity.x = Mathf.Lerp(this.Velocity.x, targetX, ax * Time.deltaTime / Math.Abs(changeX));
+                }
+
+                if (changeY != 0)
+                {
+                    float ay = Mathf.Abs(_acceleration * changeY / changeTotal);
+                    this.Velocity.y = Mathf.Lerp(this.Velocity.y, targetY, ay * Time.deltaTime / Math.Abs(changeY));
+                }
             }
+        }
+        else
+        {
+            this.Velocity = Vector2.zero;
         }
 
         base.Update();
