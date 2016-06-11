@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public static class ProgressData
 {
     public const int WEAPON_SLOTS = 4;
+    public const int POINTS_FOR_HIT = 1;
+    public const int POINTS_FOR_KILL = 3;
     public const string DATA_PATH = "progress.dat";
 
     public static IntegerVector[] CompletedTiles { get { LoadFromDisk(); return _completedTiles.ToArray(); } }
@@ -121,12 +123,27 @@ public static class ProgressData
         return _currentBosses;
     }
 
+    public static int GetPointsForPlayer(int playerIndex)
+    {
+        if (_playerPoints == null)
+            _playerPoints = new int[DynamicData.MAX_PLAYERS];
+        return _playerPoints[playerIndex];
+    }
+
+    public static void ApplyPointsDeltaForPlayer(int playerIndex, int delta)
+    {
+        if (_playerPoints == null)
+            _playerPoints = new int[DynamicData.MAX_PLAYERS];
+        _playerPoints[playerIndex] += delta;
+    }
+
     public static void WipeData()
     {
         _completedTiles = new List<IntegerVector>();
         _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
         _mostRecentTile = null;
         _currentBosses = null;
+        _playerPoints = null;
     }
 
     public static void SaveToDisk()
@@ -137,6 +154,8 @@ public static class ProgressData
         diskData.HaveUsedMostRecentTile = _mostRecentTile != null;
         diskData.MostRecentTile = _mostRecentTile.HasValue ? _mostRecentTile.Value : new IntegerVector();
         diskData.WeaponSlotsByPlayer = _weaponSlotsByPlayer;
+        diskData.CurrentBosses = _currentBosses;
+        diskData.PlayerPoints = _playerPoints;
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
 
@@ -152,6 +171,14 @@ public static class ProgressData
                 if (diskData.HaveUsedMostRecentTile)
                     _mostRecentTile = diskData.MostRecentTile;
                 _weaponSlotsByPlayer = diskData.WeaponSlotsByPlayer;
+
+                _currentBosses = diskData.CurrentBosses;
+                if (_currentBosses != null && _currentBosses.Length < 4)
+                    _currentBosses = null;
+
+                _playerPoints = diskData.PlayerPoints;
+                if (_playerPoints != null && _playerPoints.Length < DynamicData.MAX_PLAYERS)
+                    _playerPoints = null;
             }
         }
     }
@@ -164,6 +191,8 @@ public static class ProgressData
         public bool HaveUsedMostRecentTile;
         public IntegerVector MostRecentTile;
         public Dictionary<int, SlotWrapper[]> WeaponSlotsByPlayer;
+        public int[] CurrentBosses;
+        public int[] PlayerPoints;
     }
 
     /**
@@ -173,5 +202,6 @@ public static class ProgressData
     private static IntegerVector? _mostRecentTile = null;
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
     private static int[] _currentBosses;
+    private static int[] _playerPoints;
     private static bool _hasLoaded = false;
 }

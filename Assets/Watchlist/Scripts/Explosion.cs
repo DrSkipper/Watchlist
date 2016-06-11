@@ -9,7 +9,7 @@ public class Explosion : VoBehavior
     public float RadiusToPowerMultiplier = 1.0f;
     public WeaponType WeaponType;
 
-    public void DetonateWithWeaponType(WeaponType weaponType, int layer, LayerMask damagableLayers)
+    public void DetonateWithWeaponType(WeaponType weaponType, int layer, LayerMask damagableLayers, AllegianceInfo allegianceInfo)
     {
         this.gameObject.layer = layer;
         _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter1;
@@ -21,6 +21,12 @@ public class Explosion : VoBehavior
         _damager.Damage = weaponType.Damage;
         _damager.Knockback = weaponType.Knockback;
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
+
+        _allegianceInfo = allegianceInfo;
+        if (allegianceInfo.Allegiance == Allegiance.Player)
+            _damager.AddAttackLandedCallback(landedAttack);
+
+        this.GetComponent<AllegianceColorizer>().UpdateVisual(allegianceInfo);
 
         ExplosionSounder.Detonate();
     }
@@ -62,4 +68,10 @@ public class Explosion : VoBehavior
     private Damager _damager;
     private CircleRenderer _circleRenderer;
     private List<GameObject> _collisions = new List<GameObject>();
+    private AllegianceInfo _allegianceInfo;
+
+    private void landedAttack(Damager damager, int damageDone, bool killingBlow)
+    {
+        GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(_allegianceInfo.MemberId, killingBlow ? ProgressData.POINTS_FOR_KILL : ProgressData.POINTS_FOR_HIT));
+    }
 }

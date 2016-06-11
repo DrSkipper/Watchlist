@@ -145,7 +145,7 @@
       <Acceleration>960</Acceleration>
       <SpinRange>0</SpinRange>
       <LookAtRange>430</LookAtRange>
-      <ShootRange>180</ShootRange>
+      <ShootRange>250</ShootRange>
       <ShotStartDistance>4</ShotStartDistance>
       <MovementType>2</MovementType>
       <TargetDistance>210</TargetDistance>

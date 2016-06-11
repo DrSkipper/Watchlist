@@ -107,3 +107,17 @@ public class MenuElementSelectedEvent : LocalEventNotifier.Event
         this.Action = action;
     }
 }
+
+public class PlayerPointsReceivedEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "PLAYER_POINTS";
+    public int PlayerIndex;
+    public int PointsDelta;
+
+    public PlayerPointsReceivedEvent(int playerIndex, int pointsDelta)
+    {
+        this.Name = NAME;
+        this.PlayerIndex = playerIndex;
+        this.PointsDelta = pointsDelta;
+    }
+}

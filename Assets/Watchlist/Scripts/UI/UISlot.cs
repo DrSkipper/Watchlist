@@ -8,11 +8,10 @@ public class UISlot : VoBehavior
     public Image SlotContentsObject;
 
     public Text TierText;
-    public RectTransform AmmoVisual;
+    public UIBar AmmoBar;
     
     public int SlotId;
     public bool UseWeaponLevelParadigm = false;
-    public int AmmoVisualHeight = 21;
 
     public Sprite UnlockedSlotSprite;
     public Sprite LockedSlotSprite;
@@ -108,11 +107,9 @@ public class UISlot : VoBehavior
         {
             SlotObject.sprite = this.UnlockedSlotSprite;
 
-            if (this.AmmoVisual != null)
+            if (this.AmmoBar != null)
             {
-                float percentRemaining = (float)ammoRemaining / (float)WeaponData.GetSlotDurationsByType()[slotType];
-                int endHeight = Mathf.RoundToInt(percentRemaining * (float)this.AmmoVisualHeight);
-                this.AmmoVisual.sizeDelta = new Vector2(this.AmmoVisual.sizeDelta.x, endHeight);
+                this.AmmoBar.UpdateLength(ammoRemaining, WeaponData.GetSlotDurationsByType()[slotType]);
             }
 
             if (this.TierText != null)
@@ -125,8 +122,8 @@ public class UISlot : VoBehavior
         }
         else
         {
-            if (this.AmmoVisual != null)
-                this.AmmoVisual.sizeDelta = new Vector2(this.AmmoVisual.sizeDelta.x, 0);
+            if (this.AmmoBar != null)
+                this.AmmoBar.EmptyCompletely();
             if (this.TierText != null)
                 this.TierText.text = "";
             SlotObject.sprite = this.LockedSlotSprite;

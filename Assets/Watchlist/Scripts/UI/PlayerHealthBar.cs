@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerHealthBar : MonoBehaviour
+public class PlayerHealthBar : UIBar
 {
-    public RectTransform HealthBar;
     public int PlayerIndex = 0;
-    public int TargetHeight = 104;
 
     void Start()
     {
@@ -33,8 +30,6 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void healthUpdated(Damagable player, int damage)
     {
-        float percentHealth = (float)player.Health / (float)player.MaxHealth;
-        int height = Mathf.RoundToInt((float)this.TargetHeight * percentHealth);
-        this.HealthBar.sizeDelta = new Vector2(this.HealthBar.sizeDelta.x, height);
+        this.UpdateLength(player.Health, player.MaxHealth);
     }
 }

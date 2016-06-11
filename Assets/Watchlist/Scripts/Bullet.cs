@@ -36,6 +36,9 @@ public class Bullet : Actor2D
         _damager.Knockback = weaponType.Knockback;
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
+        if (_allegianceInfo.Allegiance == Allegiance.Player)
+            _damager.AddAttackLandedCallback(landedAttack);
+
         this.BounceLayerMask = weaponType.MaximumBounces > 0 ? levelGeometryMask : nothing;
         this.CollisionMask = _damager.DamagableLayers | levelGeometryMask;
         this.HaltMovementMask = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? levelGeometryMask : this.CollisionMask;
@@ -98,8 +101,7 @@ public class Bullet : Actor2D
     public static void CreateExplosionEntity(Vector3 position, GameObject explosionPrefab, AllegianceInfo allegianceInfo, int layer, LayerMask damagableLayers, WeaponType weaponType)
     {
         GameObject explosion = Instantiate(explosionPrefab, position, Quaternion.identity) as GameObject;
-        explosion.GetComponent<Explosion>().DetonateWithWeaponType(weaponType, layer, damagableLayers);
-        explosion.GetComponent<AllegianceColorizer>().UpdateVisual(allegianceInfo);
+        explosion.GetComponent<Explosion>().DetonateWithWeaponType(weaponType, layer, damagableLayers, allegianceInfo);
     }
 
     /**
@@ -121,6 +123,11 @@ public class Bullet : Actor2D
 
         if (_explosionRemaining && !_isLaser)
             triggerExplosion(location);
+    }
+
+    private void landedAttack(Damager damager, int damageDone, bool killingBlow)
+    {
+        GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(_allegianceInfo.MemberId, killingBlow ? ProgressData.POINTS_FOR_KILL : ProgressData.POINTS_FOR_HIT));
     }
 
     private void bounce(GameObject hit, Vector2 origVelocity, Vector2 appliedVelocity)

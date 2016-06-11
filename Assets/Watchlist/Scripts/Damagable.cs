@@ -21,6 +21,7 @@ public class Damagable : VoBehavior
     public AudioClip AudioOnHit = null;
 
     public int MaxHealth { get { return _maxHealth; } }
+    public bool IsDead { get { return this.Health <= 0.0f; } }
 
     public delegate void HealthCallback(Damagable affected, int damageDone);
     public delegate void DeathCallback(Damagable affected);
