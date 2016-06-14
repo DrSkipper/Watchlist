@@ -159,9 +159,9 @@ public static class ProgressData
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
 
-    public static void LoadFromDisk()
+    public static void LoadFromDisk(bool force = false)
     {
-        if (!_hasLoaded)
+        if (!_hasLoaded || force)
         {
             _hasLoaded = true;
             ProgressDiskData diskData = DiskDataHandler.Load<ProgressDiskData>(DATA_PATH);

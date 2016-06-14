@@ -19,6 +19,7 @@ public class LoseCondition : VoBehavior
 
     public void GoToGameOver()
     {
+        ProgressData.LoadFromDisk(true);
         SceneManager.LoadScene(this.Destination);
     }
 

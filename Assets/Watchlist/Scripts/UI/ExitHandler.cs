@@ -29,7 +29,10 @@ public class ExitHandler : VoBehavior
         if (pressed)
         {
             if (this.Destination != "")
+            {
+                ProgressData.LoadFromDisk(true);
                 SceneManager.LoadScene(this.Destination);
+            }
             else
                 Application.Quit();
         }
