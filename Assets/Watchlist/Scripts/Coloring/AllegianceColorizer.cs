@@ -32,9 +32,17 @@ public class AllegianceColorizer : VoBehavior
                 {
                     _image = this.GetComponent<Image>();
                     if (_image != null)
+                    {
                         _colorSetter = setImageColor;
+                    }
                     else
-                        _colorSetter = emptyColorSetter;
+                    {
+                        _text = this.GetComponent<Text>();
+                        if (_text != null)
+                            _colorSetter = setTextColor;
+                        else
+                            _colorSetter = emptyColorSetter;
+                    }
                 }
             }
         }
@@ -51,11 +59,15 @@ public class AllegianceColorizer : VoBehavior
     {
         this.AllegianceInfo = allegianceInfo;
 
-        foreach (AllegianceColorizer dependent in this.DependentColorizers)
+        if (this.DependentColorizers != null)
         {
-            AllegianceInfo info = dependent.AllegianceInfo;
-            info.MemberId = allegianceInfo.MemberId;
-            dependent.UpdateVisual(info);
+            foreach (AllegianceColorizer dependent in this.DependentColorizers)
+            {
+                AllegianceInfo info = dependent.AllegianceInfo;
+                info.Allegiance = allegianceInfo.Allegiance;
+                info.MemberId = allegianceInfo.MemberId;
+                dependent.UpdateVisual(info);
+            }
         }
 
         if (_colorSetter != null)
@@ -76,6 +88,7 @@ public class AllegianceColorizer : VoBehavior
     private LineRenderer _lineRenderer;
     private Camera _camera;
     private Image _image;
+    private Text _text;
 
     private void setSpriteColor(Color color)
     {
@@ -95,6 +108,11 @@ public class AllegianceColorizer : VoBehavior
     private void setImageColor(Color color)
     {
         _image.color = color;
+    }
+
+    private void setTextColor(Color color)
+    {
+        _text.color = color;
     }
 
     private void emptyColorSetter(Color color)
