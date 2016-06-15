@@ -5,9 +5,12 @@ public class PlayerShopHandler : MonoBehaviour
 {
     public bool HasReadied = false;
     public int PlayerIndex = 0;
+    public GameObject ReadyPanel;
+    public UIDialogHandler ShopDialog;
 
     void Awake()
     {
+        this.ShopDialog = this.GetComponent<UIDialogHandler>();
         regenSmartSlots(null);
     }
 
@@ -28,6 +31,8 @@ public class PlayerShopHandler : MonoBehaviour
             if (_rewiredPlayer.GetButtonDown(MenuInput.PAUSE) || _rewiredPlayer.GetButtonDown(MenuInput.EXIT))
             {
                 this.HasReadied = !this.HasReadied;
+                this.ReadyPanel.SetActive(this.HasReadied);
+                this.ShopDialog.AcceptingInput = !this.HasReadied;
             }
         }
     }

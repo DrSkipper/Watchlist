@@ -23,6 +23,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
 
             if (_readied)
             {
+                PauseController.EnablePausing(true);
                 Destroy(this.LevelInfoRootObject);
                 this.GetComponent<TimedCallbacks>().AddCallback(this, beginGameplay, this.BeginGameplayDelay);
             }

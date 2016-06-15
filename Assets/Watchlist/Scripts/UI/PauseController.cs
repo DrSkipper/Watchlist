@@ -4,12 +4,22 @@ public class PauseController : VoBehavior
 {
     public static bool IsPaused()
     {
-        return _paused || Time.deltaTime == 0.0f;
+        return _pauseController._paused || Time.deltaTime == 0.0f;
+    }
+
+    public static void EnablePausing(bool enable)
+    {
+        _pauseController.AllowPausing = enable;
     }
 
     public GameObject PauseMenu;
     public bool PauseOnStart = false;
     public bool AllowPausing = true;
+
+    void Awake()
+    {
+        _pauseController = this;
+    }
 
     void Start()
     {
@@ -33,7 +43,8 @@ public class PauseController : VoBehavior
     /**
      * Private
      */
-    private static bool _paused;
+    private static PauseController _pauseController;
+    private bool _paused;
 
     private void pause()
     {

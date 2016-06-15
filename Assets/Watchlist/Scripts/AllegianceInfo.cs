@@ -37,5 +37,7 @@ public enum ColorPaletteState
     Projectile,
     Explosion,
     Damaged,
-    Gibs
+    Gibs,
+    UIPrimary,
+    UISecondary
 }
