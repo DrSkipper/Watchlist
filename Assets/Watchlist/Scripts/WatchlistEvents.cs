@@ -121,3 +121,13 @@ public class PlayerPointsReceivedEvent : LocalEventNotifier.Event
         this.PointsDelta = pointsDelta;
     }
 }
+
+public class BeginGameplayEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "BEGIN_GAMEPLAY";
+
+    public BeginGameplayEvent()
+    {
+        this.Name = NAME;
+    }
+}

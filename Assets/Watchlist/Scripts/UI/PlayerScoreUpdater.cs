@@ -17,6 +17,12 @@ public class PlayerScoreUpdater : MonoBehaviour
         this.ScoreText.text = _prefix + ProgressData.GetPointsForPlayer(this.PlayerIndex);
     }
 
+    void OnDestroy()
+    {
+        if (GlobalEvents.Notifier != null)
+            GlobalEvents.Notifier.RemoveAllListenersForOwner(this);
+    }
+
     /**
      * Private
      */
@@ -28,7 +34,6 @@ public class PlayerScoreUpdater : MonoBehaviour
 
         if (pointsEvent.PlayerIndex == this.PlayerIndex)
         {
-            ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, pointsEvent.PointsDelta);
             this.ScoreText.text = _prefix + ProgressData.GetPointsForPlayer(this.PlayerIndex);
         }
     }

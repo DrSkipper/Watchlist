@@ -47,6 +47,7 @@ public class WeaponType : ICloneable
 [System.Serializable]
 public class WeaponData
 {
+    [System.Serializable]
     public enum Slot
     {
         Empty = 0,
@@ -175,12 +176,34 @@ public class WeaponData
         if (_slotDurationsByType == null)
         {
             _slotDurationsByType = new Dictionary<Slot, int>();
-            _slotDurationsByType[Slot.Bomb] = 32;
-            _slotDurationsByType[Slot.Spreadshot] = 38;
-            _slotDurationsByType[Slot.Bounce] = 42;
-            _slotDurationsByType[Slot.Laser] = 112;
+            _slotDurationsByType[Slot.Bomb] = 48;
+            _slotDurationsByType[Slot.Spreadshot] = 56;
+            _slotDurationsByType[Slot.Bounce] = 62;
+            _slotDurationsByType[Slot.Laser] = 158;
         }
         return _slotDurationsByType;
+    }
+
+    private static int[] _upgradeCosts;
+    private static int[] _upgradeCostIncreases;
+
+    public static int GetUpgradeCost(Slot slotType)
+    {
+        if (_upgradeCosts == null)
+            _upgradeCosts = new int[] { 0, 35, 50, 70, 40 };
+        return _upgradeCosts[(int)slotType];
+    }
+
+    public static int GetUpgradeCostIncreases(Slot slotType)
+    {
+        if (_upgradeCostIncreases == null)
+            _upgradeCostIncreases = new int[] { 0, 10, 10, 20, 8 };
+        return _upgradeCostIncreases[(int)slotType];
+    }
+
+    public static int GetUpgradeTotalCost(Slot slotType, int level)
+    {
+        return GetUpgradeCost(slotType) + GetUpgradeCostIncreases(slotType) * level;
     }
 
     /**

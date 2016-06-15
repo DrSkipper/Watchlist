@@ -125,7 +125,7 @@ public class PlayerController : Actor2D
     /**
      * Private
      */
-    private int _selectedSlot;
+    //private int _selectedSlot;
     private float _acceleration;
     private Weapon _weapon;
     private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();

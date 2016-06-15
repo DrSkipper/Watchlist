@@ -13,6 +13,7 @@ public class SpawnPositioner : VoBehavior
     public float SpawnPlayersDelay = 1.0f;
     public float SpawnEnemiesDelay = 3.0f;
     public int MaxPlayerSpawnDistance = 10;
+    public bool WaitForGameplayBeginEvent = false;
 
     void Start()
     {
@@ -21,6 +22,11 @@ public class SpawnPositioner : VoBehavior
         _map = this.LevelGenerator.GetComponent<LevelGenMap>();
         _tileRenderer = this.Tiles.GetComponent<TileMapOutlineRenderer>();
         _levelGenManager.UpdateDelegate = this.LevelGenUpdate;
+
+        if (this.WaitForGameplayBeginEvent)
+            GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, okToBegin);
+        else
+            _okToBegin = true;
 
         if (_tileRenderer.OffsetTilesToCenter)
             this.transform.position = new Vector3(0, 0, this.transform.position.z);
@@ -34,7 +40,6 @@ public class SpawnPositioner : VoBehavior
             _targets = new List<Transform>();
             _enemySpawns = new List<EnemySpawn>();
             _playerSpawns = new List<IntegerVector>();
-            TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
             bool generationOk = false;
 
             switch (output.Input.Type)
@@ -49,8 +54,15 @@ public class SpawnPositioner : VoBehavior
             }
             if (generationOk)
             {
-                callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
-                callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
+                if (_okToBegin)
+                {
+                    _okToBegin = false;
+                    begin();
+                }
+                else
+                {
+                    _readyToSpawn = true;
+                }
             }
             else
             {
@@ -139,6 +151,28 @@ public class SpawnPositioner : VoBehavior
     private List<Transform> _targets;
     private List<EnemySpawn> _enemySpawns;
     private List<IntegerVector> _playerSpawns;
+    private bool _okToBegin;
+    private bool _readyToSpawn;
+
+    private void okToBegin(LocalEventNotifier.Event e)
+    {
+        if (_readyToSpawn)
+        {
+            _readyToSpawn = false;
+            begin();
+        }
+        else
+        {
+            _okToBegin = true;
+        }
+    }
+
+    private void begin()
+    {
+        TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+        callbacks.AddCallback(this, this.SpawnPlayers, this.SpawnPlayersDelay);
+        callbacks.AddCallback(this, this.SpawnEnemies, this.SpawnEnemiesDelay);
+    }
 
     private bool findCASpawns(LevelGenOutput output)
     {

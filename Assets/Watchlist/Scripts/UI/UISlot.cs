@@ -67,36 +67,8 @@ public class UISlot : VoBehavior
 
     private void updateSlotLevelParadigm(ProgressData.SlotWrapper[] slots)
     {
-        bool[] weaponTypesFound = { false, false, false, false };
-        int[] ammoRemaining = { 0, 0, 0, 0 };
-        int[] weaponLevel = { 0, 0, 0, 0 };
-        int numTypesFound = 0;
-        WeaponData.Slot chosenSlotType = WeaponData.Slot.Empty;
-        int chosenWeaponIndex = -1;
-
-        for (int i = 0; i < slots.Length; ++i)
-        {
-            if (slots[i].SlotType == WeaponData.Slot.Empty)
-                continue;
-            int weaponIndex = (int)slots[i].SlotType - 1;
-            ++weaponLevel[weaponIndex];
-            if (chosenSlotType == WeaponData.Slot.Empty && !weaponTypesFound[weaponIndex])
-            {
-                ++numTypesFound;
-                weaponTypesFound[weaponIndex] = true;
-                ammoRemaining[weaponIndex] = slots[i].AmmoRemaining;
-
-                if (numTypesFound > this.SlotId)
-                {
-                    chosenSlotType = slots[i].SlotType;
-                    chosenWeaponIndex = weaponIndex;
-                }
-            }
-        }
-
-        int ammo = chosenSlotType != WeaponData.Slot.Empty ? ammoRemaining[chosenWeaponIndex] : 0;
-        int level = chosenSlotType != WeaponData.Slot.Empty ? weaponLevel[chosenWeaponIndex] : 0;
-        updateSlotHelper(chosenSlotType, ammo, level);
+        ProgressData.SmartSlot smartSlot = ProgressData.GetSmartSlot(slots, this.SlotId);
+        updateSlotHelper(smartSlot.SlotType, smartSlot.Ammo, smartSlot.Level);
     }
 
     private void updateSlotHelper(WeaponData.Slot slotType, int ammoRemaining, int weaponLevel)

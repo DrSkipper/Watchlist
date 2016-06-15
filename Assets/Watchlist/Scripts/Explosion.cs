@@ -72,6 +72,8 @@ public class Explosion : VoBehavior
 
     private void landedAttack(Damager damager, int damageDone, bool killingBlow)
     {
-        GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(_allegianceInfo.MemberId, killingBlow ? ProgressData.POINTS_FOR_KILL : ProgressData.POINTS_FOR_HIT));
+        int points = killingBlow ? ProgressData.POINTS_FOR_KILL : ProgressData.POINTS_FOR_HIT;
+        ProgressData.ApplyPointsDeltaForPlayer(_allegianceInfo.MemberId, points);
+        GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(_allegianceInfo.MemberId, points));
     }
 }

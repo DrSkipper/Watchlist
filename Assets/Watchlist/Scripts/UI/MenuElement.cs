@@ -70,7 +70,8 @@ public class MenuElement : MonoBehaviour
 
     void Start()
     {
-        this.Text.color = this.Locked ? this.LockedColor : this.UnlockedColor;
+        if (this.Text != null)
+            this.Text.color = this.Locked ? this.LockedColor : this.UnlockedColor;
     }
 
     public void Select()

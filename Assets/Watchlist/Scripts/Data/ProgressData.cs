@@ -115,6 +115,111 @@ public static class ProgressData
             _weaponSlotsByPlayer[playerIndex][i] = new SlotWrapper(slots[i]);
         }
     }
+
+    public struct SmartSlot
+    {
+        public WeaponData.Slot SlotType;
+        public int Ammo;
+        public int Level;
+
+        public SmartSlot(WeaponData.Slot slotType, int ammo, int level)
+        {
+            this.SlotType = slotType;
+            this.Ammo = ammo;
+            this.Level = level;
+        }
+    }
+
+    public static SmartSlot GetSmartSlot(SlotWrapper[] slots, int slotId)
+    {
+        bool[] weaponTypesFound = { false, false, false, false };
+        int[] ammoRemaining = { 0, 0, 0, 0 };
+        int[] weaponLevel = { 0, 0, 0, 0 };
+        int numTypesFound = 0;
+        WeaponData.Slot chosenSlotType = WeaponData.Slot.Empty;
+        int chosenWeaponIndex = -1;
+
+        for (int i = 0; i < slots.Length; ++i)
+        {
+            if (slots[i].SlotType == WeaponData.Slot.Empty)
+                continue;
+            int weaponIndex = (int)slots[i].SlotType - 1;
+            ++weaponLevel[weaponIndex];
+            if (chosenSlotType == WeaponData.Slot.Empty && !weaponTypesFound[weaponIndex])
+            {
+                ++numTypesFound;
+                weaponTypesFound[weaponIndex] = true;
+                ammoRemaining[weaponIndex] = slots[i].AmmoRemaining;
+
+                if (numTypesFound > slotId)
+                {
+                    chosenSlotType = slots[i].SlotType;
+                    chosenWeaponIndex = weaponIndex;
+                }
+            }
+        }
+
+        int ammo = chosenSlotType != WeaponData.Slot.Empty ? ammoRemaining[chosenWeaponIndex] : 0;
+        int level = chosenSlotType != WeaponData.Slot.Empty ? weaponLevel[chosenWeaponIndex] : 0;
+        return new SmartSlot(chosenSlotType, ammo, level);
+    }
+
+    public static SmartSlot[] GetSmartSlots(int playerIndex)
+    {
+        SmartSlot[] smartSlots = new SmartSlot[5];
+        SlotWrapper[] wrappers = WeaponSlotsByPlayer[playerIndex];
+        for (int i = 0; i < 4; ++i)
+        {
+            SmartSlot smartSlot = GetSmartSlot(wrappers, i);
+            if (smartSlot.SlotType != WeaponData.Slot.Empty)
+                smartSlots[(int)smartSlot.SlotType] = smartSlot;
+            else
+                break;
+        }
+        return smartSlots;
+    }
+
+    public static void PickupSlot(int playerIndex, WeaponData.Slot slotType)
+    {
+        int count = 0;
+
+        List<ProgressData.SlotWrapper> slots = new List<ProgressData.SlotWrapper>(WeaponSlotsByPlayer[playerIndex]);
+        foreach (ProgressData.SlotWrapper slot in slots)
+        {
+            if (slot.SlotType == slotType)
+                ++count;
+        }
+
+        if (count < WeaponData.GetMaxSlotsByType()[slotType])
+        {
+            slots.Add(new ProgressData.SlotWrapper(slotType));
+        }
+        else
+        {
+            int shots = WeaponData.GetSlotDurationsByType()[slotType];
+            int shotsToAdd = shots;
+
+            for (int i = slots.Count - 1; i >= 0; --i)
+            {
+                ProgressData.SlotWrapper slot = slots[i];
+                if (slot.SlotType == slotType)
+                {
+                    slot.AmmoRemaining += shotsToAdd;
+                    if (slot.AmmoRemaining > shots)
+                    {
+                        shotsToAdd = slot.AmmoRemaining - shots;
+                        slot.AmmoRemaining = shots;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        UpdatePlayerSlots(playerIndex, slots.ToArray());
+    }
     
     public static int[] GetCurrentBosses()
     {
