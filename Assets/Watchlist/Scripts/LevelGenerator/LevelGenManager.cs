@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class LevelGenManager : LevelGenBehavior
 {
@@ -7,7 +8,6 @@ public class LevelGenManager : LevelGenBehavior
 	public float StepRunInterval = 0.0f;
 	public int StepsRunEachUpdate = int.MaxValue;
 	public bool Finished { get { return !_generating; } }
-    public LevelGenerationUpdateDelegate UpdateDelegate = null;
     public BSPGenerator.BSPGenerationParams DefaultBSPParams;
     public bool RemoveTips = true;
     public int Border = 0;
@@ -45,9 +45,12 @@ public class LevelGenManager : LevelGenBehavior
         _generator.Bounds = new Rect(this.Border, this.Border, this.Map.Width - this.Border * 2, this.Map.Height - this.Border * 2);
 		_generator.SetupGeneration();
 
-        if (this.UpdateDelegate != null)
-            this.UpdateDelegate();
-	}
+        if (_updateDelegates != null)
+        {
+            for (int i = 0; i < _updateDelegates.Count; ++i)
+                _updateDelegates[i]();
+        }
+    }
 
 	public void TestGenerator(BaseLevelGenerator generator)
 	{
@@ -59,9 +62,12 @@ public class LevelGenManager : LevelGenBehavior
 		this.Map.FillCompletely(LevelGenMap.TileType.A);
 		_generator.SetupGeneration();
 
-        if (this.UpdateDelegate != null)
-            this.UpdateDelegate();
-	}
+        if (_updateDelegates != null)
+        {
+            for (int i = 0; i < _updateDelegates.Count; ++i)
+                _updateDelegates[i]();
+        }
+    }
 
 	public void Update()
 	{
@@ -81,8 +87,11 @@ public class LevelGenManager : LevelGenBehavior
                         removeTips();
                 }
 
-                if (this.UpdateDelegate != null)
-                    this.UpdateDelegate();
+                if (_updateDelegates != null)
+                {
+                    for (int i = 0; i < _updateDelegates.Count; ++i)
+                        _updateDelegates[i]();
+                }
 			}
 		}
 	}
@@ -113,6 +122,18 @@ public class LevelGenManager : LevelGenBehavior
         return output;
 	}
 
+    public void AddUpdateDelegate(LevelGenerationUpdateDelegate callback)
+    {
+        if (_updateDelegates == null)
+            _updateDelegates = new List<LevelGenerationUpdateDelegate>();
+        _updateDelegates.Add(callback);
+    }
+
+    public void RemoveUpdateDelegate(LevelGenerationUpdateDelegate callback)
+    {
+        _updateDelegates.Remove(callback);
+    }
+
 	/**
 	 * Private
 	 */
@@ -121,6 +142,7 @@ public class LevelGenManager : LevelGenBehavior
 	private float _timeSinceLastStep;
 	private BaseLevelGenerator _generator;
     private LevelGenInput _input;
+    private List<LevelGenerationUpdateDelegate> _updateDelegates;
 
     private void removeTips()
     {

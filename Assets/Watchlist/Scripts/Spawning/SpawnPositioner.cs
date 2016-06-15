@@ -15,13 +15,15 @@ public class SpawnPositioner : VoBehavior
     public int MaxPlayerSpawnDistance = 10;
     public bool WaitForGameplayBeginEvent = false;
 
+    public bool SpawnersPlaced { get { return _readyToSpawn; } }
+
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
         _starter = this.LevelGenerator.GetComponent<LevelGenStarter>();
         _map = this.LevelGenerator.GetComponent<LevelGenMap>();
         _tileRenderer = this.Tiles.GetComponent<TileMapOutlineRenderer>();
-        _levelGenManager.UpdateDelegate = this.LevelGenUpdate;
+        _levelGenManager.AddUpdateDelegate(this.LevelGenUpdate);
 
         if (this.WaitForGameplayBeginEvent)
             GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, okToBegin);
@@ -127,6 +129,20 @@ public class SpawnPositioner : VoBehavior
             spawnBehavior.DestroyAfterSpawn = true;
             spawnBehavior.SpawnPool = new int[] { enemySpawn.EnemyId };
         }
+    }
+
+    public Dictionary<int, int> GetEnemyCounts()
+    {
+        Dictionary<int, int> enemyCounts = new Dictionary<int, int>();
+        for (int i = 0; i < _enemySpawns.Count; ++i)
+        {
+            int enemyId = _enemySpawns[i].EnemyId;
+            if (enemyCounts.ContainsKey(enemyId))
+                enemyCounts[enemyId] = enemyCounts[enemyId] + 1;
+            else
+                enemyCounts.Add(enemyId, 1);
+        }
+        return enemyCounts;
     }
 
     /**

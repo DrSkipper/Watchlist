@@ -9,7 +9,7 @@ public class LevelGenTestRenderer : LevelGenBehavior
 
     void Awake()
     {
-        this.Manager.UpdateDelegate = this.MapWasUpdated;
+        this.Manager.AddUpdateDelegate(this.MapWasUpdated);
         _tileMapRender = this.Tiles.GetComponent<TileMapRenderer>();
         _tileMapOutlineRender = this.Tiles.GetComponent<TileMapOutlineRenderer>();
     }
