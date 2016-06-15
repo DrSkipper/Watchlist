@@ -9,6 +9,7 @@ public class MenuController : VoBehavior, UIDialogHandler
     public bool ListenToPause = true;
     public int[] PrioritizedDefaults;
     public MenuControlType ControlType = MenuControlType.UpDown;
+    public int LimitToPlayerIndex = -1;
 
     [System.Serializable]
     public enum MenuControlType
@@ -54,7 +55,7 @@ public class MenuController : VoBehavior, UIDialogHandler
             else if (highlightPreviousElement())
                 highlightElement(this.CurrentElement == 0 ? this.MenuElements.Length - 1 : this.CurrentElement - 1);
             else if (!otherHighlightOption() &&
-                this.AllowSelection && MenuInput.SelectCurrentElement())
+                this.AllowSelection && MenuInput.SelectCurrentElement(this.LimitToPlayerIndex))
                 selectCurrentElement();
         }
     }
@@ -72,9 +73,9 @@ public class MenuController : VoBehavior, UIDialogHandler
         {
             default:
             case MenuControlType.UpDown:
-                return MenuInput.NavDown();
+                return MenuInput.NavDown(this.LimitToPlayerIndex);
             case MenuControlType.LeftRight:
-                return MenuInput.NavRight();
+                return MenuInput.NavRight(this.LimitToPlayerIndex);
         }
     }
 
@@ -84,9 +85,9 @@ public class MenuController : VoBehavior, UIDialogHandler
         {
             default:
             case MenuControlType.UpDown:
-                return MenuInput.NavUp();
+                return MenuInput.NavUp(this.LimitToPlayerIndex);
             case MenuControlType.LeftRight:
-                return MenuInput.NavLeft();
+                return MenuInput.NavLeft(this.LimitToPlayerIndex);
         }
     }
 

@@ -13,39 +13,39 @@ public static class MenuInput
     public const string EXIT = "Exit";
     public const string MENU_CATEGORY = "Default";
 
-    public static bool SelectCurrentElement()
+    public static bool SelectCurrentElement(int playerIndex = -1)
     {
-        return checkButton(SELECT);
+        return checkButton(SELECT, playerIndex);
     }
 
-    public static bool NavLeft()
+    public static bool NavLeft(int playerIndex = -1)
     {
-        return checkButton(LEFT);
+        return checkButton(LEFT, playerIndex);
     }
 
-    public static bool NavRight()
+    public static bool NavRight(int playerIndex = -1)
     {
-        return checkButton(RIGHT);
+        return checkButton(RIGHT, playerIndex);
     }
 
-    public static bool NavUp()
+    public static bool NavUp(int playerIndex = -1)
     {
-        return checkButton(UP);
+        return checkButton(UP, playerIndex);
     }
 
-    public static bool NavDown()
+    public static bool NavDown(int playerIndex = -1)
     {
-        return checkButton(DOWN);
+        return checkButton(DOWN, playerIndex);
     }
 
-    public static bool Pause()
+    public static bool Pause(int playerIndex = -1)
     {
-        return checkButton(PAUSE);
+        return checkButton(PAUSE, playerIndex);
     }
 
-    public static bool Exit()
+    public static bool Exit(int playerIndex = -1)
     {
-        return checkButton(EXIT);
+        return checkButton(EXIT, playerIndex);
     }
 
     public static bool AnyInput()
@@ -62,13 +62,22 @@ public static class MenuInput
      * Private
      */
 
-    private static bool checkButton(string buttonName)
+    private static bool checkButton(string buttonName, int playerIndex)
     {
-        foreach (Player player in ReInput.players.GetPlayers())
+        if (playerIndex < 0)
         {
-            if (player.GetButtonDown(buttonName))
-                return true;
+            foreach (Player player in ReInput.players.GetPlayers())
+            {
+                if (player.GetButtonDown(buttonName))
+                    return true;
+            }
+            return false;
         }
-        return false;
+
+        SessionPlayer sessionPlayer = DynamicData.GetSessionPlayer(playerIndex);
+        if (sessionPlayer == null || !sessionPlayer.HasJoined)
+            return false;
+
+        return ReInput.players.GetPlayer(sessionPlayer.RewiredId).GetButtonDown(buttonName);
     }
 }
