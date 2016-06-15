@@ -7,6 +7,8 @@ public class GameplayPalette : MonoBehaviour
     public Color[] PlayerProjectileColor;
     public Color[] PlayerExplosionColor;
     public Color[] PlayerDamagedColor;
+    public Color[] PlayerUIPrimaryColor;
+    public Color[] PlayerUISecondaryColor;
     
     public Color EnemyColor;
     public Color EnemyProjectileColor;
@@ -36,6 +38,12 @@ public class GameplayPalette : MonoBehaviour
 
         _playerDamagedColor = new Color[this.PlayerDamagedColor.Length];
         this.PlayerDamagedColor.CopyTo(_playerDamagedColor, 0);
+
+        _playerUIPrimaryColor = new Color[this.PlayerUIPrimaryColor.Length];
+        this.PlayerUIPrimaryColor.CopyTo(_playerUIPrimaryColor, 0);
+
+        _playerUISecondaryColor = new Color[this.PlayerUISecondaryColor.Length];
+        this.PlayerUISecondaryColor.CopyTo(_playerUISecondaryColor, 0);
 
         _enemyColor = this.EnemyColor;
         _enemyProjectileColor = this.EnemyProjectileColor;
@@ -78,6 +86,20 @@ public class GameplayPalette : MonoBehaviour
         if (playerNum < _playerDamagedColor.Length)
             return _playerDamagedColor[playerNum];
         return _playerDamagedColor[0];
+    }
+
+    public static Color GetPlayerUIPrimaryColor(int playerNum)
+    {
+        if (playerNum < _playerUIPrimaryColor.Length)
+            return _playerUIPrimaryColor[playerNum];
+        return _playerUIPrimaryColor[0];
+    }
+
+    public static Color GetPlayerUISecondaryColor(int playerNum)
+    {
+        if (playerNum < _playerUISecondaryColor.Length)
+            return _playerUISecondaryColor[playerNum];
+        return _playerUISecondaryColor[0];
     }
 
     public static Color GetEnemyColor()
@@ -149,6 +171,10 @@ public class GameplayPalette : MonoBehaviour
                 return GetPlayerDamagedColor(parameter);
             case "player_gibs":
                 return GetPlayerColor(parameter); //TODO ?
+            case "player_uiprimary":
+                return GetPlayerUIPrimaryColor(parameter);
+            case "player_uisecondary":
+                return GetPlayerUISecondaryColor(parameter);
             case "enemy":
                 return GetEnemyColor();
             case "enemy_projectile":
@@ -198,6 +224,12 @@ public class GameplayPalette : MonoBehaviour
             case ColorPaletteState.Gibs:
                 colorClassAddition = "_gibs";
                 break;
+            case ColorPaletteState.UIPrimary:
+                colorClassAddition = "_uiprimary";
+                break;
+            case ColorPaletteState.UISecondary:
+                colorClassAddition = "_uisecondary";
+                break;
         }
 
         switch (allegianceInfo.Allegiance)
@@ -218,6 +250,8 @@ public class GameplayPalette : MonoBehaviour
     private static Color[] _playerProjectileColor;
     private static Color[] _playerExplosionColor;
     private static Color[] _playerDamagedColor;
+    private static Color[] _playerUIPrimaryColor;
+    private static Color[] _playerUISecondaryColor;
 
     private static Color _enemyColor;
     private static Color _enemyProjectileColor;
