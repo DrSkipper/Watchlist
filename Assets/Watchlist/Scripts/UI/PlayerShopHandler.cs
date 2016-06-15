@@ -32,6 +32,12 @@ public class PlayerShopHandler : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (!_sessionPlayer.HasJoined)
+            Destroy(this.gameObject);
+    }
+
     void OnDestroy()
     {
         if (GlobalEvents.Notifier != null)

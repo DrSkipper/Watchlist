@@ -14,7 +14,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
             _readied = true;
             for (int i = 0; i < this.Shops.Length; ++i)
             {
-                if (!this.Shops[i].HasReadied)
+                if (this.Shops[i] != null && !this.Shops[i].HasReadied)
                 {
                     _readied = false;
                     break;
