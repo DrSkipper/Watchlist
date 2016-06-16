@@ -6,7 +6,7 @@
       <Id>1000000</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -29,7 +29,7 @@
       <Id>1000001</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -52,7 +52,7 @@
       <Id>1000002</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -75,7 +75,7 @@
       <Id>1000003</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -98,7 +98,7 @@
       <Id>1000004</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -121,7 +121,7 @@
       <Id>1000011</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -144,7 +144,7 @@
       <Id>1000022</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -167,7 +167,7 @@
       <Id>1000033</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -190,7 +190,7 @@
       <Id>1000044</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -213,7 +213,7 @@
       <Id>1000021</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -236,7 +236,7 @@
       <Id>1000031</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -259,7 +259,7 @@
       <Id>1000041</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -282,7 +282,7 @@
       <Id>1000032</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -305,7 +305,7 @@
       <Id>1000042</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -328,7 +328,7 @@
       <Id>1000043</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -351,7 +351,7 @@
       <Id>1000111</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -374,7 +374,7 @@
       <Id>1000222</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>5</ShotCount>
@@ -397,7 +397,7 @@
       <Id>1000333</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -420,7 +420,7 @@
       <Id>1000444</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -443,7 +443,7 @@
       <Id>1000211</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -466,7 +466,7 @@
       <Id>1000311</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -489,7 +489,7 @@
       <Id>1000411</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -512,7 +512,7 @@
       <Id>1000221</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -535,7 +535,7 @@
       <Id>1000322</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -558,7 +558,7 @@
       <Id>1000422</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -581,7 +581,7 @@
       <Id>1000331</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -604,7 +604,7 @@
       <Id>1000332</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -627,7 +627,7 @@
       <Id>1000433</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -650,7 +650,7 @@
       <Id>1000441</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -673,7 +673,7 @@
       <Id>1000442</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -696,7 +696,7 @@
       <Id>1000443</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -719,7 +719,7 @@
       <Id>1000321</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -742,7 +742,7 @@
       <Id>1000421</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -765,7 +765,7 @@
       <Id>1000431</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -788,7 +788,7 @@
       <Id>1000432</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -811,7 +811,7 @@
       <Id>1001111</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -834,7 +834,7 @@
       <Id>1002222</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>5</ShotCount>
@@ -857,7 +857,7 @@
       <Id>1003333</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -880,7 +880,7 @@
       <Id>1004444</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -903,7 +903,7 @@
       <Id>1002111</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -926,7 +926,7 @@
       <Id>1003111</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -949,7 +949,7 @@
       <Id>1004111</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -972,7 +972,7 @@
       <Id>1002221</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>4</ShotCount>
@@ -995,7 +995,7 @@
       <Id>1003222</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>4</ShotCount>
@@ -1018,7 +1018,7 @@
       <Id>1004222</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>400</ShotSpeed>
       <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>4</ShotCount>
@@ -1041,7 +1041,7 @@
       <Id>1003331</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.06</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1064,7 +1064,7 @@
       <Id>1003332</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.06</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1087,7 +1087,7 @@
       <Id>1004333</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1110,7 +1110,7 @@
       <Id>1004441</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1133,7 +1133,7 @@
       <Id>1004442</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1156,7 +1156,7 @@
       <Id>1004443</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1179,7 +1179,7 @@
       <Id>1002211</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>540</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1202,7 +1202,7 @@
       <Id>1003311</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1225,7 +1225,7 @@
       <Id>1004411</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1248,7 +1248,7 @@
       <Id>1003322</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1271,7 +1271,7 @@
       <Id>1004422</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1294,7 +1294,7 @@
       <Id>1004433</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1317,7 +1317,7 @@
       <Id>1003211</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1340,7 +1340,7 @@
       <Id>1004211</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1363,7 +1363,7 @@
       <Id>1004311</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1386,7 +1386,7 @@
       <Id>1003221</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1409,7 +1409,7 @@
       <Id>1004221</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1432,7 +1432,7 @@
       <Id>1004322</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>3</ShotCount>
@@ -1455,7 +1455,7 @@
       <Id>1003321</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.1</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1478,7 +1478,7 @@
       <Id>1004331</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1501,7 +1501,7 @@
       <Id>1004332</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.2</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1524,7 +1524,7 @@
       <Id>1004421</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.6</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1547,7 +1547,7 @@
       <Id>1004431</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1570,7 +1570,7 @@
       <Id>1004432</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>300</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1593,7 +1593,7 @@
       <Id>1004321</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>0.67</HitInvincibilityDuration>
+      <HitInvincibilityDuration>0.5</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.3</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1616,7 +1616,7 @@
       <Id>2000001</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>240</ShotSpeed>
       <ShotCooldown>0.5</ShotCooldown>
       <ShotCount>1</ShotCount>
@@ -1639,7 +1639,7 @@
       <Id>2000002</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>4</ShotCount>
@@ -1662,7 +1662,7 @@
       <Id>2000003</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>240</ShotSpeed>
       <ShotCooldown>0.24</ShotCooldown>
       <ShotCount>4</ShotCount>
@@ -1685,7 +1685,7 @@
       <Id>2000004</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>240</ShotSpeed>
       <ShotCooldown>0</ShotCooldown>
       <ShotCount>0</ShotCount>
@@ -1708,7 +1708,7 @@
       <Id>2000005</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>240</ShotSpeed>
       <ShotCooldown>0</ShotCooldown>
       <ShotCount>0</ShotCount>
@@ -1731,7 +1731,7 @@
       <Id>2000006</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>200</ShotSpeed>
       <ShotCooldown>2</ShotCooldown>
       <ShotCount>8</ShotCount>
@@ -1754,7 +1754,7 @@
       <Id>2000007</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>2</ShotCount>
@@ -1777,7 +1777,7 @@
       <Id>2000008</Id>
       <Damage>1</Damage>
       <Knockback>150</Knockback>
-      <HitInvincibilityDuration>2</HitInvincibilityDuration>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
       <ShotSpeed>0</ShotSpeed>
       <ShotCooldown>0.0333</ShotCooldown>
       <ShotCount>3</ShotCount>

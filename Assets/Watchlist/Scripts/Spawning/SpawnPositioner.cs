@@ -197,7 +197,8 @@ public class SpawnPositioner : VoBehavior
         EnemySelector enemySelector = new EnemySelector();
 
         int difficulty = ProgressData.GetCurrentDifficulty();
-        this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
+        IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
+        this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
 
         if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
@@ -220,7 +221,8 @@ public class SpawnPositioner : VoBehavior
         EnemySelector enemySelector = new EnemySelector();
 
         int difficulty = ProgressData.GetCurrentDifficulty();
-        this.NumEnemies = Random.Range(output.Input.NumEnemiesRange.X, output.Input.NumEnemiesRange.Y);
+        IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
+        this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
         int totalGuarantees = 0;
         for (int i = 0; i < guaranteedEnemiesPlaced.Length; ++i)
