@@ -66,11 +66,18 @@ public class LevelInfoPanelHandler : MonoBehaviour
             }
             Dictionary<string, Sprite> sprites = this.EnemySprites.GetSprites();
             if (mostCommon != -1)
+            {
+                this.EnemyImage1.enabled = true;
                 this.EnemyImage1.sprite = sprites[StaticData.EnemyData.EnemyTypes[mostCommon].SpriteName];
+            }
             else
                 this.EnemyImage1.enabled = false;
+
             if (secondMostCommon != -1)
+            {
+                this.EnemyImage2.enabled = true;
                 this.EnemyImage2.sprite = sprites[StaticData.EnemyData.EnemyTypes[secondMostCommon].SpriteName];
+            }
             else
                 this.EnemyImage2.enabled = false;
         }
