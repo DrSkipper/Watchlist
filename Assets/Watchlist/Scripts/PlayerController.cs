@@ -27,7 +27,8 @@ public class PlayerController : Actor2D
         _weapon.ShotFiredCallback = shotFired;
 
         this.Reticle.PlayerIndex = this.PlayerIndex;
-        this.GetComponent<Damagable>().OnDeathCallbacks.Add(died);
+        _damagable = this.GetComponent<Damagable>();
+        _damagable.OnDeathCallbacks.Add(died);
         this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
         updateSlots();
 
@@ -102,7 +103,18 @@ public class PlayerController : Actor2D
             {
                 WeaponPickup pickup = hit.GetComponent<WeaponPickup>();
                 if (pickup != null)
-                    pickupWeaponSlot(pickup.SlotType);
+                {
+                    switch (pickup.PickupContents.Type)
+                    {
+                        default:
+                        case WeaponPickup.PickupType.WeaponSlot:
+                            pickupWeaponSlot((WeaponData.Slot)pickup.PickupContents.Parameter);
+                            break;
+                        case WeaponPickup.PickupType.HealthRefill:
+                            _damagable.Heal(pickup.PickupContents.Parameter);
+                            break;
+                    }
+                }
 
                 Destroy(hit);
             }
@@ -128,6 +140,7 @@ public class PlayerController : Actor2D
     //private int _selectedSlot;
     private float _acceleration;
     private Weapon _weapon;
+    private Damagable _damagable;
     private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();
 
     private void pickupWeaponSlot(WeaponData.Slot slotType)

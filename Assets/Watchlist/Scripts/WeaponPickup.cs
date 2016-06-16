@@ -2,5 +2,19 @@
 
 public class WeaponPickup : VoBehavior
 {
-    public WeaponData.Slot SlotType;
+    [System.Serializable]
+    public enum PickupType
+    {
+        WeaponSlot,
+        HealthRefill
+    }
+
+    [System.Serializable]
+    public struct Contents
+    {
+        public PickupType Type;
+        public int Parameter;
+    }
+
+    public Contents PickupContents;
 }

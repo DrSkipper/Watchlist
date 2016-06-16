@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: aa1e185140a7e9d4b91f580d26d3984f
-timeCreated: 1459297605
+timeCreated: 1466111752
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,7 @@ TextureImporter:
     21300004: pickup_empty
     21300006: pickup_bomb
     21300008: pickup_laser
+    21300010: pickup_health
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -103,6 +104,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 10
+        y: 13
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pickup_health
+      rect:
+        serializedVersion: 2
+        x: 19
         y: 13
         width: 9
         height: 9

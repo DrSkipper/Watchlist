@@ -113,6 +113,17 @@ public class Damagable : VoBehavior
         die();
     }
 
+    public void Heal(int amount)
+    {
+        int prevHealth = this.Health;
+
+        if (this.ApplyDamageLocally)
+            this.Health = Mathf.Min(this.Health + amount, _maxHealth);
+
+        foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
+            callback(this, this.Health < _maxHealth ? amount : _maxHealth - prevHealth);
+    }
+
     public void ReceiveDamage(Damager other)
     {
         _alreadyHitThisUpdate.Add(other.gameObject);
