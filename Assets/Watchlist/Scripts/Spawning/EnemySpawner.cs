@@ -5,12 +5,23 @@ public class EnemySpawner : VoBehavior
 {
     public delegate void SpawnedObjectCallback(GameObject spawnedObject);
 
+    [System.Serializable]
+    public enum SpawnRule
+    {
+        DistanceOnly,
+        LineOfSight
+    }
+
     public int[] SpawnPool; // If empty, we assume entire enemy pool
     public float SpawnCooldown = 0.0f; // If 0, wait until Spawn is called externally
     public float MinDistanceToSpawn = float.MaxValue;
     public float SpawnDelay = 0.5f;
     public bool DestroyAfterSpawn = false;
     public bool NoFire = false;
+    public SpawnRule Rule = SpawnRule.DistanceOnly;
+    public LayerMask LineOfSightBlockers = 0;
+    public bool IsChildSpawner = false;
+    public List<EnemySpawner> ChildSpawners;
     public SpawnedObjectCallback SpawnCallback;
     public List<Transform> Targets;
 
@@ -26,36 +37,55 @@ public class EnemySpawner : VoBehavior
 
     void Update()
     {
-        if (this.SpawnCooldown > 0.0f)
+        if (!this.IsChildSpawner)
         {
-            if (_cooldownTimer <= 0.0f)
+            if (this.SpawnCooldown > 0.0f)
             {
-                if (distanceCheck() && !_spawning)
-                    BeginSpawn();
+                if (_cooldownTimer <= 0.0f)
+                {
+                    if (distanceCheck() && !_spawning)
+                        BeginSpawn();
+                }
+                else
+                {
+                    _cooldownTimer -= Time.deltaTime;
+                }
             }
-            else
+            else if (distanceCheck() && !_spawning)
             {
-                _cooldownTimer -= Time.deltaTime;
+                BeginSpawn();
             }
-        }
-        else if (distanceCheck() && !_spawning)
-        {
-            BeginSpawn();
         }
     }
 
     public void BeginSpawn()
     {
-        _spawning = true;
+        if (this.ChildSpawners == null || this.ChildSpawners.Count == 0)
+        {
+            _spawning = true;
 
-        if (this.SpawnVisualPrefab != null)
-            Instantiate(this.SpawnVisualPrefab, this.transform.position, Quaternion.identity);
+            if (this.SpawnVisualPrefab != null)
+                Instantiate(this.SpawnVisualPrefab, this.transform.position, Quaternion.identity);
 
-        TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
-        if (callbacks != null)
-            callbacks.AddCallback(this, this.Spawn, this.SpawnDelay);
+            TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+            if (callbacks != null)
+                callbacks.AddCallback(this, this.Spawn, this.SpawnDelay);
+            else
+                Spawn();
+        }
         else
-            Spawn();
+        {
+            _cooldownTimer = this.SpawnCooldown;
+
+            for (int i = 0; i < this.ChildSpawners.Count; ++i)
+            {
+                if (this.ChildSpawners[i] != null)
+                    this.ChildSpawners[i].BeginSpawn();
+            }
+
+            if (this.DestroyAfterSpawn)
+                Destroy(this.gameObject);
+        }
     }
 
     public void Spawn()
@@ -107,8 +137,17 @@ public class EnemySpawner : VoBehavior
         {
             if (this.transform != null)
             {
-                if (Vector2.Distance(this.transform.position, target.position) <= this.MinDistanceToSpawn)
-                    return true;
+                float distance = Vector2.Distance(this.transform.position, target.position);
+                if (distance <= this.MinDistanceToSpawn)
+                {
+                    if (this.Rule == SpawnRule.DistanceOnly)
+                        return true;
+
+                    CollisionManager.RaycastResult result = CollisionManager.RaycastFirst(new IntegerVector(this.transform.position), ((Vector2)target.position - (Vector2)this.transform.position).normalized, distance, this.LineOfSightBlockers);
+
+                    if (!result.Collided)
+                        return true;
+                }
             }
         }
 

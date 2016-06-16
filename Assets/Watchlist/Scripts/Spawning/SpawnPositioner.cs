@@ -17,6 +17,11 @@ public class SpawnPositioner : VoBehavior
 
     public bool SpawnersPlaced { get { return _readyToSpawn; } }
 
+    void Awake()
+    {
+        _winCondition = this.GetComponent<WinCondition>();
+    }
+
     void Start()
     {
         _levelGenManager = this.LevelGenerator.GetComponent<LevelGenManager>();
@@ -40,7 +45,7 @@ public class SpawnPositioner : VoBehavior
         {
             LevelGenOutput output = _levelGenManager.GetOutput();
             _targets = new List<Transform>();
-            _enemySpawns = new List<EnemySpawn>();
+            _enemySpawns = new List<EnemySpawnGroup>();
             _playerSpawns = new List<IntegerVector>();
             bool generationOk = false;
 
@@ -113,22 +118,42 @@ public class SpawnPositioner : VoBehavior
 
     public void SpawnEnemies()
     {
-        WinCondition winCondition = this.GetComponent<WinCondition>();
-
-        foreach (EnemySpawn enemySpawn in _enemySpawns)
+        foreach (EnemySpawnGroup enemySpawn in _enemySpawns)
         {
-            IntegerVector position = enemySpawn.SpawnPosition;
-            GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X * _tileRenderer.TileRenderSize, position.Y * _tileRenderer.TileRenderSize, this.transform.position.z), Quaternion.identity) as GameObject;
-            if (_tileRenderer.OffsetTilesToCenter)
-                spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
+            if (!enemySpawn.IsMultiSpawn)
+            {
+                createEnemySpawner(enemySpawn.SingleSpawn.Value.SpawnPosition, enemySpawn.SingleSpawn.Value.EnemyId, _targets, false);
+            }
+            else
+            {
+                List<EnemySpawner> subSpawns = new List<EnemySpawner>();
+                for (int i = 0; i < enemySpawn.MultiSpawns.Count; ++i)
+                {
+                    subSpawns.Add(createEnemySpawner(enemySpawn.MultiSpawns[i].SpawnPosition, enemySpawn.MultiSpawns[i].EnemyId, _targets, true));
+                }
 
-            EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
-            if (winCondition != null)
-                spawnBehavior.SpawnCallback = winCondition.EnemySpawned;
-            spawnBehavior.Targets = new List<Transform>(_targets);
-            spawnBehavior.DestroyAfterSpawn = true;
-            spawnBehavior.SpawnPool = new int[] { enemySpawn.EnemyId };
+                EnemySpawner parent = createEnemySpawner(enemySpawn.Origin, 0, _targets, false);
+                parent.ChildSpawners = subSpawns;
+                parent.MinDistanceToSpawn = enemySpawn.SpawnDistance;
+            }
         }
+    }
+
+    private EnemySpawner createEnemySpawner(IntegerVector position, int enemyId, List<Transform> targets, bool isChildSpawner)
+    {
+        GameObject spawner = Instantiate(this.EnemySpawnPrefab, new Vector3(position.X * _tileRenderer.TileRenderSize, position.Y * _tileRenderer.TileRenderSize, this.transform.position.z), Quaternion.identity) as GameObject;
+        if (_tileRenderer.OffsetTilesToCenter)
+            spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
+
+        EnemySpawner spawnBehavior = spawner.GetComponent<EnemySpawner>();
+        if (_winCondition != null)
+            spawnBehavior.SpawnCallback = _winCondition.EnemySpawned;
+        spawnBehavior.Rule = EnemySpawner.SpawnRule.LineOfSight;
+        spawnBehavior.IsChildSpawner = isChildSpawner;
+        spawnBehavior.Targets = new List<Transform>(_targets);
+        spawnBehavior.DestroyAfterSpawn = true;
+        spawnBehavior.SpawnPool = new int[] { enemyId };
+        return spawnBehavior;
     }
 
     public Dictionary<int, int> GetEnemyCounts()
@@ -136,11 +161,25 @@ public class SpawnPositioner : VoBehavior
         Dictionary<int, int> enemyCounts = new Dictionary<int, int>();
         for (int i = 0; i < _enemySpawns.Count; ++i)
         {
-            int enemyId = _enemySpawns[i].EnemyId;
-            if (enemyCounts.ContainsKey(enemyId))
-                enemyCounts[enemyId] = enemyCounts[enemyId] + 1;
+            if (_enemySpawns[i].IsMultiSpawn)
+            {
+                for (int j = 0; j < _enemySpawns[i].MultiSpawns.Count; ++j)
+                {
+                    int enemyId = _enemySpawns[i].MultiSpawns[j].EnemyId;
+                    if (enemyCounts.ContainsKey(enemyId))
+                        enemyCounts[enemyId] = enemyCounts[enemyId] + 1;
+                    else
+                        enemyCounts.Add(enemyId, 1);
+                }
+            }
             else
-                enemyCounts.Add(enemyId, 1);
+            {
+                int enemyId = _enemySpawns[i].SingleSpawn.Value.EnemyId;
+                if (enemyCounts.ContainsKey(enemyId))
+                    enemyCounts[enemyId] = enemyCounts[enemyId] + 1;
+                else
+                    enemyCounts.Add(enemyId, 1);
+            }
         }
         return enemyCounts;
     }
@@ -160,15 +199,44 @@ public class SpawnPositioner : VoBehavior
         }
     }
 
+    private struct EnemySpawnGroup
+    {
+        public bool IsMultiSpawn { get { return this.MultiSpawns != null; } }
+        public EnemySpawn? SingleSpawn;
+        public IntegerVector Origin;
+        public List<EnemySpawn> MultiSpawns;
+        public float SpawnDistance;
+
+        public EnemySpawnGroup(IntegerVector spawnPosition, int enemyId)
+        {
+            this.SingleSpawn = new EnemySpawn(spawnPosition, enemyId);
+            this.Origin = spawnPosition;
+            this.MultiSpawns = null;
+            this.SpawnDistance = 0.0f;
+        }
+
+        public EnemySpawnGroup(IntegerVector origin, List<EnemySpawn> spawns, float spawnDistance)
+        {
+            this.SingleSpawn = null;
+            this.Origin = origin;
+            this.MultiSpawns = spawns;
+            this.SpawnDistance = spawnDistance;
+        }
+    }
+
     private LevelGenManager _levelGenManager;
     private LevelGenStarter _starter;
     private LevelGenMap _map;
     private TileMapOutlineRenderer _tileRenderer;
     private List<Transform> _targets;
-    private List<EnemySpawn> _enemySpawns;
+    private List<EnemySpawnGroup> _enemySpawns;
     private List<IntegerVector> _playerSpawns;
+    private WinCondition _winCondition;
     private bool _okToBegin;
     private bool _readyToSpawn;
+
+    private const float CHANCE_FOR_EXTRA_TWO_IN_BSP_ROOM = 0.2f;
+    private const float CHANCE_FOR_REMOVE_SPAWN_ROOM_FOR_FUTURE_BSP = 0.4f;
 
     private void okToBegin(LocalEventNotifier.Event e)
     {
@@ -280,6 +348,8 @@ public class SpawnPositioner : VoBehavior
                         continue;
                     }
 
+                    List<EnemySpawn> roomSpawns = new List<EnemySpawn>();
+
                     EnemySelector.WeightSet roomWeightSet = new EnemySelector.WeightSet();
                     enemySelector.AddWeightSet(roomWeightSet);
 
@@ -297,8 +367,7 @@ public class SpawnPositioner : VoBehavior
 
                     IntegerVector firstPosition = roomCorners[roomCorners.Count - 1];
                     ++enemiesSpawned;
-                    //TODO - mark spawn as united spawn so enemies all spawn when enter room
-                    _enemySpawns.Add(new EnemySpawn(firstPosition, favoredEnemyId));
+                    roomSpawns.Add(new EnemySpawn(firstPosition, favoredEnemyId));
                     roomCorners.RemoveAt(roomCorners.Count - 1);
                     int enemyDifficulty = StaticData.EnemyData.EnemyTypes[favoredEnemyId].Difficulty;
                     if (guaranteedEnemiesPlaced[enemyDifficulty] < output.Input.GuaranteedEnemiesByDifficulty[enemyDifficulty])
@@ -311,7 +380,7 @@ public class SpawnPositioner : VoBehavior
                     {
                         ++enemiesSpawned;
                         int enemyId = enemySelector.ChooseEnemy(difficulty);
-                        _enemySpawns.Add(new EnemySpawn(position, enemyId));
+                        roomSpawns.Add(new EnemySpawn(position, enemyId));
                         enemyDifficulty = StaticData.EnemyData.EnemyTypes[enemyId].Difficulty;
                         if (guaranteedEnemiesPlaced[enemyDifficulty] < output.Input.GuaranteedEnemiesByDifficulty[enemyDifficulty])
                         {
@@ -320,9 +389,11 @@ public class SpawnPositioner : VoBehavior
                         }
                     }
 
-                    if (this.NumEnemies - enemiesSpawned > 2 && Random.value > 0.5f)
+                    bool extraTwo = false;
+                    if (this.NumEnemies - enemiesSpawned > 2 && Random.value < CHANCE_FOR_EXTRA_TWO_IN_BSP_ROOM)
                     {
                         // Let's add 2 along the walls of the longest room dimension
+                        extraTwo = true;
                         favoredEnemyId = pickMaybeGuaranteedEnemy(guaranteesSpawned, totalGuarantees, enemiesSpawned, difficulty, guaranteedEnemiesPlaced, output, enemySelector);
                         roomWeightSet.WeightsByEnemyId[favoredEnemyId] = 100;
 
@@ -340,8 +411,7 @@ public class SpawnPositioner : VoBehavior
                         }
 
                         enemiesSpawned += 2;
-                        //TODO - mark spawn as united spawn so enemies all spawn when enter room
-                        _enemySpawns.Add(new EnemySpawn(position1, favoredEnemyId));
+                        roomSpawns.Add(new EnemySpawn(position1, favoredEnemyId));
                         enemyDifficulty = StaticData.EnemyData.EnemyTypes[favoredEnemyId].Difficulty;
                         if (guaranteedEnemiesPlaced[enemyDifficulty] < output.Input.GuaranteedEnemiesByDifficulty[enemyDifficulty])
                         {
@@ -350,7 +420,7 @@ public class SpawnPositioner : VoBehavior
                         }
 
                         int enemyId = enemySelector.ChooseEnemy(difficulty);
-                        _enemySpawns.Add(new EnemySpawn(position2, enemyId));
+                        roomSpawns.Add(new EnemySpawn(position2, enemyId));
                         enemyDifficulty = StaticData.EnemyData.EnemyTypes[enemyId].Difficulty;
                         if (guaranteedEnemiesPlaced[enemyDifficulty] < output.Input.GuaranteedEnemiesByDifficulty[enemyDifficulty])
                         {
@@ -359,12 +429,14 @@ public class SpawnPositioner : VoBehavior
                         }
                     }
 
+                    _enemySpawns.Add(new EnemySpawnGroup(new IntegerVector(room.X + room.Width / 2, room.Y + room.Height / 2), roomSpawns, ((Mathf.Max(room.Width, room.Height) + 2.6f) / 2.0f) * _tileRenderer.TileRenderSize));
+
                     if (!enemySelector.RemoveWeightSet(roomWeightSet))
                     {
                         Debug.Log("hrrmmmm");
                     }
 
-                    if (Random.value > 0.5f)
+                    if (extraTwo || Random.value < CHANCE_FOR_REMOVE_SPAWN_ROOM_FOR_FUTURE_BSP)
                         openTiles.RemoveList(coordinatesInRoom(room));
                 }
 
@@ -386,7 +458,7 @@ public class SpawnPositioner : VoBehavior
                 int enemyId = enemySelector.ChooseEnemyOfDifficulty(i);
                 guaranteedEnemiesPlaced[i] = guaranteedEnemiesPlaced[i] + 1;
                 ++enemiesSpawned;
-                _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
+                _enemySpawns.Add(new EnemySpawnGroup(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
             }
         }
 
@@ -394,7 +466,7 @@ public class SpawnPositioner : VoBehavior
         for (; enemiesSpawned < this.NumEnemies; ++enemiesSpawned)
         {
             int enemyId = enemySelector.ChooseEnemy(difficulty);
-            _enemySpawns.Add(new EnemySpawn(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
+            _enemySpawns.Add(new EnemySpawnGroup(findGoodOpenPosition(openTiles, output.Input.MinDistanceBetweenSpawns).integerVector, enemyId));
         }
 
         // Players
@@ -490,9 +562,9 @@ public class SpawnPositioner : VoBehavior
 
     private bool isPositionFreeInArea(LevelGenMap.Coordinate position, int minDistance)
     {
-        foreach (EnemySpawn enemySpawn in _enemySpawns)
+        foreach (EnemySpawnGroup enemySpawn in _enemySpawns)
         {
-            if (Vector2.Distance(position.integerVector, enemySpawn.SpawnPosition) < minDistance)
+            if (Vector2.Distance(position.integerVector, enemySpawn.Origin) < minDistance)
                 return false;
         }
         return true;
