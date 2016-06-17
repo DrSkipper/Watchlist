@@ -1795,5 +1795,28 @@
       <AudioIndex>1</AudioIndex>
       <AudioCooldown>0.07</AudioCooldown>
     </WeaponType>
+    <WeaponType>
+      <Name>Enemy Triple Bomb</Name>
+      <Id>2000009</Id>
+      <Damage>1</Damage>
+      <Knockback>150</Knockback>
+      <HitInvincibilityDuration>1.8</HitInvincibilityDuration>
+      <ShotSpeed>240</ShotSpeed>
+      <ShotCooldown>0.3</ShotCooldown>
+      <ShotCount>3</ShotCount>
+      <AngleBetweenShots>8</AngleBetweenShots>
+      <MaximumBounces>1</MaximumBounces>
+      <MinimumBounceAngle>8</MinimumBounceAngle>
+      <VelocityFallOff>50</VelocityFallOff>
+      <DurationTime>0.85</DurationTime>
+      <DurationDistance>1000</DurationDistance>
+      <TravelType>normal</TravelType>
+      <TravelTypeParameter>0</TravelTypeParameter>
+      <SpecialEffect>explosion</SpecialEffect>
+      <SpecialEffectParameter1>15</SpecialEffectParameter1>
+      <SpecialEffectParameter2>0</SpecialEffectParameter2>
+      <AudioIndex>0</AudioIndex>
+      <AudioCooldown>0.1</AudioCooldown>
+    </WeaponType>
   </WeaponTypes>
 </WeaponData>
