@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
 
 public static class PersistentData
@@ -22,7 +21,7 @@ public static class PersistentData
         {
             chosen[i] = possibilities[Random.Range(0, possibilities.Count)];
 
-            if (possibilities.Count > chosen.Length)
+            if (possibilities.Count >= chosen.Length - i)
                 possibilities.Remove(chosen[i]);
         }
         return chosen;
