@@ -7,6 +7,9 @@ public class LookAtPlayer : VoBehavior
     public LayerMask LineOfSightBlockers = 0;
     public float RotationOffset = 0.0f;
 
+    public bool IsLookingAt { get { return _isLookingAt; } }
+    public Vector2 AimAxis { get { return _aimAxis; } }
+
     void Start()
     {
         _targets = PlayerTargetController.Targets;
@@ -16,7 +19,6 @@ public class LookAtPlayer : VoBehavior
     void Update()
     {
         float distance = GenericEnemy.MAX_DISTANCE;
-        Vector2 aimAxis = Vector2.zero;
         Vector2 forward = Vector2.zero;
 
         // Find the closest visible target
@@ -36,7 +38,7 @@ public class LookAtPlayer : VoBehavior
                     if (!result.Collided)
                     {
                         distance = d;
-                        aimAxis = theirPosition - ourPosition;
+                        _aimAxis = theirPosition - ourPosition;
                     }
                 }
             }
@@ -45,18 +47,25 @@ public class LookAtPlayer : VoBehavior
         // If close enough, turn to face the target
         if (distance < this.LookAtRange)
         {
-            forward = aimAxis;
+            _isLookingAt = true;
+            forward = _aimAxis;
 
-            _currentAngle = Vector2.Angle(Vector2.up, aimAxis);
-            if (aimAxis.x > 0.0f)
+            _currentAngle = Vector2.Angle(Vector2.up, _aimAxis);
+            if (_aimAxis.x > 0.0f)
                 _currentAngle = -_currentAngle;
             _currentAngle += this.RotationOffset;
 
             this.transform.localRotation = Quaternion.AngleAxis(_currentAngle, _rotationAxis);
         }
+        else
+        {
+            _isLookingAt = false;
+        }
     }
 
     private List<Transform> _targets;
     private Vector3 _rotationAxis;
+    private Vector2 _aimAxis;
     private float _currentAngle;
+    private bool _isLookingAt;
 }
