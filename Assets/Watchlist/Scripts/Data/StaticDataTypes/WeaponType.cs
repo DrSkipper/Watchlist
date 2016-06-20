@@ -176,10 +176,10 @@ public class WeaponData
         if (_slotDurationsByType == null)
         {
             _slotDurationsByType = new Dictionary<Slot, int>();
-            _slotDurationsByType[Slot.Bomb] = 48;
-            _slotDurationsByType[Slot.Spreadshot] = 56;
-            _slotDurationsByType[Slot.Bounce] = 62;
-            _slotDurationsByType[Slot.Laser] = 158;
+            _slotDurationsByType[Slot.Bomb] = 40;
+            _slotDurationsByType[Slot.Spreadshot] = 47;
+            _slotDurationsByType[Slot.Bounce] = 52;
+            _slotDurationsByType[Slot.Laser] = 132;
         }
         return _slotDurationsByType;
     }
@@ -190,14 +190,14 @@ public class WeaponData
     public static int GetUpgradeCost(Slot slotType)
     {
         if (_upgradeCosts == null)
-            _upgradeCosts = new int[] { 0, 35, 50, 70, 40 };
+            _upgradeCosts = new int[] { 0, 50, 75, 100, 60 };
         return _upgradeCosts[(int)slotType];
     }
 
     public static int GetUpgradeCostIncreases(Slot slotType)
     {
         if (_upgradeCostIncreases == null)
-            _upgradeCostIncreases = new int[] { 0, 10, 10, 20, 8 };
+            _upgradeCostIncreases = new int[] { 0, 5, 5, 0, 5 };
         return _upgradeCostIncreases[(int)slotType];
     }
 
