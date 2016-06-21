@@ -4,14 +4,16 @@ using System.Collections.Generic;
 /**
  * Runs CA passes and then creates some rooms on top
  */
-public class CAPlusRoomGenerator : BaseLevelGenerator
+public class BSPPlusCAGenerator : BaseLevelGenerator
 {
-    public List<CAGenerator.CAGenerationParams> CaParams = null;
-    public RoomGenerator.RoomGenerationParams RoomParams;
+    public CAGenerator.CAGenerationParams CAParams;
+    public BSPGenerator.BSPGenerationParams BSPParams;
+    public int BSPBoundsReduction = 0;
+    public int CABoundsReduction = 8;
 
     public void Reset()
     {
-        this.GeneratorName = "CA + Room Generator";
+        this.GeneratorName = "BSP + CA Generator";
     }
 
     public override void SetupGeneration()
@@ -19,9 +21,9 @@ public class CAPlusRoomGenerator : BaseLevelGenerator
         base.SetupGeneration();
         _outputs = new List<LevelGenOutput>();
         cleanGenerator();
-        this.AddPhase(this.CAInitPhase);
+        this.AddPhase(this.BSPInitPhase);
         this.AddPhase(this.RunPhase);
-        this.AddPhase(this.RoomInitPhase);
+        this.AddPhase(this.CAInitPhase);
         this.AddPhase(this.RunPhase);
         this.AddPhase(this.CleanupPhase);
     }
@@ -36,22 +38,24 @@ public class CAPlusRoomGenerator : BaseLevelGenerator
         return finalOutput;
     }
 
-    public void CAInitPhase(int frames)
+    public void BSPInitPhase(int frames)
     {
-        MultiCAGenerator caGenerator = this.gameObject.AddComponent<MultiCAGenerator>();
-        caGenerator.CaParams = this.CaParams;
-        caGenerator.SetupGeneration();
-        _currentGenerator = caGenerator;
+        BSPGenerator bspGenerator = this.gameObject.AddComponent<BSPGenerator>();
+        bspGenerator.Bounds = new Rect(this.Bounds.IntX() + this.BSPBoundsReduction, this.Bounds.IntY() + this.BSPBoundsReduction, this.Bounds.IntWidth() - this.BSPBoundsReduction * 2, this.Bounds.IntHeight() - this.BSPBoundsReduction * 2);
+        bspGenerator.ApplyParams(this.BSPParams);
+        bspGenerator.SetupGeneration();
+        _currentGenerator = bspGenerator;
         this.NextPhase();
     }
 
-    public void RoomInitPhase(int frames)
+    public void CAInitPhase(int frames)
     {
         cleanGenerator();
-        RoomGenerator roomGenerator = this.gameObject.AddComponent<RoomGenerator>();
-        roomGenerator.ApplyParams(this.RoomParams);
-        roomGenerator.SetupGeneration();
-        _currentGenerator = roomGenerator;
+        CAGenerator caGenerator = this.gameObject.AddComponent<CAGenerator>();
+        caGenerator.Bounds = new Rect(this.Bounds.IntX() + this.CABoundsReduction, this.Bounds.IntY() + this.CABoundsReduction, this.Bounds.IntWidth() - this.CABoundsReduction * 2, this.Bounds.IntHeight() - this.CABoundsReduction * 2);
+        caGenerator.ApplyParams(this.CAParams);
+        caGenerator.SetupGeneration();
+        _currentGenerator = caGenerator;
         this.NextPhase();
     }
 

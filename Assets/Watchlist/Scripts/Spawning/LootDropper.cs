@@ -3,6 +3,8 @@
 public class LootDropper : VoBehavior
 {
     public LootManager LootManager;
+    public int AmountToDrop = 1;
+    public float MaxDistance = 0.0f;
 
     void Start()
     {
@@ -11,10 +13,13 @@ public class LootDropper : VoBehavior
 
     void OnDeath(Damagable died)
     {
-        GameObject toSpawn = LootManager.GenerateLootDrop();
-        if (toSpawn != null)
+        for (int i = 0; i < this.AmountToDrop; ++i)
         {
-            Instantiate(toSpawn, this.transform.position, Quaternion.identity);
+            GameObject toSpawn = LootManager.GenerateLootDrop();
+            if (toSpawn != null)
+            {
+                Instantiate(toSpawn, (Vector2)this.transform.position + new Vector2(Random.Range(-this.MaxDistance, this.MaxDistance), Random.Range(-this.MaxDistance, this.MaxDistance)), Quaternion.identity);
+            }
         }
     }
 }

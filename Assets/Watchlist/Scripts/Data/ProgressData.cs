@@ -54,6 +54,11 @@ public static class ProgressData
         return Mathf.Abs(tile.X) == 3 && Mathf.Abs(tile.Y) == 3;
     }
 
+    public static bool OnMiniBoss()
+    {
+        return true;
+    }
+
     public static int NumBossesBeaten()
     {
         int num = 0;

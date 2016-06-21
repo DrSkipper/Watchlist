@@ -8,6 +8,7 @@ public class LevelGenManager : LevelGenBehavior
 	public float StepRunInterval = 0.0f;
 	public int StepsRunEachUpdate = int.MaxValue;
 	public bool Finished { get { return !_generating; } }
+    public CAGenerator.CAGenerationParams DefaultCAParams;
     public BSPGenerator.BSPGenerationParams DefaultBSPParams;
     public bool RemoveTips = true;
     public int Border = 0;
@@ -33,6 +34,11 @@ public class LevelGenManager : LevelGenBehavior
             case LevelGenInput.GenerationType.Room:
                 _generator = this.gameObject.AddComponent<RoomGenerator>();
                 ((RoomGenerator)_generator).NumberOfRooms = Random.Range(input.NumRoomsRange.X, input.NumRoomsRange.Y + 1);
+                break;
+            case LevelGenInput.GenerationType.CABSPCombo:
+                _generator = this.gameObject.AddComponent<BSPPlusCAGenerator>();
+                ((BSPPlusCAGenerator)_generator).CAParams = this.DefaultCAParams;
+                ((BSPPlusCAGenerator)_generator).BSPParams = this.DefaultBSPParams;
                 break;
 
         }

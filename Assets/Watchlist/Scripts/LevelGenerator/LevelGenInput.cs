@@ -6,7 +6,8 @@ public class LevelGenInput : ScriptableObject
     {
         CA,
         BSP,
-        Room
+        Room,
+        CABSPCombo
     }
 
     public GenerationType Type;

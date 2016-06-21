@@ -6,6 +6,7 @@ public class SpawnPositioner : VoBehavior
     public GameObject LevelGenerator;
     public GameObject Tiles;
     public GameObject EnemySpawnPrefab;
+    public GameObject MinibossSpawnPrefab;
     public GameObject PlayerPrefab;
     public GameObject[] PickupPrefabs;
     public int NumEnemies = 10;
@@ -57,6 +58,9 @@ public class SpawnPositioner : VoBehavior
                     break;
                 case LevelGenInput.GenerationType.BSP:
                     generationOk = findBSPSpawns(output);
+                    break;
+                case LevelGenInput.GenerationType.CABSPCombo:
+                    generationOk = findBSPCAComboSpawns(output);
                     break;
             }
             if (generationOk)
@@ -137,6 +141,11 @@ public class SpawnPositioner : VoBehavior
                 parent.MinDistanceToSpawn = enemySpawn.SpawnDistance;
             }
         }
+
+        if (_miniBossSpawn.HasValue)
+        {
+            createMinibossSpawner(_miniBossSpawn.Value);
+        }
     }
 
     private EnemySpawner createEnemySpawner(IntegerVector position, int enemyId, List<Transform> targets, bool isChildSpawner)
@@ -154,6 +163,14 @@ public class SpawnPositioner : VoBehavior
         spawnBehavior.DestroyAfterSpawn = true;
         spawnBehavior.SpawnPool = new int[] { enemyId };
         return spawnBehavior;
+    }
+
+    private GameObject createMinibossSpawner(IntegerVector position)
+    {
+        GameObject spawner = Instantiate(this.MinibossSpawnPrefab, new Vector3(position.X * _tileRenderer.TileRenderSize, position.Y * _tileRenderer.TileRenderSize, this.transform.position.z), Quaternion.identity) as GameObject;
+        if (_tileRenderer.OffsetTilesToCenter)
+            spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
+        return spawner;
     }
 
     public Dictionary<int, int> GetEnemyCounts()
@@ -231,6 +248,7 @@ public class SpawnPositioner : VoBehavior
     private List<Transform> _targets;
     private List<EnemySpawnGroup> _enemySpawns;
     private List<IntegerVector> _playerSpawns;
+    private IntegerVector? _miniBossSpawn;
     private WinCondition _winCondition;
     private bool _okToBegin;
     private bool _readyToSpawn;
@@ -266,10 +284,14 @@ public class SpawnPositioner : VoBehavior
 
         int difficulty = ProgressData.GetCurrentDifficulty();
         IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
-        this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
+        this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
+        LevelGenCaveInfo caveInfo = output.MapInfo[LevelGenCaveInfo.KEY] as LevelGenCaveInfo;
 
-        if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2+ 1)
+        if (ProgressData.OnMiniBoss())
+            findMinibossSpawn(openTiles, (caveInfo.Data as List<List<LevelGenMap.Coordinate>>)[0]);
+
+        if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2 + 1)
         {
             Debug.Log("Regeneration necessary - CA");
             return false;
@@ -285,12 +307,16 @@ public class SpawnPositioner : VoBehavior
     {
         List<LevelGenMap.Coordinate> openTiles = new List<LevelGenMap.Coordinate>(output.OpenTiles);
         openTiles.Shuffle();
+
         LevelGenRoomInfo roomInfo = output.MapInfo[LevelGenRoomInfo.KEY] as LevelGenRoomInfo;
         EnemySelector enemySelector = new EnemySelector();
-
-        int difficulty = ProgressData.GetCurrentDifficulty();
         IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
         this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
+
+        if (ProgressData.OnMiniBoss())
+            findMinibossSpawn(openTiles, openTiles);
+
+        int difficulty = ProgressData.GetCurrentDifficulty();
         int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
         int totalGuarantees = 0;
         for (int i = 0; i < guaranteedEnemiesPlaced.Length; ++i)
@@ -448,6 +474,54 @@ public class SpawnPositioner : VoBehavior
         return true;
     }
 
+    private bool findBSPCAComboSpawns(LevelGenOutput output)
+    {
+        List<LevelGenMap.Coordinate> openTiles = new List<LevelGenMap.Coordinate>(output.OpenTiles);
+        openTiles.Shuffle();
+        EnemySelector enemySelector = new EnemySelector();
+
+        int difficulty = ProgressData.GetCurrentDifficulty();
+        IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
+        int[] guaranteedEnemiesPlaced = new int[output.Input.GuaranteedEnemiesByDifficulty.Length];
+        this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
+        LevelGenCaveInfo caveInfo = output.MapInfo[LevelGenCaveInfo.KEY] as LevelGenCaveInfo;
+
+        if (ProgressData.OnMiniBoss())
+            findMinibossSpawn(openTiles, (caveInfo.Data as List<List<LevelGenMap.Coordinate>>)[0]);
+
+        LevelGenRoomInfo roomInfo = output.MapInfo[LevelGenRoomInfo.KEY] as LevelGenRoomInfo;
+
+        List<SimpleRect> availableRooms = new List<SimpleRect>(roomInfo.Data as List<SimpleRect>);
+        availableRooms.Shuffle();
+
+        // Player room
+        SimpleRect playerRoom = availableRooms[availableRooms.Count - 1];
+        availableRooms.RemoveAt(availableRooms.Count - 1);
+        List<LevelGenMap.Coordinate> playerRoomCoords = coordinatesInRoom(playerRoom);
+        openTiles.RemoveList(playerRoomCoords);
+        playerRoomCoords.Shuffle();
+
+        for (int p = 0; p < DynamicData.MAX_PLAYERS; ++p)
+        {
+            if (DynamicData.GetSessionPlayer(p).HasJoined)
+            {
+                _playerSpawns.Add(playerRoomCoords[playerRoomCoords.Count - 1].integerVector);
+                playerRoomCoords.RemoveAt(playerRoomCoords.Count - 1);
+            }
+        }
+
+        if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2 + 1)
+        {
+            Debug.Log("Regeneration necessary - CA");
+            return false;
+        }
+        else
+        {
+            spawnSimple(0, output, guaranteedEnemiesPlaced, enemySelector, difficulty, openTiles, false);
+        }
+        return true;
+    }
+
     private void spawnSimple(int enemiesSpawned, LevelGenOutput output, int[] guaranteedEnemiesPlaced, EnemySelector enemySelector, int difficulty, List<LevelGenMap.Coordinate> openTiles, bool spawnPlayers)
     {
         // Guaranteed enemies
@@ -568,5 +642,40 @@ public class SpawnPositioner : VoBehavior
                 return false;
         }
         return true;
+    }
+
+    private void findMinibossSpawn(List<LevelGenMap.Coordinate> openTiles, List<LevelGenMap.Coordinate> placable)
+    {
+        List<LevelGenMap.Coordinate> neighbors;
+        for (int i = 0; i < openTiles.Count; ++i)
+        {
+            
+            neighbors = _map.CoordinatesInRect(new Rect(placable[i].x - 1, placable[i].y - 1, 3, 3));
+            if (neighbors.Count < 9)
+                continue;
+
+            bool wall = false;
+            for (int j = 0; j < neighbors.Count; ++j)
+            {
+                if (!openTiles.Contains(neighbors[j]))
+                {
+                    wall = true;
+                    break;
+                }
+            }
+
+            if (wall)
+                continue;
+
+            _miniBossSpawn = placable[i].integerVector;
+
+            for (int j = 0; j < neighbors.Count; ++j)
+            {
+                openTiles.Remove(neighbors[j]);
+            }
+            return;
+        }
+
+        _miniBossSpawn = placable[0].integerVector;
     }
 }
