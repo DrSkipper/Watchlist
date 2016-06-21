@@ -74,17 +74,20 @@ public class MiniBossBehavior : VoBehavior
             float distance = this.MaxMovementDistance + this.HalfSize;
             CollisionManager.RaycastResult result = CollisionManager.RaycastFirst(new IntegerVector(this.transform.position), direction, distance, this.HaltMovementMask);
 
-            distance -= (this.HalfSize + WIGGLE);
-
-            if (distance > this.MinMovementDistance)
+            if (!result.Collided)
             {
-                distance = Random.Range(this.MinMovementDistance, distance);
+                distance -= (this.HalfSize + WIGGLE);
 
-                IntegerVector offset = new IntegerVector(direction * distance);
-
-                if (this.LookAt.integerCollider.CollideFirst(offset.X, offset.Y, this.HaltMovementMask) == null)
+                if (distance > this.MinMovementDistance)
                 {
-                    return (Vector2)this.transform.position + direction * distance;
+                    distance = Random.Range(this.MinMovementDistance, distance);
+
+                    IntegerVector offset = new IntegerVector(direction * distance);
+
+                    if (this.LookAt.integerCollider.CollideFirst(offset.X, offset.Y, this.HaltMovementMask) == null)
+                    {
+                        return (Vector2)this.transform.position + direction * distance;
+                    }
                 }
             }
         }
