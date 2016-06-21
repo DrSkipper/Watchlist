@@ -25,7 +25,6 @@ public class PlayerStateHandler : MonoBehaviour
 
     private void levelComplete(LocalEventNotifier.Event e)
     {
-        LevelCompleteEvent levelCompleteEvent = e as LevelCompleteEvent;
         for (int i = 0; i < _playerControllers.Length; ++i)
         {
             PlayerController playerController = _playerControllers[i];

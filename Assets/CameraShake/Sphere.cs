@@ -13,7 +13,7 @@ public class Sphere : MonoBehaviour {
 	bool isBeingThrown = false;
 	bool isHeld = false;
 	bool shouldLerpToOrigin = false;
-	bool shouldPlayToneASAP = false;
+	//bool shouldPlayToneASAP = false;
 	
 	float radius = 1.0f;
 	
@@ -89,7 +89,7 @@ public class Sphere : MonoBehaviour {
 					thisTransform.position = newWorldPoint;							
 				}
 				
-				float percentDistance = distance2D / radius;
+				//float percentDistance = distance2D / radius;
 				
 				// If we let go of the button or we are out of bounds, release the ball
 				if (Input.GetMouseButtonUp(0)) {

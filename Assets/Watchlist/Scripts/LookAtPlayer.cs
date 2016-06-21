@@ -19,7 +19,6 @@ public class LookAtPlayer : VoBehavior
     void Update()
     {
         float distance = GenericEnemy.MAX_DISTANCE;
-        Vector2 forward = Vector2.zero;
 
         // Find the closest visible target
         if (_targets.Count > 0)
@@ -48,7 +47,6 @@ public class LookAtPlayer : VoBehavior
         if (distance < this.LookAtRange)
         {
             _isLookingAt = true;
-            forward = _aimAxis;
 
             _currentAngle = Vector2.Angle(Vector2.up, _aimAxis);
             if (_aimAxis.x > 0.0f)
