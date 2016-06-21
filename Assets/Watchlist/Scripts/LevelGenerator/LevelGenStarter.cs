@@ -25,7 +25,7 @@ public class LevelGenStarter : LevelGenBehavior
         if (!this.OverrideInput)
         {
             int difficulty = ProgressData.GetCurrentDifficulty();
-            List<LevelGenInput> possibleInputs = !ProgressData.OnMiniBoss() ? this.InputsByDifficulty[difficulty].PossibleInputs : this.MiniBossInputs[difficulty].PossibleInputs;
+            List<LevelGenInput> possibleInputs = !ProgressData.IsMiniBoss(ProgressData.MostRecentTile) ? this.InputsByDifficulty[difficulty].PossibleInputs : this.MiniBossInputs[difficulty].PossibleInputs;
             this.Manager.InitiateGeneration(possibleInputs[Random.Range(0, possibleInputs.Count)]);
         }
         else

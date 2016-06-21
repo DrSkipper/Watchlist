@@ -14,6 +14,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     public float GridSpaceDistance = 17.0f;
     public Color PlayerColor;
     public Color BossColor;
+    public Color MinibossColor;
     public Color AvailableColor;
     public Color BaseColor;
     public float BlinkIntervalOn = 0.5f;
@@ -36,7 +37,8 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
 
     private enum TileTrait
     {
-        Boss
+        Boss,
+        Miniboss
     }
 
     private class LevelGraphTile
@@ -154,6 +156,11 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
                             traits.Add(TileTrait.Boss);
                             break;
                         }
+                    }
+
+                    if (ProgressData.IsMiniBoss(position))
+                    {
+                        traits.Add(TileTrait.Miniboss);
                     }
                 }
 
@@ -417,6 +424,8 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
 
             if (tile.HasTrait(TileTrait.Boss))
                 center = this.BossColor;
+            else if (tile.HasTrait(TileTrait.Miniboss))
+                center = this.MinibossColor;
         }
 
         tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(outline);

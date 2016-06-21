@@ -288,7 +288,7 @@ public class SpawnPositioner : VoBehavior
         this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
         LevelGenCaveInfo caveInfo = output.MapInfo[LevelGenCaveInfo.KEY] as LevelGenCaveInfo;
 
-        if (ProgressData.OnMiniBoss())
+        if (ProgressData.IsMiniBoss(ProgressData.MostRecentTile))
             findMinibossSpawn(openTiles, (caveInfo.Data as List<List<LevelGenMap.Coordinate>>)[0]);
 
         if (openTiles.Count <= (this.NumEnemies + DynamicData.MAX_PLAYERS) * output.Input.MinDistanceBetweenSpawns * 2 + 1)
@@ -313,7 +313,7 @@ public class SpawnPositioner : VoBehavior
         IntegerVector enemyCountRange = output.Input.GetCurrentNumEnemiesRange();
         this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
 
-        if (ProgressData.OnMiniBoss())
+        if (ProgressData.IsMiniBoss(ProgressData.MostRecentTile))
             findMinibossSpawn(openTiles, openTiles);
 
         int difficulty = ProgressData.GetCurrentDifficulty();
@@ -486,7 +486,7 @@ public class SpawnPositioner : VoBehavior
         this.NumEnemies = Random.Range(enemyCountRange.X, enemyCountRange.Y + 1);
         LevelGenCaveInfo caveInfo = output.MapInfo[LevelGenCaveInfo.KEY] as LevelGenCaveInfo;
 
-        if (ProgressData.OnMiniBoss())
+        if (ProgressData.IsMiniBoss(ProgressData.MostRecentTile))
             findMinibossSpawn(openTiles, (caveInfo.Data as List<List<LevelGenMap.Coordinate>>)[0]);
 
         LevelGenRoomInfo roomInfo = output.MapInfo[LevelGenRoomInfo.KEY] as LevelGenRoomInfo;

@@ -47,6 +47,14 @@ public static class ProgressData
                 PersistentData.RegisterClearedMap();
         }
         _mostRecentTile = tile;
+
+        if (_minibossTiles != null)
+        {
+            if (_minibossTiles.Contains(tile))
+                _minibossTiles.Remove(tile);
+
+            moveMiniBosses();
+        }
     }
 
     public static bool IsCornerBoss(IntegerVector tile)
@@ -54,9 +62,24 @@ public static class ProgressData
         return Mathf.Abs(tile.X) == 3 && Mathf.Abs(tile.Y) == 3;
     }
 
-    public static bool OnMiniBoss()
+    public static bool IsMiniBoss(IntegerVector tile)
     {
-        return true;
+        if (_minibossTiles != null)
+        {
+            for (int i = 0; i < _minibossTiles.Count; ++i)
+            {
+                if (tile == _minibossTiles[i])
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public static IntegerVector[] GetMinibossTiles()
+    {
+        if (_minibossTiles != null)
+            return _minibossTiles.ToArray();
+        return new IntegerVector[0];
     }
 
     public static int NumBossesBeaten()
@@ -254,6 +277,7 @@ public static class ProgressData
         _mostRecentTile = null;
         _currentBosses = null;
         _playerPoints = null;
+        setStartingMinibosses();
     }
 
     public static void SaveToDisk()
@@ -266,6 +290,7 @@ public static class ProgressData
         diskData.WeaponSlotsByPlayer = _weaponSlotsByPlayer;
         diskData.CurrentBosses = _currentBosses;
         diskData.PlayerPoints = _playerPoints;
+        diskData.MinibossTiles = _minibossTiles;
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
 
@@ -289,6 +314,12 @@ public static class ProgressData
                 _playerPoints = diskData.PlayerPoints;
                 if (_playerPoints != null && _playerPoints.Length < DynamicData.MAX_PLAYERS)
                     _playerPoints = null;
+
+                _minibossTiles = diskData.MinibossTiles;
+            }
+            else
+            {
+                setStartingMinibosses();
             }
         }
     }
@@ -303,6 +334,7 @@ public static class ProgressData
         public Dictionary<int, SlotWrapper[]> WeaponSlotsByPlayer;
         public int[] CurrentBosses;
         public int[] PlayerPoints;
+        public List<IntegerVector> MinibossTiles;
     }
 
     /**
@@ -314,4 +346,35 @@ public static class ProgressData
     private static int[] _currentBosses;
     private static int[] _playerPoints;
     private static bool _hasLoaded = false;
+    private static List<IntegerVector> _minibossTiles = new List<IntegerVector>();
+
+    private static void setStartingMinibosses()
+    {
+        _minibossTiles = new List<IntegerVector>();
+        _minibossTiles.Add(new IntegerVector(2, 2));
+        _minibossTiles.Add(new IntegerVector(2, -2));
+        _minibossTiles.Add(new IntegerVector(-2, 2));
+        _minibossTiles.Add(new IntegerVector(-2, -2));
+    }
+
+    private static void moveMiniBosses()
+    {
+        int[] neighborCoords = { -1, 1 };
+        for (int i = 0; i < _minibossTiles.Count; ++i)
+        {
+            IntegerVector miniBossTile = _minibossTiles[i];
+            List<IntegerVector> validNeighbors = new List<IntegerVector>();
+            foreach (int x in neighborCoords)
+            {
+                foreach (int y in neighborCoords)
+                {
+                    IntegerVector neighbor = new IntegerVector(miniBossTile.X + x, miniBossTile.Y + y);
+                    if (Mathf.Abs(neighbor.X) <= 3 && Mathf.Abs(neighbor.Y) <= 3 && !_completedTiles.Contains(neighbor) && !IsCornerBoss(neighbor) && !IsMiniBoss(neighbor))
+                        validNeighbors.Add(neighbor);
+                }
+            }
+            if (validNeighbors.Count > 0)
+                _minibossTiles[i] = validNeighbors[Random.Range(0, validNeighbors.Count)];
+        }
+    }
 }

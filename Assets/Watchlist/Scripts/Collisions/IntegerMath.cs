@@ -104,6 +104,8 @@ public struct IntegerVector
         this.Y = Mathf.RoundToInt(v.y);
     }
 
+    public static IntegerVector Zero { get { return new IntegerVector(); } }
+
     public static IntegerVector operator +(IntegerVector v1, IntegerVector v2)
     {
         return new IntegerVector(v1.X + v2.X, v1.Y + v2.Y);
@@ -129,5 +131,30 @@ public struct IntegerVector
         return new Vector2(v.X, v.Y);
     }
 
-    public static IntegerVector Zero { get { return new IntegerVector(); } }
+    public static implicit operator IntegerVector (Vector2 v)
+    {
+        return new IntegerVector(v);
+    }
+
+    public static bool operator ==(IntegerVector v1, IntegerVector v2)
+    {
+        return v1.X == v2.X && v1.Y == v2.Y;
+    }
+    
+    public static bool operator !=(IntegerVector v1, IntegerVector v2)
+    {
+        return !(v1 == v2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is IntegerVector)
+            return this == (IntegerVector)obj;
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
