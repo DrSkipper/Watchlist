@@ -131,3 +131,13 @@ public class BeginGameplayEvent : LocalEventNotifier.Event
         this.Name = NAME;
     }
 }
+
+public class HideShopEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "HIDE_SHOP";
+
+    public HideShopEvent()
+    {
+        this.Name = NAME;
+    }
+}

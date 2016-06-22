@@ -40,6 +40,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
             {
                 PauseController.EnablePausing(true);
                 Destroy(this.LevelInfoRootObject);
+                GlobalEvents.Notifier.SendEvent(new HideShopEvent());
                 this.GetComponent<TimedCallbacks>().AddCallback(this, beginGameplay, this.BeginGameplayDelay);
             }
         }

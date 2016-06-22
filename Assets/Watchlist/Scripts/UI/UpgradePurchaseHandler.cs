@@ -48,11 +48,28 @@ public class UpgradePurchaseHandler : MonoBehaviour
         {
             if (ProgressData.GetPointsForPlayer(this.PlayerIndex) >= _cost)
             {
-                this.SelectionImage.color = _normalColor;
-                ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, -_cost);
-                ProgressData.PickupSlot(this.PlayerIndex, this.SlotType);
-                GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(this.PlayerIndex, -_cost));
-                updateDisplay();
+                ProgressData.SmartSlot[] smartSlots = ProgressData.GetSmartSlots(this.PlayerIndex);
+                bool ok = true;
+                for (int i = 0; i < smartSlots.Length; ++i)
+                {
+                    if (smartSlots[i].SlotType == this.SlotType)
+                    {
+                        ok = smartSlots[i].Level < WeaponData.GetMaxSlotsByType()[this.SlotType] || smartSlots[i].Ammo < WeaponData.GetSlotDurationsByType()[this.SlotType];
+                        break;
+                    }
+                }
+                if (ok)
+                {
+                    this.SelectionImage.color = _normalColor;
+                    ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, -_cost);
+                    ProgressData.PickupSlot(this.PlayerIndex, this.SlotType);
+                    GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(this.PlayerIndex, -_cost));
+                    updateDisplay();
+                }
+                else
+                {
+                    this.SelectionImage.color = this.NotEnoughColor;
+                }
             }
             else
             {

@@ -40,6 +40,13 @@ public class LocalEventNotifier : MonoBehaviour
         }
     }
 
+    public void RemoveListenersForOwnerAndEventName(MonoBehaviour owner, string eventName)
+    {
+        if (_listenersByEventName == null || !_listenersByEventName.ContainsKey(eventName))
+            return;
+        _listenersByEventName[eventName].RemoveAll(listener => listener.Owner == owner);
+    }
+
     public void SendEvent(Event localEvent)
     {
         if (_listenersByEventName == null)

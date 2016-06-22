@@ -34,6 +34,11 @@ public class UISlot : VoBehavior
             this.SetPlayer(this.PlayerObject);
     }
 
+    public void UpdateWithSessionPlayer(SessionPlayer player)
+    {
+        this.UpdateSlots(ProgressData.WeaponSlotsByPlayer[player.PlayerIndex]);
+    }
+
     public void SetPlayer(GameObject playerObject)
     {
         this.PlayerObject = playerObject;
