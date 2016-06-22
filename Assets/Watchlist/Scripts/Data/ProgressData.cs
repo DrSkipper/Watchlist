@@ -270,6 +270,23 @@ public static class ProgressData
         _playerPoints[playerIndex] += delta;
     }
 
+    public static int GetHealthForPlayer(int playerIndex)
+    {
+        if (_playerHealth == null)
+            initializePlayerHealth();
+        if (_playerHealth[playerIndex] <= 0)
+            return 1;
+        return _playerHealth[playerIndex];
+    }
+
+    public static void SetHealthForPlayer(int playerIndex, int health)
+    {
+        if (_playerHealth == null)
+            initializePlayerHealth();
+
+        _playerHealth[playerIndex] = Mathf.Clamp(health, 1, 5);
+    }
+
     public static void WipeData()
     {
         _completedTiles = new List<IntegerVector>();
@@ -277,6 +294,7 @@ public static class ProgressData
         _mostRecentTile = null;
         _currentBosses = null;
         _playerPoints = null;
+        _playerHealth = null;
         setStartingMinibosses();
     }
 
@@ -290,6 +308,7 @@ public static class ProgressData
         diskData.WeaponSlotsByPlayer = _weaponSlotsByPlayer;
         diskData.CurrentBosses = _currentBosses;
         diskData.PlayerPoints = _playerPoints;
+        diskData.PlayerHealth = _playerHealth;
         diskData.MinibossTiles = _minibossTiles;
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
@@ -315,6 +334,10 @@ public static class ProgressData
                 if (_playerPoints != null && _playerPoints.Length < DynamicData.MAX_PLAYERS)
                     _playerPoints = null;
 
+                _playerHealth = diskData.PlayerHealth;
+                if (_playerHealth != null && _playerHealth.Length < DynamicData.MAX_PLAYERS)
+                    _playerHealth = null;
+
                 _minibossTiles = diskData.MinibossTiles;
             }
             else
@@ -334,6 +357,7 @@ public static class ProgressData
         public Dictionary<int, SlotWrapper[]> WeaponSlotsByPlayer;
         public int[] CurrentBosses;
         public int[] PlayerPoints;
+        public int[] PlayerHealth;
         public List<IntegerVector> MinibossTiles;
     }
 
@@ -345,8 +369,16 @@ public static class ProgressData
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
     private static int[] _currentBosses;
     private static int[] _playerPoints;
+    private static int[] _playerHealth;
     private static bool _hasLoaded = false;
     private static List<IntegerVector> _minibossTiles = new List<IntegerVector>();
+
+    private static void initializePlayerHealth()
+    {
+        _playerHealth = new int[DynamicData.MAX_PLAYERS];
+        for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
+            _playerHealth[i] = 5;
+    }
 
     private static void setStartingMinibosses()
     {

@@ -38,9 +38,12 @@ public class Damager : VoBehavior
     {
         _alreadyHitThisUpdate.Add(other.gameObject);
 
-        for (int i = 0; i < _onAttackLandedCallbacks.Count; ++i)
+        if (!other.IgnoreHealthCallbacks)
         {
-            _onAttackLandedCallbacks[i](this, this.Damage, other.IsDead);
+            for (int i = 0; i < _onAttackLandedCallbacks.Count; ++i)
+            {
+                _onAttackLandedCallbacks[i](this, this.Damage, other.IsDead);
+            }
         }
     }
 

@@ -35,6 +35,7 @@ public class Bullet : Actor2D
         _damager.Knockback = weaponType.Knockback;
         _damager.HitInvincibilityDuration = weaponType.HitInvincibilityDuration;
 
+        //TODO - Only do this in campaign mode!!
         if (_allegianceInfo.Allegiance == Allegiance.Player)
             _damager.AddAttackLandedCallback(landedAttack);
 

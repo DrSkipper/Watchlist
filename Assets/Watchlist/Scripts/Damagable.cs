@@ -18,6 +18,7 @@ public class Damagable : VoBehavior
     public float ShakeHitToDamageRatio = 0;
     public float HitInvincibilityMultiplier = 1.0f;
     public float KnockbackMultiplier = 1.0f;
+    public bool IgnoreHealthCallbacks = false;
     public AudioClip AudioOnHit = null;
 
     public int MaxHealth { get { return _maxHealth; } }
@@ -120,8 +121,23 @@ public class Damagable : VoBehavior
         if (this.ApplyDamageLocally)
             this.Health = Mathf.Min(this.Health + amount, _maxHealth);
 
-        foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
-            callback(this, this.Health < _maxHealth ? amount : _maxHealth - prevHealth);
+        if (!this.IgnoreHealthCallbacks)
+        {
+            foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
+                callback(this, this.Health < _maxHealth ? amount : _maxHealth - prevHealth);
+        }
+    }
+
+    public void DirectSetHealth(int health)
+    {
+        int diff = health - this.Health;
+        this.Health = health;
+
+        if (!this.IgnoreHealthCallbacks)
+        {
+            foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
+                callback(this, diff);
+        }
     }
 
     public void ReceiveDamage(Damager other)
@@ -131,8 +147,11 @@ public class Damagable : VoBehavior
         if (this.ApplyDamageLocally)
             this.Health -= other.Damage;
 
-        foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
-            callback(this, this.Health >= 0 ? other.Damage : other.Damage + this.Health);
+        if (!this.IgnoreHealthCallbacks)
+        {
+            foreach (HealthCallback callback in this.OnHealthChangeCallbacks)
+                callback(this, this.Health >= 0 ? other.Damage : other.Damage + this.Health);
+        }
 
         Vector2 impactVector = Vector2.zero;
 

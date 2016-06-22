@@ -42,6 +42,14 @@ public class PlayerController : Actor2D
 
             this.spriteRenderer.sprite = this.SpriteAtlas.GetSprites()["player_body_" + this.PlayerIndex];
         }
+
+        if (_initialHealth > 0)
+            _damagable.DirectSetHealth(_initialHealth);
+    }
+
+    public void SetInitialHealth(int health)
+    {
+        _initialHealth = health;
     }
 
     public override void Update()
@@ -139,6 +147,7 @@ public class PlayerController : Actor2D
      */
     //private int _selectedSlot;
     private float _acceleration;
+    private int _initialHealth;
     private Weapon _weapon;
     private Damagable _damagable;
     private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();
