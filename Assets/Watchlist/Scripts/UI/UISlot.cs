@@ -8,6 +8,7 @@ public class UISlot : VoBehavior
     public Image SlotContentsObject;
 
     public Text TierText;
+    public GameObject BaseAmmo;
     public UIBar AmmoBar;
     
     public int SlotId;
@@ -79,6 +80,8 @@ public class UISlot : VoBehavior
         {
             SlotObject.sprite = this.UnlockedSlotSprite;
 
+            if (this.BaseAmmo != null && !this.BaseAmmo.activeInHierarchy)
+                this.BaseAmmo.SetActive(true);
             if (this.AmmoBar != null)
             {
                 this.AmmoBar.UpdateLength(ammoRemaining, WeaponData.GetSlotDurationsByType()[slotType]);
@@ -96,6 +99,8 @@ public class UISlot : VoBehavior
         {
             if (this.AmmoBar != null)
                 this.AmmoBar.EmptyCompletely();
+            if (this.BaseAmmo != null)
+                this.BaseAmmo.SetActive(false);
             if (this.TierText != null)
                 this.TierText.text = "";
             SlotObject.sprite = this.LockedSlotSprite;
