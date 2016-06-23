@@ -35,7 +35,6 @@ public class BossOtherMainBehavior : VoBehavior
         {
             Damagable damagable = this.SubBossParts[i].GetComponent<Damagable>();
             damagable.OnDeathCallbacks.Add(this.SubBossPartDestroyed);
-            _health.AddDamagable(damagable);
         }
         for (int i = 0; i < this.MinionSpawners.Count; ++i)
         {
@@ -43,6 +42,11 @@ public class BossOtherMainBehavior : VoBehavior
             this.MinionSpawners[i].SpawnCallback = shooterSpawned;
         }
         _health.DeathCallbacks.Add(this.OnDeath);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
