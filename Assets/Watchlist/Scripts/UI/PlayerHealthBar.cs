@@ -7,7 +7,10 @@ public class PlayerHealthBar : UIBar
     void Start()
     {
         if (DynamicData.GetSessionPlayer(this.PlayerIndex).HasJoined)
+        {
+            this.UpdateLength(ProgressData.GetHealthForPlayer(this.PlayerIndex), ProgressData.MAX_HEALTH);
             GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
+        }
     }
 
     void OnDestroy()
