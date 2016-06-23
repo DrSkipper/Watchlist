@@ -31,7 +31,8 @@ public class PlayerStateHandler : MonoBehaviour
             PlayerController playerController = _playerControllers[i];
             ProgressData.SlotWrapper[] slots = playerController != null ? playerController.Slots.ToArray() : new ProgressData.SlotWrapper[0];
             ProgressData.UpdatePlayerSlots(i, slots);
-            ProgressData.SetHealthForPlayer(i, playerController != null ? playerController.GetComponent<Damagable>().Health : 0);
+            if (DynamicData.GetSessionPlayer(i).HasJoined)
+                ProgressData.SetHealthForPlayer(i, playerController != null ? playerController.GetComponent<Damagable>().Health : 0);
         }
     }
 
