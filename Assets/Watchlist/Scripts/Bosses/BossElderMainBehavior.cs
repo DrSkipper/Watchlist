@@ -34,6 +34,11 @@ public class BossElderMainBehavior : VoBehavior
             subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
         }
         this.MinionSpawner.SpawnCallback = minionSpawned;
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
