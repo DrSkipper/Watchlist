@@ -27,6 +27,11 @@ public class BossLoversController : VoBehavior
 
     void Start()
     {
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.spawnSubBossWave, this.InitialSpawnDelay);
     }
 
