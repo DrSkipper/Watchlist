@@ -26,7 +26,7 @@ public class UIDialog : MonoBehaviour
     {
         if (this.ActiveAtStart)
         {
-            if (_usingManager)
+            if (_usingManager && UIDialogManager.Instance.ActiveDialog == null)
                 UIDialogManager.Instance.ActiveDialog = this;
         }
         else
@@ -59,6 +59,11 @@ public class UIDialog : MonoBehaviour
         {
             _timedCallbacks.RemoveCallbacksForOwner(this);
             _timedCallbacks.AddCallback(this, beginAcceptingInput, BEGIN_ACCEPTING_INPUT_DELAY);
+        }
+        else
+        {
+            _timedCallbacks.RemoveCallbacksForOwner(this);
+            _handler.AcceptingInput = false;
         }
     }
 

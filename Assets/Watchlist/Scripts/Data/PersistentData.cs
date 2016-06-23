@@ -36,7 +36,7 @@ public static class PersistentData
     public static void UnlockBoss(int bossId)
     {
         LoadFromDisk();
-        _bossLockStatuses[bossId] = true;
+        _bossLockStatuses[bossId] = false;
         if (!_bossUnlocksNeedingNotification.Contains(bossId))
             _bossUnlocksNeedingNotification.Add(bossId);
         SaveToDisk();
@@ -62,6 +62,14 @@ public static class PersistentData
         PersistentDiskData diskData = new PersistentDiskData();
         diskData.DataSaved = true;
         diskData.BossLockStatuses = _bossLockStatuses;
+        diskData.BossUnlocksNeedingNotification = _bossUnlocksNeedingNotification;
+        diskData.LevelsBeatenByNumPlayers = _levelsBeatenByNumPlayers;
+        diskData.BossesBeaten = _bossesBeaten;
+        diskData.TimesBeat4CornerBosses = _timesBeat4CornerBosses;
+        diskData.TimesAcceptedMaster = _timesAcceptedMaster;
+        diskData.TimesRefusedMaster = _timesRefusedMaster;
+        diskData.TimesDefeatedMaster = _timesDefeatedMaster;
+        diskData.TimesClearedMap = _timesClearedMap;
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
 
@@ -103,6 +111,8 @@ public static class PersistentData
     {
         LoadFromDisk();
         _levelsBeatenByNumPlayers[numPlayers - 1]++;
+        checkLoversUnlock();
+        checkCommunalUnlock();
     }
 
     public static void RegisterBossBeaten()
@@ -115,6 +125,7 @@ public static class PersistentData
     {
         LoadFromDisk();
         ++_timesBeat4CornerBosses;
+        checkElderUnlock();
     }
 
     public static void RegisterAcceptedMaster()
@@ -139,6 +150,7 @@ public static class PersistentData
     {
         LoadFromDisk();
         ++_timesClearedMap;
+        checkEarthUnlock();
     }
 
     [System.Serializable]
@@ -200,48 +212,44 @@ public static class PersistentData
 
     private static void checkLoversUnlock()
     {
-        if (!_bossLockStatuses[BOSS_LOVERS])
+        if (_bossLockStatuses[BOSS_LOVERS])
         {
             if (_levelsBeatenByNumPlayers[1] + _levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] >= 3)
             {
                 UnlockBoss(BOSS_LOVERS);
-                // notify unlock
             }
         }
     }
 
     private static void checkCommunalUnlock()
     {
-        if (!_bossLockStatuses[BOSS_COMMUNAL])
+        if (_bossLockStatuses[BOSS_COMMUNAL])
         {
             if (_levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] > 2)
             {
                 UnlockBoss(BOSS_COMMUNAL);
-                // notify unlock
             }
         }
     }
 
     private static void checkEarthUnlock()
     {
-        if (!_bossLockStatuses[BOSS_EARTH])
+        if (_bossLockStatuses[BOSS_EARTH])
         {
             if (_timesClearedMap >= 1)
             {
                 UnlockBoss(BOSS_EARTH);
-                // notify unlock
             }
         }
     }
 
     private static void checkElderUnlock()
     {
-        if (!_bossLockStatuses[BOSS_ELDER])
+        if (_bossLockStatuses[BOSS_ELDER])
         {
             if (_timesBeat4CornerBosses >= 1)
             {
                 UnlockBoss(BOSS_ELDER);
-                // notify unlock
             }
         }
     }
