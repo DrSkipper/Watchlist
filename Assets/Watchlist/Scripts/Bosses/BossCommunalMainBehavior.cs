@@ -36,9 +36,14 @@ public class BossCommunalMainBehavior : VoBehavior
             this.MinionSpawners[i].SpawnCallback = minionSpawned;
         }
 
-        _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ALIGNING_STATE, updateAligning, enterAligning, exitAligning);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
+        _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
     private void begin()

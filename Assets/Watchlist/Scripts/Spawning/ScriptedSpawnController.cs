@@ -11,13 +11,24 @@ public class ScriptedSpawnController : VoBehavior
     public bool ShouldSpawnPlayers = true;
     public float SpawnPlayersDelay = 0.2f;
     public bool NoFireForPlayers = false;
+    public bool WaitForGameplayBeginEvent = false;
 
 	void Start()
     {
         _waveCooldown = this.InitialDelay;
         if (this.ShouldSpawnPlayers && this.PlayerSpawns.Length > 0)
-            this.GetComponent<TimedCallbacks>().AddCallback(this, SpawnPlayers, this.SpawnPlayersDelay);
+        {
+            if (this.WaitForGameplayBeginEvent)
+                GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+            else
+                gameplayBegin(null);
+        }
 	}
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
+        this.GetComponent<TimedCallbacks>().AddCallback(this, SpawnPlayers, this.SpawnPlayersDelay);
+    }
 
     void Update()
     {

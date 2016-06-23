@@ -62,6 +62,7 @@ public class EnemySpawner : VoBehavior
     {
         if (this.ChildSpawners == null || this.ChildSpawners.Count == 0)
         {
+            _spawnPosition = this.transform.position;
             _spawning = true;
 
             if (this.SpawnVisualPrefab != null)
@@ -101,11 +102,12 @@ public class EnemySpawner : VoBehavior
         else if (enemy.PrefabName == "move_and_fire")
             prefab = this.MoveAndFirePrefab;
         
-        GameObject enemyObject = Instantiate(prefab, this.transform.position, Quaternion.identity) as GameObject;
+        GameObject enemyObject = Instantiate(prefab, _spawnPosition.HasValue ?_spawnPosition.Value : (Vector2)this.transform.position, Quaternion.identity) as GameObject;
         GenericEnemy enemyComponent = enemyObject.GetComponent<GenericEnemy>();
         enemyComponent.EnemyType = enemy;
         enemyComponent.Targets = new List<Transform>(this.Targets);
         enemyComponent.NoFire = this.NoFire;
+        _spawnPosition = null;
 
         if (this.SpawnCallback != null)
             this.SpawnCallback(enemyObject);
@@ -127,6 +129,7 @@ public class EnemySpawner : VoBehavior
      */
     private float _cooldownTimer;
     private bool _spawning;
+    private Vector2? _spawnPosition;
 
     private bool distanceCheck()
     {

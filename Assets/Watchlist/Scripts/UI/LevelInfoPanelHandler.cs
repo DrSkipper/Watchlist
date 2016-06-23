@@ -19,7 +19,8 @@ public class LevelInfoPanelHandler : MonoBehaviour
 
     void Awake()
     {
-        this.LevelGenManager.AddUpdateDelegate(levelGenUpdate);
+        if (this.LevelGenManager != null)
+            this.LevelGenManager.AddUpdateDelegate(levelGenUpdate);
     }
 
     public void Update()
@@ -45,7 +46,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
             }
         }
 
-        if (!_haveUpdatedEnemyInfo && this.SpawnPositioner.SpawnersPlaced)
+        if (this.SpawnPositioner != null && !_haveUpdatedEnemyInfo && this.SpawnPositioner.SpawnersPlaced)
         {
             _haveUpdatedEnemyInfo = true;
 
@@ -91,7 +92,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
 
     private void levelGenUpdate()
     {
-        if (this.LevelGenManager.Finished)
+        if (this.LevelLayoutText != null && this.LevelGenManager.Finished)
         {
             LevelGenOutput output = this.LevelGenManager.GetOutput();
 
