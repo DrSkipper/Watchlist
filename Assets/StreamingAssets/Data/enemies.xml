@@ -191,7 +191,7 @@
       <Difficulty>99</Difficulty>
       <ChoiceWeight>0</ChoiceWeight>
       <ChoiceWeightIncrease>50</ChoiceWeightIncrease>
-      <Health>6</Health>
+      <Health>12</Health>
       <Friction>150</Friction>
       <MaxSpeed>0</MaxSpeed>
       <Acceleration>0</Acceleration>

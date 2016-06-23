@@ -10,6 +10,7 @@ public class BossMasterMainBehavior : VoBehavior
     public List<BossMasterGroupBehavior> BossGroups;
     public List<BossMasterSubBehavior> BossSubs;
     public List<Damagable> Shooters;
+    public List<EnemySpawner> MinionSpawners;
     public GameObject LeftEye;
     public GameObject RightEye;
     public WinCondition WinCondition;
@@ -43,6 +44,8 @@ public class BossMasterMainBehavior : VoBehavior
     public Transform RightEyeAttack;
     public float LeftEyeAttackStartRotation = 180.0f;
     public float RightEyeAttackStartRotation = 0.0f;
+    public float InitialMinionSpawnDelay = 15.0f;
+    public float SubsequentMinionSpawnCooldown = 6.0f;
 
     void Awake()
     {
@@ -59,6 +62,14 @@ public class BossMasterMainBehavior : VoBehavior
             this.BossGroups[i].Shooter.GetComponent<Damagable>().OnDeathCallbacks.Add(shooterDeath);
         }
 
+        for (int i = 0; i < this.MinionSpawners.Count; ++i)
+        {
+            this.MinionSpawners[i].Targets = this.Targets;
+            this.MinionSpawners[i].SpawnCallback = minionSpawned;
+        }
+
+        _minionCooldown = this.InitialMinionSpawnDelay;
+
         for (int i = 0; i < this.BossSubs.Count; ++i)
         {
             this.BossSubs[i].GetComponent<Damagable>().OnDeathCallbacks.Add(subDeath);
@@ -70,13 +81,36 @@ public class BossMasterMainBehavior : VoBehavior
         _stateMachine.AddState(HOME_STATE, updateHome, enterHome, exitHome);
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
         _stateMachine.AddState(ATTACK_STATE, updateAttack, enterAttack, exitAttack);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void minionSpawned(GameObject go)
+    {
+        Damagable damagable = go.GetComponent<Damagable>();
+        damagable.OnDeathCallbacks.Add(shooterDeath);
+        this.Shooters.Add(damagable);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
     void Update()
     {
         if (_began && !_dead)
+        {
+            _minionCooldown -= Time.deltaTime;
+            if (_minionCooldown <= 0.0f)
+            {
+                _minionCooldown = this.SubsequentMinionSpawnCooldown;
+                for (int i = 0; i < this.MinionSpawners.Count; ++i)
+                {
+                    this.MinionSpawners[i].BeginSpawn();
+                }
+            }
             _stateMachine.Update();
+        }
     }
 
     /**
@@ -92,6 +126,7 @@ public class BossMasterMainBehavior : VoBehavior
     private bool _dead;
     private bool _leftEyePrepared;
     private bool _rightEyePrepared;
+    private float _minionCooldown;
 
     private const string HOME_STATE = "home";
     private const string TRANSITION_STATE = "transition";
@@ -109,6 +144,12 @@ public class BossMasterMainBehavior : VoBehavior
     private void onDeath(int hp)
     {
         _dead = true;
+        for (int i = 0; i < this.MinionSpawners.Count; ++i)
+        {
+            Destroy(this.MinionSpawners[i].gameObject);
+        }
+        this.LeftEye.GetComponent<Damagable>().Kill(50.0f);
+        this.RightEye.GetComponent<Damagable>().Kill(50.0f);
         while (this.Shooters.Count > 0)
         {
             this.Shooters[this.Shooters.Count - 1].Kill(0.0f);
@@ -144,7 +185,7 @@ public class BossMasterMainBehavior : VoBehavior
     private void shooterDeath(Damagable shooter)
     {
         this.Shooters.Remove(shooter);
-        this.BossGroups.Remove(shooter.transform.parent.GetComponent<BossMasterGroupBehavior>());
+        //this.BossGroups.Remove(shooter.transform.parent.GetComponent<BossMasterGroupBehavior>());
     }
 
     private void subDeath(Damagable sub)
@@ -185,26 +226,32 @@ public class BossMasterMainBehavior : VoBehavior
 
     private void beginSeeking()
     {
-        _seeking = true;
-        LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
-        LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
-        leftRotation.AddCallback(eyePrepared);
-        rightRotation.AddCallback(eyePrepared);
-        leftRotation.TargetRotation = this.LeftEyePanStartRotation;
-        rightRotation.TargetRotation = this.RightEyePanStartRotation;
-        leftRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
-        rightRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
-        leftRotation.LerpToTargetRotation();
-        rightRotation.LerpToTargetRotation();
+        if (!_dead)
+        {
+            _seeking = true;
+            LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
+            LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
+            leftRotation.AddCallback(eyePrepared);
+            rightRotation.AddCallback(eyePrepared);
+            leftRotation.TargetRotation = this.LeftEyePanStartRotation;
+            rightRotation.TargetRotation = this.RightEyePanStartRotation;
+            leftRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+            rightRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+            leftRotation.LerpToTargetRotation();
+            rightRotation.LerpToTargetRotation();
+        }
     }
 
     private void eyePrepared(GameObject go)
     {
-        if (go == this.LeftEye)
-            _leftEyePrepared = true;
-        else
-            _rightEyePrepared = true;
-        go.GetComponent<LerpRotation>().ClearCallbacks();
+        if (!_dead)
+        {
+            if (go == this.LeftEye)
+                _leftEyePrepared = true;
+            else
+                _rightEyePrepared = true;
+            go.GetComponent<LerpRotation>().ClearCallbacks();
+        }
     }
 
     private string updateHome()
@@ -271,29 +318,38 @@ public class BossMasterMainBehavior : VoBehavior
 
     private void beginEyeShooting()
     {
-        this.LeftEye.GetComponent<WeaponAutoFire>().Paused = false;
-        this.RightEye.GetComponent<WeaponAutoFire>().Paused = false;
-        _timedCallbacks.AddCallback(this, beginEyePan, this.EyePanDelay);
+        if (!_dead)
+        {
+            this.LeftEye.GetComponent<WeaponAutoFire>().Paused = false;
+            this.RightEye.GetComponent<WeaponAutoFire>().Paused = false;
+            _timedCallbacks.AddCallback(this, beginEyePan, this.EyePanDelay);
+        }
     }
 
     private void beginEyePan()
     {
-        LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
-        LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
-        leftRotation.AddCallback(eyePanDone);
-        rightRotation.AddCallback(eyePanDone);
-        leftRotation.TargetRotation = this.LeftEyePanEndRotation;
-        rightRotation.TargetRotation = this.RightEyePanEndRotation;
-        leftRotation.RotationSpeed = this.EyePanRotationSpeed;
-        rightRotation.RotationSpeed = this.EyePanRotationSpeed;
-        leftRotation.LerpToTargetRotation();
-        rightRotation.LerpToTargetRotation();
+        if (!_dead)
+        {
+            LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
+            LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
+            leftRotation.AddCallback(eyePanDone);
+            rightRotation.AddCallback(eyePanDone);
+            leftRotation.TargetRotation = this.LeftEyePanEndRotation;
+            rightRotation.TargetRotation = this.RightEyePanEndRotation;
+            leftRotation.RotationSpeed = this.EyePanRotationSpeed;
+            rightRotation.RotationSpeed = this.EyePanRotationSpeed;
+            leftRotation.LerpToTargetRotation();
+            rightRotation.LerpToTargetRotation();
+        }
     }
 
     private void eyePanDone(GameObject go)
     {
-        go.GetComponent<LerpRotation>().ClearCallbacks();
-        go.GetComponent<WeaponAutoFire>().Paused = true;
+        if (!_dead)
+        {
+            go.GetComponent<LerpRotation>().ClearCallbacks();
+            go.GetComponent<WeaponAutoFire>().Paused = true;
+        }
     }
 
     private void exitHome()
@@ -317,26 +373,29 @@ public class BossMasterMainBehavior : VoBehavior
 
     private void secondStageTransition()
     {
-        for (int i = 0; i < this.BossSubs.Count; ++i)
+        if (!_dead)
         {
-            if (this.BossSubs[i] != null)
-                this.BossSubs[i].GoToAttackPosition(this.TransitionSecondPartTime);
+            for (int i = 0; i < this.BossSubs.Count; ++i)
+            {
+                if (this.BossSubs[i] != null)
+                    this.BossSubs[i].GoToAttackPosition(this.TransitionSecondPartTime);
+            }
+
+            this.LeftEye.transform.parent = this.EyeAttackRotation.transform;
+            this.RightEye.transform.parent = this.EyeAttackRotation.transform;
+            this.LeftEye.GetComponent<LerpMovement>().BeginMovement(this.LeftEyeAttack.transform.position, this.TransitionSecondPartTime);
+            this.RightEye.GetComponent<LerpMovement>().BeginMovement(this.RightEyeAttack.transform.position, this.TransitionSecondPartTime);
+            LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
+            LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
+            leftRotation.TargetRotation = this.LeftEyeAttackStartRotation;
+            rightRotation.TargetRotation = this.RightEyeAttackStartRotation;
+            leftRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+            rightRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
+            leftRotation.LerpToTargetRotation();
+            rightRotation.LerpToTargetRotation();
+
+            _timedCallbacks.AddCallback(this, switchState, this.TransitionSecondPartTime + this.BufferTime);
         }
-
-        this.LeftEye.transform.parent = this.EyeAttackRotation.transform;
-        this.RightEye.transform.parent = this.EyeAttackRotation.transform;
-        this.LeftEye.GetComponent<LerpMovement>().BeginMovement(this.LeftEyeAttack.transform.position, this.TransitionSecondPartTime);
-        this.RightEye.GetComponent<LerpMovement>().BeginMovement(this.RightEyeAttack.transform.position, this.TransitionSecondPartTime);
-        LerpRotation leftRotation = this.LeftEye.GetComponent<LerpRotation>();
-        LerpRotation rightRotation = this.RightEye.GetComponent<LerpRotation>();
-        leftRotation.TargetRotation = this.LeftEyeAttackStartRotation;
-        rightRotation.TargetRotation = this.RightEyeAttackStartRotation;
-        leftRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
-        rightRotation.RotationSpeed = this.EyePanPrepareRotationSpeed;
-        leftRotation.LerpToTargetRotation();
-        rightRotation.LerpToTargetRotation();
-
-        _timedCallbacks.AddCallback(this, switchState, this.TransitionSecondPartTime + this.BufferTime);
     }
 
     private string updateTransition()
@@ -364,14 +423,20 @@ public class BossMasterMainBehavior : VoBehavior
 
     private void beginEyeFiring()
     {
-        this.LeftEye.GetComponent<WeaponAutoFire>().Paused = false;
-        this.RightEye.GetComponent<WeaponAutoFire>().Paused = false;
+        if (!_dead)
+        {
+            this.LeftEye.GetComponent<WeaponAutoFire>().Paused = false;
+            this.RightEye.GetComponent<WeaponAutoFire>().Paused = false;
+        }
     }
 
     private void beginEyeRotating()
     {
-        this.EyeAttackRotation.RotationSpeed = -this.EyeAttackRotation.RotationSpeed;
-        this.EyeAttackRotation.IsRotating = true;
+        if (!_dead)
+        {
+            this.EyeAttackRotation.RotationSpeed = -this.EyeAttackRotation.RotationSpeed;
+            this.EyeAttackRotation.IsRotating = true;
+        }
     }
 
     private string updateAttack()
