@@ -47,6 +47,11 @@ public class BossYoungMainBehavior : VoBehavior
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ATTACKING_STATE, updateAttacking, enterAttacking, exitAttacking);
         _stateMachine.AddState(RETURNING_STATE, updateReturning, enterReturning, exitReturning);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
