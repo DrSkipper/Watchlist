@@ -50,6 +50,11 @@ public class BossEarthMainBehavior : VoBehavior
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(PATHING_STATE, updatePathing, enterPathing, exitPathing);
         _stateMachine.AddState(TRANSITION_STATE, updateTransition, enterTransition, exitTransition);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
