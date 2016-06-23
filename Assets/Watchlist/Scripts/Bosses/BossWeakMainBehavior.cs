@@ -59,6 +59,11 @@ public class BossWeakMainBehavior : VoBehavior
         this.GetComponent<BossHealth>().DeathCallbacks.Add(onDeath);
         _stateMachine.AddState(ROTATION_STATE, updateRotation, enterRotation, exitRotation);
         _stateMachine.AddState(ATTACKING_STATE, updateAttacking, enterAttacking, exitAttacking);
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
         _timedCallbacks.AddCallback(this, begin, this.InitialDelay);
     }
 
@@ -268,6 +273,6 @@ public class BossWeakMainBehavior : VoBehavior
     private void exitAttacking()
     {
         _eyeAutoFire.Paused = true;
-        _eyeRotation.RotationSpeed = -Mathf.Sign(_eyeRotation.RotationSpeed) *_originalEyeSpeed;
+        _eyeRotation.RotationSpeed = (Random.value > 0.6f ? 1 : -1) * Mathf.Sign(_eyeRotation.RotationSpeed) * _originalEyeSpeed;
     }
 }
