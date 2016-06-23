@@ -14,7 +14,7 @@ public class BossSpawner : VoBehavior
     void Start()
     {
         if (this.SpawnOnStart)
-            this.GetComponent<TimedCallbacks>().AddCallback(this, initialSpawn, this.InitialDelay);
+            this.GetComponent<TimedCallbacks>().AddCallback(this, this.BeginSpawn, this.InitialDelay);
     }
 
     public void InitiateSpawn(GameObject prefabToSpawn, GameObject spawnVisualPrefab, SpawnedObjectCallback callback)
@@ -32,10 +32,7 @@ public class BossSpawner : VoBehavior
             this.SpawnCallback(spawn);
     }
 
-    /**
-     * Private
-     */
-    private void initialSpawn()
+    public void BeginSpawn()
     {
         this.InitiateSpawn(this.PrefabToSpawn, this.SpawnVisualPrefab, this.SpawnCallback);
     }

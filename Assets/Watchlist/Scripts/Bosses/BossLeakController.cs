@@ -14,8 +14,14 @@ public class BossLeakController : VoBehavior
 
     void Start()
     {
+        GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
         GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
         GlobalEvents.Notifier.Listen(PlayerDiedEvent.NAME, this, playerDied);
+    }
+
+    private void gameplayBegin(LocalEventNotifier.Event e)
+    {
+        this.GetComponent<BossSpawner>().BeginSpawn();
     }
 
     void Update()
