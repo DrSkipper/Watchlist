@@ -23,7 +23,7 @@ public class UISlot : VoBehavior
     public Sprite LaserSlotSprite;
     public Sprite BombSlotSprite;
 
-    void Start()
+    void Awake()
     {
         if (this.UseWeaponLevelParadigm)
             updateSlotParadigm = updateSlotLevelParadigm;
