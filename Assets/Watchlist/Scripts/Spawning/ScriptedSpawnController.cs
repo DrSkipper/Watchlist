@@ -12,6 +12,7 @@ public class ScriptedSpawnController : VoBehavior
     public float SpawnPlayersDelay = 0.2f;
     public bool NoFireForPlayers = false;
     public bool WaitForGameplayBeginEvent = false;
+    public float PlayerInteractionDelay = 0.0f;
 
 	void Start()
     {
@@ -109,6 +110,8 @@ public class ScriptedSpawnController : VoBehavior
         PlayerController playerController = player.GetComponent<PlayerController>();
         playerController.PlayerIndex = sessionPlayer.PlayerIndex;
         playerController.NoFire = this.NoFireForPlayers;
+        if (this.PlayerInteractionDelay > 0.0f)
+            playerController.SetInteractionDelay(this.PlayerInteractionDelay);
 
         GlobalEvents.Notifier.SendEvent(new PlayerSpawnedEvent(player, sessionPlayer.PlayerIndex));
     }

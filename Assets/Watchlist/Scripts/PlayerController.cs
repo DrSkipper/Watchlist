@@ -47,6 +47,21 @@ public class PlayerController : Actor2D
             _damagable.DirectSetHealth(_initialHealth);
     }
 
+    public void SetInteractionDelay(float delay)
+    {
+        _initialNoFire = this.NoFire;
+        _initialNoMove = this.NoMove;
+        this.NoFire = true;
+        this.NoMove = true;
+        this.GetComponent<TimedCallbacks>().AddCallback(this, beginInteraction, delay);
+    }
+
+    private void beginInteraction()
+    {
+        this.NoFire = _initialNoFire;
+        this.NoMove = _initialNoMove;
+    }
+
     public void SetInitialHealth(int health)
     {
         _initialHealth = health;
@@ -146,6 +161,8 @@ public class PlayerController : Actor2D
      * Private
      */
     //private int _selectedSlot;
+    private bool _initialNoFire;
+    private bool _initialNoMove;
     private float _acceleration;
     private int _initialHealth;
     private Weapon _weapon;

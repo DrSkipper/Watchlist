@@ -15,6 +15,7 @@ public class SpawnPositioner : VoBehavior
     public float SpawnEnemiesDelay = 3.0f;
     public int MaxPlayerSpawnDistance = 10;
     public bool WaitForGameplayBeginEvent = false;
+    public float PlayerInteractionDelay = 0.0f;
 
     public bool SpawnersPlaced { get { return _readyToSpawn; } }
 
@@ -99,6 +100,8 @@ public class SpawnPositioner : VoBehavior
                     break;
             }
             player.GetComponent<PlayerController>().PlayerIndex = playerIndex;
+            if (this.PlayerInteractionDelay > 0.0f)
+                player.GetComponent<PlayerController>().SetInteractionDelay(this.PlayerInteractionDelay);
 
             GlobalEvents.Notifier.SendEvent(new PlayerSpawnedEvent(player, playerIndex));
             ++playerIndex;
