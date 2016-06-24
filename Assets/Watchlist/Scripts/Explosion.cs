@@ -8,6 +8,8 @@ public class Explosion : VoBehavior
     public float ExplosionDuration = 1.0f;
     public float RadiusToPowerMultiplier = 1.0f;
     public WeaponType WeaponType;
+    public bool LineOfSight = false;
+    public LayerMask LineOfSightBlockers = 0;
 
     public void DetonateWithWeaponType(WeaponType weaponType, int layer, LayerMask damagableLayers, AllegianceInfo allegianceInfo)
     {
@@ -48,7 +50,24 @@ public class Explosion : VoBehavior
             circleCollider.Collide(_collisions, 0, 0, _damager.DamagableLayers);
 
             for (int i = prevCount; i < _collisions.Count; ++i)
-                this.localNotifier.SendEvent(new HitEvent(_collisions[i]));
+            {
+                Damagable damagable = _collisions[i].GetComponent<Damagable>();
+                if (damagable != null && !damagable.Invincible)
+                {
+                    if (!this.LineOfSight)
+                        this.localNotifier.SendEvent(new HitEvent(_collisions[i]));
+                    else
+                    {
+                        Vector2 direction = (_collisions[i].transform.position - this.transform.position).normalized;
+                        float distance = Vector2.Distance(this.transform.position, _collisions[i].transform.position);
+                        Vector2 start = (Vector2)this.transform.position + direction * Mathf.Max(1.0f, Mathf.Min(Mathf.Min(_trueRadius / 10.0f, 4.5f), distance));
+                        distance = Vector2.Distance(start, _collisions[i].transform.position);
+                        Debug.DrawLine(start, _collisions[i].transform.position);
+                        if (!CollisionManager.RaycastFirst(start, direction, distance, this.LineOfSightBlockers).Collided)
+                            this.localNotifier.SendEvent(new HitEvent(_collisions[i]));
+                    }
+                }
+            }
         }
     }
 
