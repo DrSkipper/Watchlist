@@ -46,7 +46,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
             }
         }
 
-        if (this.SpawnPositioner != null && !_haveUpdatedEnemyInfo && this.SpawnPositioner.SpawnersPlaced)
+        if (!_readied && this.SpawnPositioner != null && !_haveUpdatedEnemyInfo && this.SpawnPositioner.SpawnersPlaced)
         {
             _haveUpdatedEnemyInfo = true;
 

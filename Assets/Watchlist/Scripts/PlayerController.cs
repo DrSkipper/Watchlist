@@ -15,8 +15,11 @@ public class PlayerController : Actor2D
     public bool UseDebugWeapon = false; // If enabled, ignores Equip Slots and uses whatever properties have been set on the Weapon's inspector
     public bool NoFire = false;
     public bool NoMove = false;
+    public float ControllerAimerSpeed = 200.0f;
     public ReticlePositioner Reticle;
     public Texture2D SpriteAtlas;
+
+    public Vector2 AimAxis { get { return _aimAxis; } }
 
     public delegate void SlotChangeDelegate(ProgressData.SlotWrapper[] newSlots);
 
@@ -25,6 +28,7 @@ public class PlayerController : Actor2D
         _acceleration = this.AccelerationDuration > 0 ? this.MaxSpeed / this.AccelerationDuration : this.MaxSpeed * 1000;
         _weapon = this.GetComponent<Weapon>();
         _weapon.ShotFiredCallback = shotFired;
+        _aimAxis = Vector2.zero;
 
         this.Reticle.PlayerIndex = this.PlayerIndex;
         _damagable = this.GetComponent<Damagable>();
@@ -45,6 +49,11 @@ public class PlayerController : Actor2D
 
         if (_initialHealth > 0)
             _damagable.DirectSetHealth(_initialHealth);
+    }
+
+    public void SetUsingController()
+    {
+        _usingController = true;
     }
 
     public void SetInteractionDelay(float delay)
@@ -109,11 +118,21 @@ public class PlayerController : Actor2D
         // Shooting
         if (!this.NoFire && _weapon != null)
         {
-            Vector2 aimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position);
-            if (aimAxis.x != 0 || aimAxis.y != 0)
+            Vector2 rawAimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position, !_usingController);
+
+            if (_usingController)
+            {
+                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, this.ControllerAimerSpeed * Time.deltaTime);
+            }
+            else
+            {
+                _aimAxis = rawAimAxis;
+            }
+
+            if (_aimAxis.x != 0 || _aimAxis.y != 0)
             {
                 if (GameplayInput.GetFireButton(this.PlayerIndex))
-                    _weapon.Fire(aimAxis, this.ShotStartDistance);
+                    _weapon.Fire(_aimAxis.normalized, this.ShotStartDistance);
             }
         }
     }
@@ -165,6 +184,8 @@ public class PlayerController : Actor2D
     private bool _initialNoMove;
     private float _acceleration;
     private int _initialHealth;
+    private bool _usingController;
+    private Vector2 _aimAxis;
     private Weapon _weapon;
     private Damagable _damagable;
     private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();

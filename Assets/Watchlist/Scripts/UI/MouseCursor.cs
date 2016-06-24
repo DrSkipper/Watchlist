@@ -7,6 +7,7 @@ public class MouseCursor : MonoBehaviour
     {
         _rectTransform = this.GetComponent<RectTransform>();
         _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
+        GlobalEvents.Notifier.Listen(PlayerDiedEvent.NAME, this, playerDied);
     }
 
     void Update()
@@ -32,16 +33,18 @@ public class MouseCursor : MonoBehaviour
             _setup = true;
         }
         
-        if (PauseController.IsPaused())
+        if (_player != null)
         {
-            _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
-        }
-
-        else if (_player != null)
-        {
-            Player rewiredP = ReInput.players.GetPlayer(_player.RewiredId);
-            Vector2 screenPos = rewiredP.controllers.Mouse.screenPosition;
-            _rectTransform.position = new Vector3(screenPos.x, screenPos.y, _rectTransform.position.z);
+            if (PauseController.IsPaused())
+            {
+                _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
+            }
+            else
+            {
+                Player rewiredP = ReInput.players.GetPlayer(_player.RewiredId);
+                Vector2 screenPos = rewiredP.controllers.Mouse.screenPosition;
+                _rectTransform.position = new Vector3(screenPos.x, screenPos.y, _rectTransform.position.z);
+            }
         }
     }
 
@@ -51,4 +54,13 @@ public class MouseCursor : MonoBehaviour
     private bool _setup;
     private SessionPlayer _player;
     private RectTransform _rectTransform;
+
+    private void playerDied(LocalEventNotifier.Event e)
+    {
+        if ((e as PlayerDiedEvent).PlayerIndex == _player.PlayerIndex)
+        {
+            _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
+            _player = null;
+        }
+    }
 }

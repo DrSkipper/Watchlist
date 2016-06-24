@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class CameraController : VoBehavior
 {
-    public Transform[] PlayerTransforms;
+    public PlayerController[] PlayerControllers;
     public ZoomLevel[] ZoomLevels;
     public float AimingImpact = 50.0f;
     public float NormalApproachSpeed = 8.0f;
@@ -25,8 +24,8 @@ public class CameraController : VoBehavior
     void Awake()
     {
         _camera = this.GetComponent<Camera>();
-        if (this.PlayerTransforms.Length == 0)
-            this.PlayerTransforms = new Transform[DynamicData.MAX_PLAYERS];
+        if (this.PlayerControllers.Length == 0)
+            this.PlayerControllers = new PlayerController[DynamicData.MAX_PLAYERS];
     }
 
     void Start()
@@ -68,7 +67,7 @@ public class CameraController : VoBehavior
     private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
     {
         PlayerSpawnedEvent spawnEvent = playerSpawnedEvent as PlayerSpawnedEvent;
-        this.PlayerTransforms[spawnEvent.PlayerIndex] = spawnEvent.PlayerObject.GetComponent<PlayerController>().ActualPosition;
+        this.PlayerControllers[spawnEvent.PlayerIndex] = spawnEvent.PlayerObject.GetComponent<PlayerController>();
     }
 
     private Vector2 calculateCenterTarget()
@@ -76,14 +75,17 @@ public class CameraController : VoBehavior
         Vector2 avgCenter = Vector2.zero;
         Vector2 avgAiming = Vector2.zero;
         int count = 0;
-        for (int i = 0; i < this.PlayerTransforms.Length; ++i)
+        for (int i = 0; i < this.PlayerControllers.Length; ++i)
         {
-            Transform target = this.PlayerTransforms[i];
-            if (target != null)
+            if (this.PlayerControllers[i] != null)
             {
-                avgCenter += (Vector2)target.position;
-                avgAiming += GameplayInput.GetAimingAxis(i, target.position, false);
-                ++count;
+                Transform target = this.PlayerControllers[i].ActualPosition;
+                if (target != null)
+                {
+                    avgCenter += (Vector2)target.position;
+                    avgAiming += this.PlayerControllers[i].AimAxis;
+                    ++count;
+                }
             }
         }
 
@@ -113,11 +115,11 @@ public class CameraController : VoBehavior
     private int findZoomLevelIndex()
     {
         float farthestDistance = 0.0f;
-        foreach (Transform target in this.PlayerTransforms)
+        for (int i = 0; i < this.PlayerControllers.Length; ++i)
         {
-            if (target != null)
+            if (this.PlayerControllers[i] != null)
             {
-                float d = Vector2.Distance(_lockPosition, target.position);
+                float d = Vector2.Distance(_lockPosition, this.PlayerControllers[i].ActualPosition.position);
                 if (d > farthestDistance)
                     farthestDistance = d;
             }
