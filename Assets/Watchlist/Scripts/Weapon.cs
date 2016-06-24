@@ -10,6 +10,8 @@ public class Weapon : VoBehavior
     public AudioClip[] FireAudio;
     public ShotFiredDelegate ShotFiredCallback;
     public float ShotAngleOffset = 0.0f;
+    public bool RaycastToShotStart = false;
+    public LayerMask ShotBlockMask = 0;
 
     public delegate void ShotFiredDelegate(bool ignoreExplosions);
 
@@ -97,9 +99,12 @@ public class Weapon : VoBehavior
 
     private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab, bool ignoreExplosions)
     {
-        // Create instance of bullet prefab and set it on its way
-        Vector3 position = this.transform.position + (new Vector3(direction.x, direction.y, 0) * shotStartDistance);
-        GameObject bullet = Instantiate(prefab, position, Quaternion.identity) as GameObject;
-        bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo, ignoreExplosions);
+        if (!this.RaycastToShotStart || !CollisionManager.RaycastFirst((Vector2)this.transform.position, direction, shotStartDistance, this.ShotBlockMask).Collided)
+        {
+            // Create instance of bullet prefab and set it on its way
+            Vector3 position = this.transform.position + (Vector3)(direction * shotStartDistance);
+            GameObject bullet = Instantiate(prefab, position, Quaternion.identity) as GameObject;
+            bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo, ignoreExplosions);
+        }
     }
 }
