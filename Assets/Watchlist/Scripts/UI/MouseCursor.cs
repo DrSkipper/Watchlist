@@ -57,7 +57,7 @@ public class MouseCursor : MonoBehaviour
 
     private void playerDied(LocalEventNotifier.Event e)
     {
-        if ((e as PlayerDiedEvent).PlayerIndex == _player.PlayerIndex)
+        if (_player != null && (e as PlayerDiedEvent).PlayerIndex == _player.PlayerIndex)
         {
             _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
             _player = null;
