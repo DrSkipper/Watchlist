@@ -50,7 +50,7 @@ public class EnemySpawner : VoBehavior
                     this.Rule = SpawnRule.DistanceOnly;
             }
 
-            if (this.DistanceToSpawnIncrease > 0.0f)
+            if (this.DistanceToSpawnIncrease > 0.0f && this.MinDistanceToSpawn > 0.0f && this.MinDistanceToSpawn < this.MinDistanceToSpawnCap)
             {
                 this.MinDistanceToSpawn = Mathf.Min(this.MinDistanceToSpawn + this.DistanceToSpawnIncrease * Time.deltaTime, this.MinDistanceToSpawnCap);
             }
