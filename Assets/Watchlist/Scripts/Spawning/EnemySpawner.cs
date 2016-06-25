@@ -24,6 +24,9 @@ public class EnemySpawner : VoBehavior
     public List<EnemySpawner> ChildSpawners;
     public SpawnedObjectCallback SpawnCallback;
     public List<Transform> Targets;
+    public float DistanceToSpawnIncrease = 0.0f;
+    public float MinDistanceToSpawnCap = float.MaxValue;
+    public float TimeToSwitchToDistanceOnly = -1.0f;
 
     public GameObject GenericPrefab;
     public GameObject GenericMotionPrefab;
@@ -39,6 +42,19 @@ public class EnemySpawner : VoBehavior
     {
         if (!this.IsChildSpawner)
         {
+            if (this.Rule != SpawnRule.DistanceOnly && this.TimeToSwitchToDistanceOnly > 0.0f)
+            {
+                _timeSinceStart += Time.deltaTime;
+
+                if (_timeSinceStart > this.TimeToSwitchToDistanceOnly)
+                    this.Rule = SpawnRule.DistanceOnly;
+            }
+
+            if (this.DistanceToSpawnIncrease > 0.0f)
+            {
+                this.MinDistanceToSpawn = Mathf.Min(this.MinDistanceToSpawn + this.DistanceToSpawnIncrease * Time.deltaTime, this.MinDistanceToSpawnCap);
+            }
+
             if (this.SpawnCooldown > 0.0f)
             {
                 if (_cooldownTimer <= 0.0f)
@@ -130,6 +146,7 @@ public class EnemySpawner : VoBehavior
     private float _cooldownTimer;
     private bool _spawning;
     private Vector2? _spawnPosition;
+    private float _timeSinceStart;
 
     private bool distanceCheck()
     {
