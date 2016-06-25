@@ -171,6 +171,9 @@ public class SpawnPositioner : VoBehavior
     private GameObject createMinibossSpawner(IntegerVector position)
     {
         GameObject spawner = Instantiate(this.MinibossSpawnPrefab, new Vector3(position.X * _tileRenderer.TileRenderSize, position.Y * _tileRenderer.TileRenderSize, this.transform.position.z), Quaternion.identity) as GameObject;
+        this.NumEnemies += 1;
+        if (_winCondition != null)
+            spawner.GetComponent<BossSpawner>().SpawnCallback = _winCondition.EnemySpawned;
         if (_tileRenderer.OffsetTilesToCenter)
             spawner.transform.position = new Vector3(spawner.transform.position.x - _tileRenderer.TileRenderSize * _tileRenderer.Width / 2, spawner.transform.position.y - _tileRenderer.TileRenderSize * _tileRenderer.Height / 2, spawner.transform.position.z);
         return spawner;

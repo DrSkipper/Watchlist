@@ -15,6 +15,7 @@ public class MiniBossBehavior : VoBehavior
     public float AlertCooldownSpeedMultiplier = 2.0f;
     public int RayDirections = 8;
     public LayerMask HaltMovementMask = 0;
+    public Damagable.DeathCallback DeathCallback;
 
     void Start()
     {
@@ -111,6 +112,9 @@ public class MiniBossBehavior : VoBehavior
 
         _lerpMovement.HaltMovement();
         _timedCallbacks.AddCallback(this, destroy, 0.2f);
+
+        if (this.DeathCallback != null)
+            DeathCallback(died);
     }
 
     private void destroy()
