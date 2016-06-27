@@ -44,10 +44,14 @@ public class BossWeakMainBehavior : VoBehavior
     void Start()
     {
         this.AttackTargets = PlayerTargetController.Targets;
+        int hp = 1;
         foreach (GameObject subBoss in this.SubBosses)
         {
             subBoss.GetComponent<BossWeakSubBehavior>().OnAttackFinished = subBossAttackFinished;
-            subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
+            Damagable damagable = subBoss.GetComponent<Damagable>();
+            damagable.DirectSetHealth(hp);
+            damagable.OnDeathCallbacks.Add(this.SubBossKilled);
+            hp = hp >= 4 ? 1 : hp + 1;
         }
 
         for (int i = 0; i < this.EnemySpawners.Length; ++i)
@@ -203,7 +207,9 @@ public class BossWeakMainBehavior : VoBehavior
                 subBoss.transform.localRotation = Quaternion.identity;
                 this.SubBosses.Add(subBoss);
                 subBoss.GetComponent<BossWeakSubBehavior>().OnAttackFinished = subBossAttackFinished;
-                subBoss.GetComponent<Damagable>().OnDeathCallbacks.Add(this.SubBossKilled);
+                Damagable damagable = subBoss.GetComponent<Damagable>();
+                damagable.DirectSetHealth(Random.Range(1, 5));
+                damagable.OnDeathCallbacks.Add(this.SubBossKilled);
             }
         }
         return !_switchState ? ROTATION_STATE : ATTACKING_STATE;
