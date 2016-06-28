@@ -62,7 +62,6 @@ public class Explosion : VoBehavior
                         float distance = Vector2.Distance(this.transform.position, _collisions[i].transform.position);
                         Vector2 start = (Vector2)this.transform.position + direction * Mathf.Max(1.0f, Mathf.Min(Mathf.Min(_trueRadius / 10.0f, 4.5f), distance));
                         distance = Vector2.Distance(start, _collisions[i].transform.position);
-                        Debug.DrawLine(start, _collisions[i].transform.position);
                         if (!CollisionManager.RaycastFirst(start, direction, distance, this.LineOfSightBlockers).Collided)
                             this.localNotifier.SendEvent(new HitEvent(_collisions[i]));
                     }
