@@ -1617,8 +1617,8 @@
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>1.6</HitInvincibilityDuration>
-      <ShotSpeed>240</ShotSpeed>
-      <ShotCooldown>0.5</ShotCooldown>
+      <ShotSpeed>215</ShotSpeed>
+      <ShotCooldown>0.67</ShotCooldown>
       <ShotCount>1</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
       <MaximumBounces>0</MaximumBounces>
@@ -1663,8 +1663,8 @@
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>1.6</HitInvincibilityDuration>
-      <ShotSpeed>240</ShotSpeed>
-      <ShotCooldown>0.24</ShotCooldown>
+      <ShotSpeed>215</ShotSpeed>
+      <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>4</ShotCount>
       <AngleBetweenShots>90</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
@@ -1686,7 +1686,7 @@
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>1.6</HitInvincibilityDuration>
-      <ShotSpeed>240</ShotSpeed>
+      <ShotSpeed>215</ShotSpeed>
       <ShotCooldown>0</ShotCooldown>
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
@@ -1709,7 +1709,7 @@
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>1.6</HitInvincibilityDuration>
-      <ShotSpeed>240</ShotSpeed>
+      <ShotSpeed>215</ShotSpeed>
       <ShotCooldown>0</ShotCooldown>
       <ShotCount>0</ShotCount>
       <AngleBetweenShots>10</AngleBetweenShots>
@@ -1801,8 +1801,8 @@
       <Damage>1</Damage>
       <Knockback>150</Knockback>
       <HitInvincibilityDuration>1.6</HitInvincibilityDuration>
-      <ShotSpeed>240</ShotSpeed>
-      <ShotCooldown>0.3</ShotCooldown>
+      <ShotSpeed>215</ShotSpeed>
+      <ShotCooldown>0.33</ShotCooldown>
       <ShotCount>3</ShotCount>
       <AngleBetweenShots>8</AngleBetweenShots>
       <MaximumBounces>1</MaximumBounces>
