@@ -41,35 +41,52 @@ public class UpgradePurchaseHandler : MonoBehaviour
     private int _cost;
     private Color _normalColor;
 
+    private const int HEALTH_COST = 30;
+
     private void menuSelection(LocalEventNotifier.Event e)
     {
         MenuElementSelectedEvent menuSelectionEvent = e as MenuElementSelectedEvent;
         if (menuSelectionEvent.Element == _menuElement)
         {
-            if (ProgressData.GetPointsForPlayer(this.PlayerIndex) >= _cost)
+            if (this.SlotType != WeaponData.Slot.Empty)
             {
-                ProgressData.SmartSlot[] smartSlots = ProgressData.GetSmartSlots(this.PlayerIndex);
-                bool ok = true;
-                for (int i = 0; i < smartSlots.Length; ++i)
+                if (ProgressData.GetPointsForPlayer(this.PlayerIndex) >= _cost)
                 {
-                    if (smartSlots[i].SlotType == this.SlotType)
+                    ProgressData.SmartSlot[] smartSlots = ProgressData.GetSmartSlots(this.PlayerIndex);
+                    bool ok = true;
+                    for (int i = 0; i < smartSlots.Length; ++i)
                     {
-                        ok = smartSlots[i].Level < WeaponData.GetMaxSlotsByType()[this.SlotType] || smartSlots[i].Ammo < WeaponData.GetSlotDurationsByType()[this.SlotType];
-                        break;
+                        if (smartSlots[i].SlotType == this.SlotType)
+                        {
+                            ok = smartSlots[i].Level < WeaponData.GetMaxSlotsByType()[this.SlotType] || smartSlots[i].Ammo < WeaponData.GetSlotDurationsByType()[this.SlotType];
+                            break;
+                        }
                     }
-                }
-                if (ok)
-                {
-                    this.SelectionImage.color = _normalColor;
-                    ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, -_cost);
-                    ProgressData.PickupSlot(this.PlayerIndex, this.SlotType);
-                    GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(this.PlayerIndex, -_cost));
-                    updateDisplay();
+                    if (ok)
+                    {
+                        this.SelectionImage.color = _normalColor;
+                        ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, -_cost);
+                        ProgressData.PickupSlot(this.PlayerIndex, this.SlotType);
+                        GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(this.PlayerIndex, -_cost));
+                        updateDisplay();
+                    }
+                    else
+                    {
+                        this.SelectionImage.color = this.NotEnoughColor;
+                    }
                 }
                 else
                 {
                     this.SelectionImage.color = this.NotEnoughColor;
                 }
+            }
+            else if (ProgressData.GetHealthForPlayer(this.PlayerIndex) < ProgressData.MAX_HEALTH && ProgressData.GetPointsForPlayer(this.PlayerIndex) >= _cost)
+            {
+                this.SelectionImage.color = _normalColor;
+                ProgressData.SetHealthForPlayer(this.PlayerIndex, ProgressData.GetHealthForPlayer(this.PlayerIndex) + 1);
+                ProgressData.ApplyPointsDeltaForPlayer(this.PlayerIndex, -_cost);
+                GlobalEvents.Notifier.SendEvent(new PlayerPointsReceivedEvent(this.PlayerIndex, -_cost));
+                updateDisplay();
             }
             else
             {
@@ -80,16 +97,24 @@ public class UpgradePurchaseHandler : MonoBehaviour
 
     private void updateDisplay()
     {
-        ProgressData.SmartSlot slot = this.ShopHandler.GetSmartSlots()[(int)this.SlotType];
-        _cost = WeaponData.GetUpgradeTotalCost(this.SlotType, slot.Level);
-        this.CostText.text = this.CostString.Replace("<cost>", "" + _cost);
-        if (slot.Level < WeaponData.GetMaxSlotsByType()[this.SlotType])
+        if (this.SlotType != WeaponData.Slot.Empty)
         {
-            this.LevelText.text = this.LevelString.Replace("<level>", "" + slot.Level);
+            ProgressData.SmartSlot slot = this.ShopHandler.GetSmartSlots()[(int)this.SlotType];
+            _cost = WeaponData.GetUpgradeTotalCost(this.SlotType, slot.Level);
+            this.CostText.text = this.CostString.Replace("<cost>", "" + _cost);
+            if (slot.Level < WeaponData.GetMaxSlotsByType()[this.SlotType])
+            {
+                this.LevelText.text = this.LevelString.Replace("<level>", "" + slot.Level);
+            }
+            else
+            {
+                this.LevelText.text = this.MaxLevelString;
+            }
         }
         else
         {
-            this.LevelText.text = this.MaxLevelString;
+            _cost = HEALTH_COST;
+            this.CostText.text = this.CostString.Replace("<cost>", "" + _cost);
         }
     }
 }

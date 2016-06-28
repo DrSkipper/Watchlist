@@ -9,6 +9,7 @@ public class PlayerHealthBar : UIBar
         if (DynamicData.GetSessionPlayer(this.PlayerIndex).HasJoined)
         {
             this.UpdateLength(ProgressData.GetHealthForPlayer(this.PlayerIndex), ProgressData.MAX_HEALTH);
+            GlobalEvents.Notifier.Listen(PlayerPointsReceivedEvent.NAME, this, pointsReceived);
             GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
         }
     }
@@ -27,6 +28,7 @@ public class PlayerHealthBar : UIBar
         PlayerSpawnedEvent spawnEvent = playerSpawnedEvent as PlayerSpawnedEvent;
         if (spawnEvent.PlayerIndex == this.PlayerIndex)
         {
+            GlobalEvents.Notifier.RemoveListenersForOwnerAndEventName(this, PlayerPointsReceivedEvent.NAME);
             spawnEvent.PlayerObject.GetComponent<Damagable>().OnHealthChangeCallbacks.Add(healthUpdated);
         }
     }
@@ -34,5 +36,14 @@ public class PlayerHealthBar : UIBar
     private void healthUpdated(Damagable player, int damage)
     {
         this.UpdateLength(player.Health, player.MaxHealth);
+    }
+
+    private void pointsReceived(LocalEventNotifier.Event e)
+    {
+        SessionPlayer player = DynamicData.GetSessionPlayer(this.PlayerIndex);
+        if (player.HasJoined && player.PlayerIndex == ((PlayerPointsReceivedEvent)e).PlayerIndex)
+        {
+            this.UpdateLength(ProgressData.GetHealthForPlayer(this.PlayerIndex), ProgressData.MAX_HEALTH);
+        }
     }
 }

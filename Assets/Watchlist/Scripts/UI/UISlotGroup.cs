@@ -34,11 +34,11 @@ public class UISlotGroup : MonoBehaviour
      */
     private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
     {
-        GlobalEvents.Notifier.RemoveListenersForOwnerAndEventName(this, PlayerPointsReceivedEvent.NAME);
         PlayerSpawnedEvent spawnEvent = playerSpawnedEvent as PlayerSpawnedEvent;
 
         if (spawnEvent.PlayerIndex == this.PlayerIndex)
         {
+            GlobalEvents.Notifier.RemoveListenersForOwnerAndEventName(this, PlayerPointsReceivedEvent.NAME);
             foreach (UISlot slot in this.Slots)
             {
                 slot.SetPlayer(spawnEvent.PlayerObject);
