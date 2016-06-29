@@ -259,8 +259,8 @@ public class SpawnPositioner : VoBehavior
     private bool _okToBegin;
     private bool _readyToSpawn;
 
-    private const float CHANCE_FOR_EXTRA_TWO_IN_BSP_ROOM = 0.2f;
-    private const float CHANCE_FOR_REMOVE_SPAWN_ROOM_FOR_FUTURE_BSP = 0.4f;
+    private const float CHANCE_FOR_EXTRA_TWO_IN_BSP_ROOM = 0.15f;
+    private const float CHANCE_FOR_REMOVE_SPAWN_ROOM_FOR_FUTURE_BSP = 0.45f;
 
     private void okToBegin(LocalEventNotifier.Event e)
     {
