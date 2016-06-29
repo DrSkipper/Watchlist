@@ -146,19 +146,34 @@ public class PlayerController : Actor2D
                 WeaponPickup pickup = hit.GetComponent<WeaponPickup>();
                 if (pickup != null)
                 {
-                    switch (pickup.PickupContents.Type)
+                    if (pickup.PickupContents.Type == WeaponPickup.PickupType.WeaponSlot)
                     {
-                        default:
-                        case WeaponPickup.PickupType.WeaponSlot:
+                        ProgressData.SmartSlot[] smartSlots = ProgressData.GetSmartSlots(this.PlayerIndex);
+                        bool ok = true;
+                        for (int i = 0; i < smartSlots.Length; ++i)
+                        {
+                            WeaponData.Slot slotType = (WeaponData.Slot)pickup.PickupContents.Parameter;
+                            if (smartSlots[i].SlotType == slotType)
+                            {
+                                ok = smartSlots[i].Level < WeaponData.GetMaxSlotsByType()[slotType] || smartSlots[i].Ammo < WeaponData.GetSlotDurationsByType()[slotType];
+                                break;
+                            }
+                        }
+                        if (ok)
+                        {
                             pickupWeaponSlot((WeaponData.Slot)pickup.PickupContents.Parameter);
-                            break;
-                        case WeaponPickup.PickupType.HealthRefill:
+                            Destroy(hit);
+                        }
+                    }
+                    else
+                    {
+                        if (_damagable.Health < ProgressData.MAX_HEALTH)
+                        {
                             _damagable.Heal(pickup.PickupContents.Parameter);
-                            break;
+                            Destroy(hit);
+                        }
                     }
                 }
-
-                Destroy(hit);
             }
         }
     }
