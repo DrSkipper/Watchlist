@@ -38,12 +38,12 @@ public class BossData
         }
     }
 
-    public static BossData Load(string path)
+    public static BossData Load(TextAsset asset)
     {
         BossData bossData = null;
         var serializer = new XmlSerializer(typeof(BossData));
 
-        using (var stream = new FileStream(path, FileMode.Open))
+        using (var stream = new StringReader(asset.text))
         {
             bossData = serializer.Deserialize(stream) as BossData;
         }
