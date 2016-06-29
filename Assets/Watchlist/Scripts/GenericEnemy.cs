@@ -12,6 +12,7 @@ public class GenericEnemy : VoBehavior
     public GameObject ExplosionPrefab;
     public bool UseDebugWeapon = false;
     public bool NoFire = false;
+    public float FireDelay = 0.15f;
 
     public enum MovementType
     {
@@ -88,6 +89,21 @@ public class GenericEnemy : VoBehavior
 
         this.spriteRenderer.sprite = this.SpriteSheet.GetSprites()[this.EnemyType.SpriteName];
         GlobalEvents.Notifier.Listen(PlayerDiedEvent.NAME, this, playerDied);
+
+        if (this.NoFire == false)
+        {
+            this.NoFire = true;
+            TimedCallbacks callbacks = this.GetComponent<TimedCallbacks>();
+            if (callbacks != null)
+            {
+                callbacks.AddCallback(this, fireOn, this.FireDelay);
+            }
+        }
+    }
+
+    private void fireOn()
+    {
+        this.NoFire = false;
     }
 
     void Update()
