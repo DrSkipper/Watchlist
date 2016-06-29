@@ -326,6 +326,8 @@ public static class ProgressData
                 if (diskData.HaveUsedMostRecentTile)
                     _mostRecentTile = diskData.MostRecentTile;
                 _weaponSlotsByPlayer = diskData.WeaponSlotsByPlayer;
+                if (_weaponSlotsByPlayer == null)
+                    _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
 
                 _currentBosses = diskData.CurrentBosses;
                 if (_currentBosses != null && _currentBosses.Length < 4)

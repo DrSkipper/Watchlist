@@ -17,7 +17,8 @@ public class GameplayPalette : MonoBehaviour
     public Color EnemyGibsColor;
 
     public Color WallColor;
-    public Color PickupColor;
+    public Color[] PickupColors;
+    public Color[] HealthPickupColors;
     public Color BackgroundColor;
 
     public Color UIPrimaryColor;
@@ -52,7 +53,8 @@ public class GameplayPalette : MonoBehaviour
         _enemyGibsColor = this.EnemyGibsColor;
 
         _wallColor = this.WallColor;
-        _pickupColor = this.PickupColor;
+        _pickupColors = this.PickupColors;
+        _healthPickupColors = this.HealthPickupColors;
         _backgroundColor = this.BackgroundColor;
 
         _uiPrimaryColor = this.UIPrimaryColor;
@@ -132,9 +134,14 @@ public class GameplayPalette : MonoBehaviour
         return _wallColor;
     }
     
-    public static Color GetPickupColor()
+    public static Color GetPickupColor(int index)
     {
-        return _pickupColor;
+        return _pickupColors[index];
+    }
+
+    public static Color GetHealthPickupColor(int index)
+    {
+        return _healthPickupColors[index];
     }
 
     public static Color GetBackgroundColor()
@@ -188,7 +195,9 @@ public class GameplayPalette : MonoBehaviour
             case "wall":
                 return GetWallColor();
             case "pickup":
-                return GetPickupColor();
+                return GetPickupColor(parameter);
+            case "health_pickup":
+                return GetHealthPickupColor(parameter);
             case "background":
                 return GetBackgroundColor();
             case "ui_primary":
@@ -260,7 +269,8 @@ public class GameplayPalette : MonoBehaviour
     private static Color _enemyGibsColor;
 
     private static Color _wallColor;
-    private static Color _pickupColor;
+    private static Color[] _pickupColors;
+    private static Color[] _healthPickupColors;
     private static Color _backgroundColor;
 
     private static Color _uiPrimaryColor;

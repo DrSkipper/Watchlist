@@ -8,7 +8,6 @@ public class TestLevelLayout : VoBehavior
     public string LevelFileName;
 
     public const string LEVEL_DATA_ROOT = "Levels/";
-    public const string LEVEL_DATA_SUFFIX = ".xml";
 
     void Start()
     {
@@ -20,7 +19,7 @@ public class TestLevelLayout : VoBehavior
         TileMapOutlineRenderer outlineRenderer = this.GetComponent<TileMapOutlineRenderer>();
         outlineRenderer.Clear();
 
-        LevelData level = LevelData.Load(Path.Combine(Application.streamingAssetsPath, LEVEL_DATA_ROOT + LevelFileName + LEVEL_DATA_SUFFIX));
+        LevelData level = LevelData.Load(Resources.Load<TextAsset>(LEVEL_DATA_ROOT + LevelFileName));
         _levelLayout = level.Grid;
 
         outlineRenderer.CreateMapWithGrid(_levelLayout);
