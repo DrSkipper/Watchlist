@@ -2,6 +2,7 @@
 using System.Text;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class EnemyType
@@ -54,12 +55,12 @@ public class EnemyData
         }
     }
 
-    public static EnemyData Load(string path)
+    public static EnemyData Load(TextAsset asset)
     {
         EnemyData enemyData = null;
         var serializer = new XmlSerializer(typeof(EnemyData));
 
-        using (var stream = new FileStream(path, FileMode.Open))
+        using (var stream = new StringReader(asset.text))
         {
             enemyData = serializer.Deserialize(stream) as EnemyData;
         }

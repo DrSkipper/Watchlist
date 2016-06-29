@@ -221,12 +221,12 @@ public class WeaponData
         }
     }
 
-    public static WeaponData Load(string path)
+    public static WeaponData Load(TextAsset asset)
     {
         WeaponData weaponData = null;
         var serializer = new XmlSerializer(typeof(WeaponData));
 
-        using (var stream = new FileStream(path, FileMode.Open))
+        using (var stream = new StringReader(asset.text))
         {
             weaponData = serializer.Deserialize(stream) as WeaponData;
         }

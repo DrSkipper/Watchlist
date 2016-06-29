@@ -2,6 +2,7 @@
 using System.Text;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class LevelDataRow
@@ -26,12 +27,12 @@ public class LevelData
     [XmlArray("Rows"), XmlArrayItem("Row")]
     public LevelDataRow[] Rows;
 
-    public static LevelData Load(string path)
+    public static LevelData Load(TextAsset asset)
     {
         LevelData level = null;
         var serializer = new XmlSerializer(typeof(LevelData));
 
-        using (var stream = new FileStream(path, FileMode.Open))
+        using (var stream = new StringReader(asset.text))
         {
             level = serializer.Deserialize(stream) as LevelData;
         }
