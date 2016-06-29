@@ -374,7 +374,7 @@ public class SpawnPositioner : VoBehavior
                     SimpleRect room = availableRooms[r];
                     if (this.NumEnemies - enemiesSpawned < 4 || (r == availableRooms.Count - 1 && haveUnitedAllRoomsSoFar && guaranteesSpawned < totalGuarantees))
                         break;
-                    if (Random.value > 0.75f)
+                    if (Random.value > 0.65f)
                     {
                         haveUnitedAllRoomsSoFar = false;
                         continue;
