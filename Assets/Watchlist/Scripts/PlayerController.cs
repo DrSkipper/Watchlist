@@ -148,11 +148,11 @@ public class PlayerController : Actor2D
                 {
                     if (pickup.PickupContents.Type == WeaponPickup.PickupType.WeaponSlot)
                     {
-                        ProgressData.SmartSlot[] smartSlots = ProgressData.GetSmartSlots(this.PlayerIndex);
+                        WeaponData.Slot slotType = (WeaponData.Slot)pickup.PickupContents.Parameter;
+                        ProgressData.SmartSlot[] smartSlots = ProgressData.SmartSlotsFromWrappers(this.Slots.ToArray());
                         bool ok = true;
                         for (int i = 0; i < smartSlots.Length; ++i)
                         {
-                            WeaponData.Slot slotType = (WeaponData.Slot)pickup.PickupContents.Parameter;
                             if (smartSlots[i].SlotType == slotType)
                             {
                                 ok = smartSlots[i].Level < WeaponData.GetMaxSlotsByType()[slotType] || smartSlots[i].Ammo < WeaponData.GetSlotDurationsByType()[slotType];
@@ -161,7 +161,7 @@ public class PlayerController : Actor2D
                         }
                         if (ok)
                         {
-                            pickupWeaponSlot((WeaponData.Slot)pickup.PickupContents.Parameter);
+                            pickupWeaponSlot(slotType);
                             Destroy(hit);
                         }
                     }

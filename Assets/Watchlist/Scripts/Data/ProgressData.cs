@@ -201,8 +201,12 @@ public static class ProgressData
 
     public static SmartSlot[] GetSmartSlots(int playerIndex)
     {
+        return SmartSlotsFromWrappers(WeaponSlotsByPlayer[playerIndex]);
+    }
+
+    public static SmartSlot[] SmartSlotsFromWrappers(SlotWrapper[] wrappers)
+    {
         SmartSlot[] smartSlots = new SmartSlot[5];
-        SlotWrapper[] wrappers = WeaponSlotsByPlayer[playerIndex];
         for (int i = 0; i < 4; ++i)
         {
             SmartSlot smartSlot = GetSmartSlot(wrappers, i);
