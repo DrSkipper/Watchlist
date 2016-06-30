@@ -18,6 +18,12 @@ public static class ProgressData
         public WeaponData.Slot SlotType;
         public int AmmoRemaining;
 
+        public SlotWrapper()
+        {
+            this.SlotType = WeaponData.Slot.Empty;
+            this.AmmoRemaining = 0;
+        }
+
         public SlotWrapper(WeaponData.Slot slotType)
         {
             this.SlotType = slotType;
