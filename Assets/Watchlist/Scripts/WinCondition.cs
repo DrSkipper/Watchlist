@@ -41,6 +41,7 @@ public class WinCondition : VoBehavior
 
     public void LevelCompleteOut()
     {
+        GlobalEvents.Notifier.SendEvent(new BeginMusicFadeEvent());
         this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteOut");
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.ReturnToLevelSelect, this.ReturnToLevelSelectDelay);
     }

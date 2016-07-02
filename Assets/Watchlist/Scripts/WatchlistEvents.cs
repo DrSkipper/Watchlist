@@ -141,3 +141,23 @@ public class HideShopEvent : LocalEventNotifier.Event
         this.Name = NAME;
     }
 }
+
+public class BeginMusicFadeEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "MUSIC_FADE";
+
+    public BeginMusicFadeEvent()
+    {
+        this.Name = NAME;
+    }
+}
+
+public class PlayMusicEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "PLAY_MUSIC";
+
+    public PlayMusicEvent()
+    {
+        this.Name = NAME;
+    }
+}
