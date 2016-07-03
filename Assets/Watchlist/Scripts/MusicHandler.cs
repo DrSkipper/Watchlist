@@ -7,10 +7,13 @@ public class MusicHandler : MonoBehaviour
     public AudioClip GameplayMusic;
     public AudioClip BossMusic;
     public AudioClip FinalBossMusic;
+    public AudioClip FinalMusic;
     public string GameplaySceneName = "Gameplay";
     public string BossRoomPrefix = "BossRoom";
     public string FinalBossRoomName = "BossRoomMaster";
     public string AltFinalBossRoomName = "FinalDialogScene";
+    public string FinalRoomName = "FinalRoom";
+    public string CreditsName = "Credits";
     public string[] WaitForPlayMusicEventScenes;
     public string[] DontStopScenePrefixes;
     public string[] SilentScenes;
@@ -101,16 +104,18 @@ public class MusicHandler : MonoBehaviour
 
             if (!contains)
             {
-                
-                this.AudioSource.volume = this.MenuVolume;
-                if (this.AudioSource.clip != this.MenuMusic || !this.AudioSource.isPlaying)
+                if (_sceneName != this.CreditsName)
                 {
-                    this.AudioSource.clip = this.MenuMusic;
+                    this.AudioSource.volume = this.MenuVolume;
+                    if (this.AudioSource.clip != this.MenuMusic || !this.AudioSource.isPlaying)
+                    {
+                        this.AudioSource.clip = this.MenuMusic;
 
-                    if (!waitForPlayEvent)
-                        this.AudioSource.Play();
-                    else if (!dontStop)
-                        this.AudioSource.Stop();
+                        if (!waitForPlayEvent)
+                            this.AudioSource.Play();
+                        else if (!dontStop)
+                            this.AudioSource.Stop();
+                    }
                 }
             }
             else
@@ -161,6 +166,12 @@ public class MusicHandler : MonoBehaviour
                 this.AudioSource.clip = this.BossMusic;
                 this.AudioSource.Play();
             }
+        }
+        else if (_sceneName == this.FinalRoomName)
+        {
+            this.AudioSource.volume = 1.0f;
+            this.AudioSource.clip = this.FinalMusic;
+            this.AudioSource.Play();
         }
     }
 }

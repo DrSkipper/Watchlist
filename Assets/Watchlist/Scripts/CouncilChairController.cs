@@ -46,6 +46,7 @@ public class CouncilChairController : VoBehavior
         if (filled && !_sequenceBegun)
         {
             _sequenceBegun = true;
+            GlobalEvents.Notifier.SendEvent(new PlayMusicEvent());
             _timedCallbacks.AddCallback(this, beginShake, this.ShakeDelay);
             _timedCallbacks.AddCallback(this, beginFade, this.FadeDelay);
             _timedCallbacks.AddCallback(this, nextScene, this.SceneChangeDelay);
