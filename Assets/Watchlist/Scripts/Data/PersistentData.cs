@@ -59,6 +59,8 @@ public static class PersistentData
     {
         if (_bossLockStatuses == null)
             getInitialBossLockData();
+        // DO NOTHING IN DEMO
+        /**
         PersistentDiskData diskData = new PersistentDiskData();
         diskData.DataSaved = true;
         diskData.BossLockStatuses = _bossLockStatuses;
@@ -71,6 +73,7 @@ public static class PersistentData
         diskData.TimesDefeatedMaster = _timesDefeatedMaster;
         diskData.TimesClearedMap = _timesClearedMap;
         DiskDataHandler.Save(DATA_PATH, diskData);
+        **/
     }
 
     public static void LoadFromDisk()

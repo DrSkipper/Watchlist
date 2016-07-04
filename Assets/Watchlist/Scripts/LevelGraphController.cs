@@ -17,6 +17,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     public Color MinibossColor;
     public Color AvailableColor;
     public Color BaseColor;
+    public Color DemoLockedColor;
     public float BlinkIntervalOn = 0.5f;
     public float BlinkIntervalOff = 0.2f;
     public string GameplaySceneName = "";
@@ -24,6 +25,8 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     public bool UseDynamicData = true;
     public string FinalDialogSceneName = "";
     public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
+
+    public const int DEMO_RADIUS = 1;
 
     /**
      * Data types
@@ -38,7 +41,8 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     private enum TileTrait
     {
         Boss,
-        Miniboss
+        Miniboss,
+        DemoLocked
     }
 
     private class LevelGraphTile
@@ -129,16 +133,23 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
                 }
                 else
                 {
-                    foreach (IntegerVector tile in this.CompletedTiles)
+                    if (Mathf.Abs(x) > DEMO_RADIUS || Mathf.Abs(y) > DEMO_RADIUS)
                     {
-                        if (tile.X == x && tile.Y == y)
+                        state = TileState.Locked;
+                    }
+                    else
+                    {
+                        foreach (IntegerVector tile in this.CompletedTiles)
                         {
-                            state = TileState.Complete;
-                            break;
-                        }
-                        else if (neighborsTile(position, tile))
-                        {
-                            state = TileState.Available;
+                            if (tile.X == x && tile.Y == y)
+                            {
+                                state = TileState.Complete;
+                                break;
+                            }
+                            else if (neighborsTile(position, tile))
+                            {
+                                state = TileState.Available;
+                            }
                         }
                     }
                 }
@@ -161,6 +172,11 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
                     if (ProgressData.IsMiniBoss(position))
                     {
                         traits.Add(TileTrait.Miniboss);
+                    }
+
+                    if (Mathf.Abs(x) > DEMO_RADIUS || Mathf.Abs(y) > DEMO_RADIUS)
+                    {
+                        traits.Add(TileTrait.DemoLocked);
                     }
                 }
 
@@ -426,6 +442,9 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
                 center = this.BossColor;
             else if (tile.HasTrait(TileTrait.Miniboss))
                 center = this.MinibossColor;
+
+            if (tile.HasTrait(TileTrait.DemoLocked))
+                outline = this.DemoLockedColor;
         }
 
         tile.GameObject.transform.Find("Outline").gameObject.GetComponent<LevelSelectColorizer>().UpdateColor(outline);

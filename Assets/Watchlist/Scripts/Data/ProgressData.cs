@@ -311,6 +311,8 @@ public static class ProgressData
 
     public static void SaveToDisk()
     {
+        // DO NOTHING IN DEMO
+        /**
         ProgressDiskData diskData = new ProgressDiskData();
         diskData.DataSaved = true;
         diskData.CompletedTiles = _completedTiles;
@@ -322,6 +324,7 @@ public static class ProgressData
         diskData.PlayerHealth = _playerHealth;
         diskData.MinibossTiles = _minibossTiles;
         DiskDataHandler.Save(DATA_PATH, diskData);
+        **/
     }
 
     public static void LoadFromDisk(bool force = false)
