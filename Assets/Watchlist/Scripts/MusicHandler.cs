@@ -3,11 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MusicHandler : MonoBehaviour
 {
-    public AudioClip MenuMusic;
-    public AudioClip GameplayMusic;
-    public AudioClip BossMusic;
-    public AudioClip FinalBossMusic;
-    public AudioClip FinalMusic;
+    public string MenuMusicName;
+    public string GameplayMusicName;
+    public string BossMusicName;
+    public string FinalBossMusicName;
+    public string FinalMusicName;
     public string GameplaySceneName = "Gameplay";
     public string BossRoomPrefix = "BossRoom";
     public string FinalBossRoomName = "BossRoomMaster";
@@ -50,6 +50,62 @@ public class MusicHandler : MonoBehaviour
      */
     private string _sceneName;
     private bool _isFading;
+    private AudioClip _menuMusic;
+    private AudioClip _gameplayMusic;
+    private AudioClip _bossMusic;
+    private AudioClip _finalBossMusic;
+    private AudioClip _finalMusic;
+    private const string PATH_PREFIX = "Music/";
+
+    private AudioClip MenuMusic
+    {
+        get
+        {
+            if (_menuMusic == null)
+                _menuMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.MenuMusicName);
+            return _menuMusic;
+        }
+    }
+
+    private AudioClip GameplayMusic
+    {
+        get
+        {
+            if (_gameplayMusic == null)
+                _gameplayMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.GameplayMusicName);
+            return _gameplayMusic;
+        }
+    }
+
+    private AudioClip BossMusic
+    {
+        get
+        {
+            if (_bossMusic == null)
+                _bossMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.BossMusicName);
+            return _bossMusic;
+        }
+    }
+
+    private AudioClip FinalBossMusic
+    {
+        get
+        {
+            if (_finalBossMusic == null)
+                _finalBossMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.FinalBossMusicName);
+            return _finalBossMusic;
+        }
+    }
+
+    private AudioClip FinalMusic
+    {
+        get
+        {
+            if (_finalMusic == null)
+                _finalMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.FinalMusicName);
+            return _finalMusic;
+        }
+    }
 
     private void sceneBegin()
     {
