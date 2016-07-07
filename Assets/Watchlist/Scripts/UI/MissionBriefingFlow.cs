@@ -87,7 +87,7 @@ public class MissionBriefingFlow : VoBehavior
 
     void Update()
     {
-        if (_introComplete && MenuInput.SelectCurrentElement())
+        if (_introComplete && (MenuInput.SelectCurrentElement()|| Input.GetMouseButtonDown(0)))
         {
             if (this.UseChoices && _choiceIndex < this.Choices.Count && this.PageHandler.CurrentPage == this.IntroPages.Count - 1)
             {

@@ -70,3 +70,4 @@ Assets/UIAttributes/.hgignore
 
 *.suo
 .~lock.*
+Webgl/

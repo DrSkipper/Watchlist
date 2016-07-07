@@ -25,7 +25,7 @@ public static class GameplayInput
         Player rewiredP = ReInput.players.GetPlayer(p.RewiredId);
         Vector2 axis;
 
-        if (rewiredP.controllers.hasMouse)
+        if (rewiredP.controllers.hasMouse && !Application.isMobilePlatform)
         {
             Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(playerWorldPosition);
             axis = rewiredP.controllers.Mouse.screenPosition - playerScreenPosition;

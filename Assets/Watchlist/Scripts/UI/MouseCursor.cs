@@ -39,7 +39,7 @@ public class MouseCursor : MonoBehaviour
             {
                 _rectTransform.position = new Vector3(-99999, -99999, _rectTransform.position.z);
             }
-            else
+            else if(!Application.isMobilePlatform)
             {
                 Player rewiredP = ReInput.players.GetPlayer(_player.RewiredId);
                 Vector2 screenPos = rewiredP.controllers.Mouse.screenPosition;
