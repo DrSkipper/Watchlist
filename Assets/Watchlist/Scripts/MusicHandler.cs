@@ -23,15 +23,18 @@ public class MusicHandler : MonoBehaviour
     public float FinalBossVolume = 0.9f;
     public float VolumeFadeSpeed = 0.3f;
     public AudioSource AudioSource;
+    public DontDestroyOnLoad Destroyer;
 
     void Start()
     {
-        sceneBegin();
+        if (!this.Destroyer.MarkedForDestruction)
+            sceneBegin();
     }
 
     void OnLevelWasLoaded(int i)
     {
-        sceneBegin();
+        if (!this.Destroyer.MarkedForDestruction)
+            sceneBegin();
     }
 
     void Update()

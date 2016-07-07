@@ -11,6 +11,7 @@ public static class MenuInput
     public const string SELECT = "Confirm";
     public const string PAUSE = "Pause";
     public const string EXIT = "Exit";
+    public const string CANCEL = "Cancel";
     public const string MENU_CATEGORY = "Default";
 
     public static bool SelectCurrentElement(int playerIndex = -1)
@@ -46,6 +47,11 @@ public static class MenuInput
     public static bool Exit(int playerIndex = -1)
     {
         return checkButton(EXIT, playerIndex);
+    }
+
+    public static bool Cancel(int playerIndex = -1)
+    {
+        return checkButton(CANCEL, playerIndex);
     }
 
     public static bool AnyInput()

@@ -10,7 +10,8 @@ public class ExitHandler : VoBehavior
     public enum ExitInput
     {
         Exit,
-        Pause
+        Pause,
+        Cancel
     }
 
     void Update()
@@ -25,6 +26,9 @@ public class ExitHandler : VoBehavior
             case ExitInput.Pause:
                 pressed = MenuInput.Pause();
                 break;
+            case ExitInput.Cancel:
+                pressed = MenuInput.Cancel();
+                break;
         }
         if (pressed)
         {
@@ -32,9 +36,12 @@ public class ExitHandler : VoBehavior
             {
                 ProgressData.LoadFromDisk(true);
                 SceneManager.LoadScene(this.Destination);
+                Destroy(this.gameObject);
             }
             else
+            {
                 Application.Quit();
+            }
         }
     }
 }
