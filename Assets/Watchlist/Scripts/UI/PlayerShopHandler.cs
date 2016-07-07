@@ -30,17 +30,13 @@ public class PlayerShopHandler : MonoBehaviour
         {
             if (_rewiredPlayer.GetButtonDown(MenuInput.PAUSE) || _rewiredPlayer.GetButtonDown(MenuInput.EXIT))
             {
-                ToggleReady();
-                
+                this.HasReadied = !this.HasReadied;
+                this.ReadyPanel.SetActive(this.HasReadied);
+                this.ShopDialog.AcceptingInput = !this.HasReadied;
             }
         }
     }
-    public void ToggleReady()
-    {
-        this.HasReadied = !this.HasReadied;
-		this.ReadyPanel.SetActive(this.HasReadied);
-        this.ShopDialog.AcceptingInput = !this.HasReadied;
-    }
+
     void LateUpdate()
     {
         if (!_sessionPlayer.HasJoined)
