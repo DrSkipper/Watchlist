@@ -16,6 +16,7 @@ public class BossMasterChoiceRecorder : MonoBehaviour
         }
         else if (selectionEvent.Action.ToLower() == "choice_b")
         {
+            GlobalEvents.Notifier.SendEvent(new PlayMusicEvent());
             PersistentData.RegisterRefusedMaster();
         }
     }

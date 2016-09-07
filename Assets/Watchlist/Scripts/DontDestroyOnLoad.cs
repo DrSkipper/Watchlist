@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour {
+public class DontDestroyOnLoad : MonoBehaviour
+{
+    public bool MarkedForDestruction { get { return _markedForDestruction; } }
+
     void Awake()
     {
         string n = this.name;
         this.name = this.name + "_check";
         if (GameObject.Find(n) != null)
         {
+            _markedForDestruction = true;
             Destroy(this.gameObject);
         }
         else
@@ -15,4 +19,6 @@ public class DontDestroyOnLoad : MonoBehaviour {
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
+    private bool _markedForDestruction;
 }

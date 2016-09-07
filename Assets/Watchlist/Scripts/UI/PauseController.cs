@@ -31,12 +31,20 @@ public class PauseController : VoBehavior
 
     void Update()
     {
-        if (this.AllowPausing && MenuInput.Pause())
+        if (this.AllowPausing)
         {
-            if (_paused)
-                unpause();
-            else
-                pause();
+            if (MenuInput.Pause())
+            {
+                if (_paused)
+                    unpause();
+                else
+                    pause();
+            }
+            else if (MenuInput.Cancel())
+            {
+                if (_paused)
+                    unpause();
+            }
         }
     }
 
