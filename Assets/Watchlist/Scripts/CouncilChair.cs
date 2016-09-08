@@ -12,7 +12,7 @@ public class CouncilChair : VoBehavior
     {
         if (this.PlayerIndex >= 0)
         {
-            if (!DynamicData.GetSessionPlayer(this.PlayerIndex).HasJoined)
+            if (this.PlayerIndex >= DynamicData.MAX_PLAYERS || !DynamicData.GetSessionPlayer(this.PlayerIndex).HasJoined)
                 this.PlayerIndex = -1;
             else
                 GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);

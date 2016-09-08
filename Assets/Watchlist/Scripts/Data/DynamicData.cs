@@ -4,7 +4,7 @@ using Rewired;
 
 public static class DynamicData
 {
-    public const int MAX_PLAYERS = 4;
+    public const int MAX_PLAYERS = 1;
 
     public static SessionPlayer GetSessionPlayer(int playerIndex)
     {
