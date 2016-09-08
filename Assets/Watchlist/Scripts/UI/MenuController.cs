@@ -10,6 +10,7 @@ public class MenuController : VoBehavior, UIDialogHandler
     public int[] PrioritizedDefaults;
     public MenuControlType ControlType = MenuControlType.UpDown;
     public int LimitToPlayerIndex = -1;
+    public bool UsingController = false;
 
     [System.Serializable]
     public enum MenuControlType
@@ -30,8 +31,48 @@ public class MenuController : VoBehavior, UIDialogHandler
             _animators[i] = animator;
             _elements[i] = element;
             animator.SetBool("Locked", element.Locked);
+            element.SelectedCallback = selectElement;
         }
 
+        if (this.UsingController)
+        {
+            startUsingController();
+        }
+    }
+
+    void Update()
+    {
+        if ((!this.ListenToPause || !PauseController.IsPaused()) &&
+            this.AcceptingInput)
+        {
+            if (!this.UsingController && MenuInput.ControllerUsed())
+            {
+                startUsingController();
+            }
+
+            else if ((!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
+            {
+                if (highlightNextElement())
+                    highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
+                else if (highlightPreviousElement())
+                    highlightElement(this.CurrentElement == 0 ? this.MenuElements.Length - 1 : this.CurrentElement - 1);
+                else if (!otherHighlightOption() &&
+                    this.AllowSelection && MenuInput.SelectCurrentElement(this.LimitToPlayerIndex))
+                    selectCurrentElement();
+            }
+        }
+    }
+
+    /**
+     * Private
+     */
+    private bool _acceptingInput = true;
+    private Animator[] _animators;
+    private MenuElement[] _elements;
+
+    private void startUsingController()
+    {
+        this.UsingController = true;
         for (int i = 0; i < this.PrioritizedDefaults.Length; ++i)
         {
             int elementIndex = this.PrioritizedDefaults[i];
@@ -44,28 +85,6 @@ public class MenuController : VoBehavior, UIDialogHandler
 
         highlightElement(this.CurrentElement);
     }
-
-    void Update()
-    {
-        if ((!this.ListenToPause || !PauseController.IsPaused()) && 
-            this.AcceptingInput && (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
-        {
-            if (highlightNextElement())
-                highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
-            else if (highlightPreviousElement())
-                highlightElement(this.CurrentElement == 0 ? this.MenuElements.Length - 1 : this.CurrentElement - 1);
-            else if (!otherHighlightOption() &&
-                this.AllowSelection && MenuInput.SelectCurrentElement(this.LimitToPlayerIndex))
-                selectCurrentElement();
-        }
-    }
-
-    /**
-     * Private
-     */
-    private bool _acceptingInput = true;
-    private Animator[] _animators;
-    private MenuElement[] _elements;
 
     private bool highlightNextElement()
     {
@@ -140,6 +159,30 @@ public class MenuController : VoBehavior, UIDialogHandler
         {
             //TODO - fcole - Wait for some animation to be finished or something
             _elements[this.CurrentElement].Select();
+        }
+    }
+
+    private void selectElement(MenuElement element)
+    {
+        if (!this.UsingController)
+        {
+            int e = 0;
+            for (int i = 0; i < this.MenuElements.Length; ++i)
+            {
+                if (this.MenuElements[i] == element.gameObject)
+                {
+                    e = i;
+                    break;
+                }
+            }
+
+            _animators[e].SetTrigger("Selected");
+
+            if (!_elements[e].Locked)
+            {
+                //TODO - fcole - Wait for some animation to be finished or something
+                _elements[e].Select();
+            }
         }
     }
 }

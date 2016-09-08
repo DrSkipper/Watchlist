@@ -64,6 +64,18 @@ public static class MenuInput
         return false;
     }
 
+    public static bool ControllerUsed()
+    {
+        IList<Player> players = ReInput.players.GetPlayers();
+        for (int i = 0; i < players.Count; ++i)
+        {
+            Player player = players[i];
+            if (player.controllers.joystickCount > 0 && player.GetAnyButton())
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Private
      */

@@ -59,6 +59,9 @@ public class MenuElement : MonoBehaviour
     public Color LockedColor;
     public Color UnlockedColor;
     public AdditionalNavOption[] AdditionalNavOptions;
+    public Button Button;
+    public delegate void ElementSelected(MenuElement element);
+    public ElementSelected SelectedCallback;
 
     void Awake()
     {
@@ -72,6 +75,18 @@ public class MenuElement : MonoBehaviour
     {
         if (this.Text != null)
             this.Text.color = this.Locked ? this.LockedColor : this.UnlockedColor;
+
+        if (this.Button != null)
+        {
+            Color color = this.Locked ? this.LockedColor : this.UnlockedColor;
+            ColorBlock colors = this.Button.colors;
+            colors.normalColor = color;
+            //colors.highlightedColor = color;
+            //colors.disabledColor = color;
+            //colors.colorMultiplier = 0;
+            this.Button.colors = colors;
+            this.Button.GetComponent<Image>().color = this.Locked ? this.LockedColor : this.UnlockedColor;
+        }
     }
 
     public void Select()
@@ -79,6 +94,14 @@ public class MenuElement : MonoBehaviour
         foreach (Action action in this.Actions)
         {
             handleSelectForAction(action);
+        }
+    }
+
+    public void ButtonSelect()
+    {
+        if (!this.Locked && this.SelectedCallback != null)
+        {
+            this.SelectedCallback(this);
         }
     }
 
