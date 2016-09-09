@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     public bool UseDynamicData = true;
     public string FinalDialogSceneName = "";
     public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
+    public bool UsingController = false;
 
     /**
      * Data types
@@ -215,7 +217,12 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
         if (!this.AcceptingInput || PauseController.IsPaused())
             return;
 
-        if (MenuInput.AnyInput())
+        if (!this.UsingController && MenuInput.ControllerUsed())
+        {
+            this.UsingController = true;
+        }
+
+        else if (this.UsingController && MenuInput.AnyInput())
         {
             IntegerVector newPosition = this.CurrentPosition;
 
@@ -242,33 +249,7 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
             }
             else if (MenuInput.SelectCurrentElement() && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
             {
-                int bossIndex = -1;
-                for (int i = 0; i < this.BossTiles.Length; ++i)
-                {
-                    IntegerVector tile = this.BossTiles[i];
-                
-                    if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
-                    {
-                        bossIndex = i;
-                        break;
-                    }
-                }
-
-                //TODO - Send input to level generation
-                ProgressData.SelectTile(this.CurrentPosition);
-                if (_allBossesDefeated && this.CurrentPosition.X == 0 && this.CurrentPosition.Y == 0)
-                {
-                    SceneManager.LoadScene(this.FinalDialogSceneName);
-                }
-                else if (bossIndex == -1)
-                {
-                    SceneManager.LoadScene(this.GameplaySceneName);
-                }
-                else
-                {
-                    BossType boss = StaticData.BossData.BossTypes[ProgressData.GetCurrentBosses()[bossIndex]];
-                    SceneManager.LoadScene(this.BossSceneName + boss.SceneKey);
-                }
+                selectCurrent();
             }
         }
         
@@ -289,6 +270,42 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
         }
     }
 
+    public void UpButtonPressed()
+    {
+        IntegerVector newPosition = this.CurrentPosition;
+        newPosition.Y += 1;
+        attemptMovePosition(newPosition);
+    }
+
+    public void LeftButtonPressed()
+    {
+        IntegerVector newPosition = this.CurrentPosition;
+        newPosition.X -= 1;
+        attemptMovePosition(newPosition);
+    }
+
+    public void DownButtonPressed()
+    {
+        IntegerVector newPosition = this.CurrentPosition;
+        newPosition.Y -= 1;
+        attemptMovePosition(newPosition);
+    }
+
+    public void RightButtonPressed()
+    {
+        IntegerVector newPosition = this.CurrentPosition;
+        newPosition.X += 1;
+        attemptMovePosition(newPosition);
+    }
+
+    public void SelectButtonPressed()
+    {
+        if (_grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
+        {
+            selectCurrent();
+        }
+    }
+
     /**
      * Private
      */
@@ -299,6 +316,45 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     private float _timeSinceBlink;
     private bool _allBossesDefeated;
     private bool _acceptingInput = true;
+
+    private void attemptMovePosition(IntegerVector newPosition)
+    {
+        if ((newPosition.X != this.CurrentPosition.X || newPosition.Y != this.CurrentPosition.Y) && _grid[newPosition.X + _halfSize, newPosition.Y + _halfSize] != null)
+        {
+            moveCurrentTile(newPosition);
+        }
+    }
+
+    private void selectCurrent()
+    {
+        int bossIndex = -1;
+        for (int i = 0; i < this.BossTiles.Length; ++i)
+        {
+            IntegerVector tile = this.BossTiles[i];
+
+            if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
+            {
+                bossIndex = i;
+                break;
+            }
+        }
+
+        //TODO - Send input to level generation
+        ProgressData.SelectTile(this.CurrentPosition);
+        if (_allBossesDefeated && this.CurrentPosition.X == 0 && this.CurrentPosition.Y == 0)
+        {
+            SceneManager.LoadScene(this.FinalDialogSceneName);
+        }
+        else if (bossIndex == -1)
+        {
+            SceneManager.LoadScene(this.GameplaySceneName);
+        }
+        else
+        {
+            BossType boss = StaticData.BossData.BossTypes[ProgressData.GetCurrentBosses()[bossIndex]];
+            SceneManager.LoadScene(this.BossSceneName + boss.SceneKey);
+        }
+    }
 
     private bool neighborsTile(Vector2 tile, Vector2 neighbor)
     {
