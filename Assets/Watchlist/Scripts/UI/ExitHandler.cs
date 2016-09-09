@@ -32,16 +32,21 @@ public class ExitHandler : VoBehavior
         }
         if (pressed)
         {
-            if (this.Destination != "")
-            {
-                ProgressData.LoadFromDisk(true);
-                SceneManager.LoadScene(this.Destination);
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Application.Quit();
-            }
+            this.Exit();
+        }
+    }
+
+    public void Exit()
+    {
+        if (this.Destination != "")
+        {
+            ProgressData.LoadFromDisk(true);
+            SceneManager.LoadScene(this.Destination);
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Application.Quit();
         }
     }
 }
