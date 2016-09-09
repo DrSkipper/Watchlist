@@ -19,6 +19,7 @@ public class WatchlistUnlockDialog : MonoBehaviour
     void Start()
     {
         int[] bossUnlocksNeedingNotification = PersistentData.BossUnlocksNeedingNotification();
+        //int[] bossUnlocksNeedingNotification = { 1000001 };
 
         if (bossUnlocksNeedingNotification.Length > 0)
         {
