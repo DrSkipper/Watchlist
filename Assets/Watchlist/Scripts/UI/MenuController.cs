@@ -58,7 +58,7 @@ public class MenuController : VoBehavior, UIDialogHandler
                 startUsingController();
             }
 
-            else if ((!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
+            else if (this.UsingController && (!this.AllowSelection || !_animators[this.CurrentElement].GetCurrentAnimatorStateInfo(0).IsName(_elements[this.CurrentElement].Locked ? "Selected (Locked)" : "Selected (UnLocked)")))
             {
                 if (highlightNextElement())
                     highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
