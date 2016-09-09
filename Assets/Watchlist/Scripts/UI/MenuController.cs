@@ -11,6 +11,7 @@ public class MenuController : VoBehavior, UIDialogHandler
     public MenuControlType ControlType = MenuControlType.UpDown;
     public int LimitToPlayerIndex = -1;
     public bool UsingController = false;
+    public bool ShowSelectorsIfNoController = false;
 
     [System.Serializable]
     public enum MenuControlType
@@ -37,6 +38,13 @@ public class MenuController : VoBehavior, UIDialogHandler
         if (this.UsingController)
         {
             startUsingController();
+        }
+        else if (this.ShowSelectorsIfNoController)
+        {
+            for (int i = 0; i < this.MenuElements.Length; ++i)
+            {
+                _animators[i].SetTrigger("Highlighted");
+            }
         }
     }
 
@@ -80,6 +88,14 @@ public class MenuController : VoBehavior, UIDialogHandler
             {
                 this.CurrentElement = elementIndex;
                 break;
+            }
+        }
+
+        if (this.ShowSelectorsIfNoController)
+        {
+            for (int i = 0; i < this.MenuElements.Length; ++i)
+            {
+                _animators[i].SetTrigger("UnHighlighted");
             }
         }
 
@@ -144,11 +160,18 @@ public class MenuController : VoBehavior, UIDialogHandler
 
     private void highlightElement(int nextElement)
     {
-        if (nextElement != this.CurrentElement)
-            _animators[this.CurrentElement].SetTrigger("UnHighlighted");
+        if (this.UsingController || !this.ShowSelectorsIfNoController)
+        {
+            if (nextElement != this.CurrentElement)
+                _animators[this.CurrentElement].SetTrigger("UnHighlighted");
+        }
 
         this.CurrentElement = nextElement;
-        _animators[this.CurrentElement].SetTrigger("Highlighted");
+
+        if (this.UsingController || !this.ShowSelectorsIfNoController)
+        {
+            _animators[this.CurrentElement].SetTrigger("Highlighted");
+        }
     }
 
     private void selectCurrentElement()
