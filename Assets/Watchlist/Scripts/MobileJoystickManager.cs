@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class MobileJoystickManager : MonoBehaviour {
+public class MobileJoystickManager : MonoBehaviour
+{
+    void Update()
+    {
+        if (!usingController && MenuInput.ControllerUsed())
+        {
+            usingController = true;
+            gameObject.SetActive(false);
+        }
+    }
 
-	// Use this for initialization
-	void Start () {
-        gameObject.SetActive(Application.isMobilePlatform);
-	}
-
+    private bool usingController = false;
 }
