@@ -161,3 +161,27 @@ public class PlayMusicEvent : LocalEventNotifier.Event
         this.Name = NAME;
     }
 }
+
+public class JoystickCenteredEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "JOY_CENTER";
+    public DynamicVirtualJoystick Joystick;
+    
+    public JoystickCenteredEvent(DynamicVirtualJoystick joystick)
+    {
+        this.Name = NAME;
+        this.Joystick = joystick;
+    }
+}
+
+public class JoystickReleasedEvent : LocalEventNotifier.Event
+{
+    public const string NAME = "JOY_RELEASE";
+    public DynamicVirtualJoystick Joystick;
+
+    public JoystickReleasedEvent(DynamicVirtualJoystick joystick)
+    {
+        this.Name = NAME;
+        this.Joystick = joystick;
+    }
+}
