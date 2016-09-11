@@ -107,6 +107,7 @@ public class ControllerAssigner : MonoBehaviour
      */
     private Dictionary<int, List<ControllerAssigned>> _assignmentCallbacks;
     private Dictionary<int, List<ControllerUnassigned>> _unassignmentCallbacks;
+    private static bool _joystickInUse;
 
     private void joinPlayer(SessionPlayer p, Player rewiredP)
     {

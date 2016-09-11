@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 // Dynamically places joystick at center of touch within valid region, nub follows finger drag until release
 public class DynamicVirtualJoystick : VoBehavior
 {
     public RectTransform ActiveArea; // Valid area to center joystick on touches
+    public Graphic ActiveAreaGraphic; // Fuckin' unity
     public RectTransform JoystickRect; // Should have explicit positioning and width/height
     public RectTransform NubRect; // Should have explict positioning
     public float DeadZone;
@@ -78,28 +80,35 @@ public class DynamicVirtualJoystick : VoBehavior
             Vector2 touchPos = touches[i].position;
             Vector2 uiPos;
 
-            bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
-            //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
-            if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
+            if (touches[i].phase == TouchPhase.Began &&
+            this.ActiveAreaGraphic.Raycast(touchPos, Camera.main))
             {
-                _activeTouch = true;
-                _fingerId = touches[i].fingerId;
-                _mostRecentTouchPos = uiPos;
-                break;
+                bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
+                //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
+                if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
+                {
+                    _activeTouch = true;
+                    _fingerId = touches[i].fingerId;
+                    _mostRecentTouchPos = uiPos;
+                    break;
+                }
             }
         }
 #if UNITY_EDITOR
-        if (!Input.touchSupported && Input.GetMouseButton(0))
+        if (!Input.touchSupported && Input.GetMouseButtonDown(0))
         {
             Vector2 uiPos;
             Vector2 touchPos = Input.mousePosition;
-            bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
-            //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
-            if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
+            if (this.ActiveAreaGraphic.Raycast(touchPos, Camera.main))
             {
-                _activeTouch = true;
-                _fingerId = -1;
-                _mostRecentTouchPos = uiPos;
+                bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
+                //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
+                if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
+                {
+                    _activeTouch = true;
+                    _fingerId = -1;
+                    _mostRecentTouchPos = uiPos;
+                }
             }
         }
 #endif
