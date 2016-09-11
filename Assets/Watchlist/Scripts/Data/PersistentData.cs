@@ -214,7 +214,8 @@ public static class PersistentData
     {
         if (_bossLockStatuses[BOSS_LOVERS])
         {
-            if (_levelsBeatenByNumPlayers[1] + _levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] >= 3)
+            //if (_levelsBeatenByNumPlayers[1] + _levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] >= 3)
+            if (_timesDefeatedMaster >= 1)
             {
                 UnlockBoss(BOSS_LOVERS);
             }
@@ -225,7 +226,8 @@ public static class PersistentData
     {
         if (_bossLockStatuses[BOSS_COMMUNAL])
         {
-            if (_levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] > 2)
+            //if (_levelsBeatenByNumPlayers[2] + _levelsBeatenByNumPlayers[3] > 2)
+            if (_timesDefeatedMaster >= 2)
             {
                 UnlockBoss(BOSS_COMMUNAL);
             }
