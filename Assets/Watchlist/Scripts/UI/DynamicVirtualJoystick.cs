@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 // Dynamically places joystick at center of touch within valid region, nub follows finger drag until release
 public class DynamicVirtualJoystick : VoBehavior
 {
     public RectTransform ActiveArea; // Valid area to center joystick on touches
-    public Graphic ActiveAreaGraphic; // Fuckin' unity
     public RectTransform JoystickRect; // Should have explicit positioning and width/height
     public RectTransform NubRect; // Should have explict positioning
     public float DeadZone;
@@ -80,8 +78,7 @@ public class DynamicVirtualJoystick : VoBehavior
             Vector2 touchPos = touches[i].position;
             Vector2 uiPos;
 
-            if (touches[i].phase == TouchPhase.Began &&
-            this.ActiveAreaGraphic.Raycast(touchPos, Camera.main))
+            if (touches[i].phase == TouchPhase.Began)
             {
                 bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
                 //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
@@ -99,16 +96,13 @@ public class DynamicVirtualJoystick : VoBehavior
         {
             Vector2 uiPos;
             Vector2 touchPos = Input.mousePosition;
-            if (this.ActiveAreaGraphic.Raycast(touchPos, Camera.main))
+            bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
+            //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
+            if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
             {
-                bool hitPlane = RectTransformUtility.ScreenPointToLocalPointInRectangle(this.ActiveArea, touchPos, Camera.main, out uiPos);
-                //uiPos = this.ActiveArea.worldToLocalMatrix.MultiplyPoint(uiPos);
-                if (hitPlane && this.ActiveArea.rect.Contains(uiPos))
-                {
-                    _activeTouch = true;
-                    _fingerId = -1;
-                    _mostRecentTouchPos = uiPos;
-                }
+                _activeTouch = true;
+                _fingerId = -1;
+                _mostRecentTouchPos = uiPos;
             }
         }
 #endif
@@ -137,7 +131,7 @@ public class DynamicVirtualJoystick : VoBehavior
 
                     this.NubRect.localPosition = new Vector3(pos.x, pos.y, this.NubRect.localPosition.z);
 
-                    this.JoystickAxis = new Vector2(Mathf.Sign(pos.x) * Mathf.Max(1.0f, Mathf.Abs(pos.x) / _maxX), Mathf.Sign(pos.y) * Mathf.Max(1.0f, Mathf.Abs(pos.y) / _maxY));
+                    this.JoystickAxis = new Vector2(Mathf.Sign(pos.x) * Mathf.Min(1.0f, Mathf.Abs(pos.x) / _maxX), Mathf.Sign(pos.y) * Mathf.Min(1.0f, Mathf.Abs(pos.y) / _maxY));
 
                     if (this.JoystickAxis.magnitude < this.DeadZone)
                         this.JoystickAxis = Vector2.zero;
@@ -165,7 +159,7 @@ public class DynamicVirtualJoystick : VoBehavior
 
                 this.NubRect.localPosition = new Vector3(pos.x, pos.y, this.NubRect.localPosition.z);
 
-                this.JoystickAxis = new Vector2(Mathf.Sign(pos.x) * Mathf.Max(1.0f, Mathf.Abs(pos.x) / _maxX), Mathf.Sign(pos.y) * Mathf.Max(1.0f, Mathf.Abs(pos.y) / _maxY));
+                this.JoystickAxis = new Vector2(Mathf.Sign(pos.x) * Mathf.Min(1.0f, Mathf.Abs(pos.x) / _maxX), Mathf.Sign(pos.y) * Mathf.Min(1.0f, Mathf.Abs(pos.y) / _maxY));
 
                 if (this.JoystickAxis.magnitude < this.DeadZone)
                     this.JoystickAxis = Vector2.zero;

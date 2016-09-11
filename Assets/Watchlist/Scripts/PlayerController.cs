@@ -83,7 +83,7 @@ public class PlayerController : Actor2D
 
         if (!this.NoMove)
         {
-            Vector2 movementAxis = GameplayInput.GetMovementAxis(this.PlayerIndex);
+            Vector2 movementAxis = getMovementAxis();
 
             float targetX = movementAxis.x * this.MaxSpeed;
             float targetY = movementAxis.y * this.MaxSpeed;
@@ -118,20 +118,16 @@ public class PlayerController : Actor2D
         // Shooting
         if (!this.NoFire && _weapon != null)
         {
-            Vector2 rawAimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position, !_usingController);
+            Vector2 rawAimAxis = getAimAxis();
 
-            if (_usingController)
-            {
-                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, this.ControllerAimerSpeed * Time.deltaTime);
-            }
-            else
-            {
-                _aimAxis = rawAimAxis;
-            }
+            //if (_usingController)
+            _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, this.ControllerAimerSpeed * Time.deltaTime);
+            //else
+            //    _aimAxis = rawAimAxis;
 
             if (_aimAxis.x != 0 || _aimAxis.y != 0)
             {
-                if (GameplayInput.GetFireButton(this.PlayerIndex))
+                if (getFire())
                     _weapon.Fire(_aimAxis.normalized, this.ShotStartDistance);
             }
         }
@@ -191,6 +187,16 @@ public class PlayerController : Actor2D
         return slots;
     }
 
+    public void UpdateVirtualMoveStick(DynamicVirtualJoystick stick)
+    {
+        _virtualMoveAxis = stick.JoystickAxis;
+    }
+
+    public void UpdateVirtualAimStick(DynamicVirtualJoystick stick)
+    {
+        _virtualAimAxis = stick.JoystickAxis;
+    }
+
     /**
      * Private
      */
@@ -204,6 +210,29 @@ public class PlayerController : Actor2D
     private Weapon _weapon;
     private Damagable _damagable;
     private List<SlotChangeDelegate> _slotChangeDelegates = new List<SlotChangeDelegate>();
+    private Vector2 _virtualMoveAxis;
+    private Vector2 _virtualAimAxis;
+
+    private Vector2 getMovementAxis()
+    {
+        if (_usingController)
+            return GameplayInput.GetMovementAxis(this.PlayerIndex);
+        return _virtualMoveAxis;
+    }
+
+    private Vector2 getAimAxis()
+    {
+        if (_usingController)
+            return GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position, !_usingController);
+        return _virtualAimAxis;
+    }
+
+    private bool getFire()
+    {
+        if (_usingController)
+            return GameplayInput.GetFireButton(this.PlayerIndex);
+        return true;
+    }
 
     private void pickupWeaponSlot(WeaponData.Slot slotType)
     {

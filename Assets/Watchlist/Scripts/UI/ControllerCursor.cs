@@ -48,7 +48,7 @@ public class ControllerCursor : MonoBehaviour
         if (playerSpawnedEvent.PlayerIndex == this.PlayerIndex)
         {
             SessionPlayer p = DynamicData.GetSessionPlayer(this.PlayerIndex);
-            if (p.HasJoined && !ReInput.players.GetPlayer(p.RewiredId).controllers.hasMouse)
+            if (p.HasJoined && ReInput.players.GetPlayer(p.RewiredId).controllers.joystickCount > 0)
             {
                 _player = p;
                 _playerController = playerSpawnedEvent.PlayerObject.GetComponent<PlayerController>();
