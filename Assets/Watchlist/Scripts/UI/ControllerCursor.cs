@@ -6,6 +6,7 @@ public class ControllerCursor : MonoBehaviour
     public int PlayerIndex = 0;
     public float AimingImpact = 50.0f;
     public int ReferenceHeight = 600;
+    public RectTransform Plane;
 
     void Start()
     {
@@ -29,7 +30,10 @@ public class ControllerCursor : MonoBehaviour
             else
             {
                 Vector2 screenPos = (Vector2)Camera.main.WorldToScreenPoint(_playerController.transform.position) + aimAxis * _aimingImpactTotal;
-                _rectTransform.position = new Vector3(screenPos.x, screenPos.y, _rectTransform.position.z);
+                Vector3 outPos;
+                bool success = RectTransformUtility.ScreenPointToWorldPointInRectangle(this.Plane, screenPos, Camera.main, out outPos);
+                if (success)
+                    _rectTransform.position = new Vector3(outPos.x, outPos.y, _rectTransform.position.z);
             }
         }
     }
@@ -48,11 +52,19 @@ public class ControllerCursor : MonoBehaviour
         if (playerSpawnedEvent.PlayerIndex == this.PlayerIndex)
         {
             SessionPlayer p = DynamicData.GetSessionPlayer(this.PlayerIndex);
-            if (p.HasJoined && ReInput.players.GetPlayer(p.RewiredId).controllers.joystickCount > 0)
+            if (p.HasJoined)
             {
-                _player = p;
-                _playerController = playerSpawnedEvent.PlayerObject.GetComponent<PlayerController>();
-                _playerController.SetUsingController();
+                if (ReInput.players.GetPlayer(p.RewiredId).controllers.joystickCount > 0)
+                {
+                    _player = p;
+                    _playerController = playerSpawnedEvent.PlayerObject.GetComponent<PlayerController>();
+                    _playerController.SetUsingController();
+                }
+                else if (Input.touchSupported)
+                {
+                    _player = p;
+                    _playerController = playerSpawnedEvent.PlayerObject.GetComponent<PlayerController>();
+                }
             }
         }
     }
