@@ -6,7 +6,7 @@ public static class ProgressData
     public const int WEAPON_SLOTS = 4;
     public const int POINTS_FOR_HIT = 1;
     public const int POINTS_FOR_KILL = 3;
-    public const int MAX_HEALTH = 5;
+    public const int MAX_HEALTH = 8;
     public const string DATA_PATH = "progress.dat";
 
     public static IntegerVector[] CompletedTiles { get { LoadFromDisk(); return _completedTiles.ToArray(); } }

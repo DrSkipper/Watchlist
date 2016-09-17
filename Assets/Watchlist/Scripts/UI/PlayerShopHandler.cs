@@ -31,7 +31,6 @@ public class PlayerShopHandler : MonoBehaviour
             if (_rewiredPlayer.GetButtonDown(MenuInput.PAUSE) || _rewiredPlayer.GetButtonDown(MenuInput.EXIT))
             {
                 ToggleReady();
-                
             }
         }
     }
