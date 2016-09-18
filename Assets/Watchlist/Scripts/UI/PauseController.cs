@@ -53,7 +53,10 @@ public class PauseController : VoBehavior
         _paused = true;
         Time.timeScale = 0.0f;
         if (this.PauseMenu != null)
+        {
             this.PauseMenu.SetActive(true);
+            this.PauseMenu.transform.SetAsLastSibling();
+        }
     }
 
     public void Unpause()
@@ -61,7 +64,10 @@ public class PauseController : VoBehavior
         _paused = false;
         Time.timeScale = 1.0f;
         if (this.PauseMenu != null)
+        {
             this.PauseMenu.SetActive(false);
+            this.PauseMenu.transform.SetAsLastSibling();
+        }
     }
 
     /**
