@@ -19,6 +19,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
 
     void Awake()
     {
+        PauseController.EnablePausing(false);
         if (this.LevelGenManager != null)
             this.LevelGenManager.AddUpdateDelegate(levelGenUpdate);
     }

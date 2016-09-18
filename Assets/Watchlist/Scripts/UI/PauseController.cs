@@ -29,6 +29,14 @@ public class PauseController : VoBehavior
             this.Unpause();
     }
 
+    void OnApplicationFocus(bool focussed)
+    {
+        if (this.AllowPausing && !focussed && !_paused)
+        {
+            this.Pause();
+        }
+    }
+
     void Update()
     {
         if (this.AllowPausing)
