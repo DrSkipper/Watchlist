@@ -24,9 +24,9 @@ public class PauseController : VoBehavior
     void Start()
     {
         if (this.PauseOnStart)
-            pause();
+            this.Pause();
         else
-            unpause();
+            this.Unpause();
     }
 
     void Update()
@@ -36,25 +36,19 @@ public class PauseController : VoBehavior
             if (MenuInput.Pause())
             {
                 if (_paused)
-                    unpause();
+                    this.Unpause();
                 else
-                    pause();
+                    this.Pause();
             }
             else if (MenuInput.Cancel())
             {
                 if (_paused)
-                    unpause();
+                    this.Unpause();
             }
         }
     }
 
-    /**
-     * Private
-     */
-    private static PauseController _pauseController;
-    private bool _paused;
-
-    private void pause()
+    public void Pause()
     {
         _paused = true;
         Time.timeScale = 0.0f;
@@ -62,11 +56,17 @@ public class PauseController : VoBehavior
             this.PauseMenu.SetActive(true);
     }
 
-    private void unpause()
+    public void Unpause()
     {
         _paused = false;
         Time.timeScale = 1.0f;
         if (this.PauseMenu != null)
             this.PauseMenu.SetActive(false);
     }
+
+    /**
+     * Private
+     */
+    private static PauseController _pauseController;
+    private bool _paused;
 }
