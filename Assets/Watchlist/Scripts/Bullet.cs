@@ -117,6 +117,11 @@ public class Bullet : Actor2D
     private bool _isLaser;
     private bool _ignoreExplosion;
 
+    /*private void reset()
+    {
+        ObjectPools.
+    }*/
+
     private void scheduleDestruction(Vector3 location)
     {
         _destructionScheduled = true;

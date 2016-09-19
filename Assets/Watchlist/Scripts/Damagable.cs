@@ -12,7 +12,7 @@ public class Damagable : VoBehavior
     public bool ApplyDamageLocally = true;
     public List<HealthCallback> OnHealthChangeCallbacks;
     public List<DeathCallback> OnDeathCallbacks;
-    public GameObject GibsPrefab;
+    public string GibsPoolKey = "gibs";
     public float ShakeMagnitudeOnDeath = 100;
     public float BaseShakeHitMagnitude = 0;
     public float ShakeHitToDamageRatio = 0;
@@ -223,9 +223,11 @@ public class Damagable : VoBehavior
         foreach (DeathCallback callback in this.OnDeathCallbacks)
             callback(this);
 
-        if (this.GibsPrefab != null)
+        if (this.GibsPoolKey != null && this.GibsPoolKey != "")
         {
-            GameObject gibs = (GameObject)Instantiate(this.GibsPrefab, this.transform.position, this.transform.rotation);
+            GameObject gibs = ObjectPools.Instance.GetPooledObject(this.GibsPoolKey);
+            gibs.transform.position = this.transform.position;
+            gibs.transform.rotation = this.transform.rotation;
             GibsBehavior gibsBehavior = gibs.GetComponent<GibsBehavior>();
             gibsBehavior.Knockback = _deathKnockback;
             gibsBehavior.ImpactVector = _deathImpactVector;
