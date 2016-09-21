@@ -176,10 +176,10 @@ public class WeaponData
         if (_slotDurationsByType == null)
         {
             _slotDurationsByType = new Dictionary<Slot, int>();
-            _slotDurationsByType[Slot.Bomb] = 118;
-            _slotDurationsByType[Slot.Spreadshot] = 140;
-            _slotDurationsByType[Slot.Bounce] = 126;
-            _slotDurationsByType[Slot.Laser] = 316;
+            _slotDurationsByType[Slot.Bomb] = 108;
+            _slotDurationsByType[Slot.Spreadshot] = 134;
+            _slotDurationsByType[Slot.Bounce] = 116;
+            _slotDurationsByType[Slot.Laser] = 300;
         }
         return _slotDurationsByType;
     }
