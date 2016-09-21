@@ -22,7 +22,12 @@ public class Bullet : Actor2D
             allegianceColorizer.UpdateVisual(allegianceInfo);
 
         _bouncesRemaining = weaponType.MaximumBounces;
-        this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
+
+        if (!_listeningToCollisions)
+        {
+            _listeningToCollisions = true;
+            this.localNotifier.Listen(CollisionEvent.NAME, this, this.OnCollide);
+        }
 
         string allegianceString = allegianceInfo.LayerString;
         int ourLayer = LayerMask.NameToLayer(allegianceString + " Missile");
@@ -126,6 +131,7 @@ public class Bullet : Actor2D
     private bool _isLaser;
     private bool _ignoreExplosion;
     private IntegerCollider _collider;
+    private bool _listeningToCollisions;
 
     private void reset()
     {
