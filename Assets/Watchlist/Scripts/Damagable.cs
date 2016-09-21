@@ -225,7 +225,7 @@ public class Damagable : VoBehavior
 
         if (this.GibsPoolKey != null && this.GibsPoolKey != "")
         {
-            GameObject gibs = ObjectPools.Instance.GetPooledObject(this.GibsPoolKey);
+            GameObject gibs = ObjectPools.GetPooledObject(this.GibsPoolKey);
             gibs.transform.position = this.transform.position;
             gibs.transform.rotation = this.transform.rotation;
             GibsBehavior gibsBehavior = gibs.GetComponent<GibsBehavior>();

@@ -4,8 +4,8 @@ public class Weapon : VoBehavior
 {
     public WeaponType WeaponType;
     public AllegianceInfo AllegianceInfo;
-    public GameObject BulletPrefab;
-    public GameObject LaserPrefab;
+    public string BulletPoolKey = "bullet";
+    public string LaserPoolKey = "laser";
     public GameObject WeaponAudioObject;
     public AudioClip[] FireAudio;
     public ShotFiredDelegate ShotFiredCallback;
@@ -26,7 +26,7 @@ public class Weapon : VoBehavior
         {
             if (direction.x != 0 || direction.y != 0)
             {
-                GameObject prefab = this.WeaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? this.LaserPrefab : this.BulletPrefab;
+                string key = this.WeaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? this.LaserPoolKey : this.BulletPoolKey;
 
                 _shotCooldown = this.WeaponType.ShotCooldown;
                 direction.Normalize();
@@ -46,7 +46,7 @@ public class Weapon : VoBehavior
 
                 if (oddCount)
                 {
-                    createBullet(direction.VectorAtAngle(this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(this.ShotAngleOffset), shotStartDistance, key, ignoreExplosions);
                     shotCount -= 1;
                 }
                 else
@@ -56,8 +56,8 @@ public class Weapon : VoBehavior
 
                 while (shotCount > 0)
                 {
-                    createBullet(direction.VectorAtAngle(shotAngle + this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
-                    createBullet(direction.VectorAtAngle(-shotAngle + this.ShotAngleOffset), shotStartDistance, prefab, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(shotAngle + this.ShotAngleOffset), shotStartDistance, key, ignoreExplosions);
+                    createBullet(direction.VectorAtAngle(-shotAngle + this.ShotAngleOffset), shotStartDistance, key, ignoreExplosions);
 
                     shotCount -= 2;
                     shotAngle += this.WeaponType.AngleBetweenShots;
@@ -97,13 +97,14 @@ public class Weapon : VoBehavior
     private float _explosionCooldown;
     private AudioSource _audio;
 
-    private void createBullet(Vector2 direction, float shotStartDistance, GameObject prefab, bool ignoreExplosions)
+    private void createBullet(Vector2 direction, float shotStartDistance, string bulletKey, bool ignoreExplosions)
     {
         if (!this.RaycastToShotStart || !CollisionManager.RaycastFirst((Vector2)this.transform.position, direction, shotStartDistance, this.ShotBlockMask).Collided)
         {
             // Create instance of bullet prefab and set it on its way
             Vector3 position = this.transform.position + (Vector3)(direction * shotStartDistance);
-            GameObject bullet = Instantiate(prefab, position, Quaternion.identity) as GameObject;
+            GameObject bullet = ObjectPools.GetPooledObject(bulletKey);
+            bullet.transform.position = position;
             bullet.GetComponent<Bullet>().LaunchWithWeaponType(direction, this.WeaponType, this.AllegianceInfo, ignoreExplosions);
         }
     }
