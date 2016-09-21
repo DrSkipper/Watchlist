@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class LaserRenderer : VoBehavior
 {
@@ -8,6 +8,7 @@ public class LaserRenderer : VoBehavior
 
     void Awake()
     {
+        _lineObjects = new List<GameObject>();
         this.localNotifier.Listen(LaserCastEvent.NAME, this, this.OnLaserCast);
     }
 
@@ -19,33 +20,34 @@ public class LaserRenderer : VoBehavior
         IntegerVector distance = raycast.FarthestPointReached - castEvent.Origin;
         if (distance.X == 0 && distance.Y == 0)
             return;
-
-        //_lineObject = Instantiate(LinePrefab, this.transform.position, Quaternion.identity) as GameObject;
-        _lineObject = ObjectPools.GetPooledObject(this.LineObjectKey);
+        
+        GameObject lineObject = ObjectPools.GetPooledObject(this.LineObjectKey);
+        _lineObjects.Add(lineObject);
         //lineObject.transform.parent = this.transform;
-        _lineObject.transform.position = new Vector3(castEvent.Origin.X, castEvent.Origin.Y, this.transform.position.z);
+        lineObject.transform.position = new Vector3(castEvent.Origin.X, castEvent.Origin.Y, this.transform.position.z);
 
-        _lineObject.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycast.FarthestPointReached.X - castEvent.Origin.X, raycast.FarthestPointReached.Y - castEvent.Origin.Y, 0));
-        _lineObject.GetComponent<AllegianceColorizer>().UpdateVisual(castEvent.AllegianceInfo);
+        lineObject.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycast.FarthestPointReached.X - castEvent.Origin.X, raycast.FarthestPointReached.Y - castEvent.Origin.Y, 0));
+        lineObject.GetComponent<AllegianceColorizer>().UpdateVisual(castEvent.AllegianceInfo);
     }
 
     public void Reset()
     {
-        if (_lineObject != null)
-            ObjectPools.ReturnPooledObject(this.LineObjectKey, _lineObject);
-        _lineObject = null;
+        for (int i = 0; i < _lineObjects.Count; ++i)
+        {
+            ObjectPools.ReturnPooledObject(this.LineObjectKey, _lineObjects[i]);
+        }
+
+        _lineObjects.Clear();
     }
 
     public override void OnDestroy()
     {
-        if (_lineObject != null)
-            ObjectPools.ReturnPooledObject(this.LineObjectKey, _lineObject);
-        _lineObject = null;
+        this.Reset();
         base.OnDestroy();
     }
 
     /**
      * Private
      */
-    private GameObject _lineObject;
+    private List<GameObject> _lineObjects;
 }
