@@ -41,7 +41,7 @@ public class UpgradePurchaseHandler : MonoBehaviour
     private int _cost;
     private Color _normalColor;
 
-    private const int HEALTH_COST = 20;
+    private const int HEALTH_COST = 15;
 
     private void menuSelection(LocalEventNotifier.Event e)
     {

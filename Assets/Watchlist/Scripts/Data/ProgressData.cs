@@ -295,7 +295,7 @@ public static class ProgressData
         if (_playerHealth == null)
             initializePlayerHealth();
 
-        _playerHealth[playerIndex] = Mathf.Clamp(health, 1, 5);
+        _playerHealth[playerIndex] = Mathf.Clamp(health, 1, MAX_HEALTH);
     }
 
     public static void WipeData()
