@@ -6,9 +6,14 @@ public class Bullet : Actor2D
     public WeaponType WeaponType;
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
     public GameObject ExplosionPrefab;
+    public string ObjectPoolKey = "bullet";
 
     public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, AllegianceInfo allegianceInfo, bool ignoreExplosion = false)
     {
+        if (_collider == null)
+            _collider = this.GetComponent<IntegerCollider>();
+        else
+            _collider.AddToCollisionPool();
         this.WeaponType = weaponType;
         _ignoreExplosion = ignoreExplosion;
         this.Velocity = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? Vector2.zero : 
@@ -29,7 +34,8 @@ public class Bullet : Actor2D
         LayerMask levelGeometryMask = (1 << LayerMask.NameToLayer("Level Geometry"));
         LayerMask nothing = 0;
 
-        _damager = this.GetComponent<Damager>();
+        if (_damager == null)
+            _damager = this.GetComponent<Damager>();
         _damager.DamagableLayers = (~alliedVulnerable) & GetVulnerableLayers();
         _damager.Damage = weaponType.Damage;
         _damager.Knockback = weaponType.Knockback;
@@ -75,7 +81,7 @@ public class Bullet : Actor2D
     void LateUpdate()
     {
         if (_destructionScheduled)
-            Destroy(this.gameObject);
+            reset();
     }
 
     public void OnCollide(LocalEventNotifier.Event localEvent)
@@ -116,11 +122,20 @@ public class Bullet : Actor2D
     private bool _explosionRemaining;
     private bool _isLaser;
     private bool _ignoreExplosion;
+    private IntegerCollider _collider;
 
-    /*private void reset()
+    private void reset()
     {
-        ObjectPools.
-    }*/
+        if (_collider != null)
+            _collider.RemoveFromCollisionPool();
+        if (_allegianceInfo.Allegiance == Allegiance.Player)
+            _damager.RemoveAttackLandedCallback(landedAttack);
+        _destructionScheduled = false;
+        _lifetime = 0.0f;
+        ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
+        if (_isLaser)
+            this.GetComponent<LaserRenderer>().Reset();
+    }
 
     private void scheduleDestruction(Vector3 location)
     {

@@ -36,7 +36,7 @@ public class GibsBehavior : VoBehavior
         if (_lifetimeTimer <= 0.0f)
         {
             reset();
-            ObjectPools.Instance.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
+            ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
         }
         else
         {
