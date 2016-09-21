@@ -107,6 +107,8 @@ public class Explosion : VoBehavior
     {
         if (_collider != null)
             _collider.RemoveFromCollisionPool();
+        if (_allegianceInfo.Allegiance == Allegiance.Player)
+            _damager.RemoveAttackLandedCallback(landedAttack);
         _trueRadius = 0.0f;
         _destructionScheduled = false;
         _collisions.Clear();
