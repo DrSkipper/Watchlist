@@ -16,6 +16,7 @@ public class LevelInfoPanelHandler : MonoBehaviour
     public Image EnemyImage1;
     public Image EnemyImage2;
     public Texture2D EnemySprites;
+    public GameObject LoadingText;
 
     void Awake()
     {
@@ -82,6 +83,9 @@ public class LevelInfoPanelHandler : MonoBehaviour
             }
             else
                 this.EnemyImage2.enabled = false;
+
+            if (this.LoadingText != null)
+                this.LoadingText.SetActive(false);
         }
     }
 
