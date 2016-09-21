@@ -13,6 +13,7 @@ public class GenericEnemy : VoBehavior
     public bool UseDebugWeapon = false;
     public bool NoFire = false;
     public float FireDelay = 0.15f;
+    public string ExplosionPoolKey = "bomb";
 
     public enum MovementType
     {
@@ -243,7 +244,7 @@ public class GenericEnemy : VoBehavior
         {
             AllegianceInfo info = this.GetComponent<AllegianceColorizer>().AllegianceInfo;
             LayerMask damagableLayers = this.GetComponent<Damager>().DamagableLayers;
-            Bullet.CreateExplosionEntity(this.transform.position, this.ExplosionPrefab, info, this.gameObject.layer, damagableLayers, this.CollisionWeaponType);
+            Bullet.CreateExplosionEntity(this.transform.position, this.ExplosionPoolKey, info, this.gameObject.layer, damagableLayers, this.CollisionWeaponType);
         }
     }
 

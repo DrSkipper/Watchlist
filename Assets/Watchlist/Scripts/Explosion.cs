@@ -10,6 +10,7 @@ public class Explosion : VoBehavior
     public WeaponType WeaponType;
     public bool LineOfSight = false;
     public LayerMask LineOfSightBlockers = 0;
+    public string ObjectPoolKey = "bomb";
 
     public void DetonateWithWeaponType(WeaponType weaponType, int layer, LayerMask damagableLayers, AllegianceInfo allegianceInfo)
     {
@@ -17,8 +18,10 @@ public class Explosion : VoBehavior
         _finalRadius = this.RadiusToPowerMultiplier * weaponType.SpecialEffectParameter1;
         _growthRate = _finalRadius / this.ExplosionDuration;
 
-        _circleRenderer = this.GetComponent<CircleRenderer>();
-        _damager = this.GetComponent<Damager>();
+        if (_circleRenderer == null)
+            _circleRenderer = this.GetComponent<CircleRenderer>();
+        if (_damager == null)
+            _damager = this.GetComponent<Damager>();
         _damager.DamagableLayers = damagableLayers;
         _damager.Damage = weaponType.Damage;
         _damager.Knockback = weaponType.Knockback;
@@ -29,6 +32,10 @@ public class Explosion : VoBehavior
             _damager.AddAttackLandedCallback(landedAttack);
 
         this.GetComponent<AllegianceColorizer>().UpdateVisual(allegianceInfo);
+        if (_collider == null)
+            _collider = this.GetComponent<IntegerCollider>();
+        else
+            _collider.AddToCollisionPool();
 
         ExplosionSounder.Detonate();
     }
@@ -80,7 +87,7 @@ public class Explosion : VoBehavior
     void LateUpdate()
     {
         if (_destructionScheduled)
-            Destroy(this.gameObject);
+            reset();
     }
 
     /**
@@ -94,6 +101,17 @@ public class Explosion : VoBehavior
     private CircleRenderer _circleRenderer;
     private List<GameObject> _collisions = new List<GameObject>();
     private AllegianceInfo _allegianceInfo;
+    private IntegerCollider _collider;
+
+    private void reset()
+    {
+        if (_collider != null)
+            _collider.RemoveFromCollisionPool();
+        _trueRadius = 0.0f;
+        _destructionScheduled = false;
+        _collisions.Clear();
+        ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
+    }
 
     private void landedAttack(Damager damager, int damageDone, bool killingBlow)
     {

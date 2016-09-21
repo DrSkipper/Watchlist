@@ -7,13 +7,10 @@ public class Bullet : Actor2D
     public LayerMask BounceLayerMask = Physics2D.DefaultRaycastLayers;
     public GameObject ExplosionPrefab;
     public string ObjectPoolKey = "bullet";
+    public string ExplosionPoolKey = "bomb";
 
     public void LaunchWithWeaponType(Vector2 direction, WeaponType weaponType, AllegianceInfo allegianceInfo, bool ignoreExplosion = false)
     {
-        if (_collider == null)
-            _collider = this.GetComponent<IntegerCollider>();
-        else
-            _collider.AddToCollisionPool();
         this.WeaponType = weaponType;
         _ignoreExplosion = ignoreExplosion;
         this.Velocity = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER ? Vector2.zero : 
@@ -51,6 +48,11 @@ public class Bullet : Actor2D
         
         _explosionRemaining = this.WeaponType.SpecialEffect == WeaponType.SPECIAL_EXPLOSION;
         _isLaser = weaponType.TravelType == WeaponType.TRAVEL_TYPE_LASER;
+
+        if (_collider == null)
+            _collider = this.GetComponent<IntegerCollider>();
+        else
+            _collider.AddToCollisionPool();
 
         if (_isLaser)
             handleLaserCast(direction);
@@ -104,9 +106,10 @@ public class Bullet : Actor2D
         }
     }
     
-    public static void CreateExplosionEntity(Vector3 position, GameObject explosionPrefab, AllegianceInfo allegianceInfo, int layer, LayerMask damagableLayers, WeaponType weaponType)
+    public static void CreateExplosionEntity(Vector3 position, string explosionKey, AllegianceInfo allegianceInfo, int layer, LayerMask damagableLayers, WeaponType weaponType)
     {
-        GameObject explosion = Instantiate(explosionPrefab, position, Quaternion.identity) as GameObject;
+        GameObject explosion = ObjectPools.GetPooledObject(explosionKey);
+        explosion.transform.position = position;
         explosion.GetComponent<Explosion>().DetonateWithWeaponType(weaponType, layer, damagableLayers, allegianceInfo);
     }
 
@@ -132,9 +135,10 @@ public class Bullet : Actor2D
             _damager.RemoveAttackLandedCallback(landedAttack);
         _destructionScheduled = false;
         _lifetime = 0.0f;
-        ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
+        _distance = Vector2.zero;
         if (_isLaser)
             this.GetComponent<LaserRenderer>().Reset();
+        ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
     }
 
     private void scheduleDestruction(Vector3 location)
@@ -232,7 +236,7 @@ public class Bullet : Actor2D
         _explosionRemaining = false;
         if (!_ignoreExplosion)
         {
-            CreateExplosionEntity(position, this.ExplosionPrefab, _allegianceInfo, this.gameObject.layer, _damager.DamagableLayers, this.WeaponType);
+            CreateExplosionEntity(position, this.ExplosionPoolKey, _allegianceInfo, this.gameObject.layer, _damager.DamagableLayers, this.WeaponType);
         }
     }
     
