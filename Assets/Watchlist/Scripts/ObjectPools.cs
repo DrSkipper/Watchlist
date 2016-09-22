@@ -35,6 +35,13 @@ public class ObjectPools : MonoBehaviour
         _instance = null;
     }
 
+    public static void Preload(string key, int quantity)
+    {
+        //TODO - Send message on preloaded object's LocalEventNotifier to notify reset. And/or should probably have PooledObject component to handle pool related stuff, and callbacks when putting into use and returning to pool.
+        if (_instance != null)
+            _instance.preload(key, quantity);
+    }
+
     public static GameObject GetPooledObject(string key)
     {
         /*if (key == "bullet")
@@ -42,7 +49,7 @@ public class ObjectPools : MonoBehaviour
             Debug.Log("get bullet");
         }*/
         if (_instance != null)
-            return _instance.InstanceGetPooledObject(key);
+            return _instance.instanceGetPooledObject(key);
         return null;
     }
 
@@ -53,10 +60,29 @@ public class ObjectPools : MonoBehaviour
             Debug.Log("return bullet");
         }*/
         if (_instance != null)
-            _instance.InstanceReturnPooledObject(key, go);
+            _instance.instanceReturnPooledObject(key, go);
     }
 
-    public GameObject InstanceGetPooledObject(string key)
+    /**
+     * Private
+     */
+    private Dictionary<string, List<GameObject>> _pooledObjects;
+    private Dictionary<string, int> _keyToPoolIndex;
+    private static ObjectPools _instance;
+
+    private void preload(string key, int quantity)
+    {
+        ObjectPool pool = this.Pools[_keyToPoolIndex[key]];
+        List<GameObject> list = _pooledObjects[key];
+        quantity = Mathf.Min(quantity, pool.MaxToStore - list.Count);
+        for (int i = 0; i < quantity; ++i)
+        {
+            GameObject go = Instantiate(pool.Prefab) as GameObject;
+            returnObject(list, go, pool.MaxToStore);
+        }
+    }
+
+    private GameObject instanceGetPooledObject(string key)
     {
         if (_pooledObjects.ContainsKey(key))
         {
@@ -67,7 +93,7 @@ public class ObjectPools : MonoBehaviour
         return null;
     }
 
-    public void InstanceReturnPooledObject(string key, GameObject go)
+    private void instanceReturnPooledObject(string key, GameObject go)
     {
         if (_pooledObjects.ContainsKey(key))
         {
@@ -75,13 +101,6 @@ public class ObjectPools : MonoBehaviour
             //this.Counts[_keyToPoolIndex[key]] = _pooledObjects[key].Count;
         }
     }
-
-    /**
-     * Private
-     */
-    private Dictionary<string, List<GameObject>> _pooledObjects;
-    private Dictionary<string, int> _keyToPoolIndex;
-    private static ObjectPools _instance;
 
     public GameObject getObject(List<GameObject> list, GameObject prefab)
     {
