@@ -26,6 +26,8 @@ public class BossWeakMainBehavior : VoBehavior
     public float EndLevelDelay = 0.5f;
     public GameObject SubBossPrefab;
     public WinCondition WinCondition;
+    public string GibsPreloadKey = "boss_gibs";
+    public float TimeBetweenPreloads = 1.0f;
     
     void Awake()
     {
@@ -43,6 +45,10 @@ public class BossWeakMainBehavior : VoBehavior
 
     void Start()
     {
+        _preloaded = this.SubBosses.Count / 3;
+        ObjectPools.Preload(this.GibsPreloadKey, _preloaded);
+        _preloadTimer = this.TimeBetweenPreloads;
+
         this.AttackTargets = PlayerTargetController.Targets;
         int hp = 1;
         foreach (GameObject subBoss in this.SubBosses)
@@ -80,6 +86,17 @@ public class BossWeakMainBehavior : VoBehavior
 
     void Update()
     {
+        if (_preloaded < this.SubBosses.Count)
+        {
+            _preloadTimer -= Time.deltaTime;
+            if (_preloadTimer <= 0.0f)
+            {
+                ++_preloaded;
+                _preloadTimer = this.TimeBetweenPreloads;
+                ObjectPools.Preload(this.GibsPreloadKey, 1);
+            }
+        }
+
         if (_began && !_dead)
             _stateMachine.Update();
     }
@@ -109,6 +126,8 @@ public class BossWeakMainBehavior : VoBehavior
     private int _attacksToFinish;
     private bool _began;
     private bool _dead;
+    private int _preloaded;
+    private float _preloadTimer;
 
     private const string ROTATION_STATE = "rotation";
     private const string ATTACKING_STATE = "path";
