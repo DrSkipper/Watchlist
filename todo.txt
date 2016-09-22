@@ -1,0 +1,7 @@
+
+Pools create per second?
+freezing while fighting miniboss?
+more increase in weapon prices per upgrade
+maybe even more laser line storage
+probably more explosion storage
+boss weak gibs preloading
