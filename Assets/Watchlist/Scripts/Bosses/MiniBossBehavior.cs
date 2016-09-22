@@ -16,6 +16,7 @@ public class MiniBossBehavior : VoBehavior
     public int RayDirections = 8;
     public LayerMask HaltMovementMask = 0;
     public Damagable.DeathCallback DeathCallback;
+    public string BossGibsPoolKey = "boss_gibs";
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class MiniBossBehavior : VoBehavior
         _lerpMovement = this.GetComponent<LerpMovement>();
         _lerpMovement.AddCallback(movementComplete);
         this.Damagable.OnDeathCallbacks.Add(onDeath);
+        ObjectPools.Preload(this.BossGibsPoolKey, this.Subs.Length);
     }
 
     void Update()
