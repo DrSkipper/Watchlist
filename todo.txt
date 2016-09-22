@@ -1,3 +1,2 @@
 
 Pools create per second?
-freezing while fighting miniboss?
