@@ -27,6 +27,7 @@ public class MusicHandler : MonoBehaviour
 
     void Start()
     {
+        _menuMusic = this.MenuMusic;
         if (!this.Destroyer.MarkedForDestruction)
             sceneBegin();
     }
@@ -43,6 +44,86 @@ public class MusicHandler : MonoBehaviour
         {
             this.AudioSource.volume = Mathf.Max(0.0f, this.AudioSource.volume - this.VolumeFadeSpeed * Time.deltaTime);
         }
+
+        if (!_allDone)
+        {
+            if (_menuRequest != null)
+            {
+                if (_menuRequest.isDone)
+                {
+                    _menuMusic = _menuRequest.asset as AudioClip;
+                    _menuRequest = null;
+                    _gameplayMusic = this.GameplayMusic;
+
+                    if (_playing && _attemptingPlay == this.MenuMusicName)
+                    {
+                        this.AudioSource.clip = _menuMusic;
+                        this.AudioSource.Play();
+                    }
+                }
+            }
+            else if (_gameplayRequest != null)
+            {
+                if (_gameplayRequest.isDone)
+                {
+                    _gameplayMusic = _gameplayRequest.asset as AudioClip;
+                    _gameplayRequest = null;
+                    _bossMusic = this.BossMusic;
+
+                    if (_playing && _attemptingPlay == this.GameplayMusicName)
+                    {
+                        this.AudioSource.clip = _gameplayMusic;
+                        this.AudioSource.Play();
+                    }
+                }
+            }
+            else if (_bossRequest != null)
+            {
+                if (_bossRequest.isDone)
+                {
+                    _bossMusic = _bossRequest.asset as AudioClip;
+                    _bossRequest = null;
+                    _finalBossMusic = this.FinalBossMusic;
+
+                    if (_playing && _attemptingPlay == this.BossMusicName)
+                    {
+                        this.AudioSource.clip = _bossMusic;
+                        this.AudioSource.Play();
+                    }
+                }
+            }
+            else if (_finalBossRequest != null)
+            {
+                if (_finalBossRequest.isDone)
+                {
+                    _finalBossMusic = _finalBossRequest.asset as AudioClip;
+                    _finalBossRequest = null;
+                    _finalMusic = this.FinalMusic;
+
+                    if (_playing && _attemptingPlay == this.FinalBossMusicName)
+                    {
+                        this.AudioSource.clip = _finalBossMusic;
+                        this.AudioSource.Play();
+                    }
+                }
+
+            }
+            else if (_finalRequest != null)
+            {
+                if (_finalRequest.isDone)
+                {
+                    _finalMusic = _finalRequest.asset as AudioClip;
+                    _finalRequest = null;
+                    _allDone = true;
+
+                    if (_playing && _attemptingPlay == this.FinalMusicName)
+                    {
+                        this.AudioSource.clip = _finalMusic;
+                        this.AudioSource.Play();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -55,6 +136,14 @@ public class MusicHandler : MonoBehaviour
     private AudioClip _bossMusic;
     private AudioClip _finalBossMusic;
     private AudioClip _finalMusic;
+    private ResourceRequest _menuRequest;
+    private ResourceRequest _gameplayRequest;
+    private ResourceRequest _bossRequest;
+    private ResourceRequest _finalBossRequest;
+    private ResourceRequest _finalRequest;
+    private bool _allDone = false;
+    private string _attemptingPlay = "";
+    private bool _playing;
     private const string PATH_PREFIX = "Music/";
 
     private AudioClip MenuMusic
@@ -62,7 +151,12 @@ public class MusicHandler : MonoBehaviour
         get
         {
             if (_menuMusic == null)
-                _menuMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.MenuMusicName);
+            {
+                if (_menuRequest == null)
+                {
+                    _menuRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.MenuMusicName);
+                }
+            }
             return _menuMusic;
         }
     }
@@ -72,7 +166,12 @@ public class MusicHandler : MonoBehaviour
         get
         {
             if (_gameplayMusic == null)
-                _gameplayMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.GameplayMusicName);
+            {
+                if (_gameplayRequest == null)
+                {
+                    _gameplayRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.GameplayMusicName);
+                }
+            }
             return _gameplayMusic;
         }
     }
@@ -82,7 +181,12 @@ public class MusicHandler : MonoBehaviour
         get
         {
             if (_bossMusic == null)
-                _bossMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.BossMusicName);
+            {
+                if (_bossRequest == null)
+                {
+                    _bossRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.BossMusicName);
+                }
+            }
             return _bossMusic;
         }
     }
@@ -92,7 +196,12 @@ public class MusicHandler : MonoBehaviour
         get
         {
             if (_finalBossMusic == null)
-                _finalBossMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.FinalBossMusicName);
+            {
+                if (_finalBossRequest == null)
+                {
+                    _finalBossRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.FinalBossMusicName);
+                }
+            }
             return _finalBossMusic;
         }
     }
@@ -102,7 +211,12 @@ public class MusicHandler : MonoBehaviour
         get
         {
             if (_finalMusic == null)
-                _finalMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.FinalMusicName);
+            {
+                if (_finalRequest == null)
+                {
+                    _finalRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.FinalMusicName);
+                }
+            }
             return _finalMusic;
         }
     }
@@ -141,7 +255,10 @@ public class MusicHandler : MonoBehaviour
         if (_sceneName == this.GameplaySceneName || _sceneName.Contains(this.BossRoomPrefix))
         {
             if (!dontStop)
+            {
+                _playing = false;
                 this.AudioSource.Stop();
+            }
             if (!waitForPlayEvent)
                 GlobalEvents.Notifier.Listen(BeginGameplayEvent.NAME, this, gameplayBegin);
         }
@@ -166,19 +283,30 @@ public class MusicHandler : MonoBehaviour
                 if (_sceneName != this.CreditsName)
                 {
                     this.AudioSource.volume = this.MenuVolume;
-                    if (this.AudioSource.clip != this.MenuMusic || !this.AudioSource.isPlaying)
+                    if (_attemptingPlay != this.MenuMusicName || !this.AudioSource.isPlaying)
                     {
+                        _attemptingPlay = this.MenuMusicName;
                         this.AudioSource.clip = this.MenuMusic;
 
                         if (!waitForPlayEvent)
-                            this.AudioSource.Play();
+                        {
+                            _playing = true;
+                            if (this.MenuMusic != null)
+                            {
+                                this.AudioSource.Play();
+                            }
+                        }
                         else if (!dontStop)
+                        {
+                            _playing = false;
                             this.AudioSource.Stop();
+                        }
                     }
                 }
             }
             else
             {
+                _playing = false;
                 this.AudioSource.Stop();
             }
         }
@@ -207,30 +335,54 @@ public class MusicHandler : MonoBehaviour
         _isFading = false;
         if (_sceneName == this.GameplaySceneName)
         {
+            _attemptingPlay = this.GameplayMusicName;
+            _playing = true;
             this.AudioSource.volume = this.GameplayVolume;
-            this.AudioSource.clip = this.GameplayMusic;
-            this.AudioSource.Play();
+
+            if (this.GameplayMusic != null)
+            {
+                this.AudioSource.clip = this.GameplayMusic;
+                this.AudioSource.Play();
+            }
         }
         else if (_sceneName.Contains(this.BossRoomPrefix) || _sceneName == this.AltFinalBossRoomName)
         {
             if (_sceneName == this.FinalBossRoomName || _sceneName == this.AltFinalBossRoomName)
             {
+                _attemptingPlay = this.FinalBossMusicName;
+                _playing = true;
                 this.AudioSource.volume = this.FinalBossVolume;
-                this.AudioSource.clip = this.FinalBossMusic;
-                this.AudioSource.Play();
+
+                if (this.FinalBossMusic != null)
+                {
+                    this.AudioSource.clip = this.FinalBossMusic;
+                    this.AudioSource.Play();
+                }
             }
             else
             {
+                _attemptingPlay = this.BossMusicName;
+                _playing = true;
                 this.AudioSource.volume = this.BossRoomVolume;
-                this.AudioSource.clip = this.BossMusic;
-                this.AudioSource.Play();
+
+                if (this.BossMusic != null)
+                {
+                    this.AudioSource.clip = this.BossMusic;
+                    this.AudioSource.Play();
+                }
             }
         }
         else if (_sceneName == this.FinalRoomName)
         {
+            _attemptingPlay = this.FinalMusicName;
+            _playing = true;
             this.AudioSource.volume = 1.0f;
-            this.AudioSource.clip = this.FinalMusic;
-            this.AudioSource.Play();
+
+            if (this.FinalMusic != null)
+            {
+                this.AudioSource.clip = this.FinalMusic;
+                this.AudioSource.Play();
+            }
         }
     }
 }
