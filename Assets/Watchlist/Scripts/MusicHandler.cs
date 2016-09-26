@@ -27,9 +27,11 @@ public class MusicHandler : MonoBehaviour
 
     void Start()
     {
-        _menuMusic = this.MenuMusic;
         if (!this.Destroyer.MarkedForDestruction)
+        {
+            _menuMusic = this.MenuMusic;
             sceneBegin();
+        }
     }
 
     void OnLevelWasLoaded(int i)
