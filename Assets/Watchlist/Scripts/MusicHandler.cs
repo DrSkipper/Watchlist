@@ -29,6 +29,7 @@ public class MusicHandler : MonoBehaviour
     {
         if (!this.Destroyer.MarkedForDestruction)
         {
+            _timedCallbacks = this.GetComponent<TimedCallbacks>();
             _menuMusic = this.MenuMusic;
             sceneBegin();
         }
@@ -55,7 +56,7 @@ public class MusicHandler : MonoBehaviour
                 {
                     _menuMusic = _menuRequest.asset as AudioClip;
                     _menuRequest = null;
-                    _gameplayMusic = this.GameplayMusic;
+                    //_gameplayMusic = this.GameplayMusic;
 
                     if (_playing && _attemptingPlay == this.MenuMusicName)
                     {
@@ -70,7 +71,7 @@ public class MusicHandler : MonoBehaviour
                 {
                     _gameplayMusic = _gameplayRequest.asset as AudioClip;
                     _gameplayRequest = null;
-                    _bossMusic = this.BossMusic;
+                    //_bossMusic = this.BossMusic;
 
                     if (_playing && _attemptingPlay == this.GameplayMusicName)
                     {
@@ -85,7 +86,7 @@ public class MusicHandler : MonoBehaviour
                 {
                     _bossMusic = _bossRequest.asset as AudioClip;
                     _bossRequest = null;
-                    _finalBossMusic = this.FinalBossMusic;
+                    //_finalBossMusic = this.FinalBossMusic;
 
                     if (_playing && _attemptingPlay == this.BossMusicName)
                     {
@@ -100,7 +101,7 @@ public class MusicHandler : MonoBehaviour
                 {
                     _finalBossMusic = _finalBossRequest.asset as AudioClip;
                     _finalBossRequest = null;
-                    _finalMusic = this.FinalMusic;
+                    //_finalMusic = this.FinalMusic;
 
                     if (_playing && _attemptingPlay == this.FinalBossMusicName)
                     {
@@ -133,6 +134,7 @@ public class MusicHandler : MonoBehaviour
      */
     private string _sceneName;
     private bool _isFading;
+    private TimedCallbacks _timedCallbacks;
     private AudioClip _menuMusic;
     private AudioClip _gameplayMusic;
     private AudioClip _bossMusic;
@@ -227,6 +229,7 @@ public class MusicHandler : MonoBehaviour
     {
         _isFading = false;
         _sceneName = SceneManager.GetActiveScene().name;
+        _timedCallbacks.RemoveCallbacksForOwner(this);
 
         bool waitForPlayEvent = false;
         if (this.WaitForPlayMusicEventScenes != null)
@@ -313,6 +316,8 @@ public class MusicHandler : MonoBehaviour
             }
         }
 
+        _timedCallbacks.AddCallback(this, checkAsyncLoading, 1.0f);
+
         GlobalEvents.Notifier.Listen(PlayMusicEvent.NAME, this, playMusic);
         GlobalEvents.Notifier.Listen(BeginMusicFadeEvent.NAME, this, beginMusicFade);
     }
@@ -385,6 +390,30 @@ public class MusicHandler : MonoBehaviour
                 this.AudioSource.clip = this.FinalMusic;
                 this.AudioSource.Play();
             }
+        }
+    }
+
+    private void checkAsyncLoading()
+    {
+        if (_sceneName == this.GameplaySceneName)
+        {
+            if (_gameplayMusic == null)
+                _gameplayMusic = this.GameplayMusic;
+        }
+        else if (_sceneName == this.FinalBossRoomName || _sceneName == this.AltFinalBossRoomName)
+        {
+            if (_finalBossMusic == null)
+                _finalBossMusic = this.FinalBossMusic;
+        }
+        else if (_sceneName.Contains(this.BossRoomPrefix))
+        {
+            if (_bossMusic == null)
+                _bossMusic = this.BossMusic;
+        }
+        else if (_sceneName == this.FinalRoomName)
+        {
+            if (_finalMusic == null)
+                _finalMusic = this.FinalMusic;
         }
     }
 }
