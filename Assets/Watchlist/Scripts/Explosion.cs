@@ -110,6 +110,11 @@ public class Explosion : VoBehavior
         if (_allegianceInfo.Allegiance == Allegiance.Player)
             _damager.RemoveAttackLandedCallback(landedAttack);
         _trueRadius = 0.0f;
+        IntegerCircleCollider circleCollider = this.integerCollider as IntegerCircleCollider;
+        if (circleCollider != null)
+            circleCollider.Radius = Mathf.RoundToInt(_trueRadius);
+        if (_circleRenderer != null)
+            _circleRenderer.Radius = _trueRadius;
         _destructionScheduled = false;
         _collisions.Clear();
         ObjectPools.ReturnPooledObject(this.ObjectPoolKey, this.gameObject);
