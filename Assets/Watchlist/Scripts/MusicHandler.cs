@@ -50,7 +50,7 @@ public class MusicHandler : MonoBehaviour
 
         if (!_allDone)
         {
-            if (_menuRequest != null)
+            /*if (_menuRequest != null)
             {
                 if (_menuRequest.isDone)
                 {
@@ -65,7 +65,7 @@ public class MusicHandler : MonoBehaviour
                     }
                 }
             }
-            else if (_gameplayRequest != null)
+            else */if (_gameplayRequest != null)
             {
                 if (_gameplayRequest.isDone)
                 {
@@ -156,10 +156,11 @@ public class MusicHandler : MonoBehaviour
         {
             if (_menuMusic == null)
             {
-                if (_menuRequest == null)
+                _menuMusic = Resources.Load<AudioClip>(PATH_PREFIX + this.MenuMusicName);
+                /*if (_menuRequest == null)
                 {
                     _menuRequest = Resources.LoadAsync<AudioClip>(PATH_PREFIX + this.MenuMusicName);
-                }
+                }*/
             }
             return _menuMusic;
         }
