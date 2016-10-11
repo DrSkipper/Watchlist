@@ -34,7 +34,11 @@ public class MusicHandler : MonoBehaviour
     void OnLevelWasLoaded(int i)
     {
         if (!this.Destroyer.MarkedForDestruction)
+        {
+            if (_timedCallbacks == null)
+                _timedCallbacks = this.GetComponent<TimedCallbacks>();
             sceneBegin();
+        }
     }
 
     void Update()
