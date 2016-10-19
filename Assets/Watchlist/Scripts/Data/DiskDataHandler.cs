@@ -22,7 +22,7 @@ public static class DiskDataHandler
 
     public static T Load<T>(string path)
     {
-        string fullPath = Application.persistentDataPath + Path.DirectorySeparatorChar + path;
+        //string fullPath = Application.persistentDataPath + Path.DirectorySeparatorChar + path;
         if (PlayerPrefs.HasKey(path))
         {
             return JsonConvert.DeserializeObject<T>(PlayerPrefs.GetString(path));
