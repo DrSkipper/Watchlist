@@ -322,6 +322,7 @@ public static class ProgressData
         diskData.PlayerHealth = _playerHealth;
         diskData.MinibossTiles = _minibossTiles;
         DiskDataHandler.Save(DATA_PATH, diskData);
+        PersistentData.SaveToDisk();
     }
 
     public static void LoadFromDisk(bool force = false)
