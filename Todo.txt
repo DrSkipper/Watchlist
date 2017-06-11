@@ -1,0 +1,18 @@
+Watchlist todo:
+shoot start dist fix
+final boss minion shoot fix
+minibosses move into blue map spaces
+shader effect when enemy/hero dies
+shader filter overlay effect
+sound manager? (limit on concurrent sound effects)
+pooled objects?
+outlined UI text, more UI animations?
+Bring credits links over from mobile builds. Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.
+Remove steam greenlight link in credits, replace with twitter follow & message about next game?
+Make sure rewired digital axis sensitivity is high enough for there to be no delay on releasing keyboard input
+Steam Achievements/trading cards?
+Cap/hard set points gained from boss?
+PauseMenu improvement?
+Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should
+Copy over all icons from mobile branch
+Gather object pool counts on common scene scripts in mobile branch

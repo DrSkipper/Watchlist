@@ -1,0 +1,53 @@
+    <Name>Stationary Look At 1</Name>
+    <ShotStartDistance>12</ShotStartDistance>
+	
+	<Name>Constant Rotating 1</Name>
+    <ShotStartDistance>12</ShotStartDistance>
+	
+    <Name>Pause Rotating 1</Name>
+    <ShotStartDistance>10</ShotStartDistance>
+	
+    <Name>Moving Look At 1</Name>
+    <ShotStartDistance>12</ShotStartDistance>
+	
+	<Name>Move Rotating 1</Name>
+    <ShotStartDistance>6</ShotStartDistance>
+	
+    <Name>Boss Master Shooter</Name>
+    <ShotStartDistance>12</ShotStartDistance>
+
+	
+Stationary Look At 1,1000001,generic,enemy_04,0,100,50,2,150,0,0,0,340,280,**12**,0,0,0,0,false,45,0,2000001,0
+
+cherry-picks:
+4374acf3195c29cfb978d91ded8ff893d6d2f55e
+419825873f0146542f074ee3c775a3728cc2ab17
+a478a1885af25d949a8085cd6d3e91250067f075 ?? - commented unused fullpath line
+105900909cf7d6ed911d6d61d78309d2c4978b93 - Fixed reused explosion from having old radius for an update
+18c7fed034ab60da9b24b80885b02569c8ea5734 - Except the prefab changes are dangerous
+750b36eddf01f44a6d0a02742764c3cffb1d27d1
+3dfe1368635fd03c5f17459dd83c6bd173cc1417
+afa85bec341173f12961a55cf500a7cdb9ffc23b
+83f23aeff816fd7b58ed30da1aa26da8d2dedfb5
+7a09def07c77c66db1fc88e95235316bf6aee5a3 - prefab changes are dangerous
+33ecf951f7415dc9fd517043ce57d593157e4d1b - prefab changes are dangerous
+0f3b158f4dcdfdc754ca98e1125bce49de6c49b5 - prefab changes dangerous
+46194a6864e95326a00fdd3d98ea38cfa1a224c6
+a403275c4df497d95c441900b940a4d61b3fc646
+
+728cd65153f0173e99b3f043a30faf18f466392d - changes to the boss master prefab and scene at least?
+
+cherry-pick credits changes (go bottom to top):
+2198f1258c3173714d230c99dbda300f9a6c71be
+9a9425466febd7b526387eddd7814fc25e62996d
+84c3127d8643023b0d09c3667d0c6bb217ce91dd
+829d762b369ab07a84272bd65d145615f53bbd26 - except not watchlist scene...
+b254dc4317660765021247c8b7f637ce7cf5be39
+62200b15a823b099a5d111c36d1bda8cfa6f9e2a
+a285aebdc257fcbecbeae97cc6fd867e03629102 - except AndroidManifest.xml.meta
+
+
+
+can't cherry pick but need to implement:
+bd180bf83b317f00c0a5c3565727c789d8ed30c4 (Fixing non-italics in dialog scenes in new unity)
+
