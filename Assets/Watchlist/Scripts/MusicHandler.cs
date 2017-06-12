@@ -35,8 +35,6 @@ public class MusicHandler : MonoBehaviour
     {
         if (!this.Destroyer.MarkedForDestruction)
         {
-            if (_timedCallbacks == null)
-                _timedCallbacks = this.GetComponent<TimedCallbacks>();
             sceneBegin();
         }
     }
