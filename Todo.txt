@@ -15,7 +15,7 @@ Copy over all icons from mobile branch
 Gather object pool counts on common scene scripts in mobile branch
 Async music loading?
 Replace controller instruction button text with images
-
+see Concept/bug.png
 
 Pretty much done:
 Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should
