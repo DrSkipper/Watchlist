@@ -8,7 +8,6 @@ sound manager? (limit on concurrent sound effects)
 outlined UI text, more UI animations?
 Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.
 Remove steam greenlight link in credits, replace with twitter follow & message about next game?
-Make sure rewired digital axis sensitivity is high enough for there to be no delay on releasing keyboard input
 Steam Achievements/trading cards?
 Cap/hard set points gained from boss?
 PauseMenu improvement?
