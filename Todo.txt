@@ -1,5 +1,6 @@
 Watchlist todo:
 shoot start dist fix
+Fix mouse shooting
 minibosses move into blue map spaces
 shader effect when enemy/hero dies
 shader filter overlay effect
