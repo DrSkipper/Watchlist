@@ -18,16 +18,3 @@
 
 	
 Stationary Look At 1,1000001,generic,enemy_04,0,100,50,2,150,0,0,0,340,280,**12**,0,0,0,0,false,45,0,2000001,0
-
-cherry-pick credits changes (go bottom to top):
-2198f1258c3173714d230c99dbda300f9a6c71be
-9a9425466febd7b526387eddd7814fc25e62996d
-84c3127d8643023b0d09c3667d0c6bb217ce91dd
-829d762b369ab07a84272bd65d145615f53bbd26 - except not watchlist scene...
-b254dc4317660765021247c8b7f637ce7cf5be39
-62200b15a823b099a5d111c36d1bda8cfa6f9e2a
-a285aebdc257fcbecbeae97cc6fd867e03629102 - except AndroidManifest.xml.meta
-
-can't cherry pick but need to implement:
-bd180bf83b317f00c0a5c3565727c789d8ed30c4 (Fixing non-italics in dialog scenes in new unity)
-
