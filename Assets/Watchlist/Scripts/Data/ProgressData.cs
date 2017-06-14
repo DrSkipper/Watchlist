@@ -405,7 +405,7 @@ public static class ProgressData
 
     private static void moveMiniBosses()
     {
-        int[] neighborCoords = { -1, 1 };
+        int[] neighborCoords = { -1, 0, 1 };
         for (int i = 0; i < _minibossTiles.Count; ++i)
         {
             IntegerVector miniBossTile = _minibossTiles[i];
@@ -414,6 +414,9 @@ public static class ProgressData
             {
                 foreach (int y in neighborCoords)
                 {
+                    if (Mathf.Abs(x) == Mathf.Abs(y))
+                        continue;
+
                     IntegerVector neighbor = new IntegerVector(miniBossTile.X + x, miniBossTile.Y + y);
                     if (Mathf.Abs(neighbor.X) <= 3 && Mathf.Abs(neighbor.Y) <= 3 && !_completedTiles.Contains(neighbor) && !IsCornerBoss(neighbor) && !IsMiniBoss(neighbor))
                         validNeighbors.Add(neighbor);
