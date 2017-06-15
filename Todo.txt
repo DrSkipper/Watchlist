@@ -1,7 +1,4 @@
 Watchlist todo:
-explosion visually draws old radius for first frame bug
-shader filter overlay effect
-outlined UI text, more UI animations?
 Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.
 Remove steam greenlight link in credits, replace with twitter follow & message about next game?
 Steam Achievements/trading cards?
@@ -11,6 +8,7 @@ Replace controller instruction button text with images. Keyboard too
 PauseMenu improvement?
 
 stretch goals:
+more UI animations?
 Cap/hard set points gained from boss?
 shader effect when enemy/hero dies
 sound manager? (limit on concurrent sound effects)
@@ -18,5 +16,6 @@ see Concept/bug.png
 Async music loading?
 
 Pretty much done:
+shader filter overlay effect
 Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should
 pooled objects?
