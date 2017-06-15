@@ -1,19 +1,20 @@
 Watchlist todo:
-minibosses move into blue map spaces
-shader effect when enemy/hero dies
 shader filter overlay effect
-sound manager? (limit on concurrent sound effects)
 outlined UI text, more UI animations?
 Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.
 Remove steam greenlight link in credits, replace with twitter follow & message about next game?
 Steam Achievements/trading cards?
-Cap/hard set points gained from boss?
-PauseMenu improvement?
 Copy over all icons from mobile branch
 Gather object pool counts on common scene scripts in mobile branch
-Async music loading?
-Replace controller instruction button text with images
+Replace controller instruction button text with images. Keyboard too
+PauseMenu improvement?
+
+stretch goals:
+Cap/hard set points gained from boss?
+shader effect when enemy/hero dies
+sound manager? (limit on concurrent sound effects)
 see Concept/bug.png
+Async music loading?
 
 Pretty much done:
 Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should

@@ -12,6 +12,8 @@ public class CameraController : VoBehavior
     public Vector2 TargetPosition; // Exposed for debugging
     public Vector2 OffsetPosition;
     public float ZoomSpeed = 20.0f;
+    public float RotationSpeed = 5.0f;
+    public float MaxAngle = 30.0f;
     
     [System.Serializable]
     public struct ZoomLevel
@@ -38,8 +40,12 @@ public class CameraController : VoBehavior
     {
         if (!PauseController.IsPaused())
         {
+            Vector2 oldTarget = _lockPosition;
             Vector2 centerTarget = calculateCenterTarget();
             this.transform.position = new Vector3(centerTarget.x + this.OffsetPosition.x, centerTarget.y + this.OffsetPosition.y, this.transform.position.z);
+
+            //if (Vector2.Distance(oldTarget, centerTarget) > 0.01f)
+                rotate();
             
             _currentZoomLevelIndex = findZoomLevelIndex();
             ZoomLevel zoomLevel = this.ZoomLevels[_currentZoomLevelIndex];
@@ -63,6 +69,16 @@ public class CameraController : VoBehavior
     private Vector2 _lockPosition;
     private Camera _camera;
     private int _currentZoomLevelIndex;
+    private float _currentAngle;
+    private int _angleDirection = 1;
+
+    private void rotate()
+    {
+        _currentAngle += this.RotationSpeed * Time.deltaTime * _angleDirection;
+        if (Mathf.Abs(_currentAngle) > this.MaxAngle)
+            _angleDirection = -_angleDirection;
+        this.transform.localRotation = Quaternion.AngleAxis(_currentAngle, Vector3.forward);
+    }
 
     private void playerSpawned(LocalEventNotifier.Event playerSpawnedEvent)
     {
