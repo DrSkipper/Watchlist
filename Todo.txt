@@ -1,4 +1,5 @@
 Watchlist todo:
+explosion visually draws old radius for first frame bug
 shader filter overlay effect
 outlined UI text, more UI animations?
 Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.

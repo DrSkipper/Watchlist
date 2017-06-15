@@ -64,10 +64,14 @@ public static class MenuInput
         return false;
     }
 
+    public static bool AnyPlayerButtonPressed(string buttonName)
+    {
+        return checkButton(buttonName, -1);
+    }
+
     /**
      * Private
      */
-
     private static bool checkButton(string buttonName, int playerIndex)
     {
         if (playerIndex < 0)

@@ -53,4 +53,20 @@ public static class GameplayInput
         SessionPlayer p = DynamicData.GetSessionPlayer(playerIndex);
         return ReInput.players.GetPlayer(p.RewiredId).GetButton(FIRE);
     }
+
+    public static bool AnyPlayerButtonPressed(string buttonName)
+    {
+        int numJoined = 0;
+        for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
+        {
+            SessionPlayer p = DynamicData.GetSessionPlayer(i);
+            if (p.HasJoined)
+            {
+                ++numJoined;
+                if (!ReInput.players.GetPlayer(p.RewiredId).GetButtonDown(buttonName))
+                    return false;
+            }
+        }
+        return numJoined > 0;
+    }
 }
