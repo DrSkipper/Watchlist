@@ -2,8 +2,10 @@
 
 public class CursorHider : MonoBehaviour
 {
+    public bool Visible = false;
+
 	void Start()
     {
-        Cursor.visible = false;
+        Cursor.visible = this.Visible;
 	}
 }
