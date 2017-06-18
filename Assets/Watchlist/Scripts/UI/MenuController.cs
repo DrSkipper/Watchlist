@@ -141,5 +141,7 @@ public class MenuController : VoBehavior, UIDialogHandler
             //TODO - fcole - Wait for some animation to be finished or something
             _elements[this.CurrentElement].Select();
         }
+
+        highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
     }
 }

@@ -11,7 +11,8 @@ public class MenuElement : MonoBehaviour
         ApplicationQuit,
         WipeProgress,
         ContinueProgress,
-        SendEvent
+        SendEvent,
+        URL
     }
 
     [System.Serializable]
@@ -123,6 +124,9 @@ public class MenuElement : MonoBehaviour
                 break;
             case ActionType.SendEvent:
                 GlobalEvents.Notifier.SendEvent(new MenuElementSelectedEvent(this, action.StringParameter));
+                break;
+            case ActionType.URL:
+                Application.OpenURL(action.StringParameter);
                 break;
         }
     }
