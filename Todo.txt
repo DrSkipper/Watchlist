@@ -1,11 +1,10 @@
 Watchlist todo:
-Enable cursor in credits screen but make sure to still allow controller/keyboard input to leave scene, and display text indicating so.
-Remove steam greenlight link in credits, replace with twitter follow & message about next game?
-Steam Achievements/trading cards?
-Copy over all icons from mobile branch
-Gather object pool counts on common scene scripts in mobile branch
-Replace controller instruction button text with images. Keyboard too
-PauseMenu improvement?
+- Remove steam greenlight link in credits, replace with twitter follow & message about next game?
+- Steam Achievements/trading cards?
+- Copy over all icons from mobile branch
+- Gather object pool counts on common scene scripts in mobile branch
+- Replace controller instruction button text with images. Keyboard too
+- PauseMenu improvement?
 
 stretch goals:
 more UI animations?
