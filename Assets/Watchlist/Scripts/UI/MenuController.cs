@@ -134,14 +134,30 @@ public class MenuController : VoBehavior, UIDialogHandler
 
     private void selectCurrentElement()
     {
-        _animators[this.CurrentElement].SetTrigger("Selected");
-
-        if (!_elements[this.CurrentElement].Locked)
+        // Currently only allowing selection on elements that have selection actions
+        if (_elements[this.CurrentElement].Actions != null && _elements[this.CurrentElement].Actions.Count > 0)
         {
-            //TODO - fcole - Wait for some animation to be finished or something
-            _elements[this.CurrentElement].Select();
-        }
+            _animators[this.CurrentElement].SetTrigger("Selected");
 
-        highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
+            if (!_elements[this.CurrentElement].Locked)
+            {
+                //TODO - fcole - Wait for some animation to be finished or something
+                _elements[this.CurrentElement].Select();
+            }
+
+            //NOTE: hack fix for not having to deal with unity animation crap. If we're not loading a scene with this selection, highlight the next element
+            bool changingScene = false;
+            for (int i = 0; i < _elements[this.CurrentElement].Actions.Count; ++i)
+            {
+                if (_elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.SceneChange)
+                {
+                    changingScene = true;
+                    break;
+                }
+            }
+
+            if (!changingScene)
+                highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
+        }
     }
 }
