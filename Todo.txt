@@ -13,6 +13,7 @@ shader effect when enemy/hero dies
 sound manager? (limit on concurrent sound effects)
 see Concept/bug.png
 Async music loading?
+Versus mode???
 
 Pretty much done:
 shader filter overlay effect
