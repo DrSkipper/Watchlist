@@ -7,6 +7,7 @@ public class MenuController : VoBehavior, UIDialogHandler
     public bool AllowSelection = true;
     public bool AcceptingInput { get { return _acceptingInput; } set { _acceptingInput = value; } }
     public bool ListenToPause = true;
+    public bool SelectionHackFix = true;
     public int[] PrioritizedDefaults;
     public MenuControlType ControlType = MenuControlType.UpDown;
     public int LimitToPlayerIndex = -1;
@@ -146,18 +147,21 @@ public class MenuController : VoBehavior, UIDialogHandler
             }
 
             //NOTE: hack fix for not having to deal with unity animation crap. If we're not loading a scene with this selection, highlight the next element
-            bool changingScene = false;
-            for (int i = 0; i < _elements[this.CurrentElement].Actions.Count; ++i)
+            if (this.SelectionHackFix)
             {
-                if (_elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.SceneChange)
+                bool changingScene = false;
+                for (int i = 0; i < _elements[this.CurrentElement].Actions.Count; ++i)
                 {
-                    changingScene = true;
-                    break;
+                    if (_elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.SceneChange)
+                    {
+                        changingScene = true;
+                        break;
+                    }
                 }
-            }
 
-            if (!changingScene)
-                highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
+                if (!changingScene)
+                    highlightElement((this.CurrentElement + 1) % this.MenuElements.Length);
+            }
         }
     }
 }

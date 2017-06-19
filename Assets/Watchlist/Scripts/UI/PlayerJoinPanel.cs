@@ -7,6 +7,8 @@ public class PlayerJoinPanel : MonoBehaviour
     public int PlayerIndex = 0;
     public Text JoinText;
     public Text JoinedText;
+    public GameObject JoinedControllerIcon;
+    public GameObject JoinedKeyboardIcon;
     public ControllerAssigner Assigner;
 
     void Awake()
