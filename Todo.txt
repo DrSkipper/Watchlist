@@ -1,10 +1,7 @@
 Watchlist todo:
-- Remove steam greenlight link in credits, replace with twitter follow & message about next game?
 - Steam Achievements/trading cards?
 - Copy over all icons from mobile branch
 - Gather object pool counts on common scene scripts in mobile branch
-- Replace controller instruction button text with images. Keyboard too
-- PauseMenu improvement?
 
 stretch goals:
 more UI animations?
