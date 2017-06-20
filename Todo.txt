@@ -1,6 +1,5 @@
 Watchlist todo:
 - Steam Achievements/trading cards/synced saves?
-- Copy over all icons from mobile branch
 
 stretch goals:
 more UI animations?
@@ -14,4 +13,3 @@ Versus mode???
 Pretty much done:
 shader filter overlay effect
 Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should
-pooled objects?
