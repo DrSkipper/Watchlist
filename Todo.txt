@@ -1,7 +1,6 @@
 Watchlist todo:
-- Steam Achievements/trading cards?
+- Steam Achievements/trading cards/synced saves?
 - Copy over all icons from mobile branch
-- Gather object pool counts on common scene scripts in mobile branch
 
 stretch goals:
 more UI animations?
