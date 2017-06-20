@@ -1,5 +1,6 @@
 Watchlist todo:
 - Steam Achievements/trading cards/synced saves?
+- Add font, button icon credits to credits scene?
 
 stretch goals:
 more UI animations?
