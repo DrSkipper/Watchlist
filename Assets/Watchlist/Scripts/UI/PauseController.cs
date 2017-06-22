@@ -4,7 +4,7 @@ public class PauseController : VoBehavior
 {
     public static bool IsPaused()
     {
-        return _pauseController._paused || Time.deltaTime == 0.0f;
+        return (_pauseController != null && _pauseController._paused) || Time.deltaTime == 0.0f;
     }
 
     public static void EnablePausing(bool enable)
