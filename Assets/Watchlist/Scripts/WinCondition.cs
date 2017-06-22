@@ -35,6 +35,7 @@ public class WinCondition : VoBehavior
 
     public void EndLevel()
     {
+        PauseController.EnablePausing(false);
         this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteIn");
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.LevelCompleteOut, this.LevelCompleteScreenLength);
     }
