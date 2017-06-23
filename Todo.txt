@@ -3,7 +3,6 @@ Watchlist todo:
 - Steam Trading Cards
 - Steam Cloud Save
 - Leaderboards??
-- At least fix being able to farm boss weak for points
 - Fullscreen, resolution, and v-sync options menu? Also local data wipe, but have to old button?
 
 stretch goals:
