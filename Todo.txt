@@ -3,7 +3,6 @@ Watchlist todo:
 - Steam Trading Cards
 - Steam Cloud Save
 - Leaderboards??
-- Fullscreen, resolution, and v-sync options menu? Also local data wipe, but have to old button?
 
 stretch goals:
 more UI animations?
