@@ -51,9 +51,14 @@ public class WinCondition : VoBehavior
     {
         GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         if (this.OnComplete == CompletionEffect.CompleteTile)
+        {
             ProgressData.CompleteTile(ProgressData.MostRecentTile);
+        }
         else if (this.OnComplete == CompletionEffect.WipeProgressData)
+        {
+            PersistentData.RecordHighScore();
             ProgressData.WipeData();
+        }
         ProgressData.SaveToDisk();
         SceneManager.LoadScene(this.Destination);
     }

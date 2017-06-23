@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public static class PersistentData
 {
     public const string DATA_PATH = "persistent.dat";
-    
+
     public static int[] GenerateBossesForPlaythrough()
     {
         LoadFromDisk();
@@ -70,6 +70,8 @@ public static class PersistentData
         diskData.TimesRefusedMaster = _timesRefusedMaster;
         diskData.TimesDefeatedMaster = _timesDefeatedMaster;
         diskData.TimesClearedMap = _timesClearedMap;
+        diskData.HighScoreSinglePlayer = _highScoreSinglePlayer;
+        diskData.HighScoreCoop = _highScoreCoop;
         DiskDataHandler.Save(DATA_PATH, diskData);
     }
 
@@ -89,6 +91,16 @@ public static class PersistentData
                 getInitialBossLockData();
             }
 
+            _levelsBeatenByNumPlayers = diskData.LevelsBeatenByNumPlayers;
+            _bossesBeaten = diskData.BossesBeaten;
+            _timesBeat4CornerBosses = diskData.TimesBeat4CornerBosses;
+            _timesAcceptedMaster = diskData.TimesAcceptedMaster;
+            _timesRefusedMaster = diskData.TimesRefusedMaster;
+            _timesDefeatedMaster = diskData.TimesDefeatedMaster;
+            _timesClearedMap = diskData.TimesClearedMap;
+            _highScoreSinglePlayer = diskData.HighScoreSinglePlayer;
+            _highScoreCoop = diskData.HighScoreCoop;
+
             if (_levelsBeatenByNumPlayers == null)
                 _levelsBeatenByNumPlayers = new int[DynamicData.MAX_PLAYERS];
         }
@@ -104,7 +116,45 @@ public static class PersistentData
         _timesRefusedMaster = 0;
         _timesDefeatedMaster = 0;
         _timesClearedMap = 0;
+        _highScoreSinglePlayer = 0;
+        _highScoreCoop = 0;
         SaveToDisk();
+    }
+
+    public static int GetSinglePlayerHighScore()
+    {
+        return _highScoreSinglePlayer;
+    }
+
+    public static int GetCoopHighScore()
+    {
+        return _highScoreCoop;
+    }
+
+    public static void RecordHighScore()
+    {
+        int score = 0;
+        int numPlayers = 0;
+        for (int i = 0; i < DynamicData.MAX_PLAYERS; ++i)
+        {
+            SessionPlayer p = DynamicData.GetSessionPlayer(i);
+            if (p.HasJoined)
+            {
+                ++numPlayers;
+                score += ProgressData.GetPointsForPlayer(i);
+            }
+        }
+
+        if (numPlayers > 1)
+        {
+            if (score > _highScoreCoop)
+                _highScoreCoop = score;
+        }
+        else
+        {
+            if (score > _highScoreSinglePlayer)
+                _highScoreSinglePlayer = score;
+        }
     }
 
     public static void RegisterLevelBeaten(int numPlayers)
@@ -166,6 +216,8 @@ public static class PersistentData
         public int TimesRefusedMaster;
         public int TimesDefeatedMaster;
         public int TimesClearedMap;
+        public int HighScoreSinglePlayer;
+        public int HighScoreCoop;
     }
 
     /**
@@ -180,6 +232,8 @@ public static class PersistentData
     private static int _timesRefusedMaster;
     private static int _timesDefeatedMaster;
     private static int _timesClearedMap;
+    private static int _highScoreSinglePlayer;
+    private static int _highScoreCoop;
     private static bool _hasLoaded = false;
 
     private const int BOSS_LOVERS = 1000001;
