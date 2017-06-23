@@ -19,6 +19,7 @@ public class OptionsMenu : MonoBehaviour
     public Text DataEraseText;
     public Toggler ShaderToggle;
     public string MainMenuScene = "MainMenu";
+    public float EraseDataHoldTime = 5.0f;
 
     void Start()
     {
@@ -61,10 +62,13 @@ public class OptionsMenu : MonoBehaviour
                 case VsyncIndex:
                     toggleVsync();
                     break;
+                default:
                 case DataEraseIndex:
                     break;
             }
         }
+
+        updateDataErase(this.MenuController.CurrentElement == DataEraseIndex && MenuInput.HoldingConfirm());
     }
 
     /**
@@ -76,10 +80,41 @@ public class OptionsMenu : MonoBehaviour
     private string _vsyncBaseText;
     private string _dataEraseBaseText;
     private Resolution[] _fullscreenResolutions;
+    private float _eraseDataHoldTime;
+    private bool _erasedData;
 
     private const string ON = "ON";
     private const string OFF = "OFF";
     private const string SHADER_KEY = "shader_toggle";
+
+    private void updateDataErase(bool holding)
+    {
+        if (_erasedData)
+            return;
+
+        if (holding)
+        {
+            if (_eraseDataHoldTime > this.EraseDataHoldTime)
+            {
+                _erasedData = true;
+                ProgressData.WipeData();
+                ProgressData.SaveToDisk();
+                PersistentData.EraseLocalData();
+                this.DataEraseText.text = _dataEraseBaseText + " (Erased!)";
+            }
+            else
+            {
+                _eraseDataHoldTime += Time.deltaTime;
+                this.DataEraseText.text = _dataEraseBaseText + " (Hold " + Mathf.RoundToInt(Mathf.Clamp(this.EraseDataHoldTime - _eraseDataHoldTime, 0.0f, this.EraseDataHoldTime)) + ")";
+            }
+
+        }
+        else if (_eraseDataHoldTime > 0.0f)
+        {
+            _eraseDataHoldTime = 0.0f;
+            this.DataEraseText.text = _dataEraseBaseText;
+        }
+    }
 
     private void toggleFullscreen()
     {
