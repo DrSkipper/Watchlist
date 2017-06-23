@@ -35,6 +35,7 @@ public class WinCondition : VoBehavior
 
     public void EndLevel()
     {
+        PauseController.EnablePausing(false);
         this.LevelCompletePanel.GetComponent<Animator>().SetTrigger("LevelCompleteIn");
         this.GetComponent<TimedCallbacks>().AddCallback(this, this.LevelCompleteOut, this.LevelCompleteScreenLength);
     }
@@ -50,9 +51,14 @@ public class WinCondition : VoBehavior
     {
         GlobalEvents.Notifier.SendEvent(new LevelCompleteEvent());
         if (this.OnComplete == CompletionEffect.CompleteTile)
+        {
             ProgressData.CompleteTile(ProgressData.MostRecentTile);
+        }
         else if (this.OnComplete == CompletionEffect.WipeProgressData)
+        {
+            PersistentData.RecordHighScore();
             ProgressData.WipeData();
+        }
         ProgressData.SaveToDisk();
         SceneManager.LoadScene(this.Destination);
     }

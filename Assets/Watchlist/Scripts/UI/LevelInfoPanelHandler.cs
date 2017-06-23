@@ -114,7 +114,6 @@ public class LevelInfoPanelHandler : MonoBehaviour
 
     private void beginGameplay()
     {
-        PauseController.EnablePausing(true);
         GlobalEvents.Notifier.SendEvent(new BeginGameplayEvent());
         this.enabled = false;
     }

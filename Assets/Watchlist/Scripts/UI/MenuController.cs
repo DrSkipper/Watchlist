@@ -152,7 +152,8 @@ public class MenuController : VoBehavior, UIDialogHandler
                 bool changingScene = false;
                 for (int i = 0; i < _elements[this.CurrentElement].Actions.Count; ++i)
                 {
-                    if (_elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.SceneChange)
+                    if (_elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.SceneChange ||
+                        _elements[this.CurrentElement].Actions[i].Type == MenuElement.ActionType.ApplicationQuit)
                     {
                         changingScene = true;
                         break;

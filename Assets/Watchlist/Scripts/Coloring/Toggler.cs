@@ -6,6 +6,7 @@ public class Toggler : MonoBehaviour
     public string PlayerPrefKey;
     public Behaviour[] ToggleTargets;
     public bool UseMenuInput = false;
+    public bool CheckInput = true;
 
     private delegate bool CheckDelegate();
     private CheckDelegate _check;
@@ -18,7 +19,9 @@ public class Toggler : MonoBehaviour
         else
             _toggled = 1;
 
-        if (this.UseMenuInput)
+        if (!this.CheckInput)
+            _check = noCheck;
+        else if (this.UseMenuInput)
             _check = menuCheck;
         else
             _check = gameplayCheck;
@@ -29,11 +32,14 @@ public class Toggler : MonoBehaviour
     void Update()
     {
         if (_check())
-        {
-            _toggled = _toggled == 1 ? 0 : 1;
-            toggle();
-            PlayerPrefs.SetInt(this.PlayerPrefKey, _toggled);
-        }
+            this.Toggle();
+    }
+
+    public void Toggle()
+    {
+        _toggled = _toggled == 1 ? 0 : 1;
+        toggle();
+        PlayerPrefs.SetInt(this.PlayerPrefKey, _toggled);
     }
     
     private void toggle()
@@ -42,6 +48,11 @@ public class Toggler : MonoBehaviour
         {
             this.ToggleTargets[i].enabled = _toggled == 1 ? true : false;
         }
+    }
+
+    private bool noCheck()
+    {
+        return false;
     }
 
     private bool menuCheck()

@@ -19,6 +19,11 @@ public static class MenuInput
         return checkButton(SELECT, playerIndex);
     }
 
+    public static bool HoldingConfirm(int playerIndex = -1)
+    {
+        return checkButtonHeld(SELECT, playerIndex);
+    }
+
     public static bool NavLeft(int playerIndex = -1)
     {
         return checkButton(LEFT, playerIndex);
@@ -79,6 +84,25 @@ public static class MenuInput
             foreach (Player player in ReInput.players.GetPlayers())
             {
                 if (player.GetButtonDown(buttonName))
+                    return true;
+            }
+            return false;
+        }
+
+        SessionPlayer sessionPlayer = DynamicData.GetSessionPlayer(playerIndex);
+        if (sessionPlayer == null || !sessionPlayer.HasJoined)
+            return false;
+
+        return ReInput.players.GetPlayer(sessionPlayer.RewiredId).GetButtonDown(buttonName);
+    }
+
+    private static bool checkButtonHeld(string buttonName, int playerIndex)
+    {
+        if (playerIndex < 0)
+        {
+            foreach (Player player in ReInput.players.GetPlayers())
+            {
+                if (player.GetButton(buttonName))
                     return true;
             }
             return false;

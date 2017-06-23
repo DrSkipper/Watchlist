@@ -24,6 +24,7 @@ public class LevelStartFlow : VoBehavior
 
     public void LevelStartOut()
     {
+        PauseController.EnablePausing(true);
         if (this.LevelIntroPanel != null)
             this.LevelIntroPanel.GetComponent<Animator>().SetTrigger("LevelStartOut");
     }
