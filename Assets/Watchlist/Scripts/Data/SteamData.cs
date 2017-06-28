@@ -10,25 +10,37 @@ public static class SteamData
     public static void UnlockBossAchievement(string bossName)
     {
         if (Initialized)
+        {
             SteamUserStats.SetAchievement(bossName.ToUpper() + BOSS_ACHIEVEMENT_SUFFIX);
+            SteamUserStats.StoreStats();
+        }
     }
 
     public static void UnlockMasterDefeatedAchievement()
     {
         if (Initialized)
+        {
             SteamUserStats.SetAchievement(MASTER_DEFEATED_ACHIEVEMENT);
+            SteamUserStats.StoreStats();
+        }
     }
 
     public static void UnlockMasterChoiceAchievement(bool accepted)
     {
         if (Initialized)
+        {
             SteamUserStats.SetAchievement(accepted ? ACCEPT_MASTER_ACHIEVEMENT : REFUSE_MASTER_ACHIEVEMENT);
+            SteamUserStats.StoreStats();
+        }
     }
 
     public static void UnlockCompleteWatchlistAchievement()
     {
         if (Initialized)
+        {
             SteamUserStats.SetAchievement(COMPLETE_WATCHLIST_ACHIEVEMENT);
+            SteamUserStats.StoreStats();
+        }
     }
 
     /**
