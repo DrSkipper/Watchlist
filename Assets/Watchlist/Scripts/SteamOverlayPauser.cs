@@ -13,7 +13,8 @@ public class SteamOverlayPauser : MonoBehaviour
 
     private void OnDestroy()
     {
-        _overlayCallback.Dispose();
+		if (_overlayCallback != null)
+        	_overlayCallback.Dispose();
     }
 
     private Callback<GameOverlayActivated_t> _overlayCallback;
