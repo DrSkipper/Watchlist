@@ -13,6 +13,11 @@ public class BossMasterChoiceRecorder : MonoBehaviour
         if (selectionEvent.Action.ToLower() == "choice_a")
         {
             PersistentData.RegisterAcceptedMaster();
+<<<<<<< Updated upstream
+=======
+            PersistentData.RecordHighScore();
+            PersistentData.SaveToDisk();
+>>>>>>> Stashed changes
         }
         else if (selectionEvent.Action.ToLower() == "choice_b")
         {
