@@ -53,6 +53,9 @@ public static class PersistentData
         LoadFromDisk();
         _bossUnlocksNeedingNotification.Remove(bossId);
         SaveToDisk();
+
+        if (allBossesUnlocked)
+            SteamData.UnlockCompleteWatchlistAchievement();
     }
 
     public static void SaveToDisk()
@@ -165,10 +168,12 @@ public static class PersistentData
         checkCommunalUnlock();
     }
 
-    public static void RegisterBossBeaten()
+    public static void RegisterBossBeaten(int bossId)
     {
         LoadFromDisk();
         ++_bossesBeaten;
+        if (StaticData.BossData.BossTypes.ContainsKey(bossId))
+            SteamData.UnlockBossAchievement(StaticData.BossData.BossTypes[bossId].Name);
     }
 
     public static void Register4CornerBossesBeaten()
@@ -182,18 +187,21 @@ public static class PersistentData
     {
         LoadFromDisk();
         ++_timesAcceptedMaster;
+        SteamData.UnlockMasterChoiceAchiefement(true);
     }
 
     public static void RegisterRefusedMaster()
     {
         LoadFromDisk();
         ++_timesRefusedMaster;
+        SteamData.UnlockMasterChoiceAchiefement(false);
     }
 
     public static void RegisterDefeatedMaster()
     {
         LoadFromDisk();
         ++_timesDefeatedMaster;
+        SteamData.UnlockMasterDefeatedAchievement();
     }
 
     public static void RegisterClearedMap()
@@ -240,6 +248,19 @@ public static class PersistentData
     private const int BOSS_COMMUNAL = 1000003;
     private const int BOSS_EARTH = 1000006;
     private const int BOSS_ELDER = 1000008;
+
+    private static bool allBossesUnlocked
+    {
+        get
+        {
+            for (int i = 0; i < _bossLockStatuses.Count; ++i)
+            {
+                if (_bossLockStatuses[i])
+                    return false;
+            }
+            return true;
+        }
+    }
 
     private static void getInitialBossLockData()
     {

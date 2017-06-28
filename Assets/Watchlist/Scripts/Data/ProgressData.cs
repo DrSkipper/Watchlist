@@ -45,7 +45,8 @@ public static class ProgressData
             PersistentData.RegisterLevelBeaten(DynamicData.NumJoinedPlayers());
             if (IsCornerBoss(tile))
             {
-                PersistentData.RegisterBossBeaten();
+                if (_mostRecentBossIndex >= 0)
+                    PersistentData.RegisterBossBeaten(GetCurrentBosses()[_mostRecentBossIndex]);
                 if (NumBossesBeaten() == 4)
                     PersistentData.Register4CornerBossesBeaten();
             }
@@ -100,9 +101,10 @@ public static class ProgressData
         return num;
     }
 
-    public static void SelectTile(IntegerVector tile)
+    public static void SelectTile(IntegerVector tile, int bossIndex)
     {
         _mostRecentTile = tile;
+        _mostRecentBossIndex = bossIndex;
     }
 
     public static int GetCurrentDifficulty()
@@ -380,6 +382,7 @@ public static class ProgressData
      */
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
+    private static int _mostRecentBossIndex;
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
     private static int[] _currentBosses;
     private static int[] _playerPoints;

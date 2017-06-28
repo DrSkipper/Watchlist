@@ -242,20 +242,9 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
             }
             else if (MenuInput.SelectCurrentElement() && _grid[this.CurrentPosition.X + _halfSize, this.CurrentPosition.Y + _halfSize].State == TileState.Available)
             {
-                int bossIndex = -1;
-                for (int i = 0; i < this.BossTiles.Length; ++i)
-                {
-                    IntegerVector tile = this.BossTiles[i];
+                int bossIndex = getBossIndex();
                 
-                    if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
-                    {
-                        bossIndex = i;
-                        break;
-                    }
-                }
-
-                //TODO - Send input to level generation
-                ProgressData.SelectTile(this.CurrentPosition);
+                ProgressData.SelectTile(this.CurrentPosition, bossIndex);
                 if (_allBossesDefeated && this.CurrentPosition.X == 0 && this.CurrentPosition.Y == 0)
                 {
                     SceneManager.LoadScene(this.FinalDialogSceneName);
@@ -299,6 +288,22 @@ public class LevelGraphController : VoBehavior, UIDialogHandler
     private float _timeSinceBlink;
     private bool _allBossesDefeated;
     private bool _acceptingInput = true;
+
+    private int getBossIndex()
+    {
+        int bossIndex = -1;
+        for (int i = 0; i < this.BossTiles.Length; ++i)
+        {
+            IntegerVector tile = this.BossTiles[i];
+
+            if (this.CurrentPosition.X == tile.X && this.CurrentPosition.Y == tile.Y)
+            {
+                bossIndex = i;
+                break;
+            }
+        }
+        return bossIndex;
+    }
 
     private bool neighborsTile(Vector2 tile, Vector2 neighbor)
     {

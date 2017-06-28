@@ -13,11 +13,13 @@ public class BossMasterChoiceRecorder : MonoBehaviour
         if (selectionEvent.Action.ToLower() == "choice_a")
         {
             PersistentData.RegisterAcceptedMaster();
+            PersistentData.SaveToDisk();
         }
         else if (selectionEvent.Action.ToLower() == "choice_b")
         {
             GlobalEvents.Notifier.SendEvent(new PlayMusicEvent());
             PersistentData.RegisterRefusedMaster();
+            PersistentData.SaveToDisk();
         }
     }
 }
