@@ -172,6 +172,7 @@ public static class PersistentData
     {
         LoadFromDisk();
         ++_bossesBeaten;
+        Debug.Log("Attempting boss unlock achievement for boss id: " + bossId);
         if (StaticData.BossData.BossTypes.ContainsKey(bossId))
             SteamData.UnlockBossAchievement(StaticData.BossData.BossTypes[bossId].Name);
     }
@@ -187,14 +188,14 @@ public static class PersistentData
     {
         LoadFromDisk();
         ++_timesAcceptedMaster;
-        SteamData.UnlockMasterChoiceAchiefement(true);
+        SteamData.UnlockMasterChoiceAchievement(true);
     }
 
     public static void RegisterRefusedMaster()
     {
         LoadFromDisk();
         ++_timesRefusedMaster;
-        SteamData.UnlockMasterChoiceAchiefement(false);
+        SteamData.UnlockMasterChoiceAchievement(false);
     }
 
     public static void RegisterDefeatedMaster()

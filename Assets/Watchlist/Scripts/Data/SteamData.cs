@@ -19,7 +19,7 @@ public static class SteamData
             SteamUserStats.SetAchievement(MASTER_DEFEATED_ACHIEVEMENT);
     }
 
-    public static void UnlockMasterChoiceAchiefement(bool accepted)
+    public static void UnlockMasterChoiceAchievement(bool accepted)
     {
         if (Initialized)
             SteamUserStats.SetAchievement(accepted ? ACCEPT_MASTER_ACHIEVEMENT : REFUSE_MASTER_ACHIEVEMENT);
