@@ -1,31 +1,29 @@
 ﻿using UnityEngine;
 using System.IO;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public static class DiskDataHandler
 {
-    public static string LoadStreamedAsset(string filePath)
-    {
-        if (filePath.Contains("://")) {
-            WWW www = new WWW(filePath);
-            //yield return www;
-            return www.text;
-        } else
-            return System.IO.File.ReadAllText(filePath);
-    }
-    
-
     public static void Save(string path, object data)
     {
-        PlayerPrefs.SetString(path, JsonConvert.SerializeObject(data));
+        string fullPath = Application.persistentDataPath + "/" + path;
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Exists(fullPath) ? File.Open(fullPath, FileMode.Open) : File.Create(fullPath);
+        bf.Serialize(file, data);
+        file.Close();
     }
 
     public static T Load<T>(string path)
     {
-        //string fullPath = Application.persistentDataPath + Path.DirectorySeparatorChar + path;
-        if (PlayerPrefs.HasKey(path))
+        string fullPath = Application.persistentDataPath + "/" + path;
+        if (File.Exists(fullPath))
         {
-            return JsonConvert.DeserializeObject<T>(PlayerPrefs.GetString(path));
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(fullPath, FileMode.Open);
+            T data = (T)bf.Deserialize(file);
+            file.Close();
+
+            return data;
         }
         return default(T);
     }
