@@ -153,25 +153,35 @@ public static class PersistentData
         if (numPlayers > 1)
         {
             if (score > _highScoreCoop)
+            {
                 OverwriteHighScoreCoop(score);
+
+                if (LeaderboardAccessor.Instance != null && SteamData.Initialized)
+                    LeaderboardAccessor.BeginGatheringData();
+            }
         }
         else
         {
             if (score > _highScoreSinglePlayer)
+            {
                 OverwriteHighScoreSolo(score);
+
+                if (LeaderboardAccessor.Instance != null && SteamData.Initialized)
+                    LeaderboardAccessor.BeginGatheringData();
+            }
         }
     }
 
     //NOTE: Use carefully! i.e. only when syncing leaderboard
     public static void OverwriteHighScoreSolo(int score)
     {
-        Debug.Log("Overwriting High Score Solo!! " + score);
+        //Debug.Log("Overwriting High Score Solo!! " + score);
         _highScoreSinglePlayer = score;
     }
 
     public static void OverwriteHighScoreCoop(int score)
     {
-        Debug.Log("Overwriting High Score Coop!! " + score);
+        //Debug.Log("Overwriting High Score Coop!! " + score);
         _highScoreCoop = score;
     }
 
