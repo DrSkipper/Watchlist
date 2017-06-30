@@ -14,6 +14,7 @@ public class LeaderboardMenu : MonoBehaviour
     public LeaderboardListEntry PlayerEntry;
     public LeaderboardListEntry[] List;
     public LeaderboardDisplayType CurrentDisplayType;
+    public const string EXIT_EVENT = "scene_exit";
 
     public enum LeaderboardDisplayType
     {
@@ -36,6 +37,8 @@ public class LeaderboardMenu : MonoBehaviour
             this.LoadingPanel.GetComponent<Text>().text = this.NoSteamText;
             this.enabled = false;
         }
+
+        GlobalEvents.Notifier.Listen(EXIT_EVENT, this, onSceneExit);
     }
 
     void Update()
@@ -76,6 +79,12 @@ public class LeaderboardMenu : MonoBehaviour
     private LeaderboardAccessor.LeaderboardFilter _currentFilter;
     private bool _loading;
     private LeaderboardManager.LeaderboardType _prevType;
+
+    private void onSceneExit(LocalEventNotifier.Event e)
+    {
+        if (_loading)
+            removeCallback();
+    }
 
     private void alignTypeAndFilter()
     {

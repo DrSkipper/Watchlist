@@ -5,6 +5,7 @@ public class ExitHandler : VoBehavior
 {
     public string Destination = "";
     public ExitInput Input = ExitInput.Exit;
+    public string EventToSend = "";
 
     [System.Serializable]
     public enum ExitInput
@@ -32,6 +33,13 @@ public class ExitHandler : VoBehavior
         }
         if (pressed)
         {
+            if (this.EventToSend != null && this.EventToSend != "")
+            {
+                LocalEventNotifier.Event e = new LocalEventNotifier.Event();
+                e.Name = this.EventToSend;
+                GlobalEvents.Notifier.SendEvent(e);
+            }
+
             if (this.Destination != "")
             {
                 ProgressData.LoadFromDisk(true);
