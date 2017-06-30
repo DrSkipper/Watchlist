@@ -139,7 +139,8 @@ public class LeaderboardManager : MonoBehaviour
     void Finish()
     {
         this.Finished = true;
-        this.DataGatheredCallback();
+        if (this.DataGatheredCallback != null)
+            this.DataGatheredCallback();
     }
 
     /**
@@ -234,6 +235,9 @@ public class LeaderboardManager : MonoBehaviour
         _topPlayersResult.Set(call);
     }
 
+    /**
+     * Async Callbacks
+     */
     private void onPlayerScoreRetrieved(LeaderboardScoresDownloaded_t result, bool failure)
     {
         if (failure)
