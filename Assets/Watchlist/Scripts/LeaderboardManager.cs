@@ -2,16 +2,27 @@
 using System.Collections.Generic;
 using Steamworks;
 
-public class LeaderboardDisplay : MonoBehaviour
+public class LeaderboardManager : MonoBehaviour
 {
     public const string SOLO_LEADERBOARD = "Solo High Score";
     public const string COOP_LEADERBOARD = "Co-op High Score";
     public const int LEADERBOARD_DETAILS_NUM = 0;
 
+    public delegate void DataGatheredDelegate();
+
     public bool Finished { get; private set; }
-    public LeaderboardEntry[] SoloLeaderboard { get { return _soloTopPlayers.ToArray(); } }
-    private DataGatherStep _currentStep = DataGatherStep.NotStarted;
-    
+    public LeaderboardEntry[] Leaderboard { get { return _topPlayers.ToArray(); } }
+    public LeaderboardEntry PlayerEntry { get { return _playerEntry; } }
+    public LeaderboardType Type { get; private set; }
+    public DataGatherStep CurrentStep { get; private set; }
+    private DataGatheredDelegate DataGatheredCallback;
+
+    public enum LeaderboardType
+    {
+        Solo,
+        Coop
+    }
+
     public enum DataGatherStep
     {
         NotStarted = 0,
@@ -32,21 +43,26 @@ public class LeaderboardDisplay : MonoBehaviour
         public bool IsUser;
     }
 
-    void Start()
+    public void BeginGatheringData(LeaderboardType leaderboardType, DataGatheredDelegate callback)
     {
-        if (!SteamData.Initialized)
-        {
-            Finish();
-            return;
-        }
+        this.Finished = false;
+        this.CurrentStep = DataGatherStep.NotStarted;
+        this.Type = leaderboardType;
+        this.DataGatheredCallback = callback;
 
-        NextStep();
+        if (!SteamData.Initialized)
+            Finish();
+        else
+            NextStep();
     }
 
+    /**
+     * Steps
+     */
     void NextStep()
     {
-        _currentStep = (DataGatherStep)((int)_currentStep + 1);
-        switch (_currentStep)
+        this.CurrentStep = (DataGatherStep)((int)this.CurrentStep + 1);
+        switch (this.CurrentStep)
         {
             case DataGatherStep.FindLeaderboard:
                 FindLeaderboard();
@@ -112,10 +128,10 @@ public class LeaderboardDisplay : MonoBehaviour
 
     void CompileLeaderboardEntries()
     {
-        _soloTopPlayers = new List<LeaderboardEntry>();
-        for (int i = 0; i < _soloTopPlayerCount; ++i)
+        _topPlayers = new List<LeaderboardEntry>();
+        for (int i = 0; i < _topPlayerCount; ++i)
         {
-            _soloTopPlayers.Add(getLeaderboardEntry(_solotTopPlayerEntries, i));
+            _topPlayers.Add(getLeaderboardEntry(_topPlayerEntries, i));
         }
         NextStep();
     }
@@ -123,33 +139,52 @@ public class LeaderboardDisplay : MonoBehaviour
     void Finish()
     {
         this.Finished = true;
+        this.DataGatheredCallback();
     }
 
     /**
      * Private
      */
     private CallResult<LeaderboardScoresDownloaded_t> _playerScoreResult;
-    private CallResult<LeaderboardFindResult_t> _soloLeaderboardResult;
+    private CallResult<LeaderboardFindResult_t> _leaderboardResult;
     private CallResult<LeaderboardScoreUploaded_t> _playerScoreUploadResult;
-    private CallResult<LeaderboardScoresDownloaded_t> _soloTopPlayersResult;
-    private SteamLeaderboard_t _soloLeaderboard;
+    private CallResult<LeaderboardScoresDownloaded_t> _topPlayersResult;
+    private SteamLeaderboard_t _leaderboard;
     private LeaderboardScoresDownloaded_t _playerScore;
-    private int _soloTopPlayerCount;
-    private SteamLeaderboardEntries_t _solotTopPlayerEntries;
-    private List<LeaderboardEntry> _soloTopPlayers;
+    private int _topPlayerCount;
+    private SteamLeaderboardEntries_t _topPlayerEntries;
+    private List<LeaderboardEntry> _topPlayers;
     private LeaderboardEntry _playerEntry;
+
+    private const string SOLO = "solo";
+    private const string COOP = "coop";
+    private string _typeString
+    {
+        get
+        {
+            return this.Type == LeaderboardType.Solo ? SOLO : COOP;
+        }
+    }
+
+    private string _leaderboardName
+    {
+        get
+        {
+            return this.Type == LeaderboardType.Solo ? SOLO_LEADERBOARD : COOP_LEADERBOARD;
+        }
+    }
 
     private void findLeaderboard()
     {
-        _soloLeaderboardResult = CallResult<LeaderboardFindResult_t>.Create(onSoloLeaderboardFound);
-        SteamAPICall_t soloCall = SteamUserStats.FindLeaderboard(SOLO_LEADERBOARD);
-        _soloLeaderboardResult.Set(soloCall);
+        _leaderboardResult = CallResult<LeaderboardFindResult_t>.Create(onLeaderboardFound);
+        SteamAPICall_t call = SteamUserStats.FindLeaderboard(_leaderboardName);
+        _leaderboardResult.Set(call);
     }
 
     private void downloadPlayerScore()
     {
         _playerScoreResult = CallResult<LeaderboardScoresDownloaded_t>.Create(onPlayerScoreRetrieved);
-        SteamAPICall_t scoreCall = SteamUserStats.DownloadLeaderboardEntriesForUsers(_soloLeaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
+        SteamAPICall_t scoreCall = SteamUserStats.DownloadLeaderboardEntriesForUsers(_leaderboard, new CSteamID[] { SteamUser.GetSteamID() }, 1);
         _playerScoreResult.Set(scoreCall);
     }
 
@@ -178,29 +213,32 @@ public class LeaderboardDisplay : MonoBehaviour
     private void uploadPlayerScore(int score)
     {
         int[] details = new int[LEADERBOARD_DETAILS_NUM];
-        _playerScoreUploadResult = CallResult<LeaderboardScoreUploaded_t>.Create(onSoloScoreUploaded);
-        SteamAPICall_t call = SteamUserStats.UploadLeaderboardScore(_soloLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, score, details, LEADERBOARD_DETAILS_NUM);
+        _playerScoreUploadResult = CallResult<LeaderboardScoreUploaded_t>.Create(onScoreUploaded);
+        SteamAPICall_t call = SteamUserStats.UploadLeaderboardScore(_leaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, score, details, LEADERBOARD_DETAILS_NUM);
         _playerScoreUploadResult.Set(call);
     }
 
     private void updateLocalPlayerScore(int score)
     {
-        PersistentData.OverwriteHighScoreSolo(score);
+        if (this.Type == LeaderboardType.Solo)
+            PersistentData.OverwriteHighScoreSolo(score);
+        else
+            PersistentData.OverwriteHighScoreCoop(score);
         PersistentData.SaveToDisk();
     }
 
     private void gatherLeaderboardEntries()
     {
-        _soloTopPlayersResult = CallResult<LeaderboardScoresDownloaded_t>.Create(onLeaderboardEntriesDownloaded);
-        SteamAPICall_t call = SteamUserStats.DownloadLeaderboardEntries(_soloLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, 0, 9);
-        _soloTopPlayersResult.Set(call);
+        _topPlayersResult = CallResult<LeaderboardScoresDownloaded_t>.Create(onLeaderboardEntriesDownloaded);
+        SteamAPICall_t call = SteamUserStats.DownloadLeaderboardEntries(_leaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, 0, 9);
+        _topPlayersResult.Set(call);
     }
 
     private void onPlayerScoreRetrieved(LeaderboardScoresDownloaded_t result, bool failure)
     {
         if (failure)
         {
-            Debug.LogWarning("Error finding player's highscore");
+            Debug.LogWarning("Error finding player's highscore: " + _typeString);
             Finish();
             return;
         }
@@ -212,11 +250,11 @@ public class LeaderboardDisplay : MonoBehaviour
         }
     }
     
-    private void onSoloScoreUploaded(LeaderboardScoreUploaded_t result, bool failure)
+    private void onScoreUploaded(LeaderboardScoreUploaded_t result, bool failure)
     {
         if (failure)
         {
-            Debug.LogWarning("Error uploading player's solo score");
+            Debug.LogWarning("Error uploading player's score: " + _typeString);
             Finish();
             return;
         }
@@ -224,22 +262,22 @@ public class LeaderboardDisplay : MonoBehaviour
         downloadPlayerScore();
     }
 
-    private void onSoloLeaderboardFound(LeaderboardFindResult_t result, bool failure)
+    private void onLeaderboardFound(LeaderboardFindResult_t result, bool failure)
     {
         if (failure)
         {
-            Debug.LogWarning("Error finding solo leaderboard");
+            Debug.LogWarning("Error finding leaderboard: " + _typeString);
             Finish();
             return;
         }
         else if (result.m_bLeaderboardFound != 1)
         {
-            Debug.LogWarning("Could not find solo leaderboard");
+            Debug.LogWarning("Could not find leaderboard: " + _typeString);
             Finish();
             return;
         }
 
-        _soloLeaderboard = result.m_hSteamLeaderboard;
+        _leaderboard = result.m_hSteamLeaderboard;
         NextStep();
     }
 
@@ -247,13 +285,13 @@ public class LeaderboardDisplay : MonoBehaviour
     {
         if (failure)
         {
-            Debug.LogWarning("Error downloading top players");
+            Debug.LogWarning("Error downloading top players: " + _typeString);
             Finish();
             return;
         }
 
-        _soloTopPlayerCount = result.m_cEntryCount;
-        _solotTopPlayerEntries = result.m_hSteamLeaderboardEntries;
+        _topPlayerCount = result.m_cEntryCount;
+        _topPlayerEntries = result.m_hSteamLeaderboardEntries;
         NextStep();
     }
 }
