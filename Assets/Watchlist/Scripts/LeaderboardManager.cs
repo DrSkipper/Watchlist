@@ -12,6 +12,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public bool Finished { get; private set; }
     public LeaderboardEntry[] Leaderboard { get { return _topPlayers.ToArray(); } }
+    public LeaderboardEntry[] FriendsLeaderboard { get { return _friends.ToArray(); } }
     public LeaderboardEntry PlayerEntry { get { return _playerEntry; } }
     public LeaderboardType Type { get; private set; }
     public DataGatherStep CurrentStep { get; private set; }
@@ -47,6 +48,8 @@ public class LeaderboardManager : MonoBehaviour
     public void BeginGatheringData(LeaderboardType leaderboardType, DataGatheredDelegate callback)
     {
         this.Finished = false;
+        _topPlayersReceived = false;
+        _friendsReceived = false;
         this.CurrentStep = DataGatherStep.NotStarted;
         this.Type = leaderboardType;
         this.DataGatheredCallback = callback;
@@ -135,6 +138,7 @@ public class LeaderboardManager : MonoBehaviour
     void GatherLeaderboardEntries()
     {
         gatherLeaderboardEntries();
+        gatherFriendsEntries();
     }
 
     void CompileLeaderboardEntries()
@@ -143,6 +147,11 @@ public class LeaderboardManager : MonoBehaviour
         for (int i = 0; i < _topPlayerCount; ++i)
         {
             _topPlayers.Add(getLeaderboardEntry(_topPlayerEntries, i));
+        }
+        _friends = new List<LeaderboardEntry>();
+        for (int i = 0; i < Mathf.Min(_friendsCount, 10); ++i)
+        {
+            _friends.Add(getLeaderboardEntry(_friendsEntries, i));
         }
         NextStep();
     }
@@ -161,11 +170,17 @@ public class LeaderboardManager : MonoBehaviour
     private CallResult<LeaderboardFindResult_t> _leaderboardResult;
     private CallResult<LeaderboardScoreUploaded_t> _playerScoreUploadResult;
     private CallResult<LeaderboardScoresDownloaded_t> _topPlayersResult;
+    private CallResult<LeaderboardScoresDownloaded_t> _friendsResult;
     private SteamLeaderboard_t _leaderboard;
     private LeaderboardScoresDownloaded_t _playerScore;
     private int _topPlayerCount;
+    private int _friendsCount;
+    private bool _topPlayersReceived;
+    private bool _friendsReceived;
     private SteamLeaderboardEntries_t _topPlayerEntries;
+    private SteamLeaderboardEntries_t _friendsEntries;
     private List<LeaderboardEntry> _topPlayers;
+    private List<LeaderboardEntry> _friends;
     private LeaderboardEntry _playerEntry;
 
     private const string SOLO = "solo";
@@ -259,6 +274,13 @@ public class LeaderboardManager : MonoBehaviour
         _topPlayersResult.Set(call);
     }
 
+    private void gatherFriendsEntries()
+    {
+        _friendsResult = CallResult<LeaderboardScoresDownloaded_t>.Create(onFriendsEntriesDownloaded);
+        SteamAPICall_t call = SteamUserStats.DownloadLeaderboardEntries(_leaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestFriends, 0, 9);
+        _friendsResult.Set(call);
+    }
+
     /**
      * Async Callbacks
      */
@@ -320,6 +342,28 @@ public class LeaderboardManager : MonoBehaviour
 
         _topPlayerCount = result.m_cEntryCount;
         _topPlayerEntries = result.m_hSteamLeaderboardEntries;
-        NextStep();
+        _topPlayersReceived = true;
+        checkTopPlayersAndFriendsDownloaded();
+    }
+
+    private void onFriendsEntriesDownloaded(LeaderboardScoresDownloaded_t result, bool failure)
+    {
+        if (failure)
+        {
+            Debug.LogWarning("Error downloading friends entries: " + _typeString);
+            Finish();
+            return;
+        }
+
+        _friendsCount = result.m_cEntryCount;
+        _friendsEntries = result.m_hSteamLeaderboardEntries;
+        _friendsReceived = true;
+        checkTopPlayersAndFriendsDownloaded();
+    }
+
+    private void checkTopPlayersAndFriendsDownloaded()
+    {
+        if (_topPlayersReceived && _friendsReceived)
+            NextStep();
     }
 }

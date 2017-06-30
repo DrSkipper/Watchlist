@@ -7,6 +7,12 @@ public class LeaderboardAccessor : MonoBehaviour
     public LeaderboardManager.DataGatheredDelegate SoloCallback;
     public LeaderboardManager.DataGatheredDelegate CoopCallback;
 
+    public enum LeaderboardFilter
+    {
+        Friends,
+        Global
+    }
+
     void Start()
     {
         _instance = this;

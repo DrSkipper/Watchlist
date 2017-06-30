@@ -3,15 +3,26 @@ using UnityEngine.UI;
 
 public class LeaderboardMenu : MonoBehaviour
 {
-    public string SoloText;
-    public string CoopText;
+    public string SoloFriendsText;
+    public string CoopFriendsText;
+    public string SoloGlobalText;
+    public string CoopGlobalText;
     public string NoSteamText;
     public Text TitleText;
     public GameObject LeaderboardPanel;
     public GameObject LoadingPanel;
     public LeaderboardListEntry PlayerEntry;
     public LeaderboardListEntry[] List;
-    public LeaderboardManager.LeaderboardType CurrentType;
+    public LeaderboardDisplayType CurrentDisplayType;
+
+    public enum LeaderboardDisplayType
+    {
+        SoloFriends = 0,
+        CoopFriends,
+        SoloGlobal,
+        CoopGlobal
+    }
+    private const int LEADERBOARD_DISPLAY_TYPE_COUNT = 4;
 
     void Start()
     {
@@ -29,10 +40,18 @@ public class LeaderboardMenu : MonoBehaviour
 
     void Update()
     {
-        if (MenuInput.NavRight() || MenuInput.NavLeft())
+        bool right = MenuInput.NavRight();
+        bool left = MenuInput.NavLeft();
+        if (right || left)
         {
-            _prevType = this.CurrentType;
-            this.CurrentType = this.CurrentType == LeaderboardManager.LeaderboardType.Solo ? LeaderboardManager.LeaderboardType.Coop : LeaderboardManager.LeaderboardType.Solo;
+            _prevType = _currentType;
+            int displayType = (int)this.CurrentDisplayType;
+            if (right)
+                displayType = displayType >= LEADERBOARD_DISPLAY_TYPE_COUNT - 1 ? 0 : displayType + 1;
+            else
+                displayType = displayType <= 0 ? LEADERBOARD_DISPLAY_TYPE_COUNT - 1 : displayType - 1;
+            this.CurrentDisplayType = (LeaderboardDisplayType)displayType;
+            alignTypeAndFilter();
             this.DisplayLeaderboard();
         }
     }
@@ -42,9 +61,9 @@ public class LeaderboardMenu : MonoBehaviour
         if (_loading)
             removeCallback();
 
-        this.TitleText.text = this.CurrentType == LeaderboardManager.LeaderboardType.Solo ? this.SoloText : this.CoopText;
+        setTitleText();
 
-        if (LeaderboardAccessor.LeaderboardFinished(this.CurrentType))
+        if (LeaderboardAccessor.LeaderboardFinished(_currentType))
             configure();
         else
             addCallback();
@@ -53,15 +72,66 @@ public class LeaderboardMenu : MonoBehaviour
     /**
      * Private
      */
+    private LeaderboardManager.LeaderboardType _currentType;
+    private LeaderboardAccessor.LeaderboardFilter _currentFilter;
     private bool _loading;
     private LeaderboardManager.LeaderboardType _prevType;
+
+    private void alignTypeAndFilter()
+    {
+        switch (this.CurrentDisplayType)
+        {
+            default:
+            case LeaderboardDisplayType.SoloFriends:
+            case LeaderboardDisplayType.CoopFriends:
+                _currentFilter = LeaderboardAccessor.LeaderboardFilter.Friends;
+                break;
+            case LeaderboardDisplayType.SoloGlobal:
+            case LeaderboardDisplayType.CoopGlobal:
+                _currentFilter = LeaderboardAccessor.LeaderboardFilter.Global;
+                break;
+        }
+
+        switch (this.CurrentDisplayType)
+        {
+            default:
+            case LeaderboardDisplayType.SoloFriends:
+            case LeaderboardDisplayType.SoloGlobal:
+                _currentType = LeaderboardManager.LeaderboardType.Solo;
+                break;
+            case LeaderboardDisplayType.CoopFriends:
+            case LeaderboardDisplayType.CoopGlobal:
+                _currentType = LeaderboardManager.LeaderboardType.Coop;
+                break;
+        }
+    }
+
+    private void setTitleText()
+    {
+        switch (this.CurrentDisplayType)
+        {
+            default:
+            case LeaderboardDisplayType.SoloFriends:
+                this.TitleText.text = this.SoloFriendsText;
+                break;
+            case LeaderboardDisplayType.CoopFriends:
+                this.TitleText.text = this.CoopFriendsText;
+                break;
+            case LeaderboardDisplayType.SoloGlobal:
+                this.TitleText.text = this.SoloGlobalText;
+                break;
+            case LeaderboardDisplayType.CoopGlobal:
+                this.TitleText.text = this.CoopGlobalText;
+                break;
+        }
+    }
 
     private void configure()
     {
         _loading = false;
         this.LeaderboardPanel.SetActive(true);
         this.LoadingPanel.SetActive(false);
-        LeaderboardManager.LeaderboardEntry[] entries = LeaderboardAccessor.GetEntries(this.CurrentType);
+        LeaderboardManager.LeaderboardEntry[] entries = LeaderboardAccessor.GetEntries(_currentType);
 
         for (int i = 0; i < this.List.Length; ++i)
         {
@@ -76,7 +146,7 @@ public class LeaderboardMenu : MonoBehaviour
             }
         }
 
-        this.PlayerEntry.ConfigureForEntry(LeaderboardAccessor.GetPlayerEntry(this.CurrentType));
+        this.PlayerEntry.ConfigureForEntry(LeaderboardAccessor.GetPlayerEntry(_currentType));
     }
 
     private void addCallback()
@@ -84,7 +154,7 @@ public class LeaderboardMenu : MonoBehaviour
         _loading = true;
         this.LeaderboardPanel.SetActive(false);
         this.LoadingPanel.SetActive(true);
-        switch (this.CurrentType)
+        switch (_currentType)
         {
             default:
             case LeaderboardManager.LeaderboardType.Solo:
