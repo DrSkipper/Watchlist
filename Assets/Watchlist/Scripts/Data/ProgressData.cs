@@ -11,6 +11,7 @@ public static class ProgressData
 
     public static IntegerVector[] CompletedTiles { get { LoadFromDisk(); return _completedTiles.ToArray(); } }
     public static IntegerVector MostRecentTile { get { LoadFromDisk(); return _mostRecentTile.HasValue ? _mostRecentTile.Value : IntegerVector.Zero; } }
+    public static int MostPlayersUsed { get { return _mostPlayersUsed; } }
     
     [System.Serializable]
     public class SlotWrapper
@@ -63,6 +64,8 @@ public static class ProgressData
 
             moveMiniBosses();
         }
+
+        _mostPlayersUsed = DynamicData.NumJoinedPlayers();
     }
 
     public static bool IsCornerBoss(IntegerVector tile)
@@ -305,6 +308,7 @@ public static class ProgressData
         _completedTiles = new List<IntegerVector>();
         _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
         _mostRecentTile = null;
+        _mostPlayersUsed = 0;
         _currentBosses = null;
         _playerPoints = null;
         _playerHealth = null;
@@ -318,6 +322,7 @@ public static class ProgressData
         diskData.CompletedTiles = _completedTiles;
         diskData.HaveUsedMostRecentTile = _mostRecentTile != null;
         diskData.MostRecentTile = _mostRecentTile.HasValue ? _mostRecentTile.Value : new IntegerVector();
+        diskData.MostPlayersUsed = _mostPlayersUsed;
         diskData.WeaponSlotsByPlayer = _weaponSlotsByPlayer;
         diskData.CurrentBosses = _currentBosses;
         diskData.PlayerPoints = _playerPoints;
@@ -338,6 +343,7 @@ public static class ProgressData
                 _completedTiles = diskData.CompletedTiles;
                 if (diskData.HaveUsedMostRecentTile)
                     _mostRecentTile = diskData.MostRecentTile;
+                _mostPlayersUsed = diskData.MostPlayersUsed;
                 _weaponSlotsByPlayer = diskData.WeaponSlotsByPlayer;
                 if (_weaponSlotsByPlayer == null)
                     _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
@@ -370,6 +376,7 @@ public static class ProgressData
         public List<IntegerVector> CompletedTiles;
         public bool HaveUsedMostRecentTile;
         public IntegerVector MostRecentTile;
+        public int MostPlayersUsed;
         public Dictionary<int, SlotWrapper[]> WeaponSlotsByPlayer;
         public int[] CurrentBosses;
         public int[] PlayerPoints;
@@ -383,6 +390,7 @@ public static class ProgressData
     private static List<IntegerVector> _completedTiles = new List<IntegerVector>();
     private static IntegerVector? _mostRecentTile = null;
     private static int _mostRecentBossIndex;
+    private static int _mostPlayersUsed;
     private static Dictionary<int, SlotWrapper[]> _weaponSlotsByPlayer = new Dictionary<int, SlotWrapper[]>();
     private static int[] _currentBosses;
     private static int[] _playerPoints;
