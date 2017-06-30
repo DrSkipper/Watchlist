@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Steamworks;
 
 public class LeaderboardAccessor : MonoBehaviour
 {
@@ -59,12 +60,14 @@ public class LeaderboardAccessor : MonoBehaviour
 
     private void onSoloComplete()
     {
-
+        if (this.SoloCallback != null)
+            this.SoloCallback();
     }
 
     private void onCoopComplete()
     {
-
+        if (this.CoopCallback != null)
+            this.CoopCallback();
     }
 
     private LeaderboardManager.LeaderboardEntry[] getEntries(LeaderboardManager.LeaderboardType type)

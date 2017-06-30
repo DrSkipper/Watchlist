@@ -11,8 +11,8 @@ public class LeaderboardManager : MonoBehaviour
     public delegate void DataGatheredDelegate();
 
     public bool Finished { get; private set; }
-    public LeaderboardEntry[] Leaderboard { get { return _topPlayers.ToArray(); } }
-    public LeaderboardEntry[] FriendsLeaderboard { get { return _friends.ToArray(); } }
+    public LeaderboardEntry[] Leaderboard { get { return _topPlayers != null ? _topPlayers.ToArray() : new LeaderboardEntry[0]; } }
+    public LeaderboardEntry[] FriendsLeaderboard { get { return _friends != null ? _friends.ToArray() : new LeaderboardEntry[0]; } }
     public LeaderboardEntry PlayerEntry { get { return _playerEntry; } }
     public LeaderboardType Type { get; private set; }
     public DataGatherStep CurrentStep { get; private set; }
