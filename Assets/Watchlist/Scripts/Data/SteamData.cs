@@ -6,6 +6,7 @@ public static class SteamData
     public const uint AppId = 652760;
     public static bool Initialized { get { return SteamManager.Initialized; } }
     public static string UserDisplayName { get { return Initialized ? SteamFriends.GetPersonaName() : ""; } }
+    public static CSteamID UserSteamId { get { return SteamUser.GetSteamID(); } }
 
     public static void UnlockBossAchievement(string bossName)
     {
