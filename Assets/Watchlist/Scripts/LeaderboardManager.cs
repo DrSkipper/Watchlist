@@ -41,6 +41,7 @@ public class LeaderboardManager : MonoBehaviour
         public int Score;
         public bool IsFriend;
         public bool IsUser;
+        public bool Unranked;
     }
 
     public void BeginGatheringData(LeaderboardType leaderboardType, DataGatheredDelegate callback)
@@ -116,9 +117,19 @@ public class LeaderboardManager : MonoBehaviour
         }
 
         if (needsUpload)
-            uploadPlayerScore(localHighScore);
+        {
+            if (localHighScore > 0)
+                uploadPlayerScore(localHighScore);
+            else
+            {
+                _playerEntry = getUnrankedPlayerEntry();
+                NextStep();
+            }
+        }
         else
+        {
             NextStep();
+        }
     }
 
     void GatherLeaderboardEntries()
@@ -200,6 +211,7 @@ public class LeaderboardManager : MonoBehaviour
         retVal.IsFriend = !retVal.IsUser && SteamFriends.HasFriend(entry.m_steamIDUser, EFriendFlags.k_EFriendFlagAll);
         retVal.Rank = entry.m_nGlobalRank;
         retVal.Score = entry.m_nScore;
+        retVal.Unranked = false;
 
         if (retVal.IsUser)
             retVal.PlayerName = SteamData.UserDisplayName;
@@ -208,6 +220,18 @@ public class LeaderboardManager : MonoBehaviour
         else
             retVal.PlayerName = entry.m_steamIDUser.ToString();
 
+        return retVal;
+    }
+
+    private LeaderboardEntry getUnrankedPlayerEntry()
+    {
+        LeaderboardEntry retVal = new LeaderboardEntry();
+        retVal.IsUser = true;
+        retVal.IsFriend = false;
+        retVal.Rank = -1;
+        retVal.Unranked = true;
+        retVal.Score = 0;
+        retVal.PlayerName = SteamData.UserDisplayName;
         return retVal;
     }
 
