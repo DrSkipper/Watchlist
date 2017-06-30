@@ -145,6 +145,8 @@ public static class PersistentData
             }
         }
 
+        numPlayers = Mathf.Max(ProgressData.MostPlayersUsed, numPlayers);
+
         if (numPlayers > 1)
         {
             if (score > _highScoreCoop)
