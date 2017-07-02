@@ -1,2 +1,0 @@
-leaderboard notes:
-- probably remove high score being uploaded/recorded except for final choice/boss before or shortly after launch
