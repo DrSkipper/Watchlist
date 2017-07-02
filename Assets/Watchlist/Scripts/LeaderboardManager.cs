@@ -103,7 +103,7 @@ public class LeaderboardManager : MonoBehaviour
     void UpdatePlayerScore()
     {
         bool needsUpload = true;
-        int localHighScore = PersistentData.GetSinglePlayerHighScore();
+        int localHighScore = this.Type == LeaderboardType.Solo ? PersistentData.GetSinglePlayerHighScore() : PersistentData.GetCoopHighScore();
         if (_playerScore.m_cEntryCount != 0)
         {
             int playerScore = _playerEntry.Score;
