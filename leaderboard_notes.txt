@@ -1,0 +1,5 @@
+leaderboard notes:
+- probably remove high score being uploaded/recorded except for final choice/boss before or shortly after launch
+- showing same leaderboard on every page (verified solo high score was uploaded to coop leaderboard)
+- not updating player row
+- didn't add player until played a level
