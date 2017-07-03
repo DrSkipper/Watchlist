@@ -57,11 +57,12 @@ public class WinCondition : VoBehavior
         else if (this.OnComplete == CompletionEffect.WipeProgressData)
         {
             //
-            //PersistentData.RecordHighScore();
+            PersistentData.RecordHighScore();
             ProgressData.WipeData();
         }
 
-        PersistentData.RecordHighScore();
+        //
+        //PersistentData.RecordHighScore();
         ProgressData.SaveToDisk();
         SceneManager.LoadScene(this.Destination);
     }
