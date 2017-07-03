@@ -177,9 +177,18 @@ public class LeaderboardManager : MonoBehaviour
         for (int i = 0; i < _nonFriends.Count;)
         {
             if (SteamFriends.RequestUserInformation(_nonFriends[i].Id, true))
+            {
+                //Debug.Log("Requesting user info: " + _nonFriends[i].Id);
                 ++i;
+            }
             else
+            {
+                //Debug.Log("Already have user info: " + _nonFriends[i].Id);
+                LeaderboardEntry entry = _nonFriends[i];
                 _nonFriends.RemoveAt(i);
+
+                entry.PlayerName = SteamFriends.GetFriendPersonaName(entry.Id);
+            }
         }
 
         if (_nonFriends.Count == 0)
@@ -407,6 +416,8 @@ public class LeaderboardManager : MonoBehaviour
 
     private void onPersonaStateChange(PersonaStateChange_t result)
     {
+        //Debug.Log("Persona State Change: " + result.m_ulSteamID);
+
         for (int i = 0; i < _nonFriends.Count; ++i)
         {
             if (_nonFriends[i].Id.m_SteamID == result.m_ulSteamID)
