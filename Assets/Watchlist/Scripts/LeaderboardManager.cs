@@ -32,17 +32,20 @@ public class LeaderboardManager : MonoBehaviour
         UpdatePlayerScore,
         GatherLeaderboardEntries,
         CompileLeaderboardEntries,
+        GatherNonFriendNames,
         Finished
     }
 
-    public struct LeaderboardEntry
+    public class LeaderboardEntry
     {
         public string PlayerName;
+        public CSteamID Id;
         public int Rank;
         public int Score;
         public bool IsFriend;
         public bool IsUser;
         public bool Unranked;
+        public bool Stranger { get { return !this.IsUser && !this.IsFriend; } }
     }
 
     public void BeginGatheringData(LeaderboardType leaderboardType, DataGatheredDelegate callback)
@@ -82,6 +85,9 @@ public class LeaderboardManager : MonoBehaviour
                 break;
             case DataGatherStep.CompileLeaderboardEntries:
                 CompileLeaderboardEntries();
+                break;
+            case DataGatherStep.GatherNonFriendNames:
+                GatherNonFriendNames();
                 break;
             default:
             case DataGatherStep.Finished:
@@ -144,16 +150,40 @@ public class LeaderboardManager : MonoBehaviour
     void CompileLeaderboardEntries()
     {
         _topPlayers = new List<LeaderboardEntry>();
+        _nonFriends = new List<LeaderboardEntry>();
+        _friends = new List<LeaderboardEntry>();
+
         for (int i = 0; i < _topPlayerCount; ++i)
         {
-            _topPlayers.Add(getLeaderboardEntry(_topPlayerEntries, i));
+            LeaderboardEntry entry = getLeaderboardEntry(_topPlayerEntries, i);
+            _topPlayers.Add(entry);
+
+            if (entry.Stranger)
+                _nonFriends.Add(entry);
         }
-        _friends = new List<LeaderboardEntry>();
+
         for (int i = 0; i < Mathf.Min(_friendsCount, 10); ++i)
         {
             _friends.Add(getLeaderboardEntry(_friendsEntries, i));
         }
+
         NextStep();
+    }
+
+    void GatherNonFriendNames()
+    {
+        _personaStateChangeCallback = Callback<PersonaStateChange_t>.Create(onPersonaStateChange);
+
+        for (int i = 0; i < _nonFriends.Count;)
+        {
+            if (SteamFriends.RequestUserInformation(_nonFriends[i].Id, true))
+                ++i;
+            else
+                _nonFriends.RemoveAt(i);
+        }
+
+        if (_nonFriends.Count == 0)
+            NextStep();
     }
 
     void Finish()
@@ -171,6 +201,7 @@ public class LeaderboardManager : MonoBehaviour
     private CallResult<LeaderboardScoreUploaded_t> _playerScoreUploadResult;
     private CallResult<LeaderboardScoresDownloaded_t> _topPlayersResult;
     private CallResult<LeaderboardScoresDownloaded_t> _friendsResult;
+    private Callback<PersonaStateChange_t> _personaStateChangeCallback;
     private SteamLeaderboard_t _leaderboard;
     private LeaderboardScoresDownloaded_t _playerScore;
     private int _topPlayerCount;
@@ -181,6 +212,7 @@ public class LeaderboardManager : MonoBehaviour
     private SteamLeaderboardEntries_t _friendsEntries;
     private List<LeaderboardEntry> _topPlayers;
     private List<LeaderboardEntry> _friends;
+    private List<LeaderboardEntry> _nonFriends;
     private LeaderboardEntry _playerEntry;
 
     private const string SOLO = "solo";
@@ -220,20 +252,24 @@ public class LeaderboardManager : MonoBehaviour
         LeaderboardEntry_t entry;
         int[] playerDetails = new int[LEADERBOARD_DETAILS_NUM];
         SteamUserStats.GetDownloadedLeaderboardEntry(entries, index, out entry, playerDetails, LEADERBOARD_DETAILS_NUM);
-
+        
         LeaderboardEntry retVal = new LeaderboardEntry();
         retVal.IsUser = entry.m_steamIDUser == SteamData.UserSteamId;
         retVal.IsFriend = !retVal.IsUser && SteamFriends.HasFriend(entry.m_steamIDUser, EFriendFlags.k_EFriendFlagAll);
         retVal.Rank = entry.m_nGlobalRank;
         retVal.Score = entry.m_nScore;
         retVal.Unranked = false;
+        retVal.Id = entry.m_steamIDUser;
 
         if (retVal.IsUser)
             retVal.PlayerName = SteamData.UserDisplayName;
         else if (retVal.IsFriend)
             retVal.PlayerName = SteamFriends.GetFriendPersonaName(entry.m_steamIDUser);
         else
+        {
+            //SteamFriends.RequestUserInformation(entry.m_steamIDUser, true);
             retVal.PlayerName = entry.m_steamIDUser.ToString();
+        }
 
         return retVal;
     }
@@ -247,6 +283,7 @@ public class LeaderboardManager : MonoBehaviour
         retVal.Unranked = true;
         retVal.Score = 0;
         retVal.PlayerName = SteamData.UserDisplayName;
+        retVal.Id = SteamData.UserSteamId;
         return retVal;
     }
 
@@ -295,7 +332,8 @@ public class LeaderboardManager : MonoBehaviour
         else
         {
             _playerScore = result;
-            _playerEntry = getLeaderboardEntry(_playerScore.m_hSteamLeaderboardEntries, 0);
+            if (result.m_cEntryCount > 0)
+                _playerEntry = getLeaderboardEntry(_playerScore.m_hSteamLeaderboardEntries, 0);
             NextStep();
         }
     }
@@ -364,6 +402,22 @@ public class LeaderboardManager : MonoBehaviour
     private void checkTopPlayersAndFriendsDownloaded()
     {
         if (_topPlayersReceived && _friendsReceived)
+            NextStep();
+    }
+
+    private void onPersonaStateChange(PersonaStateChange_t result)
+    {
+        for (int i = 0; i < _nonFriends.Count; ++i)
+        {
+            if (_nonFriends[i].Id.m_SteamID == result.m_ulSteamID)
+            {
+                _nonFriends[i].PlayerName = SteamFriends.GetFriendPersonaName(_nonFriends[i].Id);
+                _nonFriends.RemoveAt(i);
+                break;
+            }
+        }
+
+        if (_nonFriends.Count == 0)
             NextStep();
     }
 }
