@@ -1,18 +1,17 @@
 Watchlist todo:
-- Steam Achievements
 - Steam Trading Cards
-- Steam Cloud Save
-- Leaderboards??
+- Fix Ready panels not covering lower shop ui
+- Ready option in shop panel rather than button icons
+
 
 stretch goals:
 more UI animations?
 Cap/hard set points gained from boss?
 shader effect when enemy/hero dies
 sound manager? (limit on concurrent sound effects)
-see Concept/bug.png
+see Concept/bug.png - happened again in 3-player co-op
 Async music loading?
 Versus mode???
 
 Pretty much done:
 shader filter overlay effect
-Check if we need to add loading objects to LevelInfoPanelHandler - e8e6ffce69ef13cf96f6234bcc1b1a2d7f2d4733, 9f38566fea5ee1fede52136127e9b880ce6c6561 - yes we should
