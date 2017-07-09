@@ -84,6 +84,7 @@ public static class PersistentData
             if (diskData.DataSaved)
             {
                 _bossLockStatuses = diskData.BossLockStatuses;
+                _bossUnlocksNeedingNotification = diskData.BossUnlocksNeedingNotification;
                 guaranteeAllBossesPresent();
             }
             else
