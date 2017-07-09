@@ -24,9 +24,16 @@ public class LeaderboardAccessor : MonoBehaviour
         _instance.beginGatheringData();
     }
 
-    public static LeaderboardManager.LeaderboardEntry[] GetEntries(LeaderboardManager.LeaderboardType type)
+    public static LeaderboardManager.LeaderboardEntry[] GetEntries(LeaderboardManager.LeaderboardType type, LeaderboardFilter filter)
     {
-        return _instance.getEntries(type);
+        switch (filter)
+        {
+            default:
+            case LeaderboardFilter.Global:
+                return _instance.getEntries(type);
+            case LeaderboardFilter.Friends:
+                return _instance.getFriendEntries(type);
+        }
     }
 
     public static bool LeaderboardFinished(LeaderboardManager.LeaderboardType type)
@@ -79,6 +86,18 @@ public class LeaderboardAccessor : MonoBehaviour
                 return this.SoloManager.Leaderboard;
             case LeaderboardManager.LeaderboardType.Coop:
                 return this.CoopManager.Leaderboard;
+        }
+    }
+
+    private LeaderboardManager.LeaderboardEntry[] getFriendEntries(LeaderboardManager.LeaderboardType type)
+    {
+        switch (type)
+        {
+            default:
+            case LeaderboardManager.LeaderboardType.Solo:
+                return this.SoloManager.FriendsLeaderboard;
+            case LeaderboardManager.LeaderboardType.Coop:
+                return this.CoopManager.FriendsLeaderboard;
         }
     }
 

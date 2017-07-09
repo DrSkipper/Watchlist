@@ -13,20 +13,23 @@ public class LeaderboardMenu : MonoBehaviour
     public GameObject LoadingPanel;
     public LeaderboardListEntry PlayerEntry;
     public LeaderboardListEntry[] List;
-    public LeaderboardDisplayType CurrentDisplayType;
+    public LeaderboardDisplayType CurrentDisplayType { get; private set; }
     public const string EXIT_EVENT = "scene_exit";
 
     public enum LeaderboardDisplayType
     {
-        SoloFriends = 0,
-        CoopFriends,
-        SoloGlobal,
-        CoopGlobal
+        SoloGlobal = 0,
+        CoopGlobal,
+        SoloFriends,
+        CoopFriends
     }
     private const int LEADERBOARD_DISPLAY_TYPE_COUNT = 4;
 
     void Start()
     {
+        this.CurrentDisplayType = (LeaderboardDisplayType)0;
+        alignTypeAndFilter();
+
         if (LeaderboardAccessor.Instance != null && SteamData.Initialized)
             this.DisplayLeaderboard();
         else
@@ -140,7 +143,7 @@ public class LeaderboardMenu : MonoBehaviour
         _loading = false;
         this.LeaderboardPanel.SetActive(true);
         this.LoadingPanel.SetActive(false);
-        LeaderboardManager.LeaderboardEntry[] entries = LeaderboardAccessor.GetEntries(_currentType);
+        LeaderboardManager.LeaderboardEntry[] entries = LeaderboardAccessor.GetEntries(_currentType, _currentFilter);
 
         for (int i = 0; i < this.List.Length; ++i)
         {
