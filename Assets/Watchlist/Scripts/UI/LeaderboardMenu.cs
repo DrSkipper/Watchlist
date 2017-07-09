@@ -50,6 +50,9 @@ public class LeaderboardMenu : MonoBehaviour
         bool left = MenuInput.NavLeft();
         if (right || left)
         {
+            if (_loading)
+                removeCallback();
+
             _prevType = _currentType;
             int displayType = (int)this.CurrentDisplayType;
             if (right)
