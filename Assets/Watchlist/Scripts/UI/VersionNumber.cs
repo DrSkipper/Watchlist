@@ -6,7 +6,7 @@ public class VersionNumber : MonoBehaviour
     public const string PREFIX = "v";
     public const int MAJOR = 1;
     public const int MINOR = 3;
-    public const int PATCH = 6;
+    public const int PATCH = 7;
     public const string DOT = ".";
 
     public Text VersionText; 
