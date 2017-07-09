@@ -118,7 +118,7 @@ public class PlayerController : Actor2D
         // Shooting
         if (!this.NoFire && _weapon != null)
         {
-            Vector2 rawAimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position, !_usingController);
+            Vector2 rawAimAxis = GameplayInput.GetAimingAxis(this.PlayerIndex, this.transform.position, false);
 
             if (_usingController)
             {
