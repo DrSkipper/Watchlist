@@ -53,9 +53,7 @@ public static class PersistentData
         LoadFromDisk();
         _bossUnlocksNeedingNotification.Remove(bossId);
         SaveToDisk();
-
-        if (allBossesUnlocked)
-            SteamData.UnlockCompleteWatchlistAchievement();
+        CheckWatchlistAchievement();
     }
 
     public static void SaveToDisk()
@@ -238,6 +236,15 @@ public static class PersistentData
         checkEarthUnlock();
     }
 
+    public static void CheckWatchlistAchievement()
+    {
+        if (_bossLockStatuses == null)
+            LoadFromDisk();
+
+        if (allBossesUnlocked)
+            SteamData.UnlockCompleteWatchlistAchievement();
+    }
+
     [System.Serializable]
     public struct PersistentDiskData
     {
@@ -280,9 +287,9 @@ public static class PersistentData
     {
         get
         {
-            for (int i = 0; i < _bossLockStatuses.Count; ++i)
+            foreach (int key in _bossLockStatuses.Keys)
             {
-                if (_bossLockStatuses[i])
+                if (_bossLockStatuses[key])
                     return false;
             }
             return true;
