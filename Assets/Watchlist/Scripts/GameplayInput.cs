@@ -9,6 +9,7 @@ public static class GameplayInput
     private const string AIM_VERTICAL = "AimVertical";
     private const string FIRE = "Fire";
     private const float MAX_MOUSE_EXTENSION_RATIO = 0.32f;
+    public const float AIM_DEAD = 0.1f;
 
     public static Vector2 GetMovementAxis(int playerIndex, bool normalized = false)
     {
@@ -41,6 +42,12 @@ public static class GameplayInput
         else
         {
             axis = rewiredP.GetAxis2D(AIM_HORIZONTAL, AIM_VERTICAL);
+            if (axis.magnitude < AIM_DEAD)
+                axis = Vector2.zero;
+            /*if (Mathf.Abs(axis.x) < AIM_DEAD)
+                axis.x = 0;
+            if (Mathf.Abs(axis.y) < AIM_DEAD)
+                axis.y = 0;*/
         }
 
         if (normalized)

@@ -16,6 +16,8 @@ public class PlayerController : Actor2D
     public bool NoFire = false;
     public bool NoMove = false;
     public float ControllerAimerSpeed = 200.0f;
+    public float ControllerReturnSpeed = 2.0f;
+    public float ControllerMinAimAmt = 0.3f;
     public ReticlePositioner Reticle;
     public Texture2D SpriteAtlas;
 
@@ -122,7 +124,18 @@ public class PlayerController : Actor2D
 
             if (_usingController)
             {
-                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, this.ControllerAimerSpeed * Time.deltaTime);
+                float aimSpeed = this.ControllerAimerSpeed;
+                if (rawAimAxis.magnitude < 0.01f)
+                {
+                    rawAimAxis = _aimAxis.normalized * this.ControllerMinAimAmt;
+                    aimSpeed = this.ControllerReturnSpeed;
+                }
+                else if (rawAimAxis.magnitude < this.ControllerMinAimAmt)
+                {
+                    rawAimAxis = rawAimAxis.normalized * this.ControllerMinAimAmt;
+                }
+
+                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, aimSpeed * Time.deltaTime);
             }
             else
             {
