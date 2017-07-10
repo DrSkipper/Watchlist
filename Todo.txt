@@ -3,6 +3,11 @@ Watchlist todo:
 - Fix Ready panels not covering lower shop ui
 - Ready option in shop panel rather than button icons
 
+- Camera aiming impact option slider
+- Controller aim speed option slider
+- Min controller aim option toggle
+- Always shoot while aiming option toggle? (only available when above option is disabled?)
+
 
 stretch goals:
 more UI animations?
