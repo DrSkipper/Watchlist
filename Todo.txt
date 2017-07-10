@@ -8,6 +8,9 @@ Watchlist todo:
 - Min controller aim option toggle
 - Always shoot while aiming option toggle? (only available when above option is disabled?)
 
+- mess with visual controller aim cursor distance impact
+- fix level gen player/miniboss placement bug?
+
 
 stretch goals:
 more UI animations?
