@@ -30,6 +30,7 @@ public class CameraController : VoBehavior
 
     void Start()
     {
+        this.AimingImpact = PlayerPrefs.GetInt(OptionsMenu.CAMERA_AIM_IMPACT_KEY, OptionsMenu.DEFAULT_CAMERA_AIM_IMPACT);
         GlobalEvents.Notifier.Listen(PlayerSpawnedEvent.NAME, this, playerSpawned);
         _lockPosition = (Vector2)this.transform.position;
     }

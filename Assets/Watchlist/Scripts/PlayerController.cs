@@ -16,6 +16,8 @@ public class PlayerController : Actor2D
     public bool NoFire = false;
     public bool NoMove = false;
     public float ControllerAimerSpeed = 200.0f;
+    public float ControllerReturnSpeedMult = 0.6f;
+    public float ControllerMinAimAmt = 0.3f;
     public ReticlePositioner Reticle;
     public Texture2D SpriteAtlas;
 
@@ -29,6 +31,10 @@ public class PlayerController : Actor2D
         _weapon = this.GetComponent<Weapon>();
         _weapon.ShotFiredCallback = shotFired;
         _aimAxis = Vector2.zero;
+
+        this.ControllerAimerSpeed = PlayerPrefs.GetFloat(OptionsMenu.CONTROLLER_AIM_SPEED_KEY, OptionsMenu.DEFAULT_CONTROLLER_AIM_SPEED);
+        if (PlayerPrefs.GetInt(OptionsMenu.CONTROLLER_AIM_LAST_DIR_KEY, OptionsMenu.DEFAULT_CONTROLLER_AIM_LAST_DIR) == 0)
+            this.ControllerMinAimAmt = 0.0f;
 
         this.Reticle.PlayerIndex = this.PlayerIndex;
         _damagable = this.GetComponent<Damagable>();
@@ -122,7 +128,18 @@ public class PlayerController : Actor2D
 
             if (_usingController)
             {
-                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, this.ControllerAimerSpeed * Time.deltaTime);
+                float aimSpeed = this.ControllerAimerSpeed;
+                if (rawAimAxis.magnitude < 0.01f)
+                {
+                    rawAimAxis = _aimAxis.normalized * this.ControllerMinAimAmt;
+                    aimSpeed = this.ControllerAimerSpeed * this.ControllerReturnSpeedMult;
+                }
+                else if (rawAimAxis.magnitude < this.ControllerMinAimAmt)
+                {
+                    rawAimAxis = rawAimAxis.normalized * this.ControllerMinAimAmt;
+                }
+
+                _aimAxis = Vector2.MoveTowards(_aimAxis, rawAimAxis, aimSpeed * Time.deltaTime);
             }
             else
             {

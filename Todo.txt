@@ -1,7 +1,8 @@
 Watchlist todo:
 - Steam Trading Cards
-- Fix Ready panels not covering lower shop ui
 - Ready option in shop panel rather than button icons
+- Always shoot while aiming option toggle? (only available when above option is disabled?)
+- fix level gen player/miniboss placement bug?
 
 
 stretch goals:
