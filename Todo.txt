@@ -1,14 +1,7 @@
 Watchlist todo:
 - Steam Trading Cards
-- Fix Ready panels not covering lower shop ui
 - Ready option in shop panel rather than button icons
-
-- Camera aiming impact option slider
-- Controller aim speed option slider
-- Min controller aim option toggle
 - Always shoot while aiming option toggle? (only available when above option is disabled?)
-
-- mess with visual controller aim cursor distance impact
 - fix level gen player/miniboss placement bug?
 
 
