@@ -2,7 +2,8 @@ Watchlist todo:
 - Steam Trading Cards
 - Ready option in shop panel rather than button icons
 - Always shoot while aiming option toggle? (only available when above option is disabled?)
-- fix level gen player/miniboss placement bug?
+- Fix level gen player/miniboss placement bug?
+- Save PlayerPref for VSync on or off? or some other persistent setting.
 
 
 stretch goals:
